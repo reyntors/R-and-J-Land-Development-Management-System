@@ -1,10 +1,41 @@
 <template>
   <div class="header">
+    <button @click="login">LOG IN</button>
+    <nav>
+      <a href="#about">ABOUT</a>
+      <a href="#map">MAP</a>
+    </nav>
   </div>
+  <login-form v-if="isLogin" @close-button="closeForm"></login-form>
 </template>
 
+<script>
+import LoginForm from '@/components/Forms/LoginForm.vue'
+export default {
+  components:{LoginForm},
+  data(){
+    return{
+      isLoginBool: true,
+    }
+  },
+  methods: {
+    login(){
+      this.isLoginBool = true
+    },
+    closeForm(){
+      this.isLoginBool = false
+    }
+  },
+  computed: {
+    isLogin(){
+      return this.isLoginBool
+    }
+  }
+}
+</script>
 
-<style>
+
+<style scoped>
 .header{
     width: 100%;
     /* background-image: url('@/assets/theme.jpg'); */
@@ -14,5 +45,28 @@
     height: 20vh;
     background-position: center center;
     box-shadow: 0 1px 11px 0.5px rgba(0, 0, 0, 0.407);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+a{
+  padding: 1rem;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+button{
+  padding: 1rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  background-color: #86D916;
+}
+button:active{
+  background-color: #84d9169f;
+  color: white;
+}
+a:active{
+  border: 1px solid blue;
 }
 </style>

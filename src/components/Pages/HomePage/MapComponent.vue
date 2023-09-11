@@ -1,5 +1,5 @@
 <template>
-    <div class="cont">
+    <div id="map" class="cont">
        MAP
        
        <div class="search-bar">
