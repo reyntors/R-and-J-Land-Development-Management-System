@@ -1,4 +1,15 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './route.js'
 
-createApp(App).mount('#app')
+import TheHeader from './components/Reusable/TheHeader.vue'
+import TheFooter from './components/Reusable/TheFooter.vue'
+
+const app = createApp(App)
+
+app.use(router)
+
+app.component('the-header',TheHeader)
+app.component('the-footer',TheFooter)
+
+app.mount('#app')
