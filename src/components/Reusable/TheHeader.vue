@@ -1,9 +1,10 @@
 <template>
   <div class="header">
-    <button @click="login">LOG IN</button>
+    <img class="logo" src="@/assets/logo.png" alt="ERROR"> 
     <nav>
       <a href="#about">ABOUT</a>
       <a href="#map">MAP</a>
+      <button @click="login">LOG IN</button>
     </nav>
   </div>
   <login-form v-if="isLogin" @close-button="closeForm"></login-form>
@@ -15,7 +16,7 @@ export default {
   components:{LoginForm},
   data(){
     return{
-      isLoginBool: true,
+      isLoginBool: false,
     }
   },
   methods: {
@@ -39,10 +40,10 @@ export default {
 .header{
     width: 100%;
     /* background-image: url('@/assets/theme.jpg'); */
-    background-image: url('@/assets/header.png');
+    /* background-image: url('@/assets/header.png'); */
     background-repeat: no-repeat;
     background-size: cover;
-    height: 20vh;
+    height: 15vh;
     background-position: center center;
     box-shadow: 0 1px 11px 0.5px rgba(0, 0, 0, 0.407);
     display: flex;
@@ -50,16 +51,19 @@ export default {
     align-items: center;
     padding: 0 1rem;
 }
+.logo{
+  width: 200px;
+}
 a{
   padding: 1rem;
   text-decoration: none;
-  font-size: 1.8rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 button{
-  padding: 1rem;
+  padding: .5rem;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1rem;
   background-color: #86D916;
 }
 button:active{

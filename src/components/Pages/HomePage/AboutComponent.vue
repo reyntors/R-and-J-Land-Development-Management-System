@@ -5,7 +5,7 @@
   </template>
   
   
-  <style>
+  <style scoped>
   .cont{
       width: 80vw;
       height: 75vh;
