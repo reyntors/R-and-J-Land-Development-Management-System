@@ -1,22 +1,37 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
+const uniqueValidator = require("mongoose-unique-validator");
 
-// Define the User schema
 const userSchema = new Schema({
-    username: String,
-    email: String,
-    password: String, // Store the hashed password
+    username: {
+        type: String,
+        require: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now()
+    }
 });
 
-// Hash the password before saving
-userSchema.pre('save', async function () {
-    const user = await bcryot.genSalt(10)
-    this.password = await bcrypt.hash(this.password, user)
-})
+userSchema.set("toJSON", {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+        delete returnedObject.password;
+    },
+});
 
+userSchema.plugin(uniqueValidator, {message: "Email already in use."});
 
-// Create a User model
-const User = mongoose.model('User', userSchema);
-
+const User = mongoose.model("user", userSchema);
 module.exports = User;
