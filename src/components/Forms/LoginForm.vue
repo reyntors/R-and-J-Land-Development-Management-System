@@ -6,7 +6,7 @@
   <div class="cardLogin" v-if="goLoginComputed">
     <form @submit.prevent="">
         <div class="icon-container">
-          Login Form
+          <h5>Login Form</h5>
           <font-awesome-icon icon="fa-solid fa-x" size="1x"  class="icon" @click="close"/>
         </div>
 
@@ -36,7 +36,7 @@
   <div class="cardSignup" v-else>
     <form @submit.prevent="">
         <div class="icon-container">
-          Sign up Form
+          <h5>Sign up Form</h5>
           <font-awesome-icon icon="fa-solid fa-x" size="1x"  class="icon" @click="close"/>
         </div>
 
@@ -63,7 +63,7 @@
               <label for="fb-account">FB Account Link</label>
           </div>
           <div class="navNextContainer" @click="navigate">
-            next<span><font-awesome-icon icon="fa-solid fa-angle-right" size="1x" /></span>
+            <font-awesome-icon icon="fa-solid fa-right-long" size="2x" class="iconNav"/>
           </div>  
           <p>Already have an account?<span class="loginInsteadButton" style="color: blue" @click="loginInstead">Log in</span></p>
         </div>
@@ -71,21 +71,25 @@
         <!-- form2 SIGNUP-->
         <div class="formSignUp2" v-else>
           <div class="style-form">
-              <input type="password"  id="username" placeholder="" v-model.trim="signUpUsername">
-              <label for="username">Password</label>
+              <input type="text"  id="username" placeholder="" v-model.trim="signUpUsername">
+              <label for="username">Username</label>
           </div>
-          <div class="style-form">
+          <div class="style-form" :class="{passwordConcernPromptContainer: !passwordStrongComputed && !passwordEmptyComputed}">
               <input type="text"  id="password" placeholder="" v-model.trim="signUpPassword">
-              <label for="password">Username</label>
+              <label for="password">Password</label>
+              <div class="hint">ex. MyP@ssw0rd</div>
+              <div class="passwordConcernPrompt" v-if="!passwordStrongComputed && !passwordEmptyComputed">weak password</div>
           </div>
           <div class="style-form">
-              <input type="password"  id="confirm" placeholder="" v-model.trim="signUpPasswordRepeat">
+              <input type="text"  id="confirm" placeholder="" v-model.trim="signUpPasswordRepeat">
               <label for="confirm">Confirm Password</label>
+              <div class="passwordConcernPrompt" v-if="!passwordMatchComputed && !passwordEmptyComputed">password don't match</div>
           </div> 
             <div class="navNextContainer" @click="navigate">
-              <span><font-awesome-icon icon="fa-solid fa-angle-left" size="1x"/></span>back
+              <font-awesome-icon icon="fa-solid fa-left-long" size="2x" class="iconNav"/>
             </div> 
-            <button type="button" class="btn btn-primary p-2 fs-6" @click="signUpInstead">SIGN UP</button> 
+            <p class="signupError" v-if="isSignupErrorComputed">Please complete all required details.</p>
+            <button type="button" class="btn btn-primary p-2 fs-6" @click="signup">SIGN UP</button> 
             <p>Already have an account?<span class="loginInsteadButton" style="color: blue" @click="loginInstead">Log in</span></p>          
         </div>
 
@@ -101,6 +105,10 @@ export default {
       goLogin: true,
       isNext: false,
       isLoginError: false,
+      isSignupError: false,
+      passwordStrong: true,
+      passwordEmpty: true,
+      passwordMatch: true,
 
       //login
       loginUsername: '',
@@ -132,58 +140,121 @@ export default {
     navigate(){
       this.isNext = !this.isNext
     },
+
     login(){
-      if(this.loginUsername !== '' || this.loginPassword !==''){
+      if(this.loginUsername !== '' && this.loginPassword !==''){
         //FETCH LOGIN REQUEST
         this.isLoginError = false;
       }else{
         //error
         this.isLoginError = true;
       }
+    },
+
+    passwordStrongChecker(param){
+      if(param.length > 0){
+        this.passwordEmpty= false
+      }else{
+        this.passwordEmpty= true
+      }
+
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])[A-Za-z\d@#$%^&+=!]{8,}$/;
+      if (passwordRegex.test(param)){
+        this.passwordStrong = true
+      }else{
+        this.passwordStrong = false
+      }
+    },
+
+    passwordMatchChecker(param){
+      if(param === this.signUpPassword){
+        this.passwordMatch = true
+      }else{
+        this.passwordMatch = false
+      }
+    },
+
+    signup(){
+      this.passwordStrongChecker(this.signUpPassword)
+      this.passwordMatchChecker(this.signUpPasswordRepeat)
+
+      if(this.signUpAddress !== '' && this.signUpContact !== '' &&
+        this.signUpEmail !== '' && this.signUpFbLink !== '' && 
+        this.signUpFullname !== '' && this.signUpUsername !== '' && 
+        this.passwordStrong === true && this.passwordMatch === true){
+          //request SIGNUP
+          this.isSignupError = false
+          console.log('STARTED SIGNING UP')
+        }else{
+          console.log('ERROR SIGNING UP')
+          this.isSignupError = true
+          //error
+        }
     }
   },
 
   computed: {
     goLoginComputed(){
-        return this.goLogin
+      return this.goLogin
     },
     isNextComputed(){
       return this.isNext;
     },
     isLoginErrorComputed(){
       return this.isLoginError  
+    },
+    passwordStrongComputed(){
+      return this.passwordStrong
+    },
+    passwordEmptyComputed(){
+      return this.passwordEmpty
+    },
+    passwordMatchComputed(){
+      return this.passwordMatch
+    },
+    isSignupErrorComputed(){
+      return this.isSignupError
     }
+  },
+
+  watch: {
+    signUpPassword(newPass){
+      this.passwordStrongChecker(newPass)    
+    },
+    signUpPasswordRepeat(newPass){
+      this.passwordMatchChecker(newPass)
+    },
   }
 }
 </script>
 
 
 <style scoped>
-        .style-form {
-            position: relative;
-        }
+.style-form {
+    position: relative;
+}
 
-        .style-form input {
-            width: 100%;
-            padding: 9px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+.style-form input {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-        .style-form label {
-            position: absolute;
-            top: 9px;
-            left: 9px;
-            pointer-events: none;
-            transition: top 0.2s, font-size 0.2s;
-        }
+.style-form label {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    pointer-events: none;
+    transition: top 0.2s, font-size 0.2s;
+}
 
-        .style-form input:focus + label,
-        .style-form input:not(:placeholder-shown) + label {
-            top: 0px;
-            font-size: 10px;
-            font-weight: 300;
-        }
+.style-form input:focus + label,
+.style-form input:not(:placeholder-shown) + label {
+    top: 0px;
+    font-size: 10px;
+    font-weight: 300;
+}
 
 .cardLogin,.cardSignup{
     position: absolute;
@@ -199,6 +270,9 @@ export default {
     background-color: white;
     outline: 1px solid black;
     text-align: center;
+}
+.cardSignup{
+  top: 10%;
 }
 .icon-container{
   display: flex;
@@ -261,13 +335,31 @@ img{
   gap: .2rem;
   font-weight: 5400;
 }
-.navNextContainer:active{
-  color: blue;
+.navNextContainer .iconNav:active,.navNextContainer .iconNav:hover{
+  color: rgba(0, 0, 255, 0.566);
   font-weight: 500;
+  background-color: rgba(192, 199, 206, 0.404);
 }
 .loginInsteadButton:active{
   text-decoration: underline;
   font-weight: 600;
+}
+.hint{
+  padding: 0 5px; 
+  text-align: start;
+  font-size: x-small;
+  /* border: 1px solid #ccc; */
+}
+.passwordConcernPromptContainer{
+  border: 1px solid red;
+}
+.passwordConcernPrompt{
+  background-color: red;
+  color: white;
+  font-weight: 200;
+}
+.signupError{
+  color: red;
 }
 .error{
   color: red;

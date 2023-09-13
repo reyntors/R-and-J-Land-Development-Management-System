@@ -49,7 +49,7 @@
   
   <style scoped>
   img{
-    min-width: 260px;
+    min-width: 230px;
     width: 40vw;
   }
   .c-cont{
