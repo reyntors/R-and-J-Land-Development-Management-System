@@ -17,7 +17,7 @@
       </div>
       <div class="carousel-item c-item">
         <img src="https://picsum.photos/id/11/200/200" class="d-block w-100 c-img" alt="...">
-        <div class="carousel-caption d-none d-md-block c-desc">
+        <div class="carousel-caption d-md-block c-desc">
           <h1 class="title">R & J Land Development Corporation</h1>
         </div>
       </div>
@@ -55,7 +55,9 @@ export default {
 .title{
   text-transform: uppercase;
   font-weight: 900;
-  font-size: 3rem;
+  font-size: clamp(1.8rem, 3vw, 5rem);
+  line-height: 2.5rem;
+  text-shadow: 0 3px 5px white;
 } 
 .c-item{
   height: 85vh;
