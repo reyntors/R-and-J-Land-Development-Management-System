@@ -3,6 +3,21 @@ const { Schema } = mongoose;
 const uniqueValidator = require("mongoose-unique-validator");
 
 const userSchema = new Schema({
+    fullname: {
+        type: String,
+        required: true
+    },
+    contactNumber: {
+        type: String,
+        required: true
+    },
+    homeAddress: {
+        type: String,
+        required: true
+    },
+    fbAccount: {
+        type: String
+    },
     username: {
         type: String,
         require: true
@@ -22,6 +37,8 @@ const userSchema = new Schema({
     }
 });
 
+
+
 userSchema.set("toJSON", {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
@@ -35,3 +52,4 @@ userSchema.plugin(uniqueValidator, {message: "Email already in use."});
 
 const User = mongoose.model("user", userSchema);
 module.exports = User;
+
