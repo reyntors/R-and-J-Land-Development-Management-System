@@ -1,22 +1,23 @@
 const Lot = require("../models/user.model");
 const LotModel  = require("../models/lot.model");
 
-exports.getLotDetails = (req, res, next) => {
+const Lots = require("../models/lot.model");
+
+exports.getPublicLotDetails = async (req, res, next) => {
+  try {
     const { lotNumber } = req.params;
 
-    Lot.findOne({ lotNumber }, (error, lot) => {
-        if (error) {
-            return next(error);
-        }
+    const lot = await Lots.findOne({ lotNumber });
 
-        if (!lot) {
-            return res.status(404).json({ message: "Lot not found" });
-        }
+    if (!lot) {
+      return res.status(404).json({ message: "Lot not found" });
+    }
 
-        return res.status(200).json({ message: "Lot found", data: lot });
-    });
+    return res.status(200).json({ message: "Lot found", data: lot });
+  } catch (error) {
+    return next(error);
+  }
 };
-
 exports.createLot = async (req, res, next) => {
     const lotData = req.body;
   
