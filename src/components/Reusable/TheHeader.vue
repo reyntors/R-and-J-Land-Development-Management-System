@@ -34,7 +34,7 @@ export default {
   components:{LoginForm},
   data(){
     return{
-      isLoginBool: true,
+      isLoginBool: false,
       isShowColumnNav:false,
     }
   },

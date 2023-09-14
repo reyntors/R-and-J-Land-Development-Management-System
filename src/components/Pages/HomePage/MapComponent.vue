@@ -4,14 +4,15 @@
         <div class="locationBody">
 
         </div>
-        <button class="btn-item">Click to select a lot</button>  
+        <button class="btn-item">Click to select a lot</button>
+        <login-form></login-form> 
     </div> 
 </template>
 
   <style scoped>
   .containerMap{
       width: 90vw;
-      /* border: 1px dashed black; */
+      border: 1px dashed black;
       margin: 2rem auto 1rem;
       text-align: center;
   }
