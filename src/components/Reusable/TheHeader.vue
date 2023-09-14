@@ -63,6 +63,8 @@ export default {
 
 <style scoped>
 .header{
+    position: sticky;
+    top: 0;
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -73,6 +75,8 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 0 1rem;
+    background-color: white;
+    z-index: 2;
 }
 .header img{
   width: 15vw;
