@@ -22,17 +22,14 @@ mongoose.connect(dbConfig.db, {
     }
 );
 
-
-
-
-
-
 app.use(express.json());
 
 app.use("/users", require("./routes/users.routes"));
 
 // Skip authentication for the public lot details route
 app.use("/lot", require("./routes/lot.routes.public"));
+
+app.use("/reservation", require("./routes/reservation.routes"));
 
 app.use(errors.errorHandler);
 
