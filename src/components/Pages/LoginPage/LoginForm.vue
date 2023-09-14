@@ -259,7 +259,7 @@ export default {
 
 .cardLogin,.cardSignup{
     position: absolute;
-    top: 15%;
+    top: 120%;
     left: 50%;
     transform: translateX(-50%);
     width: 30vw;

@@ -3,10 +3,10 @@
 
   </div>
   <div> 
+    
     <div class="columnNav">
-      <div>
-        <font-awesome-icon icon="fa-solid fa-x" @click="closeNav"/>
-      </div>
+      <font-awesome-icon icon="fa-solid fa-x" class="closeButton" @click="closeNav"/>
+      <router-link to="/about">ABOUT</router-link>
       <router-link to="/about">ABOUT</router-link>
       <router-link to="/projects">PROJECTS</router-link>
       <router-link to="/gallery">GALLERY</router-link>
@@ -102,5 +102,22 @@ button:active{
   background-color: red;
   z-index: 1;
   background-color: rgba(116, 105, 105, 0.425)
+}
+.closeButton{
+  position: absolute;
+  z-index: 1;
+  left: -2.9rem;
+  top: 2px;
+  padding: 1rem;
+  
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.closeButton:hover, .closeButton:active{
+  outline: 1px solid black;
+  font-weight: 700;
+  background-color: rgba(116, 105, 105, 0.244);
+  color: white;
 }
 </style>
