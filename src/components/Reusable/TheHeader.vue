@@ -116,7 +116,7 @@ a:active{
 }
 
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 821px) {
     .rowNav{
       display: none;
     }
@@ -124,7 +124,7 @@ a:active{
       display: visible;
     }
 }
-@media screen and (min-width: 767px) {
+@media screen and (min-width: 821px) {
     .rowNav{
       display: visible;
     }

@@ -6,7 +6,7 @@
     
     <div class="columnNav">
       <font-awesome-icon icon="fa-solid fa-x" class="closeButton" @click="closeNav"/>
-      <router-link to="/about">ABOUT</router-link>
+      <router-link to="/home">HOME</router-link>
       <router-link to="/about">ABOUT</router-link>
       <router-link to="/projects">PROJECTS</router-link>
       <router-link to="/gallery">GALLERY</router-link>

@@ -1,4 +1,5 @@
 <template>
+  <the-header></the-header>
   GALLERY
 </template>
 
