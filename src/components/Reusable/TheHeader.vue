@@ -1,7 +1,10 @@
 <template>
 
   <div class="header">
-    <img class="logo" src="@/assets/logo.png" alt="ERROR"> 
+    <router-link to="/home">
+      <img class="logo" src="@/assets/logo.png" alt="ERROR">      
+    </router-link>
+ 
 
     <!-- ROW NAV-->
     <nav class="rowNav">
@@ -98,6 +101,14 @@ button:active{
 }
 a:active{
   border: 1px solid blue;
+}
+.bars{
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: 5px;
+}
+.bars:hover, .bars:active {
+  border: .5px solid black;
 }
 
 

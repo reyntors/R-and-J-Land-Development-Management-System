@@ -1,5 +1,5 @@
 <template>
-  ADMIN
+  CONTACT
 </template>
 
 <script>

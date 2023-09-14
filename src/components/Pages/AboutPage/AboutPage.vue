@@ -1,5 +1,5 @@
 <template>
-  User
+  ABOUT
 </template>
 
 <script>
