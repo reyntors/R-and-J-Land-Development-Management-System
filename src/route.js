@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 import HomePage from './components/Pages/HomePage/HomePage.vue'
-import VirtualView from './components/Pages/HomePage/subfolder/VirtualView.vue'
 
 const route = createRouter({
 
@@ -9,7 +8,11 @@ const route = createRouter({
         routes: [
             {path: '/', redirect: '/home'},
             {path:'/home', component: HomePage},
-            {path:'/home/virtual', component: VirtualView}
+            {path:'/about', component: null},
+            {path:'/gallery', component: null},
+            {path:'/forms', component: null},
+            {path:'/contact', component: null},
+            {path:'/:notFound(.*)', component: null}
         ]
     })
 

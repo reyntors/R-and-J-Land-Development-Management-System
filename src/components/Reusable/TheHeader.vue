@@ -1,59 +1,58 @@
 <template>
+
   <div class="header">
     <img class="logo" src="@/assets/logo.png" alt="ERROR"> 
-    <nav class="rowNav">
-      <a href="#about">ABOUT</a>
-      <a href="#about">PROJECTS</a>
-      <a href="#about">GALLERY</a>
-      <a href="#about">FORMS</a>
-      <a href="#about">CONTACT INFO</a>
-      <button @click="login">LOG IN</button>
-    </nav>
-    <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
-    <div class="columnNav" v-if="isShowColumnNav">
-      <!-- <div class="backgroundFade">
 
-      </div> -->
-      <div>
-        <font-awesome-icon icon="fa-solid fa-x"  @click="showColumnNav(false)"/>
-      </div>
-      <a href="#about">ABOUT</a>
-      <a href="#about">PROJECTS</a>
-      <a href="#about">GALLERY</a>
-      <a href="#about">FORMS</a>
-      <a href="#about">CONTACT INFO</a>
-      <button @click="login">LOG IN</button>
-    </div>
+    <!-- ROW NAV-->
+    <nav class="rowNav">
+      <router-link to="/about">ABOUT</router-link>
+      <router-link to="/projects">PROJECTS</router-link>
+      <router-link to="/gallery">GALLERY</router-link>
+      <router-link to="/forms">FORMS</router-link>
+      <router-link to="/contact">CONTACT INFO</router-link>
+      <button @click="closeOrOpenForm(true)">LOG IN</button>
+    </nav>
+    <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
+
+    <!-- COLLUMN NAV-->
+    <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
+    <column-nav v-if="isShowColumnNavComputed" @close-nav="showColumnNav(false)"></column-nav>
   </div>
-  <login-form v-if="isLogin" @close-button="closeForm"></login-form>
+
 </template>
 
 <script>
 import LoginForm from '@/components/Forms/LoginForm.vue'
+import ColumnNav from './SubColumnComponent/ColumnNav.vue'
 export default {
-  components:{LoginForm},
+  components:{LoginForm, ColumnNav},
   data(){
+
     return{
       isLoginBool: false,
-      isShowColumnNav:false,
+      isShowColumnNav: true,
     }
+
   },
   methods: {
-    login(){
-      this.isLoginBool = true
-      this.showColumnNav(false);
-    },
-    closeForm(){
-      this.isLoginBool = false
+
+    closeOrOpenForm(bool){
+        this.isLoginBool = bool
     },
     showColumnNav(bool){
       this.isShowColumnNav = bool;
     }
+
   },
   computed: {
-    isLogin(){
+
+    isLoginBoolComputed(){
       return this.isLoginBool
+    },
+    isShowColumnNavComputed(){
+      return this.isShowColumnNav
     }
+    
   }
 }
 </script>
@@ -62,8 +61,6 @@ export default {
 <style scoped>
 .header{
     width: 100%;
-    /* background-image: url('@/assets/theme.jpg'); */
-    /* background-image: url('@/assets/header.png'); */
     background-repeat: no-repeat;
     background-size: cover;
     height: 15vh;
@@ -102,47 +99,6 @@ button:active{
 a:active{
   border: 1px solid blue;
 }
-.columnNav{
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  background-color: white;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 5px 1px gray;
-}
-.columnNav div{
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  padding: .5rem;
-}
-.columnNav button{
-  width: 100%;
-  border: none;
-}
-.columnNav a{
-  text-align: center;
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.188);
-}
-.columnNav a:active{
-  border: 1px solid black;
-}
-/* .backgroundFade{
-  position: initial;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: red;
-  z-index: 0;
-} */
-
 
 
 @media screen and (max-width: 767px) {

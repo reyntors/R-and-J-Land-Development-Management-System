@@ -51,6 +51,7 @@ export default {
     /* margin: 3rem auto; */
     text-align: center;
     /* border: 5px solid black; */
+    z-index: 0;
 }
 .title{
   text-transform: uppercase;

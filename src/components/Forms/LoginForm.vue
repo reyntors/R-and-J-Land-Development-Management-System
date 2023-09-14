@@ -100,6 +100,7 @@
 
 <script>
 export default {
+  emits : ['close-button'],
   data(){
     return{
       goLogin: true,
@@ -317,7 +318,7 @@ img{
   width: 100%;
   height: 100%;
   background-color: rgba(116, 105, 105, 0.425);
-  z-index: 2;
+  z-index: 1;
 }
 .formSignUp1 .navNextContainer{
   width: 100%;
