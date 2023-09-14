@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import LoginForm from '@/components/Forms/LoginForm.vue'
+import LoginForm from '@/components/Pages/LoginPage/LoginForm.vue'
 export default {
     emits: ['close-nav'],
     components: { LoginForm},
