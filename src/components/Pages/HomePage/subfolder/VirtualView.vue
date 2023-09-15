@@ -5,8 +5,8 @@
 <style scoped>
 iframe{
     z-index: 1;
-    height: 60vh;
-    width: 90%;
+    height: 50vh;
+    width: 85%;
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;

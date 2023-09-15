@@ -14,11 +14,14 @@
             <img class="img3" :src="getImage">
             <img class="img4" :src="getImage">
             
-        </div>
-        <button class="btn-item" @click="toggleVirtualView">{{ buttonName }}</button>
-            <virtual-view v-if="virtualViewVisibleComputed"/>
-        
+        </div>        
     </div>
+    <div class="virtualViewContainer">
+        <button class="btn-item" @click="toggleVirtualView">{{ buttonName }}</button>
+        <!-- <button @click="toggleVirtualView">{{ buttonName }}</button> -->
+        <virtual-view v-if="virtualViewVisibleComputed"/>      
+    </div>
+        
   </template>
   
   <script>
@@ -106,6 +109,7 @@
   .c-cont h2{
     padding: 3rem 0 1rem;
     font-weight: 500;
+    font-size: clamp(2rem, 3vw, 4rem);
   }
   .buttons{
     display: flex;
@@ -115,16 +119,18 @@
   }
   .buttons button {
     border: none;
-    padding: .2rem .3rem;
-    box-shadow: 0 0 3px 2px gray;
+    padding: .5rem 1rem;
+    margin: .2rem;
+    box-shadow: 0 0 1px 1px gray;
     box-sizing: border-box;
+    font-size: clamp(.6rem, 1.2vw, 2rem);
   }
   .buttons button:active, .buttons button:hover {
     border: none;
     box-shadow: none;
   }
   .buttons .flat{
-    outline: 1px solid black;
+    /* outline: 1px solid black; */
     box-shadow: none;
     background-color: #86D916;;
   }
@@ -136,26 +142,30 @@
     justify-items: center;
     gap: 1rem;
     padding: .2rem;
-    /* border: 1px solid black; */
+  }
+  .virtualViewContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .btn-item{
     font-size: clamp(.5rem, 2vw, 2rem);
     margin: .5rem;
     padding: .5rem 2rem; 
-    box-shadow: 0 0 5px .5px rgba(0, 0, 0, 0.381);
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.381);
     border: none;
-    text-shadow: 0 0 2px black;
+    border-radius: 20px;
     animation: buttonColor 1s ease-in-out infinite alternate;
 }
 
 @keyframes buttonColor {
     0%{ 
         background-color: gold;
-        color:black;
     }
     100%{
-        background-color: red;
-        color: white;
+        background-color: #191970;
+        /* color: white; */
     }
 }
 
