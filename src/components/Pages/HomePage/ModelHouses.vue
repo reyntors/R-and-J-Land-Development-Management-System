@@ -13,7 +13,6 @@
             <img class="img2" :src="getImage">
             <img class="img3" :src="getImage">
             <img class="img4" :src="getImage">
-            
         </div>        
     </div>
     <div class="virtualViewContainer">

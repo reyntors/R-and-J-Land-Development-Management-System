@@ -84,6 +84,9 @@ export default {
 .logo{
   width: 200px;
 }
+.rowNav{
+  display: flex;
+}
 a{
   padding: 1rem;
   text-decoration: none;
@@ -91,6 +94,7 @@ a{
   font-weight: 700;
 }
 button{
+  box-sizing: border-box;
   border: none;
   box-shadow: 0 0 5px .5px rgba(0, 0, 0, 0.381);
   padding: .5rem;
@@ -103,7 +107,7 @@ button:active{
   color: white;
 }
 a:active{
-  border: 1px solid blue;
+  outline: 1px solid blue;
 }
 .bars{
   cursor: pointer;
