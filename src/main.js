@@ -17,6 +17,7 @@ library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong)
 
 import TheHeader from './components/Reusable/TheHeader.vue'
 import TheFooter from './components/Reusable/TheFooter.vue'
+import FormCard from './components/Reusable/FormCard.vue'
 
 
 const app = createApp(App)
@@ -27,5 +28,6 @@ app.use(store)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('the-header',TheHeader)
 app.component('the-footer',TheFooter)
+app.component('form-card',FormCard)
 
 app.mount('#app')

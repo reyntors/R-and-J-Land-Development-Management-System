@@ -1,6 +1,5 @@
 <template>
     <the-header></the-header>
-    <!-- <login-form></login-form> -->
     <carousel-component></carousel-component>
     <about-component></about-component>
     <map-component></map-component>

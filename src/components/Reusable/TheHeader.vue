@@ -1,9 +1,9 @@
 <template>
 
   <div class="header">
-    <router-link to="/home">
-      <img class="logo" src="@/assets/logo.png" alt="ERROR">      
-    </router-link>
+
+    <img class="logo" src="@/assets/logo.png" alt="ERROR" @click="goToHome">      
+   
  
 
     <!-- ROW NAV-->
@@ -30,22 +30,21 @@ import ColumnNav from './SubColumnComponent/ColumnNav.vue'
 export default {
   components:{LoginForm, ColumnNav},
   data(){
-
     return{
       isLoginBool: false,
       isShowColumnNav: false,
     }
-
   },
   methods: {
-
     closeOrOpenForm(bool){
         this.isLoginBool = bool
     },
     showColumnNav(bool){
       this.isShowColumnNav = bool;
+    },
+    goToHome(){
+      this.$router.push('/')
     }
-
   },
   computed: {
 

@@ -56,8 +56,7 @@ export default {
 .title{
   text-transform: uppercase;
   font-weight: 900;
-  font-size: clamp(1.8rem, 3vw, 5rem);
-  line-height: 2.5rem;
+  font-size: clamp(2rem, 5vw, 5rem);
   text-shadow: 0 3px 5px white;
 } 
 .c-item{
