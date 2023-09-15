@@ -12,33 +12,44 @@
       <router-link to="/gallery">GALLERY</router-link>
       <router-link to="/forms">FORMS</router-link>
       <router-link to="/contact">CONTACT INFO</router-link>
-      <button @click="closeOrOpenForm(true)">LOG IN</button>
+      <button @click="closeOrOpenForm" v-if="!isUserValidComputed">LOG IN</button>
+      <button @click="logout" v-else>LOG OUT</button>
     </div>
-    <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
   </div>
 </template>
 
 <script>
-import LoginForm from '@/components/Pages/LoginPage/LoginForm.vue'
 export default {
-    emits: ['close-nav'],
-    components: { LoginForm},
+    emits: ['close-nav','log-in'],
     data(){
       return{
         isLoginBool: false,
       }
     },
     methods: {
-      closeOrOpenForm(bool){
-        this.isLoginBool = bool
+      closeOrOpenForm(){
+        this.$emit('close-nav')
+        this.$emit('log-in')
       },
       closeNav(){
         this.$emit('close-nav')
+      },
+      logout(){
+        this.$store.commit('auth/eraseStoreState')
+        this.$store.commit('auth/eraseLocalStorage')
+        this.$emit('close-nav')
+        this.$router.push('/home')
       }
     },
     computed: {
       isLoginBoolComputed(){
         return this.isLoginBool
+      },
+      navVisibleComputed(){
+        return this.navVisible
+      },
+      isUserValidComputed(){
+        return this.$store.getters['auth/authGetter'] //get the realtime updates of the vuex
       }
     }
 }

@@ -13,13 +13,15 @@
       <router-link to="/gallery">GALLERY</router-link>
       <router-link to="/forms">FORMS</router-link>
       <router-link to="/contact">CONTACT INFO</router-link>
-      <button @click="closeOrOpenForm(true)">LOG IN</button>
+      <!-- <a class="button">LOG IN</a> -->
+      <button @click="closeOrOpenForm(true)" v-if="!isUserValidComputed">LOG IN</button>
+      <button @click="logout" v-if="isUserValidComputed">LOG OUT</button>
     </nav>
     <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
 
     <!-- COLLUMN NAV-->
     <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
-    <column-nav v-if="isShowColumnNavComputed" @close-nav="showColumnNav(false)"></column-nav>
+    <column-nav v-if="isShowColumnNavComputed" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)"></column-nav>
   </div>
 
 </template>
@@ -33,6 +35,12 @@ export default {
     return{
       isLoginBool: false,
       isShowColumnNav: false,
+
+      //user details
+      userOrganization : null,
+      userTokenID : null,
+      isUserValid : false,
+      tryAuth: this.$store.state.auth.tokenID
     }
   },
   methods: {
@@ -44,6 +52,14 @@ export default {
     },
     goToHome(){
       this.$router.push('/')
+    },
+    tryLogin(){
+      this.$store.commit('auth/getLocalStorage')  //get the localstorage into vuex
+    },
+    logout(){
+      this.$store.commit('auth/eraseStoreState')
+      this.$store.commit('auth/eraseLocalStorage')
+      this.$router.push('/home')
     }
   },
   computed: {
@@ -53,9 +69,16 @@ export default {
     },
     isShowColumnNavComputed(){
       return this.isShowColumnNav
+    },
+    isUserValidComputed(){
+      return this.$store.getters['auth/authGetter'] //get the realtime updates of the vuex
     }
-    
-  }
+
+  },
+  mounted(){
+    console.log("MOUNTED NA NDIRI DAYON")
+    this.tryLogin()
+  },
 }
 </script>
 
@@ -94,6 +117,7 @@ a{
   font-weight: 700;
 }
 button{
+  margin-left: 1px;
   box-sizing: border-box;
   border: none;
   box-shadow: 0 0 5px .5px rgba(0, 0, 0, 0.381);
