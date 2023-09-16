@@ -95,6 +95,13 @@
                 <label for="confirm">Confirm Password</label>
                 <div class="passwordConcernPrompt" v-if="!passwordMatchComputed && !passwordEmptyComputed">password don't match</div>
             </div> 
+            <div class="style-form">
+                <select v-model="signUpOrganization">
+                  <option value="guest">Guest</option>
+                  <option value="staff">Staff</option>
+                  <option value="admin">Admin</option>
+                </select>
+            </div>
               <div class="navNextContainer" @click="navigate">
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" class="iconNav"/>
               </div> 
@@ -138,6 +145,7 @@ export default {
       signUpUsername: '',
       signUpPassword: '',
       signUpPasswordRepeat: '',
+      signUpOrganization: 'guest',
 
       //pending boolean
       isLoading: false,
@@ -198,38 +206,64 @@ export default {
         try{
 
           await this.$store.dispatch('auth/login') 
-          // toast.success('Wow Success!', {autoClose: 5000,});
+          toast.success('Logged in Successfuly!', {autoClose: 2000,});
+          await new Promise(resolve=>(setTimeout(resolve,2000)))
           this.close()
           this.$router.replace('/home')
           
         }catch(error){
           
-          toast.error(error+'', {autoClose: 5000,});
+          toast.error(error+'', {autoClose: 3000,});
 
         }
         this.isLoading = false;
        
       }else{
         //error
+        console.log('ERROR LOGIN FORM ')
         this.isLoginError = true;
       }
     },
 
-    signup(){
+    async signup(){
       this.passwordStrongChecker(this.signUpPassword)
       this.passwordMatchChecker(this.signUpPasswordRepeat)
+      this.isLoginError = false;
+      this.isLoading = true;
 
       if(this.signUpAddress !== '' && this.signUpContact !== '' &&
         this.signUpEmail !== '' && this.signUpFbLink !== '' && 
         this.signUpFullname !== '' && this.signUpUsername !== '' && 
         this.passwordStrong === true && this.passwordMatch === true){
+          
           //request SIGNUP
           this.isSignupError = false
-          console.log('STARTED SIGNING UP')
+
+          const credentials = {
+            fullname: this.signUpFullname,
+            email: this.signUpEmail,
+            contactNumber: this.signUpContact,
+            homeAddress: this.signUpAddress, 
+            fbAccount: this.signUpFbLink,
+            username: this.signUpUsername,
+            password: this.signUpPasswordRepeat,
+            organizaton: this.signUpOrganization
+          }
+
+          try{
+            await this.$store.dispatch('auth/signup',credentials)
+            toast.success('Successfuly created your account!', {autoClose: 2000,});
+            await new Promise(resolve=>(setTimeout(resolve,2000)))
+            this.close()
+            this.$router.replace('/home')
+          }catch(error){
+            toast.error(error+'', {autoClose: 3000,});
+          }
+          this.isLoading = false;
+          
         }else{
-          console.log('ERROR SIGNING UP')
+          console.log('ERROR SIGNING UP FORM ')
           this.isSignupError = true
-          //error
         }
     }
   },

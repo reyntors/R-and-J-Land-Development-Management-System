@@ -11,9 +11,8 @@
       <router-link to="/about">ABOUT</router-link>
       <router-link to="/projects">PROJECTS</router-link>
       <router-link to="/gallery">GALLERY</router-link>
-      <router-link to="/forms">FORMS</router-link>
       <router-link to="/contact">CONTACT INFO</router-link>
-      <!-- <a class="button">LOG IN</a> -->
+      <router-link to="/forms" v-if="isUserValidComputed">FORMS</router-link>
       <button @click="closeOrOpenForm(true)" v-if="!isUserValidComputed">LOG IN</button>
       <button @click="logout" v-if="isUserValidComputed">LOG OUT</button>
     </nav>
@@ -53,9 +52,9 @@ export default {
     goToHome(){
       this.$router.push('/')
     },
-    tryLogin(){
-      this.$store.commit('auth/getLocalStorage')  //get the localstorage into vuex
-    },
+    // tryLogin(){
+    //   this.$store.commit('auth/getLocalStorage')  //get the localstorage into vuex
+    // },
     logout(){
       this.$store.commit('auth/eraseStoreState')
       this.$store.commit('auth/eraseLocalStorage')
@@ -75,10 +74,10 @@ export default {
     }
 
   },
-  mounted(){
-    console.log("MOUNTED NA NDIRI DAYON")
-    this.tryLogin()
-  },
+  // mounted(){
+  //   console.log("MOUNTED diri")
+  //   this.tryLogin()
+  // },
 }
 </script>
 

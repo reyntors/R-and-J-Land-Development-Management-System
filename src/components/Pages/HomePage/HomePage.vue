@@ -8,7 +8,7 @@
 </template>
 
 <script>
-// import LoginForm from '@/components/Forms/LoginForm.vue'
+
 import AboutComponent from './ModelHouses.vue'
 import CarouselComponent from './CarouselComponent.vue'
 import MapComponent from './MapComponent.vue'

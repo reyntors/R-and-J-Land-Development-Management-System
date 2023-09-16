@@ -31,6 +31,7 @@ export default {
 
     },
     actions:{
+        //LOGIN REQUEST
         async login(context){
             console.log('login clicked')
 
@@ -40,8 +41,33 @@ export default {
 
                 //TOGGLE if we assume ERROR
                 // throw Error('SOMETHING WENT WRONG')
-
+    
                 //TOGGLE we assume SUCCESS and the user is GUEST
+                const responseData = {
+                    user : 'guest',
+                    tokenID: 'A2pqD123' }
+                context.commit('addLocalStorage',responseData)
+                context.commit('addStoreState',responseData)
+
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+  
+        },
+
+        //SIGNUP REQUEST
+        async signup(context,payload){
+            console.log('signup clicked')
+            console.log(payload)
+            try{
+                //change this to HTTP REQUEST
+                await new Promise(resolve=> (setTimeout(resolve,1000))) 
+
+                //TOGGLE if we assume ERROR
+                // throw Error('SOMETHING WENT WRONG')
+
+                // //TOGGLE we assume SUCCESS and the user is GUEST
                 const responseData = {
                     user : 'guest',
                     tokenID: 'A2pqD123' }
@@ -57,10 +83,11 @@ export default {
     },
     getters: {
         authGetter(state){
+            // console.log(state.organization)
             if(state.organization && state.tokenID){
                 return true
             }else{
-                false
+                return false
             }
         }
     }
