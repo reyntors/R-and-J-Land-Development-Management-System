@@ -379,6 +379,8 @@ p{
 }   
 .form article{
     padding: 1rem;
+    /* border: 1px solid black; */
+    min-height: 150px;
 }
 .form .details div{
     display: flex;
@@ -405,6 +407,7 @@ p{
     justify-content: center;
 }
 .form article .maritalSig{
+    margin-top: 2rem;
     border-top: 1px solid black;
     display: flex;
     justify-content: center;

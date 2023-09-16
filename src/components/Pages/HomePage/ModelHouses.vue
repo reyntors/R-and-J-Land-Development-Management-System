@@ -97,9 +97,6 @@
     box-shadow: 0 0 2px 1px black;
     border-radius: 5px;
   }
-  img:hover, img:active{
-    /* scale: 1.05; */
-  }
   .c-cont{
       text-align: center;
       /* margin: 1rem; */
