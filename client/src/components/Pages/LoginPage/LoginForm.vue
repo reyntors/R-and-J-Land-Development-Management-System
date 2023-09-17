@@ -201,6 +201,8 @@ export default {
   
         this.isLoginError = false;
         this.isLoading = true;
+
+        let response;
         
         //FETCH LOGIN REQUEST
 
@@ -208,19 +210,21 @@ export default {
         const credentials = {
           username: this.loginUsername,
           password: this.loginPassword,
+          
         }
         
         try{
 
-          await this.$store.dispatch('auth/login', credentials) 
-          toast.success('Logged in Successfuly!', {autoClose: 2000,});
-          await new Promise(resolve=>(setTimeout(resolve,2000)))
+          response = await this.$store.dispatch('auth/login', credentials) 
+          toast.success(response.message, {autoClose: 1000,});
           this.close()
           this.$router.replace('/home')
           
+          
+          
         }catch(error){
           
-          toast.error(error+'', {autoClose: 3000,});
+          toast.error(error+'', {autoClose: 1000,});
 
         }
         this.isLoading = false;
@@ -247,6 +251,7 @@ export default {
           this.isLoading = true;
           this.isSignupError = false
 
+        
           const credentials = {
             fullname: this.signUpFullname,
             email: this.signUpEmail,
@@ -255,25 +260,33 @@ export default {
             fbAccount: this.signUpFbLink,
             username: this.signUpUsername,
             password: this.signUpPasswordRepeat,
-            organizaton: this.signUpOrganization,
+           
           };
 
-          try{
-            await this.$store.dispatch('auth/signup',credentials)
-            toast.success('Successfuly created your account!', {autoClose: 2000,});
-            await new Promise(resolve=>(setTimeout(resolve,2000)))
-            this.close()
-            this.$router.replace('/home')
-          }catch(error){
-            toast.error(error+'', {autoClose: 3000,});
+
+
+          try {
+              const response = await this.$store.dispatch('auth/signup', credentials); // Assign the response
+
+              if (response.message) {
+                toast.success(response.message, { autoClose: 2000 });
+                this.close();
+                this.$router.replace('/home');
+              } else {
+                // Handle cases where there might not be a message in the response
+                toast.success('Signed up successfully!', { autoClose: 2000 });
+                this.close();
+                this.$router.replace('/home');
+              }
+            } catch (error) {
+              toast.error(error + '', { autoClose: 2000 });
+            }
+            this.isLoading = false;
+          } else {
+            console.log('ERROR SIGNING UP FORM');
+            this.isSignupError = true;
           }
-          this.isLoading = false;
-          
-        }else{
-          console.log('ERROR SIGNING UP FORM ')
-          this.isSignupError = true
         }
-    }
   },
 
   computed: {

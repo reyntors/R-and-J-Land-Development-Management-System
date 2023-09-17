@@ -48,10 +48,13 @@ export default {
                   // store this data in Vuex or local storage and commit it to the Vuex store
                 const Data = {
                     user: responseData.data.fullname,
-                    tokenID: responseData.data.token
+                    tokenID: responseData.data.token,
+                    status: responseData.data,
+                    message: responseData.message,
                 }
-
                 console.log(Data);
+
+               
 
 
                 context.commit('addLocalSttorage', Data);
@@ -83,11 +86,8 @@ export default {
                     fullname: responseData.data.fullname,
                     homeAddress: responseData.data.homeAddress,
                     password: responseData.data.password,
-                    username: responseData.data.username
+                    username: responseData.data.username,
                 }
-
-                
-
                 
                 context.commit('addLocalStorage',Data)
                 context.commit('addStoreState',Data)

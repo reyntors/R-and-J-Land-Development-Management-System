@@ -12,7 +12,7 @@ exports.register = (req, res, next) => {
             return next(error);
         }
         return res.status(200).send({
-            message: "Success",
+            message: `Hello ${req.body.username}! You successfully registered!`,
             data: result,
         });
     });
@@ -26,7 +26,7 @@ exports.login = (req, res, next) => {
             return next(error);
         }
         return res.status(200).send({
-            message: "Success",
+            message: `Hello ${req.body.username}! You successfully Login`,
             data: result,
         });
     });
