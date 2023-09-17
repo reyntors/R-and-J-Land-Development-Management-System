@@ -291,13 +291,7 @@
 </template>
 
 <script>
-export default {
-    data(){
-        return {
-            company: 'R and J Land Development Corporation'
-        }
-    }
-}
+
 </script>
 
 <style scoped>
