@@ -37,7 +37,7 @@ export default {
 
             try{
                 //change this to HTTP REQUEST
-                await new Promise(resolve=> (setTimeout(resolve,1000))) 
+                await new Promise(resolve=> (setTimeout(resolve,1000)))
 
                 //TOGGLE if we assume ERROR
                 // throw Error('SOMETHING WENT WRONG')

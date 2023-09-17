@@ -5,10 +5,19 @@ const store = createStore({
         modules:{
             auth,
         },
+        state(){
+            return{
+                companyName: 'R&J Land Development Corporation',
+                companyAddress: '329 Bonifacio St. Davao City'
+            }
+        },
 
         getters:{
-            isLogin(){
-                return false
+            companyName(state){
+                return state.companyName
+            },
+            companyAddress(state){
+                return state.companyAddress
             }
         }
        

@@ -229,8 +229,7 @@ export default {
       this.passwordStrongChecker(this.signUpPassword)
       this.passwordMatchChecker(this.signUpPasswordRepeat)
       this.isLoginError = false;
-      this.isLoading = true;
-
+      
       if(this.signUpAddress !== '' && this.signUpContact !== '' &&
         this.signUpEmail !== '' && this.signUpFbLink !== '' && 
         this.signUpFullname !== '' && this.signUpUsername !== '' && 
@@ -238,6 +237,8 @@ export default {
           
           //request SIGNUP
           this.isSignupError = false
+          this.isLoading = true;
+
 
           const credentials = {
             fullname: this.signUpFullname,
