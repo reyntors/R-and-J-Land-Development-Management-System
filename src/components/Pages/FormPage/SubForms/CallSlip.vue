@@ -111,7 +111,6 @@ p{
 
 /*prospect and spouse */
 .prospect-name,.spouse {
-  /* Ensure that the div container only takes as much width as necessary */
   display: flex;
 }
 .prospect-name span,.spouse span {
@@ -151,10 +150,15 @@ p{
 .checkboxes-cont{
   display: flex;
   flex-wrap: wrap;
+  column-gap: .5rem;
+  padding-left: 1rem;
 }
 .checkboxes-cont .checkbox-item{
   padding: .2rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
 }
 
 .signature-cont{

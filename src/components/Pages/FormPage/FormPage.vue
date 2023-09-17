@@ -4,8 +4,9 @@
     <!-- <reservation-agreement></reservation-agreement>
     <letter-of-intent></letter-of-intent> 
     <call-slip></call-slip>  
-    <bir-tin-request></bir-tin-request>  -->
-    <individual-buyers-declaration></individual-buyers-declaration>
+    <bir-tin-request></bir-tin-request> 
+    <individual-buyers-declaration></individual-buyers-declaration> -->
+    <approved-payment-scheme></approved-payment-scheme>
   </div>
 
 </template>
@@ -15,11 +16,12 @@
 // import LetterOfIntent from './SubForms/LetterOfIntent.vue'
 // import CallSlip from './SubForms/CallSlip.vue'
 // import BirTinRequest from './SubForms/BirTinRequest.vue'
-import IndividualBuyersDeclaration from './SubForms/IndividualBuyersDeclaration.vue'
+// import IndividualBuyersDeclaration from './SubForms/IndividualBuyersDeclaration.vue'
+import ApprovedPaymentScheme from './SubForms/ApprovedPaymentScheme'
 export default {
   components: {
-    // ReservationAgreement,LetterOfIntent,CallSlip,BirTinRequest,
-    IndividualBuyersDeclaration
+    // ReservationAgreement,LetterOfIntent,CallSlip,BirTinRequest,IndividualBuyersDeclaration,
+    ApprovedPaymentScheme
   }
 
 }
