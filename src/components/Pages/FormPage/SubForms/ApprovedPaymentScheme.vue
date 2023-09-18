@@ -143,10 +143,87 @@
                     </div>
                 </div>  
             </article>
-        
 
         </div>
-       
+
+        <div class="instruction">
+            <p>
+            SPECIALINSTRUCITONS/REMARKS (Pease specify)
+            </p>
+            <textarea ></textarea>
+            <p style="text-align: center;"><strong>IMPORTANT</strong></p>
+            <ol>
+                <li>
+                    Sale is subject to all conditions and restrictions contained in the Contract to Sell or Deed of Absolute and its annexes.
+                </li>
+                <li>
+                    Other Fees to be considered:
+                    <div class="other-fees-flex">
+                        <section>
+                            <p>For Transfer of Rights</p>
+                        </section>
+                        <section>
+                            <p>P 10,000 per lot for Northrown of Northcrest</p>
+                            <p>P 20,000 per lot for Last Terrazas or Fernwood/Eden Ridge</p>
+                        </section>
+                    </div>
+                    <div class="other-fees-flex">
+                        <section>
+                            <p>Photocopy of lost Notarized Contract</p>
+                        </section>
+                        <section>
+                            <p>P 200 per contract</p>
+                        </section>
+                    </div>
+                    <div class="other-fees-flex">
+                        <section>
+                            <p>Change/Amendment of Contract</p>
+                        </section>
+                        <section>
+                            <p>P 500 per contract</p>
+                        </section>
+                    </div>
+                    
+                </li>
+                <li>
+                    Sale is subject to all conditions and restrictions contained in the Contract to Sell or Deed of Absolute and its annexes.
+                </li>
+                <li>
+                    A Deed of Assignment (dully notarized) is required for all transfers made.
+                </li>
+                <li>
+                    A photocopy of Birth Certificate is required for transfers made between parents/children or vice versa, and between siblings.
+                </li>
+                <li>
+                    A Notarized Special Power of Attorney shall be required if the buyer is represented by another person.
+                </li>
+                <li>
+                    A Notarized Board Resolution is required if the buyer is a Corporation.
+                </li>
+                <li>
+                    A Notarized Waiver of Claims is required when the buyer's spouse is a foreigner.
+                </li>
+            </ol>
+        </div>
+    <br>
+        <p>I/we certify all tine ifnormation given are true and correct</p>
+        
+        <div class="signature-cont">
+            <section>
+                <p>Conformed by:</p>
+                <input style="display: block; border: none; border-bottom: 1px solid black;">
+                <span style="display: block; margin-top: .5rem;">
+                    Date : <input type="date">
+                </span>
+            </section>
+            <section>
+                <p>Conformed by:</p>
+                <input style="display: block; border: none; border-bottom: 1px solid black;">
+                <span style="display: block; margin-top: .5rem;">
+                    Date : <input type="date">
+                </span>
+            </section>
+        </div>
 
     </div>
     </form-card>
@@ -162,6 +239,50 @@ li,ol{
     margin: 0.3rem;
 }
 
+/*signature*/
+.signature-cont{
+    display: flex;
+}
+.signature-cont section{
+    margin-top: .5rem;
+    width: 50%;
+    padding: 0 .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*instruction*/
+.instruction{
+    border: 1px solid black;
+    padding: .5rem 2rem;
+}
+.instruction textarea{
+    width: 100%;
+    min-height: 5rem;
+    resize: none;
+    padding: .5rem;
+}
+.instruction .other-fees-flex{
+    /* border: 1px solid black; */
+    display: flex;
+    margin: 0 1rem;
+}
+.instruction .other-fees-flex section{
+    width: 50%;
+}
+@media screen and (max-width: 655px) {
+    .instruction .other-fees-flex{
+        flex-direction: column;
+        margin: .5rem 0;
+    }
+    .instruction .other-fees-flex section{
+        width: 100%;
+    }
+    .instruction .other-fees-flex :nth-child(2){
+        font-weight: 500;
+    }
+}
 
 /*name-date */
 .name-date{
@@ -329,13 +450,11 @@ li,ol{
     display: flex;
     justify-content: space-evenly;
 }
-
 .terms article .installment-cont-flex .installment-flex .section1 :nth-child(2),
 .terms article .installment-cont-flex .installment-flex .section2 :nth-child(2),
 .terms article .installment-cont-flex .installment-flex .section3 .amortization-payment{
     margin-left: 3rem;
 }
-
 @media screen and (max-width: 655px) {
     .terms article .installment-cont-flex .installment-flex .section1 :nth-child(1),
     .terms article .installment-cont-flex .installment-flex .section2 :nth-child(1),
@@ -349,7 +468,6 @@ li,ol{
         margin-left: 1rem;
     }
 }
-
 
 /*TERMS: others */
 .terms article .other-cont-flex{
@@ -374,22 +492,19 @@ li,ol{
     display: flex;
     justify-content: space-evenly;
 }
-
 .terms article .other-cont-flex .other-flex .section1 :nth-child(2),
 .terms article .other-cont-flex .other-flex .section3 .amortization-payment{
     margin-left: 3rem;
 }
-
 @media screen and (max-width: 655px) {
-    .terms article .pther-cont-flex .pther-flex .section1 :nth-child(1),
+    .terms article .other-cont-flex .other-flex .section1 :nth-child(1),
     .terms article .other-cont-flex .other-flex .section2 p,
     .terms article .other-cont-flex .other-flex .section3 .amortization{
         width: 70%;
-        /* border: 1px solid black; */
     }
 
-    .terms article .pther-cont-flex .pther-flex .section1 :nth-child(2),
-    .terms article .pther-cont-flex .pther-flex .section3 .amortization-payment{
+    .terms article .other-cont-flex .other-flex .section1 :nth-child(2),
+    .terms article .other-cont-flex .other-flex .section3 .amortization-payment{
         margin-left: 1rem;
     }
 }
@@ -399,5 +514,7 @@ li,ol{
         flex-direction: column;
     }
 }
+
+
 
 </style>
