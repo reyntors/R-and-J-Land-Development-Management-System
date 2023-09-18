@@ -134,7 +134,7 @@ export default {
       //login
       loginUsername: '',
       loginPassword: '',
-      organization: 'guest',
+      role: '',
 
       //signup
       signUpFullname: '',
@@ -145,14 +145,14 @@ export default {
       signUpUsername: '',
       signUpPassword: '',
       signUpPasswordRepeat: '',
-      signUpOrganization: 'guest',
+      signUpRole: '',
 
       //pending boolean
       isLoading: false,
       isRequestError: false,
 
       //user details
-      userOrganization: null,
+      userRole: null,
       userTokenID: null,
       isLoggedInSuccessful: false,
 

@@ -2,7 +2,22 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const uniqueValidator = require("mongoose-unique-validator");
 
+// Define a function to generate a user ID with the format: year + random number
+function generateUserId() {
+    const currentYear = new Date().getFullYear();
+    const randomPart = Math.floor(Math.random() * 1000); // You can adjust the range as needed
+    return `${currentYear}-${randomPart}`;
+}
+
+
+
 const userSchema = new Schema({
+    userId: {
+        type: String,
+        unique: true,
+        required: true,
+        default: generateUserId,
+    },
     fullname: {
         type: String,
         required: true
@@ -20,7 +35,7 @@ const userSchema = new Schema({
     },
     username: {
         type: String,
-        require: true
+        required: true
     },
     email: {
         type: String,
@@ -31,6 +46,12 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    roles: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user' 
+    },
+
     date: {
         type: Date,
         default: Date.now()
@@ -48,8 +69,11 @@ userSchema.set("toJSON", {
     },
 });
 
+
+
 userSchema.plugin(uniqueValidator, {message: "Email already in use."});
 
 const User = mongoose.model("user", userSchema);
 module.exports = User;
+
 

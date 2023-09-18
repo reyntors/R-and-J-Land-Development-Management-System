@@ -2,7 +2,6 @@
   <div class="card-container">
     <h5 class="title">{{ title }}</h5>
     <slot>
-        
     </slot>
   </div>
 </template>

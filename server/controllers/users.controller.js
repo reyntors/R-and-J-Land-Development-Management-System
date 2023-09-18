@@ -1,5 +1,8 @@
 const bcryptjs = require('bcryptjs');
 const userService = require("../services/users.services");
+const User = require('../models/user.model');
+
+
 
 exports.register = (req, res, next) => {
     const {password} = req.body;
@@ -33,5 +36,51 @@ exports.login = (req, res, next) => {
 };
 
 exports.userProfile = (req, res, next) => {
+    
     return res.status(200).json({ message: "Authorized User!"});
 };
+
+exports.getUserDetails = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        if (id) {  
+            
+            const user = await User.findOne({userId: id});
+
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found'
+                });
+            }
+
+            return res.status(200).json({
+                message:'User details',
+                data: user
+            });
+        } else {
+            const activeUsers = await User.find();
+
+
+            return res.status(200).json({
+                message: 'All active users details',
+                data: activeUsers
+            });
+        }
+
+    } catch (error) {
+        return next(error);
+    }
+  }
+
+
+exports.restrict = (roles) => {
+    return (req, res, next) => {
+        if(req.user.roles !== roles) {
+            return res.status(404).json({
+                message: 'You dont have permission to perform this action'
+            });
+        }
+        next();
+    }
+}

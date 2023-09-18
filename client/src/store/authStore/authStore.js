@@ -13,7 +13,7 @@ export default {
     },
     mutations:{
         addStoreState(state,responseData){
-            state.organization = responseData.user
+            state.role = responseData.user
             state.tokenID = responseData.tokenID
         },
         eraseStoreState(state){
@@ -25,7 +25,7 @@ export default {
             localStorage.setItem('token',responseData.tokenID)
         },
         getLocalStorage(state){
-            state.organization = localStorage.getItem('user')
+            state.role = localStorage.getItem('user')
             state.tokenID = localStorage.getItem('token')
         },
         eraseLocalStorage(){
@@ -54,13 +54,9 @@ export default {
                 }
                 console.log(Data);
 
-               
-
-
-                context.commit('addLocalSttorage', Data);
+                context.commit('addLocalStorage', Data);
                 context.commit('addStoreState', Data);
                 
-
                 return responseData; 
                 
             }catch(error){
@@ -104,7 +100,7 @@ export default {
     getters: {
         authGetter(state){
             // console.log(state.organization)
-            if(state.organization && state.tokenID){
+            if(state.role && state.tokenID){
                 return true
             }else{
                 return false

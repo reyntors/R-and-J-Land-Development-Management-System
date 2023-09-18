@@ -9,7 +9,7 @@
 
     <div class="gentlemen">
         <p>GentleMen:</p>
-        <p>I <input> hereby reserve for a parcel of land at <input>, situated
+        <p>I <input> hereby reserve for a parcel of land at <input style="min-width: 20px;">, situated
            at <input>, Davao City, Philippines with the following specifation
            and payment terms</p>
     </div>
@@ -249,17 +249,21 @@
                 X -----------------------------------------X
             </p>
         </section>
-        <p> 
-            BEFORE ME, a Notary Public for Davao City, Philippines, personally appeared <input> who
-            exhibited to me his/her <input> issued in <input> on <input> known to me to be the same person
-            who executed the forgoing instrument and who acknowledged to me that the same in his free and voluntary act and deed.
-        </p>
-        <p>
-            IN WITNESS WHEREOF, I have hereunto affixed my signature and Notarial Seal in Davao City this <input> day of <input>, 20 <input>.
-        </p>
-        <p>
-            This instrument is composed of two (2) pages, including this page on which this acknowledgement is written, all copies duly signed by the parties.
-        </p>
+        
+        <div class="notary-message">
+            <p> 
+                BEFORE ME, a Notary Public for Davao City, Philippines, personally appeared <input> who
+                exhibited to me his/her <input> issued in <input> on <input> known to me to be the same person
+                who executed the forgoing instrument and who acknowledged to me that the same in his free and voluntary act and deed.
+            </p>
+            <p>
+                IN WITNESS WHEREOF, I have hereunto affixed my signature and Notarial Seal in Davao City this <input> day of <input>, 20 <input>.
+            </p>
+            <p>
+                This instrument is composed of two (2) pages, including this page on which this acknowledgement is written, all copies duly signed by the parties.
+            </p>   
+        </div>
+        
         <section class="notary">
             Notary Public
             <div>
@@ -311,6 +315,10 @@ p{
 .gentlemen{
     margin-top: 1rem;
 }
+.gentlemen input{
+    border: none;
+    border-bottom: 1px solid black;
+}
 
 /*grid*/
 .grid{
@@ -350,6 +358,10 @@ p{
     align-items: center;
     font-size: clamp(.7rem, 1.5vw, 2rem);
 }
+.checkboxes input{
+    border: none;
+    border-bottom: 1px solid black;
+}
 
 /*terms and conditions*/
 .terms-conditions{
@@ -366,6 +378,10 @@ p{
 }
 .terms-conditions p{
     margin-bottom: .5rem;
+}
+.terms-conditions input{
+    border: none;
+    border-bottom: 1px solid black;
 }
 
 /* form */
@@ -427,6 +443,10 @@ p{
 }
 
 /* NOTARY */
+.notary-message input{
+    border: none;
+    border-bottom: 1px solid black;   
+}
 .notary{
     margin-top: 1rem;
     font-size: clamp(.6rem, 1.2vw, 2rem);
@@ -434,5 +454,9 @@ p{
 .notary label{
     width: 8vw;
     min-width: 50px;
+}
+.notary input{
+    border: none;
+    border-bottom: 1px solid black;
 }
 </style>
