@@ -176,6 +176,7 @@
                                 <p>2. No transer will be entertained for FULLY PAID LOT ACCOUNT or with less than 6-months amortization.</p>
                             </div>
                         </li>
+                    <br>
                         <li>
                             <p>Documentation Charges : P 800.00 per lot</p>
                         </li>
@@ -241,7 +242,7 @@ p{
     justify-content: space-between;
     width: 85%;
     margin: auto;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 .signature-cont section{
     display: flex;
