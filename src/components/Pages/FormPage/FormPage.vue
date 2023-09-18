@@ -6,7 +6,8 @@
     <call-slip></call-slip>  
     <bir-tin-request></bir-tin-request> 
     <individual-buyers-declaration></individual-buyers-declaration> -->
-    <approved-payment-scheme></approved-payment-scheme>
+    <!-- <approved-payment-scheme></approved-payment-scheme> -->
+    <checklist-closing-sale></checklist-closing-sale>
   </div>
 
 </template>
@@ -17,11 +18,12 @@
 // import CallSlip from './SubForms/CallSlip.vue'
 // import BirTinRequest from './SubForms/BirTinRequest.vue'
 // import IndividualBuyersDeclaration from './SubForms/IndividualBuyersDeclaration.vue'
-import ApprovedPaymentScheme from './SubForms/ApprovedPaymentScheme'
+// import ApprovedPaymentScheme from './SubForms/ApprovedPaymentScheme'
+import ChecklistClosingSale from './SubForms/ChecklistClosingSale.vue'
 export default {
   components: {
-    // ReservationAgreement,LetterOfIntent,CallSlip,BirTinRequest,IndividualBuyersDeclaration,
-    ApprovedPaymentScheme
+    // ReservationAgreement,LetterOfIntent,CallSlip,BirTinRequest,IndividualBuyersDeclaration,ApprovedPaymentScheme,
+    ChecklistClosingSale
   }
 
 }
