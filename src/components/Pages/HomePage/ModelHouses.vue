@@ -18,15 +18,15 @@
     <div class="virtualViewContainer">
         <button class="btn-item" @click="toggleVirtualView">{{ buttonName }}</button>
         <!-- <button @click="toggleVirtualView">{{ buttonName }}</button> -->
-        <virtual-view v-if="virtualViewVisibleComputed"/>      
+        <!-- <virtual-view v-if="virtualViewVisibleComputed"/>       -->
     </div>
         
   </template>
   
   <script>
-  import VirtualView from './subfolder/VirtualView.vue'
+//   import VirtualView from './subfolder/VirtualView.vue'
   export default {
-    components: {VirtualView},
+    // components: {VirtualView},
     data(){
         return{
             value: 1,

@@ -40,7 +40,8 @@ const route = createRouter({
         if(to.meta.requiredAuth && !store.getters['auth/authGetter']){
             next('/home');
             console.log('NOT AUTHENTICATED NOT ALLOWED TO ACCESS THIS ROUTE')
-        }else if(to.meta.requiredAuth && store.getters['auth/authGetter']){
+        }
+        else if(to.meta.requiredAuth && store.getters['auth/authGetter']){
             console.log('AUTHENTICATED and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
