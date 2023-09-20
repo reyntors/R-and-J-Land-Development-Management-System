@@ -67,17 +67,21 @@
 
     <div class="checkboxes">
         <section>
-            <input type="checkbox" id="opt1"><label>CASH TERM</label>
+            <input type="radio" id="opt1" value="cash term" v-model="checkbox">
+            <label for="opt1">CASH TERM</label>
         </section>
         <section>
-            <input type="checkbox" id="opt1"><label>INSTALLMENT PAYMENT</label>
+            <input type="radio" id="opt2" value="installment payment" v-model="checkbox">
+            <label for="opt2">INSTALLMENT PAYMENT</label>
         </section>
         <section>
-            <input type="checkbox" id="opt1"><label>DEFFERED DOWNPAYMENT</label>
+            <input type="radio" id="opt3" value="deffered downpayment" v-model="checkbox">
+            <label for="opt3">DEFFERED DOWNPAYMENT</label>
         </section>
         <section>
-            <input type="checkbox" id="opt1"><input type="text">
+            <input type="radio" id="opt1" :value="other" v-model="checkbox"><input type="text" v-model.trim="other">
         </section>
+        <!-- <button @click="show">show</button> -->
     </div>
 
     <p>The following sets out the basic terms upon which I/We would be prepared to purchase the
@@ -285,12 +289,24 @@
         </section>
     </div>
 
-
-    
+   
     </form-card>
 </template>
 
 <script>
+export default{
+    data(){
+        return{
+            other: '',
+            checkbox:null,
+        }
+    },
+    methods: {
+        show(){
+            console.log(this.checkbox)
+        }
+    }
+}
 
 </script>
 
@@ -336,7 +352,8 @@ p{
     word-wrap: break-word;
 }
 .grid-item input{
-    padding: 0.2rem 1rem;
+    /* padding: 0.2rem 1rem; */
+    text-align: center;
 }
 
 /* checkbox */
