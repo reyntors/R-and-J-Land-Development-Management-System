@@ -9,59 +9,59 @@
 
     <div class="gentlemen">
         <p>GentleMen:</p>
-        <p>I <input> hereby reserve for a parcel of land at <input style="min-width: 20px;">, situated
-           at <input>, Davao City, Philippines with the following specifation
+        <p>I <input v-model.trim="name"> hereby reserve for a parcel of land at <input v-model.trim="land_at">, situated
+           at <input v-model.trim="situated_at">, Davao City, Philippines with the following specifation
            and payment terms</p>
     </div>
 
     <div class="grid">
         <section class="grid-item">
             <header>Phase</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="phase_1">
+            <input v-model.trim="phase_2">
+            <input v-model.trim="phase_3">
         </section>
         <section class="grid-item">
             <header>Block</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="block_1">
+            <input v-model.trim="block_2">
+            <input v-model.trim="block_3">
         </section>
         <section class="grid-item">
             <header>Lot</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="lot_1">
+            <input v-model.trim="lot_2">
+            <input v-model.trim="lot_3">
         </section>
         <section class="grid-item">
             <header>Area</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="area_1">
+            <input v-model.trim="area_2">
+            <input v-model.trim="area_3">
         </section>
         <section class="grid-item">
             <header>Price/sq.m.</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="price_per_sq_1">
+            <input v-model.trim="price_per_sq_2">
+            <input v-model.trim="price_per_sq_3">
         </section>
         <section class="grid-item">
             <header>Contract Price</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="contract_price_1">
+            <input v-model.trim="contract_price_2">
+            <input v-model.trim="contract_price_3">
         </section>
         <section class="grid-item">
             <header>Discount</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="discount_1">
+            <input v-model.trim="discount_2">
+            <input v-model.trim="discount_3">
         </section>
         <section class="grid-item">
             <header>Down Payment</header>
-            <input>
-            <input>
-            <input>
+            <input v-model.trim="downpayment_1">
+            <input v-model.trim="downpayment_2">
+            <input v-model.trim="downpayment_3">
         </section>
     </div>
 
@@ -79,7 +79,7 @@
             <label for="opt3">DEFFERED DOWNPAYMENT</label>
         </section>
         <section>
-            <input type="radio" id="opt1" :value="other" v-model="checkbox"><input type="text" v-model.trim="other">
+            <input type="radio" :value="other" v-model="checkbox"><input type="text" v-model.trim="other">
         </section>
         <!-- <button @click="show">show</button> -->
     </div>
@@ -152,7 +152,7 @@
         <p>
             In the event that property is found to be unavailable for sale to me due to technical reasons or due to a prior sale commitment or transactions with
             another party, the same having been offered to me by mistake or inadvertence, I may have the property exchanged with another parcel of land and/or
-            house and lot at <input>of equal value to be agreed by herein parties, or I may cancel this Reservation Agreement, and be
+            house and lot at <input v-model.trim="lot_at">of equal value to be agreed by herein parties, or I may cancel this Reservation Agreement, and be
             refunded of all payments I have made, without interest.
         </p>
         <p>
@@ -171,7 +171,7 @@
             It is further agreed that the venue of any court action which may arise from this Agreement shall be in the proper courts of Davao City.
         </p>
         <p>
-            IN WITNESS WHEREOF, the parties hereby affix their signature on <input>at Davao City, Philippines.
+            IN WITNESS WHEREOF, the parties hereby affix their signature on <input v-model.trim="witness_signature_place">at Davao City, Philippines.
         </p>
     </div>
 
@@ -185,42 +185,42 @@
                     <span>Tel. No.</span>
                     <span>:</span>
                 </span>
-                <input>
+                <input v-model.trim="tel_no">
             </div>
             <div>
                 <span class="label">
                     <span>Address</span>
                     <span>:</span>
                 </span>
-                <input>
+                <input v-model.trim="address">
             </div>
             <div>
                 <span class="label">
                     <span>Email Address</span>
                     <span>:</span>
                 </span>
-                <input>
+                <input v-model.trim="email_address">
             </div>
             <div>
                 <span class="label">
                     <span>T.I.N.</span>
                     <span>:</span>
                 </span>
-                <input>
+                <input v-model.trim="TIN">
             </div>
             <div>
                 <span class="label">
                     <span>Gov't issued ID</span>
                     <span>:</span>
                 </span>
-                <input>
+                <input  v-model.trim="govt_issued_id">
             </div>
             <div>
                 <span class="label">
                     <span>Expiration Date</span>
                     <span>:</span>
                 </span>
-                <input>
+                <input type="date" v-model="exp_date">
             </div>
                           
         </article>
@@ -272,19 +272,19 @@
             Notary Public
             <div>
                 <label>Doc. No.</label>
-                <input>;
+                <input v-model.trim="doc_no">;
             </div>
             <div>
                 <label>Page No.</label>
-                <input>;
+                <input v-model.trim="page_no">;
             </div>
             <div>
                 <label>Book No.</label>
-                <input>;
+                <input v-model.trim="book_no">;
             </div>
             <div>
                 <label>Series of</label>
-                <input>;
+                <input v-model.trim="series_no">;
             </div>
         </section>
     </div>
@@ -297,13 +297,46 @@
 export default{
     data(){
         return{
+            name: '',
+            land_at: '',
+            situated_at: '',
+
+            //GRID VARIABLES
+            phase_1:'', phase_2:'', phase_3:'',
+            block_1:'', block_2:'', block_3:'',
+            lot_1:'', lot_2:'', lot_3:'',
+            area_1:'', area_2:'', area_3:'',
+            price_per_sq_1:'', price_per_sq_2:'', price_per_sq_3:'',
+            contract_price_1:'', contract_price_2: '', contract_price_3:'',
+            discount_1:'', discount_2:'', discount_3:'',
+            downpayment_1:'', downpayment_2:'', downpayment_3:'',
+
+            //checkboxes
             other: '',
-            checkbox:null,
+            checkbox: null,
+
+            //agreement
+            lot_at:'',
+            witness_signature_place:'',
+
+            //form
+            tel_no:'',
+            address:'',
+            email_address: '',
+            TIN:'',
+            govt_issued_id:'',
+            exp_date: null,
+
+            //acknowledgement
+            doc_no:'',
+            page_no:'',
+            book_no:'',
+            series_no:'',
         }
     },
     methods: {
         show(){
-            console.log(this.checkbox)
+            console.log(this.phase)
         }
     }
 }

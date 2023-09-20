@@ -24,7 +24,7 @@
             </div>
 
             <div class="style-form">
-                <select v-model="organization">
+                <select v-model="loginRole">
                   <option value="guest">Guest</option>
                   <option value="staff">Staff</option>
                   <option value="admin">Admin</option>
@@ -95,13 +95,6 @@
                 <label for="confirm">Confirm Password</label>
                 <div class="passwordConcernPrompt" v-if="!passwordMatchComputed && !passwordEmptyComputed">password don't match</div>
             </div> 
-            <div class="style-form">
-                <select v-model="signUpOrganization">
-                  <option value="guest">Guest</option>
-                  <option value="staff">Staff</option>
-                  <option value="admin">Admin</option>
-                </select>
-            </div>
               <div class="navNextContainer" @click="navigate">
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" class="iconNav"/>
               </div> 
@@ -134,7 +127,7 @@ export default {
       //login
       loginUsername: '',
       loginPassword: '',
-      organization: 'guest',
+      loginRole: 'guest',
 
       //signup
       signUpFullname: '',
@@ -145,7 +138,6 @@ export default {
       signUpUsername: '',
       signUpPassword: '',
       signUpPasswordRepeat: '',
-      signUpOrganization: 'guest',
 
       //pending boolean
       isLoading: false,
@@ -201,11 +193,15 @@ export default {
   
         this.isLoginError = false;
         this.isLoading = true;
-        
+        const payload = {
+          username: this.loginUsername,
+          password: this.loginPassword,
+          role    : this.loginRole,
+        }
         //FETCH LOGIN REQUEST
         try{
 
-          await this.$store.dispatch('auth/login') 
+          await this.$store.dispatch('auth/login',payload) 
           toast.success('Logged in Successfuly!', {autoClose: 2000,});
           await new Promise(resolve=>(setTimeout(resolve,2000)))
           this.close()
@@ -248,7 +244,7 @@ export default {
             fbAccount: this.signUpFbLink,
             username: this.signUpUsername,
             password: this.signUpPasswordRepeat,
-            organizaton: this.signUpOrganization
+            organizaton: this.signUploginRole
           }
 
           try{

@@ -3,25 +3,25 @@ export default {
     
     state(){
         return{
-            organization: null,
+            role: null,
             tokenId: null,
         }
     },
     mutations:{
         addStoreState(state,responseData){
-            state.organization = responseData.user
+            state.role = responseData.role
             state.tokenID = responseData.tokenID
         },
         eraseStoreState(state){
-            state.organization = null;
+            state.role = null;
             state.tokenID = null
         },
         addLocalStorage(_,responseData){
-            localStorage.setItem('user',responseData.user)
+            localStorage.setItem('user',responseData.role)
             localStorage.setItem('token',responseData.tokenID)
         },
         getLocalStorage(state){
-            state.organization = localStorage.getItem('user')
+            state.role = localStorage.getItem('user')
             state.tokenID = localStorage.getItem('token')
         },
         eraseLocalStorage(){
@@ -32,9 +32,9 @@ export default {
     },
     actions:{
         //LOGIN REQUEST
-        async login(context){
+        async login(context,payload){
             console.log('login clicked')
-
+            console.log(payload)
             try{
                 //change this to HTTP REQUEST
                 await new Promise(resolve=> (setTimeout(resolve,1000)))
@@ -44,7 +44,7 @@ export default {
     
                 //TOGGLE we assume SUCCESS and the user is GUEST
                 const responseData = {
-                    user : 'guest',
+                    role : payload.role,
                     tokenID: 'A2pqD123' }
                 context.commit('addLocalStorage',responseData)
                 context.commit('addStoreState',responseData)
@@ -83,11 +83,52 @@ export default {
     },
     getters: {
         authGetter(state){
-            // console.log(state.organization)
-            if(state.organization && state.tokenID){
+            // console.log(state.role)
+            if(state.role && state.tokenID){
                 return true
             }else{
                 return false
+            }
+        },
+        authorizationRoleGuest(state){
+            if(state.role && state.tokenID){
+                if(state.role === 'guest'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
+        authorizationRoleStaff(state){
+            if(state.role && state.tokenID){
+                if(state.role === 'staff'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
+        // authorizationRoleAdmin(state){
+        //     if(state.role && state.tokenID){
+        //         if(state.role === 'guest'){
+        //             return true
+        //         }else{
+        //             return false
+        //         }
+        //     }else{
+        //         return false
+        //     }
+        // },
+
+        getRoleType(state){
+            if(state.role && state.tokenID){
+                return state.role
+            }else{
+                return undefined
             }
         }
     }
