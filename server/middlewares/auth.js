@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 
 
 
-JWT_SECRET_KEY = 'Iron_Dev_Secret_key'
 
 function authenticateToken(req, res, next) {
     
@@ -11,10 +10,9 @@ function authenticateToken(req, res, next) {
 
     if(!token) return res.sendStatus(401);
 
-    jwt.verify(token, JWT_SECRET_KEY, (err, user)=> {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user)=> {
         if(err) return res.sendStatus(403);
         req.user = user;
-     
         next();
     });
 }

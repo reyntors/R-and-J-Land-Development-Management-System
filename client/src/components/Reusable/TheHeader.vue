@@ -2,7 +2,7 @@
 
   <div class="header">
 
-    <img class="logo" src="@/assets/logo.png" alt="ERROR" @click="goToHome">      
+    <img class="logo" :src="logo" alt="ERROR" @click="goToHome">      
    
  
 
@@ -28,10 +28,12 @@
 <script>
 import LoginForm from '@/components/Pages/LoginPage/LoginForm.vue'
 import ColumnNav from './SubColumnComponent/ColumnNav.vue'
+import logo from '@/assets/logo.png'
 export default {
   components:{LoginForm, ColumnNav},
   data(){
     return{
+      logo: logo,
       isLoginBool: false,
       isShowColumnNav: false,
 

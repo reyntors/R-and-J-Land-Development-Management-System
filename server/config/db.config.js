@@ -1,3 +1,7 @@
+require('dotenv').config();
+
+
+
 module.exports = {
-    db: 'mongodb+srv://reyntors:generalaccount@reynardapi.qegt2hm.mongodb.net/Node-API?retryWrites=true&w=majority'
+    db: process.env.MONGODB_URI
 };

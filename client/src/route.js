@@ -21,7 +21,14 @@ const route = createRouter({
             {path:'/contact', component: ContactPage},
             {path:'/forms', component: FormPage, meta: {requiredAuth: true}},
             {path:'/:notFound(.*)', component: null}
-        ]
+        ],
+        scrollBehavior(to,from,savedPosition){
+            if(savedPosition){
+                return savedPosition
+            }else{
+                return {left: 0, top: 0};
+            }
+        }
     });
 
     route.beforeEach(function(to,_,next){
@@ -33,7 +40,8 @@ const route = createRouter({
         if(to.meta.requiredAuth && !store.getters['auth/authGetter']){
             next('/home');
             console.log('NOT AUTHENTICATED NOT ALLOWED TO ACCESS THIS ROUTE')
-        }else if(to.meta.requiredAuth && store.getters['auth/authGetter']){
+        }
+        else if(to.meta.requiredAuth && store.getters['auth/authGetter']){
             console.log('AUTHENTICATED and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }

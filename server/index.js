@@ -8,8 +8,6 @@ const errors = require('./middlewares/errors');
 
 
 
-
-
 const app = express();
 app.use(morgan('combine'));
 app.use(bodyParser.json());
@@ -38,6 +36,6 @@ app.use("/reservation", require("./routes/reservation.routes"));
 
 app.use(errors.errorHandler);
 
-app.listen(process.env.PORT || 4000, function () {
+app.listen(process.env.PORT, function () {
     console.log("Ready to Go!");
 });

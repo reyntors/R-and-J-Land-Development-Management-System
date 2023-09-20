@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const auth = require("../middlewares/auth.js");
 const jwt = require('jsonwebtoken');
 
-JWT_SECRET_KEY = 'Iron_Dev_Secret_key'
+
 
 async function login({username, password}, callback){
 
@@ -16,16 +16,22 @@ async function login({username, password}, callback){
             }
 
             const isPasswordValid = await bcrypt.compare(password, user.password);
-
+            
             if (!isPasswordValid) {
-                return res.status(401).json({ message: 'Invalid password' });
+                return callback({ message: 'Invalid password' });
             }
 
             // Include user's role in the JWT payload   
-            const token =  jwt.sign({ username: user.username, roles: user.roles }, JWT_SECRET_KEY, { expiresIn: '1h' });
-            return callback(null, {...user.toJSON(), token});
+            const token =  jwt.sign({ 
+                username: user.username, 
+                roles: user.roles }, 
+                process.env.JWT_SECRET_KEY, { 
+                    expiresIn: '1h' 
+                });
+            callback(null, {...user.toJSON(), token});
         } catch (error) {
             // Handle other errors and pass them to the callback
+            
             callback({ error: 'Login failed' });
         }
 }
