@@ -8,7 +8,7 @@
     <div class="cardLogin" v-if="goLoginComputed && !isLoadingComputed">
       <form @submit.prevent="">
           <div class="icon-container">
-            <h5>Login Form</h5>
+            <h5>Login</h5>
             <font-awesome-icon icon="fa-solid fa-x" size="1x"  class="icon" @click="close"/>
           </div>
 
@@ -24,12 +24,13 @@
             </div>
 
             <div class="style-form">
-                <select v-model="organization">
-                  <option value="guest">Guest</option>
-                  <option value="staff">Staff</option>
-                  <option value="admin">Admin</option>
-                </select>
-            </div>
+            <select v-model="roles" @change="checkRoleSelection">
+              <option value="" disabled selected>Please select a role</option>
+              <option value="guest">Guest</option>
+              <option value="staff">Staff</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
 
             <span class="error" v-if="isLoginErrorComputed">Please complete the form.</span>
             <div class="c-button">
@@ -134,7 +135,7 @@ export default {
       //login
       loginUsername: '',
       loginPassword: '',
-      role: '',
+      roles: '',
 
       //signup
       signUpFullname: '',
@@ -145,7 +146,7 @@ export default {
       signUpUsername: '',
       signUpPassword: '',
       signUpPasswordRepeat: '',
-      signUpRole: '',
+      signUpRoles: '',
 
       //pending boolean
       isLoading: false,
@@ -196,45 +197,46 @@ export default {
       }
     },
 
-    async login(){
-      if(this.loginUsername !== '' && this.loginPassword !==''){
-  
-        this.isLoginError = false;
-        this.isLoading = true;
+    async login() {
+        if (this.loginUsername !== '' && this.loginPassword !== '' && this.loginRoles !== '') {
+          this.isLoginError = false;
+          this.isLoading = true;
 
-        let response;
-        
-        //FETCH LOGIN REQUEST
+          let response;
 
-        
-        const credentials = {
-          username: this.loginUsername,
-          password: this.loginPassword,
-          
+          // FETCH LOGIN REQUEST
+
+          const credentials = {
+            username: this.loginUsername,
+            password: this.loginPassword,
+            roles:    this.roles,
+          }
+
+          try {
+            response = await this.$store.dispatch('auth/login', credentials);
+            const userRole = response.data.roles; // Assuming the user's roles are included in the response
+            
+            // Check if the selected role matches the user's role
+            if (this.roles === userRole) {
+              toast.success(response.message, { autoClose: 1000 });
+              this.close()
+              this.$router.replace('/home')
+            } else {
+              // If the selected role doesn't match the user's role
+              toast.error("Invalid role selection", { autoClose: 1000 });
+            }
+          } catch (error) {
+
+            toast.error(error, { autoClose: 1000 });
+          }
+
+          this.isLoading = false;
+        } else {
+          // If the username, password, or roles are not provided
+          this.isLoginError = true;
+          toast.error("Please complete the form.", { autoClose: 1000 });
         }
-        
-        try{
-
-          response = await this.$store.dispatch('auth/login', credentials) 
-          toast.success(response.message, {autoClose: 1000,});
-          this.close()
-          this.$router.replace('/home')
-          
-          
-          
-        }catch(error){
-          
-          toast.error(error+'', {autoClose: 1000,});
-
-        }
-        this.isLoading = false;
-       
-      }else{
-        //error
-        console.log('ERROR LOGIN FORM ')
-        this.isLoginError = true;
-      }
-    },
+      },
 
     async signup(){
       this.passwordStrongChecker(this.signUpPassword)

@@ -10,6 +10,7 @@ import { login, register } from './Api';
 
 export default {
   async login(credentials) {
+  
     
     return login(credentials);
   },
@@ -23,7 +24,7 @@ export default {
       return response.data; // You can adjust this to return specific data if needed
     } catch (error) {
 
-        console.log(error)
+        console.error(error)
       throw error
     }
   },

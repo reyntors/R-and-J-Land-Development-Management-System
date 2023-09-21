@@ -19,6 +19,7 @@ import TheHeader from './components/Reusable/TheHeader.vue'
 import TheFooter from './components/Reusable/TheFooter.vue'
 import FormCard from './components/Reusable/FormCard.vue'
 import ProgressLoading from './components/Reusable/ProgressLoading.vue'
+import FormThumbnail from './components/Reusable/FormThumbnail.vue'
 
 
 const app = createApp(App)
@@ -31,5 +32,7 @@ app.component('the-header',TheHeader)
 app.component('the-footer',TheFooter)
 app.component('form-card',FormCard)
 app.component('progress-loading',ProgressLoading)
+app.component('form-thumbnail', FormThumbnail)
+
 
 app.mount('#app')

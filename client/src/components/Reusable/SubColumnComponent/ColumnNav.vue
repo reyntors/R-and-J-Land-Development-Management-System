@@ -10,7 +10,7 @@
       <router-link to="/about">ABOUT</router-link>
       <router-link to="/projects">PROJECTS</router-link>
       <router-link to="/gallery">GALLERY</router-link>
-      <router-link to="/forms">FORMS</router-link>
+      <router-link :to="userRole">FORMS</router-link>
       <router-link to="/contact">CONTACT INFO</router-link>
       <button @click="closeOrOpenForm" v-if="!isUserValidComputed">LOG IN</button>
       <button @click="logout" v-else>LOG OUT</button>
@@ -50,6 +50,16 @@ export default {
       },
       isUserValidComputed(){
         return this.$store.getters['auth/authGetter'] //get the realtime updates of the vuex
+      },
+      userRole(){
+        const stringRole = this.$store.getters['auth/getRoleType']
+        if(stringRole === 'guest'){
+          return '/guest-forms'
+        }else if(stringRole === 'staff'){
+          return '/staff-forms'
+        }else{
+          return '/admin-we-will-change-this'
+        }
       }
     }
 }

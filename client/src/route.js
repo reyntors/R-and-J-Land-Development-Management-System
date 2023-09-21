@@ -4,8 +4,21 @@ import HomePage from './components/Pages/HomePage/HomePage.vue'
 import AboutPage from './components/Pages/AboutPage/AboutPage.vue'
 import ProjectPage from './components/Pages/ProjectPage/ProjectPage.vue'
 import GalleryPage from './components/Pages/GalleryPage/GalleryPage.vue'
-import FormPage from './components/Pages/FormPage/FormPage.vue'
 import ContactPage from './components/Pages/ContactPage/ContactPage.vue'
+
+//GUEST FORMS NEW PAGE
+import GuestFormPage from './components/Pages/FormPage/GuestForms/GuestFormPage.vue'
+import GuestLetterOfIntent from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestLetterIntent.vue'
+import GuestContractDetails from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestContractDetails.vue'
+import GuestBIRtinRequest from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestBirTinRequest.vue'
+import GuestIndividualBuyerDeclaration from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestIndividualBuyerDeclaration.vue'
+
+//STAFF FORMS NEW PAGE
+import StaffFormPage from './components/Pages/FormPage/StaffForms/StaffFormPage.vue'
+import StaffChecklistClosing from './components/Pages/FormPage/StaffForms/StaffSubForms/StaffChecklistClosing.vue'
+import StaffAppprovePayment from './components/Pages/FormPage/StaffForms/StaffSubForms/StaffApprovePayment.vue'
+
+
 
 import store from './store/store.js'
 
@@ -19,8 +32,21 @@ const route = createRouter({
             {path:'/projects', component: ProjectPage},
             {path:'/gallery', component: GalleryPage},
             {path:'/contact', component: ContactPage},
-            {path:'/forms', component: FormPage, meta: {requiredAuth: true}},
-            {path:'/:notFound(.*)', component: null}
+
+            //guest authorized
+            {path:'/guest-forms', component: GuestFormPage, meta: {requiresAuthGuest: true}},
+            {path:'/guest-forms/letter-of-intent', component: GuestLetterOfIntent, meta: {requiresAuthGuest: true}},
+            {path:'/guest-forms/contract-details', component: GuestContractDetails, meta: {requiresAuthGuest: true}},
+            {path:'/guest-forms/bir-tin-request', component: GuestBIRtinRequest, meta: {requiresAuthGuest: true}},
+            {path:'/guest-forms/individual-buyer-declaration', component: GuestIndividualBuyerDeclaration, meta: {requiresAuthGuest: true}},
+
+            //staff authorized
+            {path: '/staff-forms', component: StaffFormPage, meta: {requiresAuthStaff: true}},
+            {path: '/staff-forms/checklist', component: StaffChecklistClosing, meta: {requiresAuthStaff: true}},
+            {path: '/staff-forms/approve-payment', component: StaffAppprovePayment, meta: {requiresAuthStaff: true}},
+
+
+
         ],
         scrollBehavior(to,from,savedPosition){
             if(savedPosition){
@@ -37,16 +63,30 @@ const route = createRouter({
         store.commit('auth/getLocalStorage')
 
         //this condition sets the path that required the user to be authenticated before they can access it
-        if(to.meta.requiredAuth && !store.getters['auth/authGetter']){
+        if(to.meta.requiresAuthGuest && !store.getters['auth/authorizationRoleGuest']){       
+            console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
+            console.log('NOT AUTHENTICATED AS GUEST and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
-            console.log('NOT AUTHENTICATED NOT ALLOWED TO ACCESS THIS ROUTE')
         }
-        else if(to.meta.requiredAuth && store.getters['auth/authGetter']){
-            console.log('AUTHENTICATED and ALLOWED TO ACCESS THIS ROUTE')
+        else if(to.meta.requiresAuthGuest && store.getters['auth/authorizationRoleGuest']){
+            console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
+            console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
+            next();
+        }
+        else if(to.meta.requiresAuthStaff && !store.getters['auth/authorizationRoleStaff']){
+            console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
+            console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
+            next('/home');
+        }
+        else if(to.meta.requiresAuthStaff && store.getters['auth/authorizationRoleStaff']){
+            console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
+            console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
         else{
             console.log('DIRECTED TO FREE ACCESS ROUTE')
+            console.log('roles: ' + store.getters['auth/getRoleType'])
+            console.log('login: ' + store.getters['auth/authGetter'])
             next()
         }
     })

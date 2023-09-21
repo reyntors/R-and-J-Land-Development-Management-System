@@ -7,25 +7,26 @@ export default {
     
     state(){
         return{
-            organization: null,
+            roles: null,
             tokenId: null,
         }
     },
     mutations:{
         addStoreState(state,responseData){
-            state.role = responseData.user
+            state.roles = responseData.roles
+            console.log(state.roles);
             state.tokenID = responseData.tokenID
         },
         eraseStoreState(state){
-            state.organization = null;
+            state.roles = null;
             state.tokenID = null
         },
         addLocalStorage(_,responseData){
-            localStorage.setItem('user',responseData.user)
+            localStorage.setItem('user',responseData.roles)
             localStorage.setItem('token',responseData.tokenID)
         },
         getLocalStorage(state){
-            state.role = localStorage.getItem('user')
+            state.roles = localStorage.getItem('user')
             state.tokenID = localStorage.getItem('token')
         },
         eraseLocalStorage(){
@@ -39,7 +40,9 @@ export default {
         async login(context, credentials){
            
 
-            try{
+           try {
+            
+           
                 
                 const responseData = await AuthenticationService.login(credentials);
 
@@ -47,25 +50,32 @@ export default {
                   // Assuming responseData contains user data and a token,
                   // store this data in Vuex or local storage and commit it to the Vuex store
                 const Data = {
-                    user: responseData.data.fullname,
+                    // user: responseData.data.fullname,
                     tokenID: responseData.data.token,
-                    status: responseData.data,
-                    message: responseData.message,
+                    roles: responseData.data.roles,
+                    // status: responseData.data,
+                    // message: responseData.message,
                 }
                 console.log(Data);
+                
 
                 context.commit('addLocalStorage', Data);
                 context.commit('addStoreState', Data);
+            
                 
                 return responseData; 
                 
-            }catch(error){
-                
-                console.log(error)
-
-                throw new Error ("Incorrect username/password")
+            }catch (error) {
+                // console.log("This is ERROR:",error.message)
+                console.error(error);
+                throw error
+                // if (error.responseData && error.responseData.data && error.responseData.data.message) {
+                    
+                //    throw  (error.responseData.data.message);
+                   
+                //     //     toast.error(error.response.data.message,{ autoClose: 1000 });
+                // }
             }
-  
         },
 
         //SIGNUP REQUEST
@@ -99,13 +109,44 @@ export default {
     },
     getters: {
         authGetter(state){
-            // console.log(state.organization)
-            if(state.role && state.tokenID){
+          
+            if(state.roles && state.tokenID){
+                
                 return true
             }else{
                 return false
             }
-        }
-    }
+        },
+        authorizationRoleGuest(state){
+            if(state.roles && state.tokenID){
+    
+                if(state.roles === 'guest'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
+        authorizationRoleStaff(state){
+            if(state.roles && state.tokenID){
+                if(state.roles === 'staff'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
+        getRoleType(state){
+            if(state.roles && state.tokenID){
+                return state.roles
+            }else{
+                return undefined
+            }
+         }
 
+    }
 }

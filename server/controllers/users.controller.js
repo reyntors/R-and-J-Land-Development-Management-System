@@ -25,8 +25,12 @@ exports.login = (req, res, next) => {
     const {username, password} = req.body;
 
     userService.login({ username, password}, (error, result) => {
+        
         if (error) {
-            return next(error);
+
+        return res.status(401).send({
+                message: 'Invalid username or password. Please try again'
+            });
         }
         return res.status(200).send({
             message: `Hello ${req.body.username}! You successfully Login`,
@@ -77,6 +81,7 @@ exports.getUserDetails = async (req, res, next) => {
 exports.restrict = (roles) => {
     return (req, res, next) => {
         if(req.user.roles !== roles) {
+
             return res.status(404).json({
                 message: 'You dont have permission to perform this action'
             });
