@@ -46,6 +46,9 @@
   
   
   <style scoped>
+  header{
+        font-size: clamp(.8rem, 1.5vw, 2rem);
+  }
   .card-container{
       /* width: 70%; */
       margin: auto;
