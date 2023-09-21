@@ -49,7 +49,7 @@ const userSchema = new Schema({
     roles: {
         type: String,
         enum: ['guest', 'staff', 'admin'],
-        default: 'user' 
+        default: 'guest' 
     },
 
     date: {

@@ -66,15 +66,10 @@ export default {
                 return responseData; 
                 
             }catch (error) {
-                // console.log("This is ERROR:",error.message)
+              
                 console.error(error);
                 throw error
-                // if (error.responseData && error.responseData.data && error.responseData.data.message) {
-                    
-                //    throw  (error.responseData.data.message);
-                   
-                //     //     toast.error(error.response.data.message,{ autoClose: 1000 });
-                // }
+               
             }
         },
 

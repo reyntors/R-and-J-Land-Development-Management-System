@@ -214,17 +214,11 @@ export default {
 
           try {
             response = await this.$store.dispatch('auth/login', credentials);
-            const userRole = response.data.roles; // Assuming the user's roles are included in the response
             
-            // Check if the selected role matches the user's role
-            if (this.roles === userRole) {
               toast.success(response.message, { autoClose: 1000 });
               this.close()
               this.$router.replace('/home')
-            } else {
-              // If the selected role doesn't match the user's role
-              toast.error("Invalid role selection", { autoClose: 1000 });
-            }
+           
           } catch (error) {
 
             toast.error(error, { autoClose: 1000 });

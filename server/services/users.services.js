@@ -4,12 +4,12 @@ const jwt = require('jsonwebtoken');
 
 
 
-async function login({username, password}, callback){
-
+async function login({username, password, roles}, callback){
+            
    
             const user = await User.findOne({ username });
-
-                
+             
+            
             if (user === null) {
 
                 return callback({ message: 'Invalid username or password'});
@@ -20,6 +20,8 @@ async function login({username, password}, callback){
             if (!isPasswordValid) {
                 return callback({ message: 'Invalid username or password' });
             }
+
+            
 
             // Include user's role in the JWT payload   
             const token =  jwt.sign({ 
