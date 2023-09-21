@@ -34,7 +34,7 @@ export default {
         //LOGIN REQUEST
         async login(context,payload){
             console.log('login clicked')
-            console.log(payload)
+            // console.log(payload)
             try{
                 //change this to HTTP REQUEST
                 await new Promise(resolve=> (setTimeout(resolve,1000)))

@@ -25,19 +25,15 @@ export default {
 
   methods: {
     navLetterIntent(){
-      console.log("routed")
       this.$router.push('/guest-forms/letter-of-intent')
     },
     navigateContractDetails(){
-      console.log("routed")
       this.$router.push('/guest-forms/contract-details')
     },
     navigateIndividualBuyer(){
-      console.log("routed")
       this.$router.push('/guest-forms/individual-buyer-declaration')
     },
     navigateBIR_TIN(){
-      console.log("routed")
       this.$router.push('/guest-forms/bir-tin-request')
     }
   }
@@ -45,21 +41,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .forms{
   padding: 1rem .5rem 0;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100%;
   /* row-gap: 1rem; */
 }
-p{
-  /* font-size: clamp(.6rem, 1.2vw, 2rem); */
-  margin: 0;
-}
 .grid-item{
-  width: 80%;
   margin: auto;
-  padding: 1rem;
+  /* padding: 1rem; */
   border-radius: 5px;
 }
 .grid-item:hover{
@@ -68,7 +59,7 @@ p{
 .grid-item:active{
   background-color: #C2E7FF;
 }
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 453px) {
   .forms{
   grid-template-columns: 80%;
   justify-content: center;
