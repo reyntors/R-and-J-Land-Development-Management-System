@@ -51,7 +51,7 @@
             </div>
         <br>
             <p>
-                I agree that any additional taxes, interest or penalty that may be incurred by Alsons Development & Investment Corp. (Alsons Dev) due to my improper or non-disclosure of the above
+                I agree that any additional taxes, interest or penalty that may be incurred by {{ companyName }} due to my improper or non-disclosure of the above
                 needed information shall be to my soleaccount and responisibility.
             </p>
         <br>

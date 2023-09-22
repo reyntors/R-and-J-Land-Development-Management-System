@@ -195,8 +195,8 @@ export default {
 
     methods: {
             checkdate(){
-                this.dateEmpty =  this.date!==''?false:true
-                return this.dateEmpty
+               return  this.dateEmpty =  this.date!==''?false:true
+                // this.dateEmpty
             },
             checkauthorizedTo(){
                 this.authorizedToEmpty = this.authorizedTo!==''?false:true
