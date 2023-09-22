@@ -122,6 +122,50 @@ export default {
                 throw error;
             }
         },
+
+        async createIndividualBuyerDeclaration(context, individualBuyerDeclarationtData) {
+            try {
+              
+                const response = await AuthenticationService.createIndividualBuyerDeclaration(individualBuyerDeclarationtData);
+                
+                const Data = {
+                    date: this.date,
+                    
+                }
+                
+                context.commit('addLocalStorage',Data)
+                context.commit('addStoreState',Data)
+               
+                
+               
+                return response.data;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        },
+
+        async createBirTinRequest(context,birTinRequestData) {
+            try {
+              
+                const response = await AuthenticationService.createBirTinRequest(birTinRequestData);
+                
+                const Data = {
+                    date: this.date,
+                    
+                }
+                
+                context.commit('addLocalStorage',Data)
+                context.commit('addStoreState',Data)
+               
+                
+               
+                return response.data;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        },
     },
 
     getters: {

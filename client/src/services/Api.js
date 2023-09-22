@@ -49,3 +49,49 @@ export const createLetterOfIntent = async (letterOfIntentData) => {
       throw error.response.data.message;
   }
 };
+
+export const createIndividualBuyerDeclaration = async (individualBuyerDeclarationtData) => {
+  try {
+    // Retrieve the token from local storage
+      const token = getToken();
+
+      // Set the "Authorization" header with the token
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+        
+      const response = await axios.post(`${BASE_URL}individualbuyer/addindividualbuyer`, individualBuyerDeclarationtData,{
+        headers: headers,
+      });
+      
+      
+      return response.data;
+  } catch (error) {
+      throw error.response.data.message;
+  }
+
+
+};
+
+export const createBirTinRequest = async (birTinRequestData) => {
+  try {
+    // Retrieve the token from local storage
+      const token = getToken();
+
+      // Set the "Authorization" header with the token
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+        
+      const response = await axios.post(`${BASE_URL}birtinrequest/addbirtinrequest`, birTinRequestData,{
+        headers: headers,
+      });
+      
+      
+      return response.data;
+  } catch (error) {
+      throw error.response.data.message;
+  }
+
+
+};

@@ -1,12 +1,12 @@
-const LetterOfIntent = require('../models/letterOfIntent.model');
+const BirTinRequest = require('../models/birtinrequest.model');
 const User = require('../models/user.model');
 
 
 
 // Create a new letter of intent
-exports.createLetterOfIntent = async (req, res, next) => {
+exports.createBirTinRequest = async (req, res, next) => {
     try {
-        const letterOfIntentData = req.body;
+        const birTinRequestData = req.body;
         const username = req.user.username;
         
         
@@ -16,18 +16,18 @@ exports.createLetterOfIntent = async (req, res, next) => {
 
         
         
-         const newLetterOfIntent = new LetterOfIntent({
-            ...letterOfIntentData,
+         const newBirTinRequest = new BirTinRequest({
+            ...birTinRequestData,
             createdBy: user._id, 
         });
         
 
        
-        const savedLetterOfIntent = await newLetterOfIntent.save();
+        const savedBirTinRequest = await newBirTinRequest.save();
 
         return res.status(200).send({
-            message: `${username}! Your Letter of Intent successfully created!`,
-            data: savedLetterOfIntent});
+            message: `${username}! Your BIR Tin Request successfully created!`,
+            data: savedBirTinRequest});
 
        
     } catch (error) {
@@ -36,7 +36,7 @@ exports.createLetterOfIntent = async (req, res, next) => {
 };
 
 
-exports.getLetterOfIntentDetails = async (req, res, next) => {
+exports.getBirTinRequest = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -61,7 +61,7 @@ exports.getLetterOfIntentDetails = async (req, res, next) => {
 };
 
 
-exports.updateLetterOfIntent = async (req, res, next) => {
+exports.updateBirTinRequest = async (req, res, next) => {
     try {
         const letterOfIntentId = req.params.id;
         const updates = req.body;
@@ -81,7 +81,7 @@ exports.updateLetterOfIntent = async (req, res, next) => {
 };
 
 
-exports.deleteLetterOfIntent = async (req, res, next) => {
+exports.deleteBirTinRequest = async (req, res, next) => {
     try {
         const letterOfIntentId = req.params.id;
 
