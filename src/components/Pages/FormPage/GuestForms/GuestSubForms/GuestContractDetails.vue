@@ -224,11 +224,11 @@
                     <!-- <div> -->
                         <section>
                             <p>Company / Business Name</p>
-                            <input>
+                            <input v-model="businessName" :class="{empty:true}">
                         </section>
                         <section>
                             <p>Company / Business Address</p>
-                            <input>
+                            <input v-model="businessAddress" :class="{empty:true}">
                         </section>                        
                     <!-- </div> -->
 
@@ -237,26 +237,26 @@
                 <div class="div2">
                     <section class="section1">
                         <p>Office / Business Phone No.</p>
-                        <input>
+                        <input v-model="businessPhoneNo" :class="{empty:true}">
                     </section>
                     <section class="section2">
                         <p>Fax No.</p>
-                        <input>
+                        <input v-model="businessfaxNo" :class="{empty:true}">
                     </section>
                     <section class="section3">
                         <p>Position</p>
-                        <input>
+                        <input v-model="businessPosition" :class="{empty:true}">
                     </section>
                     <section class="section4">
                         <p>Profession</p>
-                        <input>
+                        <input v-model="businessProfession" :class="{empty:true}">
                     </section>
-                    <section class="section5">
+                    <section class="section5" :class="{empty:true}">
                         <p>Employment Status</p>
                         <div>
-                            <span><input type="checkbox"> Local</span>
-                            <span><input type="checkbox"> OFW</span>
-                            <span><input type="checkbox"> self-Employed</span>
+                            <span><input type="radio" value="local" v-model="businessEmploymentStatus"> Local</span>
+                            <span><input type="radio" value="OFW" v-model="businessEmploymentStatus"> OFW</span>
+                            <span><input type="radio" value="self-employed" v-model="businessEmploymentStatus"> self-Employed</span>
                         </div>
                     </section>
                 </div>
@@ -271,15 +271,15 @@
                         <br>
                         <div class="names">
                             <section>
-                                <input type="text">
+                                <input type="text" v-model="spouseLastname" :class="{empty:true}">
                                 <p>Last Name</p>
                             </section>
                             <section>
-                                <input type="text">
+                                <input type="text" v-model="spouseFirstname" :class="{empty:true}">
                                 <p>First Name</p>
                             </section>
                             <section>
-                                <input type="text">
+                                <input type="text" v-model="spouseMiddleName" :class="{empty:true}">
                                 <p>Middle Name</p>
                             </section>
                         </div>
@@ -288,7 +288,7 @@
                     <div class="section1-right">
                         <p>Occupation / Profession</p>
                         <br>
-                        <input>
+                        <input v-model="spouseOccupation" :class="{empty:true}">
                          <br>
                     </div>
             </div>
@@ -296,53 +296,53 @@
             <div class="div2">
                 <section>
                     <p>HOME PHONE NO.</p>
-                    <input style="display: block;">
+                    <input style="display: block;" v-model="spousePhoneNo" :class="{empty:true}">
                 </section>
                 <section>
                     <p>MOBILE NO.</p>
-                    <input style="display: block;">
+                    <input style="display: block;" v-model="spouseMobileNo" :class="{empty:true}">
                 </section>
                 <section>
                     <p>EMAIL ADDRESS</p>
-                    <input style="display: block;">
+                    <input style="display: block;" v-model="spouseEmail" :class="{empty:true}">
                 </section>
                 <section>
                     <p>T.I.N.</p>
-                    <input style="display: block;">
+                    <input style="display: block;" v-model="spouseTIN" :class="{empty:true}">
                 </section>
                 <section>
                     <p>CITIZENSHIP</p>
-                    <input style="display: block;">
+                    <input style="display: block;" v-model="spouseCitizenship" :class="{empty:true}">
                 </section>
             </div>
 
             <div class="div3">
                 <section class="section1">
                     <p>FAX NO.</p>
-                    <input>
+                    <input v-model="spouseFaxNo" :class="{empty:true}">
                 </section>
 
-                <section class="section2">
+                <section class="section2" :class="{empty:true}">
                     Sex
                     <div>
-                        <span><input type="checkbox">Male</span>
-                        <span><input type="checkbox">Male</span>
+                        <span><input type="radio" value="Male" id="spouseMale" v-model="spouseSex"><label for="spouseMale">Male</label></span>
+                        <span><input type="radio" value="Female" id="spouseFemale" v-model="spouseSex"><label for="spouseFemale">Female</label></span>
                     </div>
                 </section>
 
-                <section class="section3">
+                <section class="section3" :class="{empty:true}">
                     <p>Employment Status</p>
                     <div>
-                        <span><input type="checkbox">Local</span>
-                        <span><input type="checkbox">Self-Employed</span>
-                        <span><input type="checkbox">OFW</span>
-                        <span><input type="checkbox">Expatriate</span>
+                        <span><input type="radio" value="Local" id="spouseLocal" v-model="spouseEmployment"><label for="spouseLocal">Local</label></span>
+                        <span><input type="radio" value="Self-Employed" id="spouseSE" v-model="spouseEmployment"><label for="spouseSE">Self-Employed</label></span>
+                        <span><input type="radio" value="OFW" id="spouseOFW" v-model="spouseEmployment"><label for="spouseOFW">OFW</label></span>
+                        <span><input type="radio" value="Expatriate" id="spouseExp" v-model="spouseEmployment"><label for="spouseExp">Expatriate</label></span>
                     </div>
                 </section>
 
                 <section class="section4">
                     <p>No. of Children</p>
-                    <input>
+                    <input v-model="spouseNoChildren" :class="{empty:true}">
                 </section>
             </div>
 
@@ -354,19 +354,19 @@
 
                 <section class="section1">
                     <div class="section1-left">
-                            <p>CONTRACT NAME (Individual Buyer)</p>
+                            <p>SPA's Name</p>
                         <br>
                         <div class="names">
                             <section>
-                                <input type="text">
+                                <input type="text" v-model="attyLastname" :class="{empty:true}">
                                 <p>Last Name</p>
                             </section>
                             <section>
-                                <input type="text">
+                                <input type="text" v-model="attyFirstname" :class="{empty:true}">
                                 <p>First Name</p>
                             </section>
                             <section>
-                                <input type="text">
+                                <input type="text" v-model="attyMiddlename" :class="{empty:true}">
                                 <p>Middle Name</p>
                             </section>
                         </div>
@@ -375,7 +375,7 @@
                     <div class="section1-right">
                         <p>Occupation / Profession</p>
                         <br>
-                        <input>
+                        <input v-model="attyOccupation" :class="{empty:true}">
                         <br>
                     </div>
                     
@@ -384,43 +384,43 @@
                 <section class="section2">
                     <div class="div1">
                         <p>PRIMARY/MAILING ADDRESS</p>
-                        <input style="width:100%;">
-                        <p>Zip Code: <input style="width:100%;"></p>
+                        <input style="width:100%;" v-model="attyPrimaryAddress" :class="{empty:true}">
+                        <p>Zip Code: <input style="width:100%;" v-model="attyPrimaryZip" :class="{empty:true}"></p>
                     </div>
-                    <div class="div2">
+                    <div class="div2" :class="{empty:true}">
                         <p>Civil Status</p>
                         <div class="status">
-                            <section><input type="checkbox">Single</section>
-                            <section><input type="checkbox">Widow/er</section>
-                            <section><input type="checkbox">Married</section>
-                            <section><input type="checkbox">Separated</section>
+                            <section><input type="radio" id="attySingle" value="Single" v-model="attyCivilStatus"><label for="attySingle" ></label>Single</section>
+                            <section><input type="radio" id="attyWidow" value="Widow/er" v-model="attyCivilStatus"><label for="attyWidow"></label>Widow/er</section>
+                            <section><input type="radio" id="attyMarried" value="Married" v-model="attyCivilStatus"><label for="attyMarried"></label>Married</section>
+                            <section><input type="radio" id="attySeparated" value="Separated" v-model="attyCivilStatus"><label for="attySeparated"></label>Separated</section>
                         </div>
                     </div>
                     <div class="div3">
                         <p>Age</p>
-                        <input style="display: block;">
+                        <input style="display: block;" v-model="attyAge" :class="{empty:true}">
                     </div>
                 </section>
 
                 <section class="section3">
                     <div class="div1">
                         <p>SECONDARY ADDRESS</p>
-                        <input style="width:100%;">
+                        <input style="width:100%;" v-model="attySecondaryAddress" :class="{empty:true}">
                         <br>
-                        <p>Zip Code: <input style="width:100%;"></p>
+                        <p>Zip Code: <input style="width:100%;" v-model="attySecondaryZip" :class="{empty:true}"></p>
                     </div>
-                    <div class="div2">
+                    <div class="div2" :class="{empty:true}">
                         <p>Sex</p>
                         <div class="status">
-                            <section><input type="checkbox">Male</section>
-                            <section><input type="checkbox">Female</section>  
+                            <section><input type="radio" id="attyMale" value="Male" v-model="attySex">Male</section>
+                            <section><input type="radio" id="attyFemale" value="Male" v-model="attySex">Female</section>  
                         </div>
                     </div>
                     <div class="div3">
                         <p>Birthdate</p>
-                        <input style="display: block;" type="date">
+                        <input style="display: block;" type="date" v-model="attyBirthdate" :class="{empty:true}">
                         <p>Place of Birth</p>
-                        <input style="border: none; border-bottom: 1px solid black;">
+                        <input style="border: none; border-bottom: 1px solid black;" v-model="attyPlaceBirth" :class="{empty:true}">
                     </div>
                 </section>
 
@@ -429,60 +429,60 @@
                         <section>
                             <div>
                                 <p>HOME PHONE NO.</p>
-                                <input>
+                                <input v-model=" attyHomeNo" :class="{empty:true}">
                             </div>
                             <div>
                                 <p>FAX NO.</p>
-                                <input>
+                                <input v-model="attyFaxNo" :class="{empty:true}">
                             </div>
                         </section>
                     
                         <p style="font-size: clamp(.5rem, 1vw, 1rem);">(please incluse country and area codes, if possible)</p>
-                        <input type="text" style="display: block;">
+                        <input type="text" style="display: block;" v-model="attyIncludeCountry" :class="{empty:true}">
                     </div>
 
                     <div class="div2">
                         <div class="div">
                             <section>
                                 <p>MOBILE NO.</p>
-                                <input>
+                                <input v-model="attyMobileNo" :class="{empty:true}">
                             </section>
                             <section>
                                 <p>T.I.N.</p>
-                                <input>
+                                <input v-model="attyTIN" :class="{empty:true}">
                             </section>
                         </div>
                         <section class="section">
                             <p>EMAIL ADDRESS.</p>
-                            <input style="display: block;">
+                            <input style="display: block;" v-model="attyEmail" :class="{empty:true}">
                         </section>
                     </div>
 
                     <div class="div3">
                         <section>
                             <p>CITIZENSHIP.</p>
-                            <input>
+                            <input v-model="attyCitizenship" :class="{empty:true}">
                         </section>
                     </div>
                 </section>
 
-                <section class="section5">
+                <section class="section5" :class="{empty:true}">
                     <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
                     <div>
                         <section>
-                            <span><input type="checkbox"> SSS/GSIS</span>:<input>
+                            <span><input type="checkbox" id="attySSS/GSIS" v-model="attyGovtIssuedID" value="SSS/GSIS"><label for="attySSS/GSIS">SSS/GSIS</label></span>:<input>
                         </section>
                         <section>
-                            <span><input type="checkbox"> Driver's License</span>:<input>
+                            <span><input type="checkbox" id="attyDriverLicense" v-model="attyGovtIssuedID" value="Driver's License"><label for="attyDriverLicense">Driver's License</label> </span>:<input>
                         </section>
                         <section>
-                            <span><input type="checkbox"> PRC</span>:<input>
+                            <span><input type="checkbox" id="attyPRC" v-model="attyGovtIssuedID" value="PRC"><label for="attyPRC">PRC</label> </span>:<input>
                         </section>
                         <section>
-                            <span><input type="checkbox"> Passport</span>:<input>
+                            <span><input type="checkbox" id="attyPassport" v-model="attyGovtIssuedID" value="Passport"><label for="attyPassport">Passport</label> </span>:<input>
                         </section>
                         <section>
-                            <span><input type="checkbox"> Others</span>:<input>
+                            <span><input type="checkbox" id="attyOthers" v-model="attyGovtIssuedID" value="Others"><label for="attyOthers">Others</label> </span>:<input>
                         </section>
                     </div>
                 </section>
@@ -496,28 +496,28 @@
             <article class="article1">
                 <section class="section1">
                     <p>Name of Corporation</p>
-                    <input>
+                    <input v-model="corpName" :class="{empty:true}">
                 </section>
                 <section class="section2">
                     <p>Name of Business</p>
-                    <input>
+                    <input v-model="corpBusinessName" :class="{empty:true}">
                 </section>
             </article>
 
             <article class="article2">
                 <div class="section1">
                     <p>BUSINESS ADDRESS</p>
-                    <input style="width:100%;">
-                    <p>Zip Code: <input style="width:100%;"></p>
+                    <input style="width:100%;" v-model="corpBusinessAddress" :class="{empty:true}">
+                    <p>Zip Code: <input style="width:100%;" v-model="corpZipCode" :class="{empty:true}"></p>
                 </div>
 
                 <div class="section2">
                     <p>BUSINESS PHONE NO.</p>
-                    <input>
+                    <input v-model="corpBusinessPhoneNo" :class="{empty:true}">
                 </div>
                 <div class="section3">
                     <p>FAX NO.</p>
-                    <input>
+                    <input v-model="corpFaxNo" :class="{empty:true}">
                 </div>
             </article>
 
@@ -527,15 +527,15 @@
                     <br>
                     <div class="names">
                         <section>
-                            <input type="text">
+                            <input type="text" v-model="corpAuthorizedLastname" :class="{empty:true}">
                             <p>Last Name</p>
                         </section>
                         <section>
-                            <input type="text">
+                            <input type="text" v-model="corpAuthorizedFirstname" :class="{empty:true}">
                             <p>First Name</p>
                         </section>
                         <section>
-                            <input type="text">
+                            <input type="text" v-model="corpAuthorizedMiddlename" :class="{empty:true}">
                             <p>Middle Name</p>
                         </section>
                     </div>
@@ -544,7 +544,7 @@
                 <div class="section1-right">
                     <p>DESIGNATION / POSITION</p>
                     <br>
-                    <input>
+                    <input v-model="corpAuthorizedPosition" :class="{empty:true}">
                     <br>
                 </div>
             </article>
@@ -552,22 +552,22 @@
             <article class="article4">
                 <div class="div1">
                     <p>SECONDARY ADDRESS</p>
-                    <input style="width:100%;">
+                    <input style="width:100%;" v-model="corpAuthorizedSecondaryAddress" :class="{empty:true}">
                     <br>
-                    <p>Zip Code: <input style="width:100%;"></p>
+                    <p>Zip Code: <input style="width:100%;" v-model="corpAuthorizedZip" :class="{empty:true}"></p>
                 </div>
-                <div class="div2">
+                <div class="div2" :class="{empty:true}">
                     <p>Sex</p>
                     <div class="status">
-                        <section><input type="checkbox">Male</section>
-                        <section><input type="checkbox">Female</section>  
+                        <section><input type="radio" id="corpMale" value="Male" v-model="corpAuthorizedSex"><label for="corpMale">Male</label></section>
+                        <section><input type="radio" id="corpFemale" value="Female" v-model="corpAuthorizedSex"><label for="corpFemale">Female</label></section>  
                     </div>
                 </div>
                 <div class="div3">
                     <p>Birthdate</p>
-                    <input style="display: block;" type="date">
+                    <input style="display: block;" type="date" v-model="corpAuthorizedBirthdate" :class="{empty:true}">
                     <p>Place of Birth</p>
-                    <input style="border: none; border-bottom: 1px solid black;">
+                    <input style="border: none; border-bottom: 1px solid black;" v-model="corpAuthorizedBirthPlace" :class="{empty:true}">
                 </div>
             </article>
 
@@ -576,69 +576,69 @@
                     <section>
                         <div>
                             <p>HOME PHONE NO.</p>
-                            <input>
+                            <input v-model="corpAuthorizedHomePhoneNo" :class="{empty:true}">
                         </div>
                         <div>
                             <p>FAX NO.</p>
-                            <input>
+                            <input v-model="corpAuthorizedFaxNo" :class="{empty:true}">
                         </div>
                     </section>
                     
                     <p style="font-size: clamp(.5rem, 1vw, 1rem);">(please incluse country and area codes, if possible)</p>
-                    <input type="text" style="display: block;">
+                    <input type="text" style="display: block;" v-model="corpAuthorizedIncludeCtry" :class="{empty:true}">
                 </div>
 
                 <div class="div2">
                     <div class="div">
                         <section>
                             <p>MOBILE NO.</p>
-                            <input>
+                            <input v-model="corpAuthorizedMobileNo" :class="{empty:true}">
                         </section>
                         <section>
                             <p>T.I.N.</p>
-                            <input>
+                            <input v-model="corpAuthorizedTIN" :class="{empty:true}">
                         </section>
                     </div>
                     <section class="section">
                         <p>EMAIL ADDRESS.</p>
-                        <input style="display: block;">
+                        <input style="display: block;" v-model="corpAuthorizedEmail" :class="{empty:true}">
                     </section>
                 </div>
 
                 <div class="div3">
                     <section class="section1">
                         <p>CITIZENSHIP.</p>
-                        <input>
+                        <input v-model="corpAuthorizedCitizenship" :class="{empty:true}">
                     </section>
-                    <section class="section2">
+                    <section class="section2" :class="{empty:true}">
                         <p>Civil Status</p>
                         <section>
-                            <span><input type="checkbox">Single</span>
-                            <span><input type="checkbox">Widow/er</span>
-                            <span><input type="checkbox">Married</span>
-                            <span><input type="checkbox">Separated</span>
+                            <span><input type="radio" id="corpSingle" value="Single" v-model="corpAuthorizedCivilStatus"><label for="corpSingle">Single</label></span>
+                            <span><input type="radio" id="corpWidow" value="Widow/er" v-model="corpAuthorizedCivilStatus"><label for="corpWidow">Widow/er</label></span>
+                            <span><input type="radio" id="corpMarried" value="Married" v-model="corpAuthorizedCivilStatus"><label for="corpMarried">Married</label></span>
+                            <span><input type="radio" id="corpSeparated" value="Separated" v-model="corpAuthorizedCivilStatus"><label for="corpSeparated">Separated</label></span>
                         </section>
                     </section>
                 </div>
             </article>
 
-            <article class="article6">
+            <article class="article6" :class="{empty:true}">
                 <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
                 <div>
                     <section>
-                        <span><input type="checkbox"> SSS/GSIS</span>:<input>
+                        <span><input type="radio" id="corpSSS" value="SSS/GSIS" v-model="corpAuthorizedGovtIssuedID"><label for="corpSSS">SSS/GSIS</label> </span>:<input>
                     </section>
                     <section>
-                        <span><input type="checkbox"> Driver's License</span>:<input>
+                        <span><input type="radio" id="driver" value="Driver's License" v-model="corpAuthorizedGovtIssuedID"> <label for="driver">Driver's License</label> </span>:<input>
                     </section>
                     <section>
-                        <span><input type="checkbox"> PRC</span>:<input>
+                        <span><input type="radio" id="PRC" value="PRC" v-model="corpAuthorizedGovtIssuedID"> <label for="PRC">PRC</label></span>:<input>
                     </section>
                     <section>
-                        <span><input type="checkbox"> Passport</span>:<input>
+                        <span><input type="radio" id="passport" value="Passport" v-model="corpAuthorizedGovtIssuedID"> <label for="passport">Passport</label></span>:<input>
                     </section>
                     <section>
-                        <span><input type="checkbox"> Others</span>:<input>
+                        <span><input type="radio" id="others" value="Others" v-model="corpAuthorizedGovtIssuedID"> <label for="others">Others</label></span>:<input>
                     </section>
                 </div>
             </article>
@@ -653,11 +653,11 @@
                     <div>
                         <section>
                             <p>Banks</p>
-                            <textarea></textarea>
+                            <textarea v-model="otherBanks"></textarea>
                         </section>
                         <section>
                             <p>Type of Account</p>
-                            <textarea></textarea>
+                            <textarea v-model="otherTypeAccount"></textarea>
                         </section>
                     </div>
                 </section>
@@ -794,6 +794,159 @@ export default {
             buyerReligionEmpty: false,
             buyerIssuedID: '',
             buyerIssuedIDEmpty: false,
+
+            //business information
+            businessName: '',
+            businessNameEmpty: false,
+            businessAddress: '',
+            businessAddressEmpty: false,
+            businessPhoneNo: '',
+            businessPhoneNoEmpty: false,
+            businessfaxNo: '',
+            businessfaxNoEmpty: false,
+            businessPosition: '',
+            businessPositionEmpty: false,
+            businessProfession: '',
+            businessProfessionEmpty: false,
+            businessEmploymentStatus: '',
+            businessEmploymentStatusEmpty: false,
+
+            //spouse
+            spouseLastname: '',
+            spouseLastnameEmpty: false,
+            spouseFirstname: '',
+            spouseFirstnameEmpty: false,
+            spouseMiddleName: '',
+            spouseMiddleNameEmpty: false,
+            spouseOccupation: '',
+            spouseOccupationEmpty: false,
+            spousePhoneNo: '',
+            spousePhoneNoEmpty: false,
+            spouseMobileNo: '',
+            spouseMobileNoEmpty: false,
+            spouseEmail: '',
+            spouseEmailEmpty: false,
+            spouseTIN: '',
+            spouseTINEmpty: false,
+            spouseCitizenship: '',
+            spouseCitizenshipEmpty: false,
+            spouseFaxNo: '',
+            spouseFaxNoEmpty: false,
+            spouseSex: '',
+            spouseSexEmpty: false,
+            spouseEmployment: '',
+            spouseEmploymentEmpty: false,
+            spouseNoChildren: '',
+            spouseNoChildrenEmpty: false,
+
+            //buyer with SPA
+            attyLastname: '',
+            attyLastnameEmpty: false,
+            attyFirstname: '',
+            attyFirstnameEmpty: false,
+            attyMiddlename: '',
+            attyMiddlenameEmpty: false,
+            attyOccupation: '',
+            attyOccupationEmpty: false,
+            attyPrimaryAddress: '',
+            attyPrimaryAddressEmpty: false,
+            attyPrimaryZip: '',
+            attyPrimaryZipEmpty: false,
+            attyCivilStatus: '',
+            attyCivilStatusEmpty: false,
+            attyAge: '',
+            attyAgeEmpty: false,
+            attySecondaryAddress: '',
+            attySecondaryAddressEmpty: false,
+            attySecondaryZip: '',
+            attySecondaryZipEmpty: false,
+            attyBirthdate: '',
+            attyBirthdateEmpty: false,
+            attyPlaceBirth: '',
+            attyPlaceBirthEmpty: false,
+            attySex: '',
+            attySexEmpty: false,
+            attyHomeNo: '',
+            attyHomeNoEmpty: false,
+            attyFaxNo: '',
+            attyFaxNoEmpty: false,
+            attyIncludeCountry: '',
+            attyIncludeCountryEmpty: false,
+            attyMobileNo: '',
+            attyMobileNoEmpty: false,
+            attyTIN: '',
+            attyTINEmpty: false,
+            attyEmail: '',
+            attyEmailEmpty: false,
+            attyCitizenship: '',
+            attyCitizenshipEmpty: false,
+            attyGovtIssuedID: '',
+            attyGovtIssuedIDEmpty: false,
+
+            //corporate buyer
+            corpName: '',
+            corpNameEmpty: false,
+            corpBusinessName: '',
+            corpBusinessNameEmpty: false,
+            corpBusinessAddress: '',
+            corpBusinessAddressEmpty: false,
+            corpZipCode: '',
+            corpZipCodeEmpty: false,
+            corpBusinessPhoneNo: '',
+            corpBusinessPhoneNoEmpty: false,
+            corpFaxNo: '',
+            corpFaxNoEmpty: false,
+            corpAuthorizedLastname: '',
+            corpAuthorizedLastnameEmpty: false,
+            corpAuthorizedFirstname: '',
+            corpAuthorizedFirstnameEmpty: false,
+            corpAuthorizedMiddlename: '',
+            corpAuthorizedMiddlenameEmpty: false,
+            corpAuthorizedPosition: '',
+            corpAuthorizedPositionEmpty: false,
+            corpAuthorizedSecondaryAddress: '',
+            corpAuthorizedSecondaryAddressEmpty: false,
+            corpAuthorizedZip: '',
+            corpAuthorizedZipEmpty: false,
+            corpAuthorizedBirthdate: '',
+            corpAuthorizedBirthdateEmpty: false,
+            corpAuthorizedBirthPlace: '',
+            corpAuthorizedBirthPlaceEmpty: false,
+            corpAuthorizedSex: '',
+            corpAuthorizedSexEmpty: false,
+            corpAuthorizedHomePhoneNo: '',
+            corpAuthorizedHomePhoneNoEmpty: false,
+            corpAuthorizedFaxNo: '',
+            corpAuthorizedFaxNoEmpty: false,
+            corpAuthorizedIncludeCtry: '',
+            corpAuthorizedIncludeCtryEmpty: false,
+            corpAuthorizedMobileNo: '',
+            corpAuthorizedMobileNoEmpty: false,
+            corpAuthorizedTIN: '',
+            corpAuthorizedTINEmpty: false,
+            corpAuthorizedEmail: '',
+            corpAuthorizedEmailEmpty: false,
+            corpAuthorizedCitizenship: '',
+            corpAuthorizedCitizenshipEmpty: false,
+            corpAuthorizedCivilStatus: '',
+            corpAuthorizedCivilStatusEmpty: false,
+            corpAuthorizedGovtIssuedID: '',
+            corpAuthorizedGovtIssuedIDEmpty: false,
+
+            //others
+            otherBanks: '',
+            otherBanksEmpty: false,
+            otherTypeAccount: '',
+            otherTypeAccountEmtpy: false,
+            otherReasonPurchase: '',
+            otherReasonPurchaseEmpty: false,
+            otherConsideredFactor: '',
+            otherConsideredFactorEmpty: false,
+            otherWhereHeard: '',
+            otherWhereHeardEmpty: false,
+            otherPurchasedBefore: '',
+            otherPurchasedBeforeEmpty: false,
+            
         }
     },
     computed: {
@@ -1294,14 +1447,15 @@ input{
     .contact-details article .section1  .section1-left{
         padding: 0;
         border-right: none;
-        border-bottom: 1px dashed black;
+        /* border-bottom: 1px dashed black; */
     }
     .contact-details article .section1  .section1-left .names section{
         width: 80%;
     }
     .contact-details article .section1  .section1-right{
         width: 80%;
-        padding: 0;
+        padding: 0 0 1rem;
+        flex-direction: column-reverse;
     }
 }
 
@@ -1641,6 +1795,14 @@ input{
 
 
 /*BUSINESS-PROPERTY-INFORMATION*/
+.business-employment{
+    border: 1px solid black;
+    border-bottom: none;
+}
+.business-employment input{
+    border: none;
+    border-bottom: 1px solid black;
+}
 .business-employment .div1{
     display: grid;
     grid-template-columns: 50% 50%;
@@ -1651,11 +1813,7 @@ input{
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    /* border: 1px solid black; */
-    border-bottom: none;
-}
-.business-employment .div1 :nth-child(1){
-    border-right: none;
+    border-bottom: 1px dashed black;
 }
 .business-employment .div2{
     /* border: 1px solid black; */
@@ -1670,16 +1828,9 @@ input{
     display: flex;    
     flex-direction: column;
     padding: 1rem;
-    border-bottom: 1px solid black;
-}
-.business-employment .div2 .section1{
-    border-right: 1px solid black;
-}
-.business-employment .div2 .section3{
-    border-right: 1px solid black;
+    border-bottom: 1px dashed black;
 }
 .business-employment .div2 .section5{
-    border-right: 1px solid black;
     border-bottom: none;
 }
 .business-employment .div2 section div{
@@ -1697,11 +1848,16 @@ input{
     .business-employment .div1,
     .business-employment .div2{
     grid-template-columns: 1fr;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     }
     .business-employment .div1 section,
     .business-employment .div2 section{
     width: 90%;
+    /* border-bottom: none; */
+    border: none;
+    }
+    .business-employment .div2 .section5{
+        border-top: 1px dashed black;
     }
 }
 
@@ -1718,7 +1874,6 @@ input{
 }
 .spouse .div1 .section1-left{
     box-sizing: border-box;
-    /* width: 70%; */
     border-right: 1px solid black;
     padding: 1rem;
     word-wrap: break-word;
@@ -1729,12 +1884,14 @@ input{
     flex-wrap: wrap;
 }
 .spouse  .div1  .section1-right{
-    flex-grow: 1;
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     word-wrap: break-word;
     text-align: center;
+    width: 90%;
+    margin: auto;
 }
 @media screen and (max-width: 732px) {
     .spouse .div1{
@@ -1743,7 +1900,6 @@ input{
     }
     .spouse  .div1 .section1-left{
         text-align: center;
-        padding: .5rem;
     }
     .spouse  .div1  .section1-left .names{
         padding: 0;
@@ -1751,7 +1907,7 @@ input{
         align-items: center;
     }
     .spouse  .div1  .section1-left .names section{
-        width: 95%;
+        width: 100%;
         margin-right: 1rem;
         text-align: center;
     }
@@ -1759,9 +1915,27 @@ input{
         width: 100%;
     }
     .spouse .div1 .section1-right{
-        /* width: 40%; */
         text-align: center;
         padding: .5rem;
+        justify-content: center;
+    }
+}@media screen and (max-width: 500px) {
+    .spouse .div1{
+        border: 1px solid black;
+        grid-template-columns: 1fr;
+    }
+    .spouse .div1 .section1-left{
+        padding: 1rem 0 0;
+        width: 80%;
+        margin: auto;
+        border: none;
+    }
+    .spouse .div1 .section1-right{
+        flex-direction: column-reverse;
+        padding: 0 0 1rem;
+        width: 80%;
+        margin: auto;
+        border: none;
     }
 }
 
@@ -1769,6 +1943,10 @@ input{
 .spouse .div2 {
     display: grid;
     grid-template-columns: 25% calc(75%/4) calc(75%/4) calc(75%/4) calc(75%/4);
+}
+.spouse .div2 input{
+    border: none;
+    border-bottom: 1px solid black;
 }
 .spouse .div2 section{
     padding: 1rem;
@@ -1796,6 +1974,10 @@ input{
 .spouse .div3{
     display: grid;
     grid-template-columns: 25% 20% 30% 25% ;
+}
+.spouse .div3 input{
+    border: none;
+    border-bottom: 1px solid black;
 }
 .spouse .div3 section{
     padding: 1rem;
@@ -1842,6 +2024,10 @@ input{
 
 /*BUYER WITH SPA*/
 /*BUYER-SPA: section1*/
+.buyer-spa input{
+    border: none;
+    border-bottom: 1px solid black;
+}
 .buyer-spa article .section1{
     display: grid;
     grid-template-columns: 70% 30%;
@@ -2150,6 +2336,10 @@ input{
 
 
 /*CORPORATE*/
+.corporate input{
+    border: none;
+    border-bottom: 1px solid black;
+}
 .corporate article{
     display: flex;
 }
