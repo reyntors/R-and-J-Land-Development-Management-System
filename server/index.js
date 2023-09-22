@@ -31,6 +31,9 @@ app.use(express.json());
 
 
 app.use("/users", require("./routes/users.routes"));
+app.use("/letter", require("./routes/guestForms.routes"));
+
+
 app.use("/lot", require("./routes/lot.routes.public"));
 app.use("/reservation", require("./routes/reservation.routes"));
 

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 
@@ -34,22 +34,39 @@ const letterOfIntentSchema = new Schema({
         required: true,
     },
     address: {
-        type: Number,
+        type: String,
         required: true,
     },
     citizenship: {
-        type: Number,
+        type: String,
         required: true,
     },
     contactNo: {
-        type: Number,
+        type: String,
+        required: true,
     },
     emailAddress: {
-        type: Number,
+        type: String,
+        required: true,
+    },
+    createdBy: {
+        type: Schema.Types.ObjectId, // Assuming this is a reference to the user who created it
+        ref: 'User', // Reference to the User model
+        required: true,
     },
     
 });
 
+letterOfIntentSchema.set("toJSON", {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+        delete returnedObject.password;
+    },
+});
+
+
 letterOfIntentSchema.set('timestamps', true);
 
-module.exports = mongoose.model('Reservation', reservationSchema);
+module.exports = mongoose.model('Letter of Intent', letterOfIntentSchema);
