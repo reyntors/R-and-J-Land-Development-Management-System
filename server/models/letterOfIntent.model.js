@@ -49,6 +49,10 @@ const letterOfIntentSchema = new Schema({
         type: String,
         required: true,
     },
+    reservationTimeSpan: {
+        type: String, // You can adjust the data type if needed (e.g., Number, Date, etc.)
+        required: true,
+    },
     createdBy: {
         type: Schema.Types.ObjectId, // Assuming this is a reference to the user who created it
         ref: 'User', // Reference to the User model
@@ -62,7 +66,7 @@ letterOfIntentSchema.set("toJSON", {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject._id;
         delete returnedObject.__v;
-        delete returnedObject.password;
+       
     },
 });
 

@@ -14,7 +14,7 @@ exports.createLetterOfIntent = async (req, res, next) => {
         // Assuming you have a User model and can find the user by username
         const user = await User.findOne({ username });
 
-        console.log(user.userId);
+        
          // Create a new letter of intent instance
          const newLetterOfIntent = new LetterOfIntent({
             ...letterOfIntentData,
@@ -25,9 +25,11 @@ exports.createLetterOfIntent = async (req, res, next) => {
         // Save the letter of intent to the database using async/await
         const savedLetterOfIntent = await newLetterOfIntent.save();
 
-        
+        return res.status(200).send({
+            message: `${username}! Your Letter of Intent successfully created!`,
+            data: savedLetterOfIntent});
 
-        return res.status(201).json({ message: 'Letter of intent created successfully', data: savedLetterOfIntent });
+       
     } catch (error) {
         return next(error);
     }

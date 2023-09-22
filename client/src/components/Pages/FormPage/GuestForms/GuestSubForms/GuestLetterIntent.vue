@@ -88,6 +88,7 @@
 </template>
 
 <script>
+
 import TheFooter from '@/components/Reusable/TheFooter.vue'
 export default{
 components: { TheFooter },
@@ -277,19 +278,41 @@ methods: {
       reservationTimeSpan: this.reservationTimeSpan,
     }
   },
-  submit(){
+  async submit(){
     this.checkAllEmpty()
     const isGood = this.checkReadySubmit()
     if(isGood){
-      //request here perform try catch
-      const payload = this.getAllData()
-      console.log(payload)
-      console.log('submitted')
-    }else{
-      //error
-      console.log('submit rejected')
-    }
-  }
+        
+
+        const letterOfIntentData = {
+              date: this.date,
+              purchase: this.purchase,
+              project: this.project,
+              locationPH: this.locationPH,
+              locationBlk: this.locationBlk,
+              locationLotOrUnit: this.locationLotOrUnit,
+              name: this.name,
+              address: this.address,
+              citizenship: this.citizenship,
+              contactNo: this.contactNo,
+              emailAddress: this.emailAddress,
+              reservationTimeSpan: this.reservationTimeSpan,
+        // Add any other data you need here
+      };
+   
+
+      try {
+       
+        await this.$store.dispatch('auth/createLetterOfIntent', letterOfIntentData);
+
+        
+       
+      } catch (error) {
+        
+        console.error('Error creating Letter of Intent:', error);
+      }
+    } 
+  },
 },
 watch:{
   date(){

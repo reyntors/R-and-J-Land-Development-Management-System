@@ -1,11 +1,6 @@
-import { login, register } from './Api';
-
-// export default {
-//   register (credentials) {
-//     return Api().post('register', credentials)
-//   }
-// }
-
+import { login, register, createLetterOfIntent } from './Api';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 
 export default {
@@ -17,15 +12,30 @@ export default {
 
   async register(credentials) {
     try {
-      // Make an API request to register the user
+ 
       const response = await register(credentials);
 
-      // Assuming the API response contains user data and a token
-      return response.data; // You can adjust this to return specific data if needed
+      
+      return response.data; 
     } catch (error) {
 
         console.error(error)
       throw error
     }
   },
+
+  async createLetterOfIntent(letterOfIntentData) {
+    try {
+      
+      const response = await createLetterOfIntent(letterOfIntentData);
+      
+      toast.success(response.message, { autoClose: 2000 });
+      
+      return response.data; 
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+  
 };

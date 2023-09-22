@@ -14,7 +14,6 @@ export default {
     mutations:{
         addStoreState(state,responseData){
             state.roles = responseData.roles
-            console.log(state.roles);
             state.tokenID = responseData.tokenID
         },
         eraseStoreState(state){
@@ -100,8 +99,31 @@ export default {
                 throw error
             }
   
-        }
+        },
+
+        async createLetterOfIntent(context, letterOfIntentData) {
+            try {
+              
+                const response = await AuthenticationService.createLetterOfIntent(letterOfIntentData);
+                
+                const Data = {
+                    date: this.date,
+                    
+                }
+                
+                context.commit('addLocalStorage',Data)
+                context.commit('addStoreState',Data)
+               
+                
+               
+                return response.data;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        },
     },
+
     getters: {
         authGetter(state){
           
