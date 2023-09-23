@@ -166,6 +166,28 @@ export default {
                 throw error;
             }
         },
+
+        async createContractDetails(context,contractDetailsData) {
+            try {
+              
+                const response = await AuthenticationService.createContractDetails(contractDetailsData);
+                
+                const Data = {
+                    date: this.date,
+                    
+                }
+                
+                context.commit('addLocalStorage',Data)
+                context.commit('addStoreState',Data)
+               
+                
+               
+                return response.data;
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        },
     },
 
     getters: {

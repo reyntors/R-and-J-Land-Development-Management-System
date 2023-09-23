@@ -3,7 +3,8 @@ import {
   register,
   createLetterOfIntent,
   createIndividualBuyerDeclaration,
-  createBirTinRequest
+  createBirTinRequest,
+  createContractDetails
  } from './Api';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -62,6 +63,20 @@ export default {
     try {
       
       const response = await createBirTinRequest(birTinRequestData);
+      
+      toast.success(response.message, { autoClose: 2000 });
+      
+      return response.data; 
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  async createContractDetails (contractDetailsData) {
+    try {
+      
+      const response = await createContractDetails(contractDetailsData);
       
       toast.success(response.message, { autoClose: 2000 });
       

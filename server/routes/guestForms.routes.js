@@ -2,6 +2,7 @@ const auth = require("../middlewares/auth");
 const letter = require('../controllers/letterofintent.controller');
 const birTinRequest = require('../controllers/birtinrequest.controller');
 const individualbuyerdeclaration = require('../controllers/individualbuyerdeclaration.controller');
+const contractDetails = require('../controllers/contractdetails.controller');
 const express = require("express");
 const userController = require("../controllers/users.controller");
 
@@ -18,5 +19,7 @@ router.post("/addbirtinrequest", auth.authenticateToken, userController.restrict
 //Individual Buyer Declaration
 router.post("/addindividualbuyer", auth.authenticateToken, userController.restrict('guest'), individualbuyerdeclaration.createIndividualBuyerDeclaration);
 
+//Individual Buyer Declaration
+router.post("/addcontract", auth.authenticateToken, userController.restrict('guest'),  contractDetails.createContractDetails);
 
 module.exports = router;

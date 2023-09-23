@@ -92,6 +92,25 @@ export const createBirTinRequest = async (birTinRequestData) => {
   } catch (error) {
       throw error.response.data.message;
   }
+};
 
+export const createContractDetails = async (contractDetailsData) => {
+  try {
+    // Retrieve the token from local storage
+      const token = getToken();
 
+      // Set the "Authorization" header with the token
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+        
+      const response = await axios.post(`${BASE_URL}contractdetails/addcontract`, contractDetailsData,{
+        headers: headers,
+      });
+      
+      
+      return response.data;
+  } catch (error) {
+      throw error.response.data.message;
+  }
 };
