@@ -9,29 +9,30 @@
                 <section class="section1" :class="{empty:ispropertyEmpty}">
                     <div>
                         <span>
-                            <input type="radio" id="propertyradio1" value="1" v-model="property">
+                            <input type="radio" id="propertyradio1" value="Northtown" v-model="property">
                             <label for="propertyradio1">Northtown</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio2" value="2" v-model="property">
+                            <input type="radio" id="propertyradio2" value="Northcrest" v-model="property">
                             <label for="propertyradio2">Northcrest</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio3" value="3" v-model="property">
+                            <input type="radio" id="propertyradio3" value="Woodlane Residence" v-model="property">
                             <label for="propertyradio3">Woodlane Residence</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio4" value="4" v-model="property">
+                            <input type="radio" id="propertyradio4" value="Fernwood" v-model="property"  >
                             <label for="propertyradio4">Fernwood</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio5" value="5" v-model="property">
+                            <input type="radio" id="propertyradio5" value="Eden Ridge" v-model="property"  >
                             <label for="propertyradio5">Eden Ridge</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio6" value="6" v-model="property">
+                            <input type="radio" id="propertyradio6" :value="propertyOther" v-model="property">
                             <label for="propertyradio6">Others</label>
-                            <input style="border: none; border-bottom: 1px solid black;">
+                            <input for="propertyradio6" style="border: none; border-bottom: 1px solid black;" v-model="propertyOthers" @input="updatePropertyOther">
+                            
                         </span>                       
                     </div>  
                 </section>
@@ -197,19 +198,24 @@
                         <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
                         <div :class="{empty:isbuyerIssuedIDEmpty}">
                             <section>
-                                <span><input type="radio" id="govtIdSSS/GSIS" value="SSS/GSIS" v-model="buyerIssuedID"><label for="govtIdSSS/GSIS">SSS/GSIS</label> </span>:<input>
+                                <span><input type="radio" id="govtIdSSS/GSIS" value="SSS/GSIS" v-model="buyerIssuedID"><label for="govtIdSSS/GSIS">SSS/GSIS</label> </span>:
+                                      <input >
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdDriverLicense" value="Driver's License" v-model="buyerIssuedID"><label for="govtIdDriverLicense">Driver's License</label> </span>:<input>
+                                <span><input type="radio" id="govtIdDriverLicense" value="Driver's License" v-model="buyerIssuedID"><label for="govtIdDriverLicense">Driver's License</label> </span>:
+                                      <input>
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdPRC" value="PRC" v-model="buyerIssuedID"><label for="govtIdPRC">PRC</label> </span>:<input>
+                                <span><input type="radio" id="govtIdPRC" value="PRC" v-model="buyerIssuedID"><label for="govtIdPRC">PRC</label> </span>:
+                                      <input>
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdPassport" value="Passport" v-model="buyerIssuedID"><label for="govtIdPassport">Passport</label> </span>:<input>
+                                <span><input type="radio" id="govtIdPassport" value="Passport" v-model="buyerIssuedID"><label for="govtIdPassport">Passport</label> </span>:
+                                    <input>
                             </section>
                             <section>
-                                <span><input type="radio" id="others" value="others" v-model="buyerIssuedID"><label for="others">Others</label> </span>:<input style="border: none; border-bottom: 1px solid black;">
+                                <span><input type="radio" id="others" value="others" v-model="buyerIssuedID"><label for="others">Others</label> </span>:
+                                    <input style="border: none; border-bottom: 1px solid black;">
                             </section>
                         </div>                        
                     </article>
@@ -224,11 +230,11 @@
                     <!-- <div> -->
                         <section>
                             <p>Company / Business Name</p>
-                            <input v-model="businessName" :class="{empty:true}">
+                            <input v-model="businessName" :class="{empty:isbusinessNameEmpty}">
                         </section>
                         <section>
                             <p>Company / Business Address</p>
-                            <input v-model="businessAddress" :class="{empty:true}">
+                            <input v-model="businessAddress" :class="{empty:isbusinessAddressEmpty}">
                         </section>                        
                     <!-- </div> -->
 
@@ -237,26 +243,26 @@
                 <div class="div2">
                     <section class="section1">
                         <p>Office / Business Phone No.</p>
-                        <input v-model="businessPhoneNo" :class="{empty:true}">
+                        <input v-model="businessPhoneNo" :class="{empty:isbusinessPhoneNoEmpty}">
                     </section>
                     <section class="section2">
                         <p>Fax No.</p>
-                        <input v-model="businessfaxNo" :class="{empty:true}">
+                        <input v-model="businessfaxNo" :class="{empty:isbusinessfaxNoEmpty}">
                     </section>
                     <section class="section3">
                         <p>Position</p>
-                        <input v-model="businessPosition" :class="{empty:true}">
+                        <input v-model="businessPosition" :class="{empty:isbusinessPositionEmpty}">
                     </section>
                     <section class="section4">
                         <p>Profession</p>
-                        <input v-model="businessProfession" :class="{empty:true}">
+                        <input v-model="businessProfession" :class="{empty:isbusinessProfessionEmpty}">
                     </section>
-                    <section class="section5" :class="{empty:true}">
+                    <section class="section5" :class="{empty:isbusinessEmploymentStatusEmpty}">
                         <p>Employment Status</p>
                         <div>
-                            <span><input type="radio" value="local" v-model="businessEmploymentStatus"> Local</span>
-                            <span><input type="radio" value="OFW" v-model="businessEmploymentStatus"> OFW</span>
-                            <span><input type="radio" value="self-employed" v-model="businessEmploymentStatus"> self-Employed</span>
+                            <span><input type="radio" value="local" v-model="businessEmploymentStatus" id="busEmplLocal"><label for="busEmplLoca">Local</label> </span>
+                            <span><input type="radio" value="OFW" v-model="businessEmploymentStatus" id="busEmplOFW"> <label for="busEmplOFW">OFW</label></span>
+                            <span><input type="radio" value="self-employed" v-model="businessEmploymentStatus" id="busEmplSelfEmployed"> <label for="busEmplSelfEmployed">self-Employed</label></span>
                         </div>
                     </section>
                 </div>
@@ -271,15 +277,15 @@
                         <br>
                         <div class="names">
                             <section>
-                                <input type="text" v-model="spouseLastname" :class="{empty:true}">
+                                <input type="text" v-model="spouseLastname" :class="{empty:isspouseLastnameEmpty}">
                                 <p>Last Name</p>
                             </section>
                             <section>
-                                <input type="text" v-model="spouseFirstname" :class="{empty:true}">
+                                <input type="text" v-model="spouseFirstname" :class="{empty:isspouseFirstnameEmpty}">
                                 <p>First Name</p>
                             </section>
                             <section>
-                                <input type="text" v-model="spouseMiddleName" :class="{empty:true}">
+                                <input type="text" v-model="spouseMiddleName" :class="{empty:isspouseMiddleNameEmpty}">
                                 <p>Middle Name</p>
                             </section>
                         </div>
@@ -288,7 +294,7 @@
                     <div class="section1-right">
                         <p>Occupation / Profession</p>
                         <br>
-                        <input v-model="spouseOccupation" :class="{empty:true}">
+                        <input v-model="spouseOccupation" :class="{empty:isspouseOccupationEmpty}">
                          <br>
                     </div>
             </div>
@@ -296,33 +302,33 @@
             <div class="div2">
                 <section>
                     <p>HOME PHONE NO.</p>
-                    <input style="display: block;" v-model="spousePhoneNo" :class="{empty:true}">
+                    <input style="display: block;" v-model="spousePhoneNo" :class="{empty:isspousePhoneNoEmpty}">
                 </section>
                 <section>
                     <p>MOBILE NO.</p>
-                    <input style="display: block;" v-model="spouseMobileNo" :class="{empty:true}">
+                    <input style="display: block;" v-model="spouseMobileNo" :class="{empty:isspouseMobileNoEmpty}">
                 </section>
                 <section>
                     <p>EMAIL ADDRESS</p>
-                    <input style="display: block;" v-model="spouseEmail" :class="{empty:true}">
+                    <input style="display: block;" v-model="spouseEmail" :class="{empty:isspouseEmailEmpty}">
                 </section>
                 <section>
                     <p>T.I.N.</p>
-                    <input style="display: block;" v-model="spouseTIN" :class="{empty:true}">
+                    <input style="display: block;" v-model="spouseTIN" :class="{empty:isspouseTINEmpty}">
                 </section>
                 <section>
                     <p>CITIZENSHIP</p>
-                    <input style="display: block;" v-model="spouseCitizenship" :class="{empty:true}">
+                    <input style="display: block;" v-model="spouseCitizenship" :class="{empty:isspouseCitizenshipEmpty}">
                 </section>
             </div>
 
             <div class="div3">
                 <section class="section1">
                     <p>FAX NO.</p>
-                    <input v-model="spouseFaxNo" :class="{empty:true}">
+                    <input v-model="spouseFaxNo" :class="{empty:isspouseFaxNoEmpty}">
                 </section>
 
-                <section class="section2" :class="{empty:true}">
+                <section class="section2" :class="{empty:isspouseSexEmpty}">
                     Sex
                     <div>
                         <span><input type="radio" value="Male" id="spouseMale" v-model="spouseSex"><label for="spouseMale">Male</label></span>
@@ -330,7 +336,7 @@
                     </div>
                 </section>
 
-                <section class="section3" :class="{empty:true}">
+                <section class="section3" :class="{empty:isspouseEmploymentEmpty}">
                     <p>Employment Status</p>
                     <div>
                         <span><input type="radio" value="Local" id="spouseLocal" v-model="spouseEmployment"><label for="spouseLocal">Local</label></span>
@@ -342,7 +348,7 @@
 
                 <section class="section4">
                     <p>No. of Children</p>
-                    <input v-model="spouseNoChildren" :class="{empty:true}">
+                    <input v-model="spouseNoChildren" :class="{empty:isspouseNoChildrenEmpty}">
                 </section>
             </div>
 
@@ -358,15 +364,15 @@
                         <br>
                         <div class="names">
                             <section>
-                                <input type="text" v-model="attyLastname" :class="{empty:true}">
+                                <input type="text" v-model="attyLastname" :class="{empty:isattyLastnameEmpty}">
                                 <p>Last Name</p>
                             </section>
                             <section>
-                                <input type="text" v-model="attyFirstname" :class="{empty:true}">
+                                <input type="text" v-model="attyFirstname" :class="{empty:isattyFirstnameEmpty}">
                                 <p>First Name</p>
                             </section>
                             <section>
-                                <input type="text" v-model="attyMiddlename" :class="{empty:true}">
+                                <input type="text" v-model="attyMiddlename" :class="{empty:isattyMiddlenameEmpty}">
                                 <p>Middle Name</p>
                             </section>
                         </div>
@@ -375,7 +381,7 @@
                     <div class="section1-right">
                         <p>Occupation / Profession</p>
                         <br>
-                        <input v-model="attyOccupation" :class="{empty:true}">
+                        <input v-model="attyOccupation" :class="{empty:isattyOccupationEmpty}">
                         <br>
                     </div>
                     
@@ -384,43 +390,43 @@
                 <section class="section2">
                     <div class="div1">
                         <p>PRIMARY/MAILING ADDRESS</p>
-                        <input style="width:100%;" v-model="attyPrimaryAddress" :class="{empty:true}">
-                        <p>Zip Code: <input style="width:100%;" v-model="attyPrimaryZip" :class="{empty:true}"></p>
+                        <input style="width:100%;" v-model="attyPrimaryAddress" :class="{empty:isattyPrimaryAddressEmpty}">
+                        <p>Zip Code: <input style="width:100%;" v-model="attyPrimaryZip" :class="{empty:isattyPrimaryZipEmpty}"></p>
                     </div>
-                    <div class="div2" :class="{empty:true}">
+                    <div class="div2" :class="{empty:isattyCivilStatusEmpty}">
                         <p>Civil Status</p>
                         <div class="status">
-                            <section><input type="radio" id="attySingle" value="Single" v-model="attyCivilStatus"><label for="attySingle" ></label>Single</section>
-                            <section><input type="radio" id="attyWidow" value="Widow/er" v-model="attyCivilStatus"><label for="attyWidow"></label>Widow/er</section>
-                            <section><input type="radio" id="attyMarried" value="Married" v-model="attyCivilStatus"><label for="attyMarried"></label>Married</section>
-                            <section><input type="radio" id="attySeparated" value="Separated" v-model="attyCivilStatus"><label for="attySeparated"></label>Separated</section>
+                            <section><input type="radio" id="attySingle" value="Single" v-model="attyCivilStatus"><label for="attySingle" >Single</label></section>
+                            <section><input type="radio" id="attyWidow" value="Widow/er" v-model="attyCivilStatus"><label for="attyWidow">Widow/er</label></section>
+                            <section><input type="radio" id="attyMarried" value="Married" v-model="attyCivilStatus"><label for="attyMarried">Married</label></section>
+                            <section><input type="radio" id="attySeparated" value="Separated" v-model="attyCivilStatus"><label for="attySeparated">Separated</label></section>
                         </div>
                     </div>
                     <div class="div3">
                         <p>Age</p>
-                        <input style="display: block;" v-model="attyAge" :class="{empty:true}">
+                        <input style="display: block;" v-model="attyAge" :class="{empty:isattyAgeEmpty}">
                     </div>
                 </section>
 
                 <section class="section3">
                     <div class="div1">
                         <p>SECONDARY ADDRESS</p>
-                        <input style="width:100%;" v-model="attySecondaryAddress" :class="{empty:true}">
+                        <input style="width:100%;" v-model="attySecondaryAddress" :class="{empty:isattySecondaryAddressEmpty}">
                         <br>
-                        <p>Zip Code: <input style="width:100%;" v-model="attySecondaryZip" :class="{empty:true}"></p>
+                        <p>Zip Code: <input style="width:100%;" v-model="attySecondaryZip" :class="{empty:isattySecondaryZipEmpty}"></p>
                     </div>
-                    <div class="div2" :class="{empty:true}">
+                    <div class="div2" :class="{empty:isattySexEmpty}">
                         <p>Sex</p>
                         <div class="status">
-                            <section><input type="radio" id="attyMale" value="Male" v-model="attySex">Male</section>
-                            <section><input type="radio" id="attyFemale" value="Male" v-model="attySex">Female</section>  
+                            <section><input type="radio" id="attyMale" value="Male" v-model="attySex"> <label for="attyMale">Male</label></section>
+                            <section><input type="radio" id="attyFemale" value="Female" v-model="attySex"> <label for="attyFemale">Female</label></section>  
                         </div>
                     </div>
                     <div class="div3">
                         <p>Birthdate</p>
-                        <input style="display: block;" type="date" v-model="attyBirthdate" :class="{empty:true}">
+                        <input style="display: block;" type="date" v-model="attyBirthdate" :class="{empty:isattyBirthdateEmpty}">
                         <p>Place of Birth</p>
-                        <input style="border: none; border-bottom: 1px solid black;" v-model="attyPlaceBirth" :class="{empty:true}">
+                        <input style="border: none; border-bottom: 1px solid black;" v-model="attyPlaceBirth" :class="{empty:isattyPlaceBirthEmpty}">
                     </div>
                 </section>
 
@@ -429,44 +435,44 @@
                         <section>
                             <div>
                                 <p>HOME PHONE NO.</p>
-                                <input v-model=" attyHomeNo" :class="{empty:true}">
+                                <input v-model=" attyHomeNo" :class="{empty:isattyHomeNoEmpty}">
                             </div>
                             <div>
                                 <p>FAX NO.</p>
-                                <input v-model="attyFaxNo" :class="{empty:true}">
+                                <input v-model="attyFaxNo" :class="{empty:isattyFaxNoEmpty}">
                             </div>
                         </section>
                     
                         <p style="font-size: clamp(.5rem, 1vw, 1rem);">(please incluse country and area codes, if possible)</p>
-                        <input type="text" style="display: block;" v-model="attyIncludeCountry" :class="{empty:true}">
+                        <input type="text" style="display: block;" v-model="attyIncludeCountry" :class="{empty:isattyIncludeCountryEmpty}">
                     </div>
 
                     <div class="div2">
                         <div class="div">
                             <section>
                                 <p>MOBILE NO.</p>
-                                <input v-model="attyMobileNo" :class="{empty:true}">
+                                <input v-model="attyMobileNo" :class="{empty:isattyMobileNoEmpty}">
                             </section>
                             <section>
                                 <p>T.I.N.</p>
-                                <input v-model="attyTIN" :class="{empty:true}">
+                                <input v-model="attyTIN" :class="{empty:isattyTINEmpty}">
                             </section>
                         </div>
                         <section class="section">
                             <p>EMAIL ADDRESS.</p>
-                            <input style="display: block;" v-model="attyEmail" :class="{empty:true}">
+                            <input style="display: block;" v-model="attyEmail" :class="{empty:isattyEmailEmpty}">
                         </section>
                     </div>
 
                     <div class="div3">
                         <section>
                             <p>CITIZENSHIP.</p>
-                            <input v-model="attyCitizenship" :class="{empty:true}">
+                            <input v-model="attyCitizenship" :class="{empty:isattyCitizenshipEmpty}">
                         </section>
                     </div>
                 </section>
 
-                <section class="section5" :class="{empty:true}">
+                <section class="section5" :class="{empty:isattyGovtIssuedIDEmpty}">
                     <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
                     <div>
                         <section>
@@ -496,28 +502,28 @@
             <article class="article1">
                 <section class="section1">
                     <p>Name of Corporation</p>
-                    <input v-model="corpName" :class="{empty:true}">
+                    <input v-model="corpName" :class="{empty:iscorpNameEmpty}">
                 </section>
                 <section class="section2">
                     <p>Name of Business</p>
-                    <input v-model="corpBusinessName" :class="{empty:true}">
+                    <input v-model="corpBusinessName" :class="{empty:iscorpBusinessNameEmpty}">
                 </section>
             </article>
 
             <article class="article2">
                 <div class="section1">
                     <p>BUSINESS ADDRESS</p>
-                    <input style="width:100%;" v-model="corpBusinessAddress" :class="{empty:true}">
-                    <p>Zip Code: <input style="width:100%;" v-model="corpZipCode" :class="{empty:true}"></p>
+                    <input style="width:100%;" v-model="corpBusinessAddress" :class="{empty:iscorpBusinessAddressEmpty}">
+                    <p>Zip Code: <input style="width:100%;" v-model="corpZipCode" :class="{empty:iscorpZipCodeEmpty}"></p>
                 </div>
 
                 <div class="section2">
                     <p>BUSINESS PHONE NO.</p>
-                    <input v-model="corpBusinessPhoneNo" :class="{empty:true}">
+                    <input v-model="corpBusinessPhoneNo" :class="{empty:iscorpBusinessPhoneNoEmpty}">
                 </div>
                 <div class="section3">
                     <p>FAX NO.</p>
-                    <input v-model="corpFaxNo" :class="{empty:true}">
+                    <input v-model="corpFaxNo" :class="{empty:iscorpFaxNoEmpty}">
                 </div>
             </article>
 
@@ -527,15 +533,15 @@
                     <br>
                     <div class="names">
                         <section>
-                            <input type="text" v-model="corpAuthorizedLastname" :class="{empty:true}">
+                            <input type="text" v-model="corpAuthorizedLastname" :class="{empty:iscorpAuthorizedLastnameEmpty}">
                             <p>Last Name</p>
                         </section>
                         <section>
-                            <input type="text" v-model="corpAuthorizedFirstname" :class="{empty:true}">
+                            <input type="text" v-model="corpAuthorizedFirstname" :class="{empty:iscorpAuthorizedFirstnameEmpty}">
                             <p>First Name</p>
                         </section>
                         <section>
-                            <input type="text" v-model="corpAuthorizedMiddlename" :class="{empty:true}">
+                            <input type="text" v-model="corpAuthorizedMiddlename" :class="{empty:iscorpAuthorizedMiddlenameEmpty}">
                             <p>Middle Name</p>
                         </section>
                     </div>
@@ -544,7 +550,7 @@
                 <div class="section1-right">
                     <p>DESIGNATION / POSITION</p>
                     <br>
-                    <input v-model="corpAuthorizedPosition" :class="{empty:true}">
+                    <input v-model="corpAuthorizedPosition" :class="{empty:iscorpAuthorizedPositionEmpty}">
                     <br>
                 </div>
             </article>
@@ -552,11 +558,11 @@
             <article class="article4">
                 <div class="div1">
                     <p>SECONDARY ADDRESS</p>
-                    <input style="width:100%;" v-model="corpAuthorizedSecondaryAddress" :class="{empty:true}">
+                    <input style="width:100%;" v-model="corpAuthorizedSecondaryAddress" :class="{empty:iscorpAuthorizedSecondaryAddressEmpty}">
                     <br>
-                    <p>Zip Code: <input style="width:100%;" v-model="corpAuthorizedZip" :class="{empty:true}"></p>
+                    <p>Zip Code: <input style="width:100%;" v-model="corpAuthorizedZip" :class="{empty:iscorpAuthorizedZipEmpty}"></p>
                 </div>
-                <div class="div2" :class="{empty:true}">
+                <div class="div2" :class="{empty:iscorpAuthorizedSexEmpty}">
                     <p>Sex</p>
                     <div class="status">
                         <section><input type="radio" id="corpMale" value="Male" v-model="corpAuthorizedSex"><label for="corpMale">Male</label></section>
@@ -565,9 +571,9 @@
                 </div>
                 <div class="div3">
                     <p>Birthdate</p>
-                    <input style="display: block;" type="date" v-model="corpAuthorizedBirthdate" :class="{empty:true}">
+                    <input style="display: block;" type="date" v-model="corpAuthorizedBirthdate" :class="{empty:iscorpAuthorizedBirthdateEmpty}">
                     <p>Place of Birth</p>
-                    <input style="border: none; border-bottom: 1px solid black;" v-model="corpAuthorizedBirthPlace" :class="{empty:true}">
+                    <input style="border: none; border-bottom: 1px solid black;" v-model="corpAuthorizedBirthPlace" :class="{empty:iscorpAuthorizedBirthPlaceEmpty}">
                 </div>
             </article>
 
@@ -576,41 +582,41 @@
                     <section>
                         <div>
                             <p>HOME PHONE NO.</p>
-                            <input v-model="corpAuthorizedHomePhoneNo" :class="{empty:true}">
+                            <input v-model="corpAuthorizedHomePhoneNo" :class="{empty:iscorpAuthorizedHomePhoneNoEmpty}">
                         </div>
                         <div>
                             <p>FAX NO.</p>
-                            <input v-model="corpAuthorizedFaxNo" :class="{empty:true}">
+                            <input v-model="corpAuthorizedFaxNo" :class="{empty:iscorpAuthorizedFaxNoEmpty}">
                         </div>
                     </section>
                     
                     <p style="font-size: clamp(.5rem, 1vw, 1rem);">(please incluse country and area codes, if possible)</p>
-                    <input type="text" style="display: block;" v-model="corpAuthorizedIncludeCtry" :class="{empty:true}">
+                    <input type="text" style="display: block;" v-model="corpAuthorizedIncludeCtry" :class="{empty:iscorpAuthorizedIncludeCtryEmpty}">
                 </div>
 
                 <div class="div2">
                     <div class="div">
                         <section>
                             <p>MOBILE NO.</p>
-                            <input v-model="corpAuthorizedMobileNo" :class="{empty:true}">
+                            <input v-model="corpAuthorizedMobileNo" :class="{empty:iscorpAuthorizedMobileNoEmpty}">
                         </section>
                         <section>
                             <p>T.I.N.</p>
-                            <input v-model="corpAuthorizedTIN" :class="{empty:true}">
+                            <input v-model="corpAuthorizedTIN" :class="{empty:iscorpAuthorizedTINEmpty}">
                         </section>
                     </div>
                     <section class="section">
                         <p>EMAIL ADDRESS.</p>
-                        <input style="display: block;" v-model="corpAuthorizedEmail" :class="{empty:true}">
+                        <input style="display: block;" v-model="corpAuthorizedEmail" :class="{empty:iscorpAuthorizedEmailEmpty}">
                     </section>
                 </div>
 
                 <div class="div3">
                     <section class="section1">
                         <p>CITIZENSHIP.</p>
-                        <input v-model="corpAuthorizedCitizenship" :class="{empty:true}">
+                        <input v-model="corpAuthorizedCitizenship" :class="{empty:iscorpAuthorizedCitizenshipEmpty}">
                     </section>
-                    <section class="section2" :class="{empty:true}">
+                    <section class="section2" :class="{empty:iscorpAuthorizedCivilStatusEmpty}">
                         <p>Civil Status</p>
                         <section>
                             <span><input type="radio" id="corpSingle" value="Single" v-model="corpAuthorizedCivilStatus"><label for="corpSingle">Single</label></span>
@@ -622,7 +628,7 @@
                 </div>
             </article>
 
-            <article class="article6" :class="{empty:true}">
+            <article class="article6" :class="{empty:iscorpAuthorizedGovtIssuedIDEmpty}">
                 <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
                 <div>
                     <section>
@@ -744,7 +750,7 @@ export default {
     data(){
         return{
             //property details
-            property: '',
+            property: '', propertyOthers: '',
             propertyEmpty: false,
             typeBuyer: '',
             typeBuyerEmpty: false,
@@ -951,89 +957,124 @@ export default {
     },
     computed: {
 
-        //property details
-        ispropertyEmpty(){
-            return this.propertyEmpty
-        },
-        istypeBuyerEmpty(){
-            return this.typeBuyerEmpty
+        propertyOther(){
+            return this.propertyOthers
         },
 
+
+        // property details
+        ispropertyEmpty(){return this.propertyEmpty},
+        istypeBuyerEmpty(){ return this.typeBuyerEmpty},
+
         //contract details
-        isbuyerLastnameEmpty(){
-            return this.buyerLastnameEmpty
-        },
-        isbuyerFirstnameEmpty(){
-            return this.buyerFirstnameEmpty
-        },
-        isbuyerMiddlenameEmpty(){
-            return this.buyerMiddlenameEmpty
-        },
-        isbuyerOccupationEmpty(){
-            return this.buyerOccupationEmpty
-        },
-        isbuyerPrimaryAddressEmpty(){
-            return this.buyerPrimaryAddressEmpty
-        },
-        isbuyerPrimaryZipEmpty(){
-            return this.buyerPrimaryZipEmpty
-        },
-        isbuyerCivilStatusEmpty(){
-            return this.buyerCivilStatusEmpty
-        },
-        isbuyerAgeEmpty(){
-            return this.buyerAgeEmpty
-        },
-        isbuyerSecondaryAddressEmpty(){
-            return this.buyerSecondaryAddressEmpty
-        },
-        isbuyerSecondaryZipEmpty(){
-            return this.buyerSecondaryZipEmpty
-        },
-        isbuyerSexEmpty(){
-            return this.buyerSexEmpty
-        },
-        isbuyerBirthdayEmpty(){
-            return this.buyerBirthdayEmpty
-        },
-        isbuyerPlaceBirthEmpty(){
-            return this.buyerPlaceBirthEmpty
-        },
-        isbuyerHomePhoneNoEmpty(){
-            return this.buyerHomePhoneNoEmpty
-        },
-        isbuyerFaxNoEmpty(){
-            return this.buyerFaxNoEmpty
-        },
-        isbuyerIncludeCountryEmpty(){
-            return this.buyerIncludeCountryEmpty
-        },
-        isbuyerMobileNoEmpty(){
-            return this.buyerMobileNoEmpty
-        },
-        isbuyerEmailEmpty(){
-            return this.buyerEmailEmpty
-        },
-        isbuyerTINEmpty(){
-            return this.buyerTINEmpty
-        },
-        isbuyerCitizenEmpty(){
-            return this.buyerCitizenEmpty
-        },
-        isbuyerReligionEmpty(){
-            return this.buyerReligionEmpty
-        },
-        isbuyerIssuedIDEmpty(){
-            return this.buyerIssuedIDEmpty
-        },
+        isbuyerLastnameEmpty(){return this.buyerLastnameEmpty},
+        isbuyerFirstnameEmpty(){return this.buyerFirstnameEmpty},
+        isbuyerMiddlenameEmpty(){return this.buyerMiddlenameEmpty},
+        isbuyerOccupationEmpty(){return this.buyerOccupationEmpty},
+        isbuyerPrimaryAddressEmpty(){return this.buyerPrimaryAddressEmpty},
+        isbuyerPrimaryZipEmpty(){return this.buyerPrimaryZipEmpty},
+        isbuyerCivilStatusEmpty(){return this.buyerCivilStatusEmpty},
+        isbuyerAgeEmpty(){return this.buyerAgeEmpty},
+        isbuyerSecondaryAddressEmpty(){return this.buyerSecondaryAddressEmpty},
+        isbuyerSecondaryZipEmpty(){return this.buyerSecondaryZipEmpty},
+        isbuyerSexEmpty(){return this.buyerSexEmpty},
+        isbuyerBirthdayEmpty(){return this.buyerBirthdayEmpty},
+        isbuyerPlaceBirthEmpty(){return this.buyerPlaceBirthEmpty},
+        isbuyerHomePhoneNoEmpty(){return this.buyerHomePhoneNoEmpty},
+        isbuyerFaxNoEmpty(){return this.buyerFaxNoEmpty},
+        isbuyerIncludeCountryEmpty(){return this.buyerIncludeCountryEmpty},
+        isbuyerMobileNoEmpty(){return this.buyerMobileNoEmpty},
+        isbuyerEmailEmpty(){return this.buyerEmailEmpty},
+        isbuyerTINEmpty(){return this.buyerTINEmpty},
+        isbuyerCitizenEmpty(){return this.buyerCitizenEmpty},
+        isbuyerReligionEmpty(){return this.buyerReligionEmpty},
+        isbuyerIssuedIDEmpty(){return this.buyerIssuedIDEmpty},
+
+        //py
+        isbusinessNameEmpty(){return this.businessNameEmpty},
+        isbusinessAddressEmpty(){return this.businessAddressEmpty},
+        isbusinessPhoneNoEmpty(){return this.businessPhoneNoEmpty},
+        isbusinessfaxNoEmpty(){return this.businessfaxNoEmpty},
+        isbusinessPositionEmpty(){return this.businessPositionEmpty},
+        isbusinessProfessionEmpty(){return this.businessProfessionEmpty},
+        isbusinessEmploymentStatusEmpty(){return this.businessEmploymentStatusEmpty},
+        isspouseLastnameEmpty(){return this.spouseLastnameEmpty},
+        isspouseFirstnameEmpty(){return this.spouseFirstnameEmpty},
+        isspouseMiddleNameEmpty(){return this.spouseMiddleNameEmpty},
+        isspouseOccupationEmpty(){return this.spouseOccupationEmpty},
+        isspousePhoneNoEmpty(){return this.spousePhoneNoEmpty},
+        isspouseMobileNoEmpty(){return this.spouseMobileNoEmpty},
+        isspouseEmailEmpty(){return this.spouseEmailEmpty},
+        isspouseTINEmpty(){return this.spouseTINEmpty},
+        isspouseCitizenshipEmpty(){return this.spouseCitizenshipEmpty},
+        isspouseFaxNoEmpty(){return this.spouseFaxNoEmpty},
+        isspouseSexEmpty(){return this.spouseSexEmpty},
+        isspouseEmploymentEmpty(){return this.spouseEmploymentEmpty},
+        isspouseNoChildrenEmpty(){return this.spouseNoChildrenEmpty},
+        isattyLastnameEmpty(){return this.attyLastnameEmpty},
+        isattyFirstnameEmpty(){return this.attyFirstnameEmpty},
+        isattyMiddlenameEmpty(){return this.attyMiddlenameEmpty},
+        isattyOccupationEmpty(){return this.attyOccupationEmpty},
+        isattyPrimaryAddressEmpty(){return this.attyPrimaryAddressEmpty},
+        isattyPrimaryZipEmpty(){return this.attyPrimaryZipEmpty},
+        isattyCivilStatusEmpty(){return this.attyCivilStatusEmpty},
+        isattyAgeEmpty(){return this.attyAgeEmpty},
+        isattySecondaryAddressEmpty(){return this.attySecondaryAddressEmpty},
+        isattySecondaryZipEmpty(){return this.attySecondaryZipEmpty},
+        isattyBirthdateEmpty(){return this.attyBirthdateEmpty},
+        isattyPlaceBirthEmpty(){return this.attyPlaceBirthEmpty},
+        isattySexEmpty(){return this.attySexEmpty},
+        isattyHomeNoEmpty(){return this.attyHomeNoEmpty},
+        isattyFaxNoEmpty(){return this.attyFaxNoEmpty},
+        isattyIncludeCountryEmpty(){return this.attyIncludeCountryEmpty},
+        isattyMobileNoEmpty(){return this.attyMobileNoEmpty},
+        isattyTINEmpty(){return this.attyTINEmpty},
+        isattyEmailEmpty(){return this.attyEmailEmpty},
+        isattyCitizenshipEmpty(){return this.attyCitizenshipEmpty},
+        isattyGovtIssuedIDEmpty(){return this.attyGovtIssuedIDEmpty},
+        iscorpNameEmpty(){return this.corpNameEmpty},
+        iscorpBusinessNameEmpty(){return this.corpBusinessNameEmpty},
+        iscorpBusinessAddressEmpty(){return this.corpBusinessAddressEmpty},
+        iscorpZipCodeEmpty(){return this.corpZipCodeEmpty},
+        iscorpBusinessPhoneNoEmpty(){return this.corpBusinessPhoneNoEmpty},
+        iscorpFaxNoEmpty(){return this.corpFaxNoEmpty},
+        iscorpAuthorizedLastnameEmpty(){return this.corpAuthorizedLastnameEmpty},
+        iscorpAuthorizedFirstnameEmpty(){return this.corpAuthorizedFirstnameEmpty},
+        iscorpAuthorizedMiddlenameEmpty(){return this.corpAuthorizedMiddlenameEmpty},
+        iscorpAuthorizedPositionEmpty(){return this.corpAuthorizedPositionEmpty},
+        iscorpAuthorizedSecondaryAddressEmpty(){return this.corpAuthorizedSecondaryAddressEmpty},
+        iscorpAuthorizedZipEmpty(){return this.corpAuthorizedZipEmpty},
+        iscorpAuthorizedBirthdateEmpty(){return this.corpAuthorizedBirthdateEmpty},
+        iscorpAuthorizedBirthPlaceEmpty(){return this.corpAuthorizedBirthPlaceEmpty},
+        iscorpAuthorizedSexEmpty(){return this.corpAuthorizedSexEmpty},
+        iscorpAuthorizedHomePhoneNoEmpty(){return this.corpAuthorizedHomePhoneNoEmpty},
+        iscorpAuthorizedFaxNoEmpty(){return this.corpAuthorizedFaxNoEmpty},
+        iscorpAuthorizedIncludeCtryEmpty(){return this.corpAuthorizedIncludeCtryEmpty},
+        iscorpAuthorizedMobileNoEmpty(){return this.corpAuthorizedMobileNoEmpty},
+        iscorpAuthorizedTINEmpty(){return this.corpAuthorizedTINEmpty},
+        iscorpAuthorizedEmailEmpty(){return this.corpAuthorizedEmailEmpty},
+        iscorpAuthorizedCitizenshipEmpty(){return this.corpAuthorizedCitizenshipEmpty},
+        iscorpAuthorizedCivilStatusEmpty(){return this.corpAuthorizedCivilStatusEmpty},
+        iscorpAuthorizedGovtIssuedIDEmpty(){return this.corpAuthorizedGovtIssuedIDEmpty},
+        
+        isotherBanksEmpty(){return this.otherBanksEmpty},
+        isotherTypeAccountEmpty(){return this.otherTypeAccountEmpty},
+        isotherReasonPurchaseEmpty(){return this.otherReasonPurchaseEmpty},
+        isotherConsideredFactorEmpty(){return this.otherConsideredFactorEmpty},
+        isotherWhereHeardEmpty(){return this.otherWhereHeardEmpty},
+        isotherPurchasedBeforeEmpty(){return this.otherPurchasedBeforeEmpty},
 
     },
     
     methods: {
         //properties
+        updatePropertyOther(){
+            this.property = this.propertyOthers
+        },
         checkproperty(){
             return this.propertyEmpty = this.property!==''?false:true
         },
+    
         checktypeBuyer(){
             return this.typeBuyerEmpty = this.typeBuyer!==''?false:true
         },
@@ -1105,11 +1146,82 @@ export default {
         checkbuyerIssuedID(){
             return this.buyerIssuedIDEmpty = this.buyerIssuedID!==''?false:true
         },
+        checkbusinessName(){return this.businessNameEmpty = this.businessName!==""?false:true},
+        checkbusinessAddress(){return this.businessAddressEmpty = this.businessAddress!==""?false:true},
+        checkbusinessPhoneNo(){return this.businessPhoneNoEmpty = this.businessPhoneNo!==""?false:true},
+        checkbusinessfaxNo(){return this.businessfaxNoEmpty = this.businessfaxNo!==""?false:true},
+        checkbusinessPosition(){return this.businessPositionEmpty = this.businessPosition!==""?false:true},
+        checkbusinessProfession(){return this.businessProfessionEmpty = this.businessProfession!==""?false:true},
+        checkbusinessEmploymentStatus(){return this.businessEmploymentStatusEmpty = this.businessEmploymentStatus!==""?false:true},
+        checkspouseLastname(){return this.spouseLastnameEmpty = this.spouseLastname!==""?false:true},
+        checkspouseFirstname(){return this.spouseFirstnameEmpty = this.spouseFirstname!==""?false:true},
+        checkspouseMiddleName(){return this.spouseMiddleNameEmpty = this.spouseMiddleName!==""?false:true},
+        checkspouseOccupation(){return this.spouseOccupationEmpty = this.spouseOccupation!==""?false:true},
+        checkspousePhoneNo(){return this.spousePhoneNoEmpty = this.spousePhoneNo!==""?false:true},
+        checkspouseMobileNo(){return this.spouseMobileNoEmpty = this.spouseMobileNo!==""?false:true},
+        checkspouseEmail(){return this.spouseEmailEmpty = this.spouseEmail!==""?false:true},
+        checkspouseTIN(){return this.spouseTINEmpty = this.spouseTIN!==""?false:true},
+        checkspouseCitizenship(){return this.spouseCitizenshipEmpty = this.spouseCitizenship!==""?false:true},
+        checkspouseFaxNo(){return this.spouseFaxNoEmpty = this.spouseFaxNo!==""?false:true},
+        checkspouseSex(){return this.spouseSexEmpty = this.spouseSex!==""?false:true},
+        checkspouseEmployment(){return this.spouseEmploymentEmpty = this.spouseEmployment!==""?false:true},
+        checkspouseNoChildren(){return this.spouseNoChildrenEmpty = this.spouseNoChildren!==""?false:true},
+        checkattyLastname(){return this.attyLastnameEmpty = this.attyLastname!==""?false:true},
+        checkattyFirstname(){return this.attyFirstnameEmpty = this.attyFirstname!==""?false:true},
+        checkattyMiddlename(){return this.attyMiddlenameEmpty = this.attyMiddlename!==""?false:true},
+        checkattyOccupation(){return this.attyOccupationEmpty = this.attyOccupation!==""?false:true},
+        checkattyPrimaryAddress(){return this.attyPrimaryAddressEmpty = this.attyPrimaryAddress!==""?false:true},
+        checkattyPrimaryZip(){return this.attyPrimaryZipEmpty = this.attyPrimaryZip!==""?false:true},
+        checkattyCivilStatus(){return this.attyCivilStatusEmpty = this.attyCivilStatus!==""?false:true},
+        checkattyAge(){return this.attyAgeEmpty = this.attyAge!==""?false:true},
+        checkattySecondaryAddress(){return this.attySecondaryAddressEmpty = this.attySecondaryAddress!==""?false:true},
+        checkattySecondaryZip(){return this.attySecondaryZipEmpty = this.attySecondaryZip!==""?false:true},
+        checkattyBirthdate(){return this.attyBirthdateEmpty = this.attyBirthdate!==""?false:true},
+        checkattyPlaceBirth(){return this.attyPlaceBirthEmpty = this.attyPlaceBirth!==""?false:true},
+        checkattySex(){return this.attySexEmpty = this.attySex!==""?false:true},
+        checkattyHomeNo(){return this.attyHomeNoEmpty = this.attyHomeNo!==""?false:true},
+        checkattyFaxNo(){return this.attyFaxNoEmpty = this.attyFaxNo!==""?false:true},
+        checkattyIncludeCountry(){return this.attyIncludeCountryEmpty = this.attyIncludeCountry!==""?false:true},
+        checkattyMobileNo(){return this.attyMobileNoEmpty = this.attyMobileNo!==""?false:true},
+        checkattyTIN(){return this.attyTINEmpty = this.attyTIN!==""?false:true},
+        checkattyEmail(){return this.attyEmailEmpty = this.attyEmail!==""?false:true},
+        checkattyCitizenship(){return this.attyCitizenshipEmpty = this.attyCitizenship!==""?false:true},
+        checkattyGovtIssuedID(){return this.attyGovtIssuedIDEmpty = this.attyGovtIssuedID!==""?false:true},
+        checkcorpName(){return this.corpNameEmpty = this.corpName!==""?false:true},
+        checkcorpBusinessName(){return this.corpBusinessNameEmpty = this.corpBusinessName!==""?false:true},
+        checkcorpBusinessAddress(){return this.corpBusinessAddressEmpty = this.corpBusinessAddress!==""?false:true},
+        checkcorpZipCode(){return this.corpZipCodeEmpty = this.corpZipCode!==""?false:true},
+        checkcorpBusinessPhoneNo(){return this.corpBusinessPhoneNoEmpty = this.corpBusinessPhoneNo!==""?false:true},
+        checkcorpFaxNo(){return this.corpFaxNoEmpty = this.corpFaxNo!==""?false:true},
+        checkcorpAuthorizedLastname(){return this.corpAuthorizedLastnameEmpty = this.corpAuthorizedLastname!==""?false:true},
+        checkcorpAuthorizedFirstname(){return this.corpAuthorizedFirstnameEmpty = this.corpAuthorizedFirstname!==""?false:true},
+        checkcorpAuthorizedMiddlename(){return this.corpAuthorizedMiddlenameEmpty = this.corpAuthorizedMiddlename!==""?false:true},
+        checkcorpAuthorizedPosition(){return this.corpAuthorizedPositionEmpty = this.corpAuthorizedPosition!==""?false:true},
+        checkcorpAuthorizedSecondaryAddress(){return this.corpAuthorizedSecondaryAddressEmpty = this.corpAuthorizedSecondaryAddress!==""?false:true},
+        checkcorpAuthorizedZip(){return this.corpAuthorizedZipEmpty = this.corpAuthorizedZip!==""?false:true},
+        checkcorpAuthorizedBirthdate(){return this.corpAuthorizedBirthdateEmpty = this.corpAuthorizedBirthdate!==""?false:true},
+        checkcorpAuthorizedBirthPlace(){return this.corpAuthorizedBirthPlaceEmpty = this.corpAuthorizedBirthPlace!==""?false:true},
+        checkcorpAuthorizedSex(){return this.corpAuthorizedSexEmpty = this.corpAuthorizedSex!==""?false:true},
+        checkcorpAuthorizedHomePhoneNo(){return this.corpAuthorizedHomePhoneNoEmpty = this.corpAuthorizedHomePhoneNo!==""?false:true},
+        checkcorpAuthorizedFaxNo(){return this.corpAuthorizedFaxNoEmpty = this.corpAuthorizedFaxNo!==""?false:true},
+        checkcorpAuthorizedIncludeCtry(){return this.corpAuthorizedIncludeCtryEmpty = this.corpAuthorizedIncludeCtry!==""?false:true},
+        checkcorpAuthorizedMobileNo(){return this.corpAuthorizedMobileNoEmpty = this.corpAuthorizedMobileNo!==""?false:true},
+        checkcorpAuthorizedTIN(){return this.corpAuthorizedTINEmpty = this.corpAuthorizedTIN!==""?false:true},
+        checkcorpAuthorizedEmail(){return this.corpAuthorizedEmailEmpty = this.corpAuthorizedEmail!==""?false:true},
+        checkcorpAuthorizedCitizenship(){return this.corpAuthorizedCitizenshipEmpty = this.corpAuthorizedCitizenship!==""?false:true},
+        checkcorpAuthorizedCivilStatus(){return this.corpAuthorizedCivilStatusEmpty = this.corpAuthorizedCivilStatus!==""?false:true},
+        checkcorpAuthorizedGovtIssuedID(){return this.corpAuthorizedGovtIssuedIDEmpty = this.corpAuthorizedGovtIssuedID!==""?false:true},
+        checkotherBanks(){return this.otherBanksEmpty = this.otherBanks!==""?false:true},
+        checkotherTypeAccount(){return this.otherTypeAccountEmpty = this.otherTypeAccount!==""?false:true},
+        checkotherReasonPurchase(){return this.otherReasonPurchaseEmpty = this.otherReasonPurchase!==""?false:true},
+        checkotherConsideredFactor(){return this.otherConsideredFactorEmpty = this.otherConsideredFactor!==""?false:true},
+        checkotherWhereHeard(){return this.otherWhereHeardEmpty = this.otherWhereHeard!==""?false:true},
+        checkotherPurchasedBefore(){return this.otherPurchasedBeforeEmpty = this.otherPurchasedBefore!==""?false:true},
 
 
 
         //CHECK
-        checkAllEmpty(){
+            checkAllEmpty(){
                 this.checkproperty() 
                 this.checktypeBuyer()
                 this.checkbuyerLastname() 
@@ -1134,6 +1246,78 @@ export default {
                 this.checkbuyerCitizen()
                 this.checkbuyerReligion()
                 this.checkbuyerIssuedID()
+                //PY
+                this.checkbusinessName()
+                this.checkbusinessAddress()
+                this.checkbusinessPhoneNo()
+                this.checkbusinessfaxNo()
+                this.checkbusinessPosition()
+                this.checkbusinessProfession()
+                this.checkbusinessEmploymentStatus()
+                this.checkspouseLastname()
+                this.checkspouseFirstname()
+                this.checkspouseMiddleName()
+                this.checkspouseOccupation()
+                this.checkspousePhoneNo()
+                this.checkspouseMobileNo()
+                this.checkspouseEmail()
+                this.checkspouseTIN()
+                this.checkspouseCitizenship()
+                this.checkspouseFaxNo()
+                this.checkspouseSex()
+                this.checkspouseEmployment()
+                this.checkspouseNoChildren()
+                this.checkattyLastname()
+                this.checkattyFirstname()
+                this.checkattyMiddlename()
+                this.checkattyOccupation()
+                this.checkattyPrimaryAddress()
+                this.checkattyPrimaryZip()
+                this.checkattyCivilStatus()
+                this.checkattyAge()
+                this.checkattySecondaryAddress()
+                this.checkattySecondaryZip()
+                this.checkattyBirthdate()
+                this.checkattyPlaceBirth()
+                this.checkattySex()
+                this.checkattyHomeNo()
+                this.checkattyFaxNo()
+                this.checkattyIncludeCountry()
+                this.checkattyMobileNo()
+                this.checkattyTIN()
+                this.checkattyEmail()
+                this.checkattyCitizenship()
+                this.checkattyGovtIssuedID()
+                this.checkcorpName()
+                this.checkcorpBusinessName()
+                this.checkcorpBusinessAddress()
+                this.checkcorpZipCode()
+                this.checkcorpBusinessPhoneNo()
+                this.checkcorpFaxNo()
+                this.checkcorpAuthorizedLastname()
+                this.checkcorpAuthorizedFirstname()
+                this.checkcorpAuthorizedMiddlename()
+                this.checkcorpAuthorizedPosition()
+                this.checkcorpAuthorizedSecondaryAddress()
+                this.checkcorpAuthorizedZip()
+                this.checkcorpAuthorizedBirthdate()
+                this.checkcorpAuthorizedBirthPlace()
+                this.checkcorpAuthorizedSex()
+                this.checkcorpAuthorizedHomePhoneNo()
+                this.checkcorpAuthorizedFaxNo()
+                this.checkcorpAuthorizedIncludeCtry()
+                this.checkcorpAuthorizedMobileNo()
+                this.checkcorpAuthorizedTIN()
+                this.checkcorpAuthorizedEmail()
+                this.checkcorpAuthorizedCitizenship()
+                this.checkcorpAuthorizedCivilStatus()
+                this.checkcorpAuthorizedGovtIssuedID()
+                this.checkotherBanks()
+                this.checkotherTypeAccount()
+                this.checkotherReasonPurchase()
+                this.checkotherConsideredFactor()
+                this.checkotherWhereHeard()
+                this.checkotherPurchasedBefore()
         },
         checkReadySubmit(){
             if(
@@ -1160,7 +1344,78 @@ export default {
                 !this.checkbuyerTIN() &&
                 !this.checkbuyerCitizen() &&
                 !this.checkbuyerReligion() &&
-                !this.checkbuyerIssuedID()
+                !this.checkbuyerIssuedID() &&
+                !this.checkbusinessName() &&
+                !this.checkbusinessAddress() &&
+                !this.checkbusinessPhoneNo() &&
+                !this.checkbusinessfaxNo() &&
+                !this.checkbusinessPosition() &&
+                !this.checkbusinessProfession() &&
+                !this.checkbusinessEmploymentStatus() &&
+                !this.checkspouseLastname() &&
+                !this.checkspouseFirstname() &&
+                !this.checkspouseMiddleName() &&
+                !this.checkspouseOccupation() &&
+                !this.checkspousePhoneNo() &&
+                !this.checkspouseMobileNo() &&
+                !this.checkspouseEmail() &&
+                !this.checkspouseTIN() &&
+                !this.checkspouseCitizenship() &&
+                !this.checkspouseFaxNo() &&
+                !this.checkspouseSex() &&
+                !this.checkspouseEmployment() &&
+                !this.checkspouseNoChildren() &&
+                !this.checkattyLastname() &&
+                !this.checkattyFirstname() &&
+                !this.checkattyMiddlename() &&
+                !this.checkattyOccupation() &&
+                !this.checkattyPrimaryAddress() &&
+                !this.checkattyPrimaryZip() &&
+                !this.checkattyCivilStatus() &&
+                !this.checkattyAge() &&
+                !this.checkattySecondaryAddress() &&
+                !this.checkattySecondaryZip() &&
+                !this.checkattyBirthdate() &&
+                !this.checkattyPlaceBirth() &&
+                !this.checkattySex() &&
+                !this.checkattyHomeNo() &&
+                !this.checkattyFaxNo() &&
+                !this.checkattyIncludeCountry() &&
+                !this.checkattyMobileNo() &&
+                !this.checkattyTIN() &&
+                !this.checkattyEmail() &&
+                !this.checkattyCitizenship() &&
+                !this.checkattyGovtIssuedID() &&
+                !this.checkcorpName() &&
+                !this.checkcorpBusinessName() &&
+                !this.checkcorpBusinessAddress() &&
+                !this.checkcorpZipCode() &&
+                !this.checkcorpBusinessPhoneNo() &&
+                !this.checkcorpFaxNo() &&
+                !this.checkcorpAuthorizedLastname() &&
+                !this.checkcorpAuthorizedFirstname() &&
+                !this.checkcorpAuthorizedMiddlename() &&
+                !this.checkcorpAuthorizedPosition() &&
+                !this.checkcorpAuthorizedSecondaryAddress() &&
+                !this.checkcorpAuthorizedZip() &&
+                !this.checkcorpAuthorizedBirthdate() &&
+                !this.checkcorpAuthorizedBirthPlace() &&
+                !this.checkcorpAuthorizedSex() &&
+                !this.checkcorpAuthorizedHomePhoneNo() &&
+                !this.checkcorpAuthorizedFaxNo() &&
+                !this.checkcorpAuthorizedIncludeCtry() &&
+                !this.checkcorpAuthorizedMobileNo() &&
+                !this.checkcorpAuthorizedTIN() &&
+                !this.checkcorpAuthorizedEmail() &&
+                !this.checkcorpAuthorizedCitizenship() &&
+                !this.checkcorpAuthorizedCivilStatus() &&
+                !this.checkcorpAuthorizedGovtIssuedID()
+                // !this.checkotherBanks() &&
+                // !this.checkotherTypeAccount() &&
+                // !this.checkotherReasonPurchase() &&
+                // !this.checkotherConsideredFactor() &&
+                // !this.checkotherWhereHeard() &&
+                // !this.checkotherPurchasedBefore()
             ){
                 return true
             }else{
@@ -1193,13 +1448,88 @@ export default {
             buyerTIN: this.buyerTIN,
             buyerCitizen: this.buyerCitizen,
             buyerReligion: this.buyerReligion,
-            buyerIssuedID: this.buyerIssuedID
+            buyerIssuedID: this.buyerIssuedID,
+
+            //py
+            businessName: this.businessName,
+            businessAddress: this.businessAddress,
+            businessPhoneNo: this.businessPhoneNo,
+            businessfaxNo: this.businessfaxNo,
+            businessPosition: this.businessPosition,
+            businessProfession: this.businessProfession,
+            businessEmploymentStatus: this.businessEmploymentStatus,
+            spouseLastname: this.spouseLastname,
+            spouseFirstname: this.spouseFirstname,
+            spouseMiddleName: this.spouseMiddleName,
+            spouseOccupation: this.spouseOccupation,
+            spousePhoneNo: this.spousePhoneNo,
+            spouseMobileNo: this.spouseMobileNo,
+            spouseEmail: this.spouseEmail,
+            spouseTIN: this.spouseTIN,
+            spouseCitizenship: this.spouseCitizenship,
+            spouseFaxNo: this.spouseFaxNo,
+            spouseSex: this.spouseSex,
+            spouseEmployment: this.spouseEmployment,
+            spouseNoChildren: this.spouseNoChildren,
+            attyLastname: this.attyLastname,
+            attyFirstname: this.attyFirstname,
+            attyMiddlename: this.attyMiddlename,
+            attyOccupation: this.attyOccupation,
+            attyPrimaryAddress: this.attyPrimaryAddress,
+            attyPrimaryZip: this.attyPrimaryZip,
+            attyCivilStatus: this.attyCivilStatus,
+            attyAge: this.attyAge,
+            attySecondaryAddress: this.attySecondaryAddress,
+            attySecondaryZip: this.attySecondaryZip,
+            attyBirthdate: this.attyBirthdate,
+            attyPlaceBirth: this.attyPlaceBirth,
+            attySex: this.attySex,
+            attyHomeNo: this.attyHomeNo,
+            attyFaxNo: this.attyFaxNo,
+            attyIncludeCountry: this.attyIncludeCountry,
+            attyMobileNo: this.attyMobileNo,
+            attyTIN: this.attyTIN,
+            attyEmail: this.attyEmail,
+            attyCitizenship: this.attyCitizenship,
+            attyGovtIssuedID: this.attyGovtIssuedID,
+            corpName: this.corpName,
+            corpBusinessName: this.corpBusinessName,
+            corpBusinessAddress: this.corpBusinessAddress,
+            corpZipCode: this.corpZipCode,
+            corpBusinessPhoneNo: this.corpBusinessPhoneNo,
+            corpFaxNo: this.corpFaxNo,
+            corpAuthorizedLastname: this.corpAuthorizedLastname,
+            corpAuthorizedFirstname: this.corpAuthorizedFirstname,
+            corpAuthorizedMiddlename: this.corpAuthorizedMiddlename,
+            corpAuthorizedPosition: this.corpAuthorizedPosition,
+            corpAuthorizedSecondaryAddress: this.corpAuthorizedSecondaryAddress,
+            corpAuthorizedZip: this.corpAuthorizedZip,
+            corpAuthorizedBirthdate: this.corpAuthorizedBirthdate,
+            corpAuthorizedBirthPlace: this.corpAuthorizedBirthPlace,
+            corpAuthorizedSex: this.corpAuthorizedSex,
+            corpAuthorizedHomePhoneNo: this.corpAuthorizedHomePhoneNo,
+            corpAuthorizedFaxNo: this.corpAuthorizedFaxNo,
+            corpAuthorizedIncludeCtry: this.corpAuthorizedIncludeCtry,
+            corpAuthorizedMobileNo: this.corpAuthorizedMobileNo,
+            corpAuthorizedTIN: this.corpAuthorizedTIN,
+            corpAuthorizedEmail: this.corpAuthorizedEmail,
+            corpAuthorizedCitizenship: this.corpAuthorizedCitizenship,
+            corpAuthorizedCivilStatus: this.corpAuthorizedCivilStatus,
+            corpAuthorizedGovtIssuedID: this.corpAuthorizedGovtIssuedID,
+            otherBanks: this.otherBanks,
+            otherTypeAccount: this.otherTypeAccount,
+            otherReasonPurchase: this.otherReasonPurchase,
+            otherConsideredFactor: this.otherConsideredFactor,
+            otherWhereHeard: this.otherWhereHeard,
+            otherPurchasedBefore: this.otherPurchasedBefore,
             }
         },
 
         submit(){
             this.checkAllEmpty()
             const isGood = this.checkReadySubmit()
+            const payload = this.getAllData()
+            console.log(payload)
             if(isGood){
                 const payload = this.getAllData()
                 console.log(payload)
@@ -1283,7 +1613,80 @@ export default {
         },
         buyerIssuedID(){
             this.checkbuyerIssuedID()
-        },       
+        },    
+        
+        //PY
+        businessName(){this.checkbusinessName()},
+        businessAddress(){this.checkbusinessAddress()},
+        businessPhoneNo(){this.checkbusinessPhoneNo()},
+        businessfaxNo(){this.checkbusinessfaxNo()},
+        businessPosition(){this.checkbusinessPosition()},
+        businessProfession(){this.checkbusinessProfession()},
+        businessEmploymentStatus(){this.checkbusinessEmploymentStatus()},
+        spouseLastname(){this.checkspouseLastname()},
+        spouseFirstname(){this.checkspouseFirstname()},
+        spouseMiddleName(){this.checkspouseMiddleName()},
+        spouseOccupation(){this.checkspouseOccupation()},
+        spousePhoneNo(){this.checkspousePhoneNo()},
+        spouseMobileNo(){this.checkspouseMobileNo()},
+        spouseEmail(){this.checkspouseEmail()},
+        spouseTIN(){this.checkspouseTIN()},
+        spouseCitizenship(){this.checkspouseCitizenship()},
+        spouseFaxNo(){this.checkspouseFaxNo()},
+        spouseSex(){this.checkspouseSex()},
+        spouseEmployment(){this.checkspouseEmployment()},
+        spouseNoChildren(){this.checkspouseNoChildren()},
+        attyLastname(){this.checkattyLastname()},
+        attyFirstname(){this.checkattyFirstname()},
+        attyMiddlename(){this.checkattyMiddlename()},
+        attyOccupation(){this.checkattyOccupation()},
+        attyPrimaryAddress(){this.checkattyPrimaryAddress()},
+        attyPrimaryZip(){this.checkattyPrimaryZip()},
+        attyCivilStatus(){this.checkattyCivilStatus()},
+        attyAge(){this.checkattyAge()},
+        attySecondaryAddress(){this.checkattySecondaryAddress()},
+        attySecondaryZip(){this.checkattySecondaryZip()},
+        attyBirthdate(){this.checkattyBirthdate()},
+        attyPlaceBirth(){this.checkattyPlaceBirth()},
+        attySex(){this.checkattySex()},
+        attyHomeNo(){this.checkattyHomeNo()},
+        attyFaxNo(){this.checkattyFaxNo()},
+        attyIncludeCountry(){this.checkattyIncludeCountry()},
+        attyMobileNo(){this.checkattyMobileNo()},
+        attyTIN(){this.checkattyTIN()},
+        attyEmail(){this.checkattyEmail()},
+        attyCitizenship(){this.checkattyCitizenship()},
+        attyGovtIssuedID(){this.checkattyGovtIssuedID()},
+        corpName(){this.checkcorpName()},
+        corpBusinessName(){this.checkcorpBusinessName()},
+        corpBusinessAddress(){this.checkcorpBusinessAddress()},
+        corpZipCode(){this.checkcorpZipCode()},
+        corpBusinessPhoneNo(){this.checkcorpBusinessPhoneNo()},
+        corpFaxNo(){this.checkcorpFaxNo()},
+        corpAuthorizedLastname(){this.checkcorpAuthorizedLastname()},
+        corpAuthorizedFirstname(){this.checkcorpAuthorizedFirstname()},
+        corpAuthorizedMiddlename(){this.checkcorpAuthorizedMiddlename()},
+        corpAuthorizedPosition(){this.checkcorpAuthorizedPosition()},
+        corpAuthorizedSecondaryAddress(){this.checkcorpAuthorizedSecondaryAddress()},
+        corpAuthorizedZip(){this.checkcorpAuthorizedZip()},
+        corpAuthorizedBirthdate(){this.checkcorpAuthorizedBirthdate()},
+        corpAuthorizedBirthPlace(){this.checkcorpAuthorizedBirthPlace()},
+        corpAuthorizedSex(){this.checkcorpAuthorizedSex()},
+        corpAuthorizedHomePhoneNo(){this.checkcorpAuthorizedHomePhoneNo()},
+        corpAuthorizedFaxNo(){this.checkcorpAuthorizedFaxNo()},
+        corpAuthorizedIncludeCtry(){this.checkcorpAuthorizedIncludeCtry()},
+        corpAuthorizedMobileNo(){this.checkcorpAuthorizedMobileNo()},
+        corpAuthorizedTIN(){this.checkcorpAuthorizedTIN()},
+        corpAuthorizedEmail(){this.checkcorpAuthorizedEmail()},
+        corpAuthorizedCitizenship(){this.checkcorpAuthorizedCitizenship()},
+        corpAuthorizedCivilStatus(){this.checkcorpAuthorizedCivilStatus()},
+        corpAuthorizedGovtIssuedID(){this.checkcorpAuthorizedGovtIssuedID()},
+        otherBanks(){this.checkotherBanks()},
+        otherTypeAccount(){this.checkotherTypeAccount()},
+        otherReasonPurchase(){this.checkotherReasonPurchase()},
+        otherConsideredFactor(){this.checkotherConsideredFactor()},
+        otherWhereHeard(){this.checkotherWhereHeard()},
+        otherPurchasedBefore(){this.checkotherPurchasedBefore()},
     }
 }
 </script>
