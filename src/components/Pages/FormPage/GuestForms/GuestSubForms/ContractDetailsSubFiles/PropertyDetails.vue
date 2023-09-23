@@ -27,7 +27,7 @@
                         <span>
                             <input type="radio" id="propertyradio6" :value="propertyOther" v-model="property">
                             <label for="propertyradio6">Others</label>
-                            <input for="propertyradio6" style="border: none; border-bottom: 1px solid black;" v-model="propertyOthers" @input="updatePropertyOther">
+                            <input style="border: none; border-bottom: 1px solid black;" v-model="propertyOthers" @input="updatePropertyOther">
                             
                         </span>                       
                     </div>  
@@ -46,7 +46,7 @@
 export default {
     data(){
         return{
-            property: '', propertyOthers: '',
+            property: '', propertyOthers: null,
             propertyEmpty: false,
             typeBuyer: '',
             typeBuyerEmpty: false,

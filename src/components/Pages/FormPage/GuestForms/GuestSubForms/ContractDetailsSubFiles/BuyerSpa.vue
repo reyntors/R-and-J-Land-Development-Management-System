@@ -121,19 +121,24 @@
                     <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
                     <div>
                         <section>
-                            <span><input type="checkbox" id="attySSS/GSIS" v-model="attyGovtIssuedID" value="SSS/GSIS"><label for="attySSS/GSIS">SSS/GSIS</label></span>:<input>
+                            <span><input type="radio" id="attySSS/GSIS" v-model="attyGovtIssuedID" value="SSS"><label for="attySSS/GSIS">SSS/GSIS</label></span>:
+                            <input v-model="idSSS" :readonly="isSSSWrite" @input="setidSSS">
                         </section>
                         <section>
-                            <span><input type="checkbox" id="attyDriverLicense" v-model="attyGovtIssuedID" value="Driver's License"><label for="attyDriverLicense">Driver's License</label> </span>:<input>
+                            <span><input type="radio" id="attyDriverLicense" v-model="attyGovtIssuedID" value="DRIVER"><label for="attyDriverLicense">Driver's License</label> </span>:
+                            <input v-model="idDriver" :readonly="isDRIVERWrite" @input="setidDriver">
                         </section>
                         <section>
-                            <span><input type="checkbox" id="attyPRC" v-model="attyGovtIssuedID" value="PRC"><label for="attyPRC">PRC</label> </span>:<input>
+                            <span><input type="radio" id="attyPRC" v-model="attyGovtIssuedID" value="PRC"><label for="attyPRC">PRC</label> </span>:
+                            <input v-model="idPrc" :readonly="isPRCWrite" @input="setidPrc">
                         </section>
                         <section>
-                            <span><input type="checkbox" id="attyPassport" v-model="attyGovtIssuedID" value="Passport"><label for="attyPassport">Passport</label> </span>:<input>
+                            <span><input type="radio" id="attyPassport" v-model="attyGovtIssuedID" value="PASSPORT"><label for="attyPassport">Passport</label> </span>:
+                            <input v-model="idPassport" :readonly="isPASSPORTWrite" @input="setidPassport">
                         </section>
                         <section>
-                            <span><input type="checkbox" id="attyOthers" v-model="attyGovtIssuedID" value="Others"><label for="attyOthers">Others</label> </span>:<input>
+                            <span><input type="radio" id="attyOthers" v-model="attyGovtIssuedID" value="OTHERS"><label for="attyOthers">Others</label> </span>:
+                            <input v-model="idOthers" :readonly="isOTHERWrite" @input="setidOthers">
                         </section>
                     </div>
                 </section>
@@ -190,6 +195,13 @@ export default {
             attyCitizenshipEmpty: false,
             attyGovtIssuedID: '',
             attyGovtIssuedIDEmpty: false,
+
+            IDNO: '',
+            idSSS: '',
+            idDriver: '',
+            idPrc: '',
+            idPassport: '',
+            idOthers: ''
         }
     },
     methods:{
@@ -216,6 +228,28 @@ export default {
         checkattyGovtIssuedID(){return this.attyGovtIssuedIDEmpty = this.attyGovtIssuedID!==""?false:true},
 
         //////////////////////////////////////////////////////////////
+        setidSSS(){
+            this.IDNO = this.idSSS
+            this.passData()
+        },
+        setidDriver(){
+            this.IDNO = this.idDriver
+            this.passData()
+        },
+        setidPrc(){
+            this.IDNO = this.idPrc
+            this.passData()
+        },
+        setidPassport(){
+            this.IDNO = this.idPassport
+            this.passData()
+        },
+        setidOthers(){
+            this.IDNO = this.idOthers
+            this.passData()
+        },
+
+        //////////////////////////////////////////////////////////////
         passData(){
             const payload = {
                 attyLastname: this.attyLastname,
@@ -238,7 +272,7 @@ export default {
                 attyTIN: this.attyTIN,
                 attyEmail: this.attyEmail,
                 attyCitizenship: this.attyCitizenship,
-                attyGovtIssuedID: this.attyGovtIssuedID,
+                attyGovtIssuedID: this.attyGovtIssuedID +' ID = ' + this.IDNO,
             }
             this.$emit('pass-data',payload)
         }
@@ -265,6 +299,22 @@ export default {
         isattyEmailEmpty(){return this.attyEmailEmpty},
         isattyCitizenshipEmpty(){return this.attyCitizenshipEmpty},
         isattyGovtIssuedIDEmpty(){return this.attyGovtIssuedIDEmpty},
+
+        isSSSWrite(){
+            return this.attyGovtIssuedID==='SSS'?false:true
+        },
+        isDRIVERWrite(){
+            return this.attyGovtIssuedID==='DRIVER'?false:true
+        },
+        isPRCWrite(){
+            return this.attyGovtIssuedID==='PRC'?false:true
+        },
+        isPASSPORTWrite(){
+            return this.attyGovtIssuedID==='PASSPORT'?false:true
+        },
+        isOTHERWrite(){
+            return this.attyGovtIssuedID==='OTHERS'?false:true
+        },
 
     },
     watch:{
@@ -348,7 +398,38 @@ export default {
             this.checkattyCitizenship()
             this.passData()
         },
-        attyGovtIssuedID(){
+        attyGovtIssuedID(latest){
+            if(latest === 'SSS'){
+                this.idDriver=''
+                this.idPrc=''
+                this.idPassport=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else if(latest === 'DRIVER'){
+                this.idSSS=''
+                this.idPrc=''
+                this.idPassport=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else if(latest === 'PRC'){
+                this.idSSS=''
+                this.idDriver=''
+                this.idPassport=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else if(latest === 'PASSPORT'){
+                this.idSSS=''
+                this.idDriver=''
+                this.idPrc=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else{
+                this.idSSS=''
+                this.idDriver=''
+                this.idPrc=''
+                this.idPassport=''
+                this.IDNO = ''
+            }
             this.checkattyGovtIssuedID()
             this.passData()
         },

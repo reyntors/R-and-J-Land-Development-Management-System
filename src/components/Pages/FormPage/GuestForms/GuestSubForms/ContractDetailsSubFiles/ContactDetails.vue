@@ -140,8 +140,8 @@
                             <p>RELIGION</p>    
                             <span><input type="radio" id="buyerRelgionCatholic" value="roman catholic" v-model="buyerReligion"><label for="buyerRelgionCatholic">Roman Catholic</label></span>
                             <span><input type="radio" id="buyerRelgionProtestant" value="protestant" v-model="buyerReligion"><label for="buyerRelgionProtestant">Protestant</label><br></span>
-                            <span><input type="radio" id="buyerRelgionOthers" value="others" v-model="buyerReligion"><label for="buyerRelgionOthers">Others (pl. specify)</label><br></span>
-                            <input>                            
+                            <span><input type="radio" id="buyerRelgionOthers" :value="buyerReligionOtherComputed" v-model="buyerReligion"><label for="buyerRelgionOthers">Others (pl. specify)</label><br></span>
+                            <input v-model="buyerReligionOther" @input="setBuyerReligion">                            
                         </article>
 
                     </div>
@@ -152,24 +152,24 @@
                         <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
                         <div :class="{empty:isbuyerIssuedIDEmpty}">
                             <section>
-                                <span><input type="radio" id="govtIdSSS/GSIS" value="SSS/GSIS" v-model="buyerIssuedID"><label for="govtIdSSS/GSIS">SSS/GSIS</label> </span>:
-                                      <input >
+                                <span><input type="radio" id="govtIdSSS/GSIS" value="SSS" v-model="buyerIssuedID"><label for="govtIdSSS/GSIS">SSS/GSIS</label> </span>:
+                                      <input v-model="idSSS" :readonly="isSSSWrite" @input="setidSSS">
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdDriverLicense" value="Driver's License" v-model="buyerIssuedID"><label for="govtIdDriverLicense">Driver's License</label> </span>:
-                                      <input>
+                                <span><input type="radio" id="govtIdDriverLicense" value="DRIVER" v-model="buyerIssuedID"><label for="govtIdDriverLicense">Driver's License</label> </span>:
+                                      <input v-model="idDriver" :readonly="isDRIVERWrite" @input="setidDriver">
                             </section>
                             <section>
                                 <span><input type="radio" id="govtIdPRC" value="PRC" v-model="buyerIssuedID"><label for="govtIdPRC">PRC</label> </span>:
-                                      <input>
+                                      <input v-model="idPrc" :readonly="isPRCWrite" @input="setidPrc">
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdPassport" value="Passport" v-model="buyerIssuedID"><label for="govtIdPassport">Passport</label> </span>:
-                                    <input>
+                                <span><input type="radio" id="govtIdPassport" value="PASSPORT" v-model="buyerIssuedID"><label for="govtIdPassport">Passport</label> </span>:
+                                    <input v-model="idPassport" :readonly="isPASSPORTWrite" @input="setidPassport">
                             </section>
                             <section>
-                                <span><input type="radio" id="others" value="others" v-model="buyerIssuedID"><label for="others">Others</label> </span>:
-                                    <input style="border: none; border-bottom: 1px solid black;">
+                                <span><input type="radio" id="others" value="OTHERS" v-model="buyerIssuedID"><label for="others">Others</label> </span>:
+                                    <input v-model="idOthers" :readonly="isOTHERWrite" @input="setidOthers">
                             </section>
                         </div>                        
                     </article>
@@ -224,10 +224,18 @@ export default {
             buyerTINEmpty: false,
             buyerCitizen: '',
             buyerCitizenEmpty: false,
-            buyerReligion: '',
+            buyerReligion: '', buyerReligionOther:null,
             buyerReligionEmpty: false,
             buyerIssuedID: '',
-            buyerIssuedIDEmpty: false
+            buyerIssuedIDEmpty: false,
+
+            IDNO: '',
+            idSSS: '',
+            idDriver: '',
+            idPrc: '',
+            idPassport: '',
+            idOthers: ''
+
         }
     },
     methods:{
@@ -299,6 +307,31 @@ export default {
         },
 
         //////////////////////////////////////////////////////////////
+        setBuyerReligion(){
+            this.buyerReligion = this.buyerReligionOther
+        },
+        //////////////////////////////////////////////////////////////
+        setidSSS(){
+            this.IDNO = this.idSSS
+            this.passData()
+        },
+        setidDriver(){
+            this.IDNO = this.idDriver
+            this.passData()
+        },
+        setidPrc(){
+            this.IDNO = this.idPrc
+            this.passData()
+        },
+        setidPassport(){
+            this.IDNO = this.idPassport
+            this.passData()
+        },
+        setidOthers(){
+            this.IDNO = this.idOthers
+            this.passData()
+        },
+        //////////////////////////////////////////////////////////////
         passData(){
             const payload = {
                 buyerLastname: this.buyerLastname,
@@ -322,9 +355,8 @@ export default {
                 buyerTIN: this.buyerTIN,
                 buyerCitizen: this.buyerCitizen,
                 buyerReligion: this.buyerReligion,
-                buyerIssuedID: this.buyerIssuedID,
+                buyerIssuedID: this.buyerIssuedID +' ID = ' + this.IDNO,
             }
-            
             this.$emit('pass-data',payload)
         }
     },
@@ -352,6 +384,28 @@ export default {
         isbuyerCitizenEmpty(){return this.buyerCitizenEmpty},
         isbuyerReligionEmpty(){return this.buyerReligionEmpty},
         isbuyerIssuedIDEmpty(){return this.buyerIssuedIDEmpty},
+
+        /////////////////////////////////////////////////////////
+        buyerReligionOtherComputed(){
+            return this.buyerReligionOther            
+        },
+        /////////////////////////////////////////////////////////
+        isSSSWrite(){
+            return this.buyerIssuedID==='SSS'?false:true
+        },
+        isDRIVERWrite(){
+            return this.buyerIssuedID==='DRIVER'?false:true
+        },
+        isPRCWrite(){
+            return this.buyerIssuedID==='PRC'?false:true
+        },
+        isPASSPORTWrite(){
+            return this.buyerIssuedID==='PASSPORT'?false:true
+        },
+        isOTHERWrite(){
+            return this.buyerIssuedID==='OTHERS'?false:true
+        },
+
     },
     watch: {
         buyerLastname(){
@@ -438,7 +492,38 @@ export default {
             this.checkbuyerReligion()
             this.passData()
         },
-        buyerIssuedID(){
+        buyerIssuedID(latest){
+            if(latest === 'SSS'){
+                this.idDriver=''
+                this.idPrc=''
+                this.idPassport=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else if(latest === 'DRIVER'){
+                this.idSSS=''
+                this.idPrc=''
+                this.idPassport=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else if(latest === 'PRC'){
+                this.idSSS=''
+                this.idDriver=''
+                this.idPassport=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else if(latest === 'PASSPORT'){
+                this.idSSS=''
+                this.idDriver=''
+                this.idPrc=''
+                this.idOthers=''
+                this.IDNO = ''
+            }else{
+                this.idSSS=''
+                this.idDriver=''
+                this.idPrc=''
+                this.idPassport=''
+                this.IDNO = ''
+            }
             this.checkbuyerIssuedID()
             this.passData()
         },    
@@ -457,6 +542,8 @@ export default {
 }
 input{
     text-align: center;
+    border: none; 
+    border-bottom: 1px solid black;
 }
 .c-cont header{
     padding: .2rem 0;
