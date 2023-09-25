@@ -284,21 +284,8 @@ methods: {
     if(isGood){
         
 
-        const letterOfIntentData = {
-              date: this.date,
-              purchase: this.purchase,
-              project: this.project,
-              locationPH: this.locationPH,
-              locationBlk: this.locationBlk,
-              locationLotOrUnit: this.locationLotOrUnit,
-              name: this.name,
-              address: this.address,
-              citizenship: this.citizenship,
-              contactNo: this.contactNo,
-              emailAddress: this.emailAddress,
-              reservationTimeSpan: this.reservationTimeSpan,
-        // Add any other data you need here
-      };
+        const letterOfIntentData = this.getAllData()
+              
    
 
       try {

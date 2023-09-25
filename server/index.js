@@ -13,18 +13,17 @@ app.use(morgan('combine'));
 app.use(bodyParser.json());
 app.use(cors());
 
-mongoose.Promise = global.Promise;
+
 mongoose.connect(dbConfig.db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(
-    () => {
-        console.log('Database connected');
-    },
-    (error) => {
-        console.log("Database can't be connected:" + error);
-    }
-);
+})
+.then(() => {
+    console.log("Database successfully connected");
+})
+.catch((error) => {
+    console.error(error);
+});
 
 app.use(express.json());
 
