@@ -31,23 +31,23 @@
             </div>
 
             <div class="div2">
-                <section>
+                <section class="section1">
                     <p>HOME PHONE NO.</p>
                     <input style="display: block;" v-model="spousePhoneNo" :class="{empty:isspousePhoneNoEmpty}">
                 </section>
-                <section>
+                <section class="section2">
                     <p>MOBILE NO.</p>
                     <input style="display: block;" v-model="spouseMobileNo" :class="{empty:isspouseMobileNoEmpty}">
                 </section>
-                <section>
+                <section class="section3">
                     <p>EMAIL ADDRESS</p>
                     <input style="display: block;" v-model="spouseEmail" :class="{empty:isspouseEmailEmpty}">
                 </section>
-                <section>
+                <section class="section4">
                     <p>T.I.N.</p>
                     <input style="display: block;" v-model="spouseTIN" :class="{empty:isspouseTINEmpty}">
                 </section>
-                <section>
+                <section class="section5">
                     <p>CITIZENSHIP</p>
                     <input style="display: block;" v-model="spouseCitizenship" :class="{empty:isspouseCitizenshipEmpty}">
                 </section>
@@ -335,25 +335,47 @@ input{
     border: none;
     border-bottom: 1px solid black;
 }
+.spouse .div2 .section1{
+    border-left: 1px solid black;
+}
 .spouse .div2 section{
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    border-right: 1px solid black;
 }
 @media screen and (max-width: 703px) {
+.spouse .div2 section{
+    border-bottom: 1px solid black;
+}
+.spouse .div2 .section5{
+    border-bottom: none;
+    border-left: 1px solid black;
+}
 .spouse .div2 {
     grid-template-columns: 25%  25% 25% 25%;
     }
 }
 @media screen and (max-width: 576px) {
-.spouse .div2 {
+    .spouse .div2 {
     grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
+    }
+    .spouse .div2 .section4{
+    border: none;
+    border-left: 1px solid black;
     }
 }
 @media screen and (max-width: 441px) {
 .spouse .div2 {
     grid-template-columns: 50% 50%;
+    }
+    .spouse .div2 .section3{
+        border-right: none;
+        border-left: 1px solid black;
+    }
+    .spouse .div2 .section4{
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
     }
 }
 
@@ -371,6 +393,7 @@ input{
     border: 1px solid black;
     display: flex;
     flex-direction: column;
+    border-right: none;
 }
 .spouse .div3 .section2 div{
     display: flex;
@@ -397,15 +420,25 @@ input{
     justify-content: center;
     align-items: center;
 }
+.spouse .div3 .section4{
+    border-right: 1px solid black;
+}
 @media screen and (max-width: 576px) {
 .spouse .div3{
     display: grid;
     grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
     }
+    .spouse .div3 .section1{
+        border-bottom: none;
+    }
 }
 @media screen and (max-width: 441px) {
 .spouse .div3 {
     grid-template-columns: 50% 50%;
+    }
+    .spouse .div3 .section2{
+        border-right: 1px solid black;
+        border-bottom: none;
     }
 }
 </style>

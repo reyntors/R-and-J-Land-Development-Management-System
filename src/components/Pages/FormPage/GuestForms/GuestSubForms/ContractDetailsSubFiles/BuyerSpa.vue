@@ -452,7 +452,7 @@ input{
 .c-cont header{
     padding: .2rem 0;
     text-align: center;
-    border-top: 1px solid black;
+    /* border-top: 1px solid black; */
     border-right: 1px solid black;
     border-left: 1px solid black;
     background-color: #CFD7EC;
