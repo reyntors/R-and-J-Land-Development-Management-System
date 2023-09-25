@@ -112,17 +112,17 @@ export default {
                 return false
             }
         },
-        // authorizationRoleAdmin(state){
-        //     if(state.role && state.tokenID){
-        //         if(state.role === 'guest'){
-        //             return true
-        //         }else{
-        //             return false
-        //         }
-        //     }else{
-        //         return false
-        //     }
-        // },
+        authorizationRoleAdmin(state){
+            if(state.role && state.tokenID){
+                if(state.role === 'admin'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
 
         getRoleType(state){
             if(state.role && state.tokenID){

@@ -1,9 +1,13 @@
 import { createStore } from "vuex";
 import auth from './authStore/authStore.js'
+import personnel from './personnelStore/personnel.js'
+import client from './personnelStore/client.js'
 
 const store = createStore({
         modules:{
             auth,
+            personnel,
+            client,
         },
         state(){
             return{

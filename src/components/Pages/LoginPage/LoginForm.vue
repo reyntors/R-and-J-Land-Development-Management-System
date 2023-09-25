@@ -205,7 +205,13 @@ export default {
           toast.success('Logged in Successfuly!', {autoClose: 2000,});
           await new Promise(resolve=>(setTimeout(resolve,2000)))
           this.close()
-          this.$router.replace('/home')
+
+          if(this.loginRole=== 'guest'){
+            this.$router.replace('/home')
+          }else{
+            this.$router.replace('/personnel/dashboard')
+          }
+          
           
         }catch(error){
           
