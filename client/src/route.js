@@ -25,7 +25,7 @@ import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/D
 import PersonnelReports from './components/Pages/PersonnelPage/SubComponents/ReportsView.vue'
 import PersonnelInquiries from './components/Pages/PersonnelPage/SubComponents/InquiriesView.vue'
 import PersonnelProperties from './components/Pages/PersonnelPage/SubComponents/PropertiesView.vue'
-import PersonnelCustomer from './components/Pages/PersonnelPage/CLIENT/ClientView.vue'
+import PersonnelCustomer from './components/Pages/PersonnelPage/CLIENT/ViewClient.vue'
 import PersonnelPayment from './components/Pages/PersonnelPage/SubComponents/PaymentView.vue'
 
 import store from './store/store.js'

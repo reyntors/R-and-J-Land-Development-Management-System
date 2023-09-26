@@ -233,7 +233,6 @@ export default {
             }
         },
         authorizationPersonnel(state){
-            console.log("I am authStore:",state.roles);
             if(state.roles && state.tokenID){
                 if(state.roles !== 'guest'){
                     return true
@@ -242,6 +241,17 @@ export default {
                 }
             }else{
                 return false
+            }
+        },
+        authorizationPersonnelTEXT(state){
+            if(state.role && state.tokenID){
+                if(state.role === 'staff'){
+                    return 'staff'
+                }else if(state.role === 'admin'){
+                    return 'admin'
+                }
+            }else{
+                return 'SOMETHING UNKNONW'
             }
         },
         getRoleType(state){
