@@ -37,14 +37,14 @@
             
         </div> -->
 
-        <submit-form-button @click="submit">Submit</submit-form-button>
+        <!-- <submit-form-button @click="submit">Submit</submit-form-button> -->
     </form-card>
     
     <the-footer/>
 </template>
 
 <script>
-import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
+// import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 import PropertyDetails from './ContractDetailsSubFiles/PropertyDetails.vue'
 import ContactDetails from './ContractDetailsSubFiles/ContactDetails.vue'
 import BusinessEmployment from './ContractDetailsSubFiles/BusinessEmployment.vue'
@@ -53,7 +53,7 @@ import BuyerSpa from './ContractDetailsSubFiles/BuyerSpa.vue'
 import CorporateBuyer from './ContractDetailsSubFiles/CorporateBuyer.vue'
 import OtherDetails from './ContractDetailsSubFiles/OtherDetails.vue'
 export default {
-  components: { SubmitFormButton, PropertyDetails ,ContactDetails, BusinessEmployment, SpouseInformation , BuyerSpa, CorporateBuyer, OtherDetails},
+  components: { PropertyDetails ,ContactDetails, BusinessEmployment, SpouseInformation , BuyerSpa, CorporateBuyer, OtherDetails},
     data(){
         return{
             propertyData: null,

@@ -25,7 +25,6 @@
     height: 85vh;
     padding: 1rem;
     border-right: 1px solid black;
-    border-bottom: 1px solid black;
 }
 .imageName{
     display: flex;

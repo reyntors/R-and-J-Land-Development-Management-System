@@ -1,5 +1,5 @@
 <template>
-  <div class="c-contianer">
+  <div class="c-container">
     <!-- {{ client }} -->
     <section class="section-left">
         <div>
@@ -14,11 +14,11 @@
 
           <button :class="{flat:clientAccountDetailsVisibleComputed}" @click="goto('accountDetails')">Account details</button>
 
-          <button :class="{flat:clientFormsVisibleComputed}" @click="goto('forms')">Add forms</button>
+          <button :class="{flat:clientFormsVisibleComputed}" @click="goto('forms')">Forms</button>
         </div>
 
         <div>
-          <button class="saveBtn" @click="saveNow">Save</button>
+          <!-- <button class="saveBtn" @click="saveNow">Save</button> -->
           <button class="delBtn" @click="deleteNow(client.id)" v-if="authorizationRoleAdmin">Delete</button>
         </div>
       
@@ -126,6 +126,9 @@ export default {
 </script>
 
 <style scoped>
+button{
+  font-size: clamp(.6rem, 1vw, 1.5rem);
+}
 .flat{
   outline: none;
   border: none;
@@ -133,16 +136,17 @@ export default {
   color: white;
   box-shadow: none;
 }
-.c-contianer{
+.c-container{
   width: 100%;
-  height: 75vh;
+  /* height: 75vh; */
   padding: .5rem;
   display: flex;
   gap: 1rem;
+  border: 1px solid black;
 }
-.c-contianer .section-left{
+.c-container .section-left{
   width: 25%;
-  height: 100%;
+  /* height: 95%; */
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -153,14 +157,14 @@ export default {
   text-align: center;
   background-color: white;
 }
-.c-contianer .section-left div{
+.c-container .section-left div{
   width: 90%;
   display: flex;
   flex-direction: column;
   gap: 3px;
   align-items: center;
 }
-.c-contianer .section-left div button{
+.c-container .section-left div button{
   width: 100%;
   border: none;
   /* outline: 1px solid black; */
@@ -181,11 +185,12 @@ img{
 
 
 
-.c-contianer .section-right{
+.c-container .section-right{
   width: 75%;
   height: 100%;
   border: 1px solid black;
   padding: 1rem;
   background-color: white;
+  overflow-y: auto;
 }
 </style>

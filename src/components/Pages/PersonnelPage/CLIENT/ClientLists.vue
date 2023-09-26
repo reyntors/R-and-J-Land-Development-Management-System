@@ -92,7 +92,8 @@ import ViewClient from './ViewClient.vue'
   
   <style scoped>
 .c-container{
-      flex-grow: 1;
+      /* flex-grow: 1; */
+      width: 100%;
       height: 85vh;      
       padding: 1rem;
   }
