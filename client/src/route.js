@@ -25,7 +25,7 @@ import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/D
 import PersonnelReports from './components/Pages/PersonnelPage/SubComponents/ReportsView.vue'
 import PersonnelInquiries from './components/Pages/PersonnelPage/SubComponents/InquiriesView.vue'
 import PersonnelProperties from './components/Pages/PersonnelPage/SubComponents/PropertiesView.vue'
-import PersonnelCustomer from './components/Pages/PersonnelPage/CLIENT/ViewClient.vue'
+import PersonnelCustomer from './components/Pages/PersonnelPage/CLIENT/ClientLists.vue'
 import PersonnelPayment from './components/Pages/PersonnelPage/SubComponents/PaymentView.vue'
 
 import store from './store/store.js'
@@ -91,13 +91,13 @@ const route = createRouter({
             next();
         }
         else if(to.meta.requiredAuthPersonnel && !store.getters['auth/authorizationPersonnel']){
-            console.log('staff: '+store.getters['auth/authorizationPersonnel'])
-            console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
+            // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
+            // console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
-        else if(to.meta.requiredAuthPersonnel && store.getters['auth/authorizationPersonnel']){
-            console.log('staff: '+store.getters['auth/authorizationPersonnel'])
-            console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
+        else if(to.meta.requiresAuthStaff && store.getters['auth/authorizationPersonnel']){
+            // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
+            // console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
         else{

@@ -94,6 +94,84 @@ exports.getUserDetails = async (req, res, next) => {
     }
   }
 
+  exports.updateUser = async (req, res, next) => {
+    const { id } = req.params;
+    const updateData = req.body;
+  
+    try {
+      // Check if the user with the specified ID exists and has the "guest" role
+      const user = await User.findOne({ userId: id, roles: 'guest' });
+      console.log(user);
+  
+      if (!user) {
+        return res.status(404).json({
+          message: 'Guest user not found or you do not have permission to update this user.',
+        });
+      }
+
+      if (updateData.fullname) {
+        user.fullname = updateData.fullname;
+      }
+      
+      if (updateData.contactNumber) {
+        user.contactNumber = updateData.contactNumber;
+      }
+      
+      if (updateData.homeAddress) {
+        user.homeAddress = updateData.homeAddress;
+      }
+      
+      if (updateData.fbAccount) {
+        user.fbAccount = updateData.fbAccount;
+      }
+      
+      if (updateData.username) {
+        user.username = updateData.username;
+      }
+      
+      if (updateData.email) {
+        user.email = updateData.email;
+      }
+      
+      await user.save();
+
+      return res.status(200).json({
+        message: 'User information updated successfully.',
+        data: user,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+  exports.deleteUser = async (req, res, next) => {
+    const { id } = req.params; // Use userId instead of id
+  
+    try {
+      // Check if the user with the specified ID exists and has the "guest" role
+      const user = await User.findOne({ userId: id, roles: 'guest' });
+      console.log(user);
+  
+      if (!user) {
+        return res.status(404).json({
+          message: 'Guest user not found or you do not have permission to delete this user.',
+        });
+      }
+  
+      // Delete the user from the database
+      await User.deleteOne({ userId: id });
+  
+      return res.status(200).json({
+        message: 'User deleted successfully.',
+      });
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+
+
+
 
 exports.restrict = (roles) => {
     return (req, res, next) => {

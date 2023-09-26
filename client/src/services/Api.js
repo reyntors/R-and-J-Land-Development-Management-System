@@ -23,9 +23,9 @@ export const register = async (userData) => {
 
 };
 
-// Function to retrieve the token from local storage
+
 const getToken = () => {
-  return localStorage.getItem('token'); // Assuming your token is stored as 'token' in local storage
+  return localStorage.getItem('token'); 
 };
 
 
