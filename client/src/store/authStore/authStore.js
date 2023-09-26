@@ -40,8 +40,6 @@ export default {
            
 
            try {
-            
-           
                 
                 const responseData = await AuthenticationService.login(credentials);
 
@@ -215,6 +213,29 @@ export default {
         authorizationRoleStaff(state){
             if(state.roles && state.tokenID){
                 if(state.roles === 'staff'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
+        authorizationRoleAdmin(state){
+            if(state.roles && state.tokenID){
+                if(state.roles === 'admin'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
+        authorizationPersonnel(state){
+            console.log("I am authStore:",state.roles);
+            if(state.roles && state.tokenID){
+                if(state.roles !== 'guest'){
                     return true
                 }else{
                     return false

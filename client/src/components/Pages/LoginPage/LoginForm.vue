@@ -8,7 +8,7 @@
     <div class="cardLogin" v-if="goLoginComputed && !isLoadingComputed">
       <form @submit.prevent="">
           <div class="icon-container">
-            <h5>Login</h5>
+            <h5>Login Form</h5>
             <font-awesome-icon icon="fa-solid fa-x" size="1x"  class="icon" @click="close"/>
           </div>
 
@@ -24,13 +24,13 @@
             </div>
 
             <div class="style-form">
-            <select v-model="roles" @change="checkRoleSelection">
-              <option value="" disabled selected>Please select a role</option>
-              <option value="guest">Guest</option>
-              <option value="staff">Staff</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+                <select v-model="roles">
+                  <option value="" disabled selected>Please select a role</option>
+                  <option value="guest">Guest</option>
+                  <option value="staff">Staff</option>
+                  <option value="admin">Admin</option>
+                </select>
+            </div>
 
             <span class="error" v-if="isLoginErrorComputed">Please complete the form.</span>
             <div class="c-button">
@@ -96,13 +96,6 @@
                 <label for="confirm">Confirm Password</label>
                 <div class="passwordConcernPrompt" v-if="!passwordMatchComputed && !passwordEmptyComputed">password don't match</div>
             </div> 
-            <div class="style-form">
-                <select v-model="signUpOrganization">
-                  <option value="guest">Guest</option>
-                  <option value="staff">Staff</option>
-                  <option value="admin">Admin</option>
-                </select>
-            </div>
               <div class="navNextContainer" @click="navigate">
                 <font-awesome-icon icon="fa-solid fa-left-long" size="2x" class="iconNav"/>
               </div> 
@@ -214,10 +207,17 @@ export default {
 
           try {
             response = await this.$store.dispatch('auth/login', credentials);
+
             
               toast.success(response.message, { autoClose: 1000 });
               this.close()
-              this.$router.replace('/home')
+              if(this.roles === 'guest'){
+                this.$router.replace('/home');
+            }else{
+              this.$router.replace('/personnel/dashboard');
+            }
+            
+         
            
           } catch (error) {
 

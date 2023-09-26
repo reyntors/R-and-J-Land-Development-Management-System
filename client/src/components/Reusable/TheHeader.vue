@@ -2,25 +2,47 @@
 
   <div class="header">
 
-    <img class="logo" :src="logo" alt="ERROR" @click="goToHome">      
-   
+    <img class="logo" :src="logo" alt="ERROR" @click="goToHome" v-if="!authorizationRoleStaff && !authorizationRoleAdmin">      
+    <div class="logoStaffAdmin" v-if="authorizationRoleStaff || authorizationRoleAdmin">
+      <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="barsStaffAdmin" @click="toggleProfile" />
+      <img class="logo" :src="logo" alt="ERROR">       
+    </div>
  
 
     <!-- ROW NAV-->
-    <nav class="rowNav">
-      <router-link to="/about">ABOUT</router-link>
-      <router-link to="/projects">PROJECTS</router-link>
-      <router-link to="/gallery">GALLERY</router-link>
-      <router-link to="/contact">CONTACT INFO</router-link>
-      <router-link :to="userRole" v-if="isUserValidComputed">FORMS</router-link>
+    <!-- show when not logged in as admin or staff and also not -->
+    <nav class="rowNav" v-if="!authorizationRoleStaff && !authorizationRoleAdmin">
+      <router-link to="/about" >ABOUT</router-link>
+      <router-link to="/projects" >PROJECTS</router-link>
+      <router-link to="/gallery" >GALLERY</router-link>
+      <router-link to="/contact" >CONTACT INFO</router-link>
+      <router-link to="/guest-forms" v-if="authorizationRoleGuest">FORMS</router-link>
       <button @click="closeOrOpenForm(true)" v-if="!isUserValidComputed">LOG IN</button>
       <button @click="logout" v-if="isUserValidComputed">LOG OUT</button>
     </nav>
+
+    <div class="navStaffAdmin" v-if="authorizationRoleStaff || authorizationRoleAdmin">
+      <font-awesome-icon icon="fa-solid fa-circle-user" size="2x" /> <span></span><p>Welcome, Admin </p>
+      <font-awesome-icon class="icon" v-if="!isShowStaffAdminColumnComputed" :icon="['fas', 'caret-down']" @click="toggleStaffAdminColumn" />
+      <font-awesome-icon class="icon" v-if="isShowStaffAdminColumnComputed" :icon="['fas', 'caret-up']" @click="toggleStaffAdminColumn" />
+      <div v-if="isShowStaffAdminColumnComputed">
+        <button>SOMETHING1</button>
+        <button>SOMETHING2</button>
+        <button @click="logout">LOG OUT</button>
+      </div>
+      
+    </div>
+
+
+
     <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
 
     <!-- COLLUMN NAV-->
-    <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
-    <column-nav v-if="isShowColumnNavComputed" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)"></column-nav>
+    <!-- <div v-if="!authorizationRoleStaff && !authorizationRoleAdmin"> -->
+    <font-awesome-icon v-if="!authorizationRoleStaff && !authorizationRoleAdmin" icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
+    <column-nav v-if="isShowColumnNavComputed && !authorizationRoleStaff && !authorizationRoleAdmin" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)"></column-nav>      
+
+
   </div>
 
 </template>
@@ -41,7 +63,10 @@ export default {
       userOrganization : null,
       userTokenID : null,
       isUserValid : false,
-      tryAuth: this.$store.state.auth.tokenID
+      tryAuth: this.$store.state.auth.tokenID,
+
+      //STAFF&ADMIN
+      isShowStaffAdminColumn: false,
     }
   },
   methods: {
@@ -54,9 +79,12 @@ export default {
     goToHome(){
       this.$router.push('/')
     },
-    // tryLogin(){
-    //   this.$store.commit('auth/getLocalStorage')  //get the localstorage into vuex
-    // },
+    toggleProfile(){
+      this.$store.commit('personnel/togglePofileShow')
+    },
+    toggleStaffAdminColumn(){
+      this.isShowStaffAdminColumn = !this.isShowStaffAdminColumn
+    },
     logout(){
       this.$store.commit('auth/eraseStoreState')
       this.$store.commit('auth/eraseLocalStorage')
@@ -71,25 +99,22 @@ export default {
     isShowColumnNavComputed(){
       return this.isShowColumnNav
     },
+    isShowStaffAdminColumnComputed(){
+      return this.isShowStaffAdminColumn
+    },
     isUserValidComputed(){
       return this.$store.getters['auth/authGetter'] //get the realtime updates of the vuex
     },
-    userRole(){
-      const stringRole = this.$store.getters['auth/getRoleType']
-      if(stringRole === 'guest'){
-        return '/guest-forms'
-      }else if(stringRole === 'staff'){
-        return '/staff-forms'
-      }else{
-        return '/admin-we-will-change-this'
-      }
+    authorizationRoleGuest(){
+        return this.$store.getters['auth/authorizationRoleGuest']
+    },
+    authorizationRoleStaff(){
+      return this.$store.getters['auth/authorizationRoleStaff']
+    },
+    authorizationRoleAdmin(){
+      return this.$store.getters['auth/authorizationRoleAdmin']
     }
-
   },
-  // mounted(){
-  //   console.log("MOUNTED diri")
-  //   this.tryLogin()
-  // },
 }
 </script>
 
@@ -111,6 +136,17 @@ export default {
     background-color: white;
     z-index: 2;
 }
+.header .logoStaffAdmin{
+  display: flex;
+  align-items: center; 
+}
+.barsStaffAdmin{
+  cursor: pointer;
+}
+.barsStaffAdmin:active{
+  scale: 1.1;
+  transition: scale .1s ease-in;
+}
 .header img{
   width: 15vw;
   min-width: 120px;
@@ -127,11 +163,11 @@ a{
   font-size: 1rem;
   font-weight: 700;
 }
-button{
+.rowNav button{
   margin-left: 1px;
   box-sizing: border-box;
   border: none;
-  box-shadow: 0 0 5px .5px rgba(0, 0, 0, 0.381);
+  box-shadow: 0 0 1 px .5px rgba(0, 0, 0, 0.381);
   padding: .5rem;
   font-weight: 700;
   font-size: 1rem;
@@ -152,6 +188,32 @@ a:active{
 .bars:hover, .bars:active {
   border: .5px solid black;
 }
+.navStaffAdmin{
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-right: 1rem;
+}
+.navStaffAdmin p{
+  margin-left: .2rem;
+  margin-right: .5rem;
+}
+.navStaffAdmin div{
+  position: absolute;
+  right: 0;
+  top: 100%;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.navStaffAdmin .icon{
+  cursor: pointer;
+  scale: 1.5;
+}
+.navStaffAdmin .icon:hover{
+  scale: 1.8;
+  transition: scale .1s ease-in;
+}
 
 
 @media screen and (max-width: 821px) {
@@ -169,5 +231,11 @@ a:active{
     .bars{
       display: none;
     }
+}
+@media screen and (max-width: 375px) {
+  .logoStaffAdmin img{
+    /* visibility: hidden; */
+    display: none; 
+  }
 }
 </style>

@@ -14,11 +14,19 @@ import GuestBIRtinRequest from './components/Pages/FormPage/GuestForms/GuestSubF
 import GuestIndividualBuyerDeclaration from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestIndividualBuyerDeclaration.vue'
 
 //STAFF FORMS NEW PAGE
+
 import StaffFormPage from './components/Pages/FormPage/StaffForms/StaffFormPage.vue'
 import StaffChecklistClosing from './components/Pages/FormPage/StaffForms/StaffSubForms/StaffChecklistClosing.vue'
 import StaffAppprovePayment from './components/Pages/FormPage/StaffForms/StaffSubForms/StaffApprovePayment.vue'
 
-
+//ADMIN & STAFF PAGE
+import PersonnelHomePage from './components/Pages/PersonnelPage/PersonnelPage.vue'
+import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/DashboardView.vue'
+import PersonnelReports from './components/Pages/PersonnelPage/SubComponents/ReportsView.vue'
+import PersonnelInquiries from './components/Pages/PersonnelPage/SubComponents/InquiriesView.vue'
+import PersonnelProperties from './components/Pages/PersonnelPage/SubComponents/PropertiesView.vue'
+import PersonnelCustomer from './components/Pages/PersonnelPage/CLIENT/ClientView.vue'
+import PersonnelPayment from './components/Pages/PersonnelPage/SubComponents/PaymentView.vue'
 
 import store from './store/store.js'
 
@@ -44,9 +52,18 @@ const route = createRouter({
             {path: '/staff-forms', component: StaffFormPage, meta: {requiresAuthStaff: true}},
             {path: '/staff-forms/checklist', component: StaffChecklistClosing, meta: {requiresAuthStaff: true}},
             {path: '/staff-forms/approve-payment', component: StaffAppprovePayment, meta: {requiresAuthStaff: true}},
-
-
-
+            
+            //personnel authorized
+            {path: '/personnel', component: PersonnelHomePage, meta:{requiredAuthPersonnel:true},
+                children: [
+                    {path: 'dashboard', component: PersonnelDashboard},
+                    {path: 'client', component: PersonnelCustomer},
+                    {path: 'properties', component: PersonnelProperties},
+                    {path: 'inquiries', component: PersonnelInquiries},
+                    {path: 'payment', component: PersonnelPayment},
+                    {path: 'reports', component: PersonnelReports}
+                ]
+            }
         ],
         scrollBehavior(to,from,savedPosition){
             if(savedPosition){
@@ -68,19 +85,19 @@ const route = createRouter({
             // console.log('NOT AUTHENTICATED AS GUEST and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
-        else if(to.meta.requiresAuthGuest && store.getters['auth/authorizationRoleGuest']){
+        else if(to.meta.requiresAuthGuest && store.getters['auth/authorizationRoleGuest'] && true){
             // console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
             // console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
-        else if(to.meta.requiresAuthStaff && !store.getters['auth/authorizationRoleStaff']){
-            // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
-            // console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
+        else if(to.meta.requiredAuthPersonnel && !store.getters['auth/authorizationPersonnel']){
+            console.log('staff: '+store.getters['auth/authorizationPersonnel'])
+            console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
-        else if(to.meta.requiresAuthStaff && store.getters['auth/authorizationRoleStaff']){
-            // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
-            // console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
+        else if(to.meta.requiredAuthPersonnel && store.getters['auth/authorizationPersonnel']){
+            console.log('staff: '+store.getters['auth/authorizationPersonnel'])
+            console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
         else{
