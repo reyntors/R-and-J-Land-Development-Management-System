@@ -2,7 +2,7 @@
   <div class="profileViewContainer">
 
     <section class="imageName">
-        <img src="@/assets/profile.png">
+        <img src="@/assets/korean.jpg">
         <h6>Sample Name</h6>
     </section>
 <br>
@@ -25,6 +25,7 @@
     height: 85vh;
     padding: 1rem;
     border-right: 1px solid black;
+    border-bottom: 1px solid black;
 }
 .imageName{
     display: flex;
@@ -37,6 +38,7 @@
     width: 80%;
     border-radius: 100%;
     border: 2px solid black;
+    margin-top: 1rem;
 }
 
 .navigations{

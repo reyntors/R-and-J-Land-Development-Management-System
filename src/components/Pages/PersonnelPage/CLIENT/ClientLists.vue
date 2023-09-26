@@ -11,20 +11,28 @@
 
         <article class="displayPart">
           <table>
+
             <tr>
               <th>Fullname</th>
               <th>Email</th>
               <th>Address</th>
               <th>Action</th>
             </tr>
-            <tr v-for="client in clientsComputed" :key="client.id">
-            
-                <td>{{ client.fullname }}</td>
-                <td>{{ client.email }}</td>
-                <td>{{ client.address }}</td>
-                <td><span>Show</span>/<span>Update</span></td>
+            <tbody v-for="client in clientsComputed" :key="client.id">
+              <tr>
               
-            </tr>
+                  <td>{{ client.fullname }}</td>
+                  <td>{{ client.email }}</td>
+                  <td>{{ client.address }}</td>
+                  <td><span @click="showClientProfile(client)">Show/Update</span></td> 
+              </tr>  
+              <tr v-if="client === selectedClient">
+                <td :colspan="4">
+                  <view-client :client="client"/>             
+                </td>
+              </tr>            
+            </tbody>
+
           </table>
         </article>        
       </div>
@@ -38,28 +46,42 @@
   
   <script>
 import AddnewClient from './AddnewClient.vue'
+import ViewClient from './ViewClient.vue'
 
   export default {
 
       components: {
-        AddnewClient
+            AddnewClient,
+            ViewClient
       },
 
       data(){
         return{
           addFormVisible: false,
+          profileClientVisible: false,
+          selectedClient: null,
         }
       },
 
       methods:{
         toggleShowAddForm(){
           this.addFormVisible = !this.addFormVisible
+        },
+        showClientProfile(params){
+          if(this.selectedClient === params){
+            this.selectedClient = null
+          }else{
+            this.selectedClient = params
+          }  
         }
       },
   
       computed: {
         addFormVisibleComputed(){
           return this.addFormVisible
+        },
+        profileClientVisibleComputed(){
+          return this.profileClientVisible
         },
         clientsComputed(){
           return this.$store.getters['client/clientsGetter']
@@ -112,8 +134,8 @@ import AddnewClient from './AddnewClient.vue'
     padding: 0 .2rem;
     border: 1px solid black;
   }
-  table tr:nth-child(even){
-    background-color: bisque;
+  table tbody:nth-child(even){
+    background-color: rgba(255, 228, 196, 0.538);
   }
   tr td:nth-child(4){
     text-align: center;
