@@ -18,14 +18,15 @@
         </div>
 
         <div>
-          <button>Save</button>
+          <button class="saveBtn" @click="saveNow">Save</button>
+          <button class="delBtn" @click="deleteNow(client.id)" v-if="authorizationRoleAdmin">Delete</button>
         </div>
       
     </section>
 
     <section class="section-right">
 
-          <client-profile v-if="clientProfileVisibleComputed" :client="client"/>
+          <client-profile v-if="clientProfileVisibleComputed" :client="client" @pass-data="getProfile"/>
           <client-income v-if="clientIncomeVisibleComputed"/>
           <client-account  v-if="clientAccountDetailsVisibleComputed"/>
           <client-forms  v-if="clientFormsVisibleComputed"/>
@@ -48,6 +49,9 @@ export default {
       clientIncomeVisible: false,
       clientAccountDetailsVisible: false,
       clientFormsVisible: false,
+
+      //OBJECTS DATA
+      profileData: null,
     }
   },
 
@@ -69,6 +73,32 @@ export default {
       this.clientIncomeVisible = false
       this.clientAccountDetailsVisible = false
       this.clientFormsVisible = false
+    },
+
+
+    //getting data
+    getProfile(payload){
+      this.profileData = payload
+    },
+
+
+    //save
+    saveNow(){
+      if(this.profileData){
+        const obj = {
+          id: this.client.id,
+          ...this.profileData
+        }
+        this.$store.commit('client/updateClient',obj)
+      }else{
+        console.log('no changes')
+      }
+    },
+
+    //delete
+    deleteNow(id){
+      alert('Deleting now')
+      this.$store.commit('client/deleteClient',id)
     }
   },
 
@@ -85,6 +115,10 @@ export default {
     },
     clientFormsVisibleComputed(){
       return this.clientFormsVisible
+    },
+
+    authorizationRoleAdmin(){
+      return this.$store.getters['auth/authorizationRoleAdmin']
     }
   }
 
@@ -138,6 +172,11 @@ img{
   border-radius: 100%;
   border: 1px solid black;
   margin-top: 1rem;
+}
+.saveBtn:active,
+.delBtn:active{
+  background-color: #31A72A; 
+  color: white;
 }
 
 

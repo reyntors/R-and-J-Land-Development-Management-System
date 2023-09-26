@@ -113,9 +113,13 @@ import ViewClient from './ViewClient.vue'
     box-shadow: 0 0 1px 1px rgb(0, 0, 0);
     cursor: pointer;
     margin: 5px 0;
+    color: white;
   }
   .searchPart div:hover{
     background-color: #30a72a8e;
+  }
+  .searchPart div:active{
+    color: black;
   }
   
   .displayPart{
@@ -135,7 +139,7 @@ import ViewClient from './ViewClient.vue'
     border: 1px solid black;
   }
   table tbody:nth-child(even){
-    background-color: rgba(255, 228, 196, 0.538);
+    background-color: rgba(255, 228, 196, 0.314);
   }
   tr td:nth-child(4){
     text-align: center;

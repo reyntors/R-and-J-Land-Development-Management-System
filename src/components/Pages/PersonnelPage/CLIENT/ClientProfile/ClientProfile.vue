@@ -18,6 +18,7 @@
 
 <script>
 export default {
+    emits: ['pass-data'],
     props: ['client'],
     data(){
         return{
@@ -25,10 +26,44 @@ export default {
             email: this.client.email,
             address: this.client.address,
         }
+    },
+    
+    methods: {
+        getDetails(){
+            return {
+                fullname: this.fullname,
+                email: this.email,
+                address: this.address,
+            }
+        },
+        passData(){
+            const payload = this.getDetails();
+            this.$emit('pass-data',payload)
+        }
+    },
+
+
+
+    watch:{
+        fullname(dataNew){
+            if(dataNew !== this.client.fullname){
+                // console.log('updating name')
+                this.passData();
+            }      
+        },
+        email(dataNew){
+            if(dataNew !== this.client.email){
+                // console.log('updating email')
+                this.passData();
+            }
+        },
+        address(dataNew){
+            if(dataNew !== this.client.address){
+                // console.log('updating address')
+                this.passData();
+            }
+        }
     }
 
 }
 </script>
-
-<style scoped>
-</style>

@@ -134,6 +134,17 @@ export default {
                 return false
             }
         },
+        authorizationPersonnelTEXT(state){
+            if(state.role && state.tokenID){
+                if(state.role === 'staff'){
+                    return 'staff'
+                }else if(state.role === 'admin'){
+                    return 'admin'
+                }
+            }else{
+                return 'SOMETHING UNKNONW'
+            }
+        },
 
         getRoleType(state){
             if(state.role && state.tokenID){
