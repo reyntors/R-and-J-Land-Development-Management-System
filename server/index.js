@@ -13,7 +13,7 @@ app.use(morgan('combine'));
 app.use(bodyParser.json());
 app.use(cors());
 
-
+mongoose.set("strictQuery", false);
 mongoose.connect(dbConfig.db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
