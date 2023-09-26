@@ -90,12 +90,12 @@ const route = createRouter({
             // console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
-        else if(to.meta.requiredAuthPersonnel && !store.getters['auth/authorizationRoleStaff']){
+        else if(to.meta.requiredAuthPersonnel && !store.getters['auth/authorizationPersonnel']){
             // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
             // console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
-        else if(to.meta.requiresAuthStaff && store.getters['auth/authorizationRoleStaff']){
+        else if(to.meta.requiresAuthStaff && store.getters['auth/authorizationPersonnel']){
             // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
             // console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
             next();

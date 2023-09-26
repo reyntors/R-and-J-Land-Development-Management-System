@@ -123,6 +123,17 @@ export default {
                 return false
             }
         },
+        authorizationPersonnel(state){
+            if(state.role && state.tokenID){
+                if(state.role !== 'guest'){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+        },
 
         getRoleType(state){
             if(state.role && state.tokenID){
