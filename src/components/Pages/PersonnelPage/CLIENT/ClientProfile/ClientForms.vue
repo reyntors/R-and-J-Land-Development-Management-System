@@ -34,11 +34,23 @@
 <br>
       <section class="section2">
         <h6>Upload here</h6>
-        <div>
-          <section class="add">
-            <font-awesome-icon class="icon" icon="fa-solid fa-plus" beat size="3x"/>
-          </section>
-        </div>
+        
+        <form enctype="multipart/form-data" @submit.prevent="">
+          <label class="uploadCont" for="upload">
+            <font-awesome-icon class="icon" icon="fa-solid fa-plus" beat size="2x"/>
+            <p class="fs-6">Upload File</p>
+          </label>
+          <div v-if="uploadedFile">
+            {{uploadedFileNameComputed}}
+          </div>
+          <button @click="submitUpload">Upload</button>
+          <input 
+          id="upload" 
+          type="file"
+          style="display: none;"
+          @change="setUploadedFile">
+        </form>
+
       </section>
 
 
@@ -58,20 +70,21 @@ import BirTin from './FORMS/BirTin.vue'
 import BuyerDeclaration from './FORMS/BuyerDeclaration.vue'
 import LetterIntent from './FORMS/LetterIntent.vue'
 export default {
-  components: { LetterIntent, BuyerDeclaration,BirTin,
-    ContractDetails 
-  },
+  components: { LetterIntent, BuyerDeclaration,BirTin,ContractDetails},
     data(){
       return{
         formVisible: null,
         openForms: false,
+
+        uploadedFile : null,
+        uploadedFileName: null,
       }
     },
     methods: {
       toggleOpenForms(){
         console.log('clicked')
         this.openForms = !this.openForms
-        this.formVisible = null
+        this.formVisible = null 
       },
       openForm(param){
         this.openForms = !this.openForms
@@ -84,11 +97,38 @@ export default {
         }else{
           this.formVisible = 'contractDetails'
         }
+      },
+      setUploadedFile(event){
+        this.uploadedFile = event.target.files[0]
+        this.uploadedFileName = this.uploadedFile.name
+        // console.log(this.uploadedFileName)
+      },
+
+      //submit uploads
+      submitUpload(){
+        if(this.uploadedFile && this.uploadedFileName){
+          const data = new FormData()
+          data.append('file',this.uploadedFile)
+          data.forEach(element => {
+            console.log(element)
+          });
+          try{
+            //request here
+            //use data as payload
+          }catch(error){
+            console.log(error)
+          }
+        }else{
+          console.log('no uploaded')
+        }
       }
     },
     computed:{
       openFormsComputed(){
           return this.openForms
+      },
+      uploadedFileNameComputed(){
+        return this.uploadedFileName
       }      
     }
  
@@ -138,25 +178,44 @@ p{
   border: 1px solid black;
 }
 
-.section2 div{
-  /* border:1px solid black; */
-  display: flex;
-}
-.section2 div .add{
-  outline:1px solid black;
-  display: flex;
-  padding: 1rem;
+.section2 form label{
+  padding: .5rem 1rem;
+  border: 1px solid black;
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.section2 div .add:hover{
-  color: black;
+.section2 form label:hover{
+  background-color: #C2E7FF;
+}
+.section2 form label:hover .icon{
+  color:black;
 }
 .icon{
   color: rgba(0, 0, 0, 0.2);
-  
 }
-.icon:hover{
-  color: rgba(0, 0, 0, 0.8);
+.section2 form button{
+  width: 100%;
+  border: none;
+  color: white;
+  background-color:#31A72A; 
+  padding: .2rem 0 ;
+  border: 1px solid black;
+  border-top: none;
 }
-
+.section2 form button:hover{
+  background-color: #30a72a8e;;
+}
+.section2 form button:active{
+  color: black;
+}
+.section2 form div{
+ text-align:center; 
+ font-style: oblique; 
+ border: 1px solid black;
+ border-top: none;
+ border-bottom: none;
+}
 </style>
