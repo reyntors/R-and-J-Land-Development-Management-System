@@ -65,10 +65,10 @@
 </template>
 
 <script>
-import ContractDetails from './FORMS/ContractDetails.vue'
-import BirTin from './FORMS/BirTin.vue'
-import BuyerDeclaration from './FORMS/BuyerDeclaration.vue'
-import LetterIntent from './FORMS/LetterIntent.vue'
+import ContractDetails from './FormComponents/ContractDetails.vue'
+import BirTin from './FormComponents/BirTin.vue'
+import BuyerDeclaration from './FormComponents/BuyerDeclaration.vue'
+import LetterIntent from './FormComponents/LetterIntent.vue'
 export default {
   components: { LetterIntent, BuyerDeclaration,BirTin,ContractDetails},
     data(){

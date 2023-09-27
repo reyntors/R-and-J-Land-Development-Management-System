@@ -34,6 +34,33 @@ export default{
                     email: 'borromeojhaerix27@gmail.com',
                     address: 'Pasay City'
                 },
+                {
+                    id: 2,
+                    fullname: 'J Borromeo',
+                    email: 'borromeojhaerix27@gmail.com',
+                    address: 'Pasay City'
+                },
+            ],
+
+            clientTransaction:[
+                {
+                    date: '2023-08-09',
+                    amountPaid: '5,000',
+                    purpose: 'Reservation Fee',
+                    attachement: ['receipt1']
+                },
+                {
+                    date: '2023-09-09',
+                    amountPaid: '50,000',
+                    purpose: 'Downpayment',
+                    attachement: ['receipt1', 'downpayment receipt']
+                },
+                {
+                    date: '2023-10-09',
+                    amountPaid: '3,000',
+                    purpose: 'Monthly',
+                    attachement: ['receipt1']
+                }
             ]
         }
     },
@@ -66,7 +93,22 @@ export default{
         deleteClient(state,id){
             const index = state.clientsAdded.findIndex(item => item.id === id)
             state.clientsAdded.splice(index,1)
+        },
+
+        addPayment(state,payload){
+            const obj = {}
+           
+            payload.forEach((value,key) => {
+                if(!Object.prototype.hasOwnProperty.call(obj, key)){
+                    obj[key] = value
+                }
+            });
+            console.log(obj)
+            state.clientTransaction.push(obj)
         }
+    },
+    actions:{
+        //do the http request functions here
     },
     getters:{
         searchResultGetter(state){
@@ -78,6 +120,10 @@ export default{
         },
         clientsGetter(state){
             return state.clientsAdded
+        },
+        clientTransactionGetter(state){
+            console.log('transaction')
+            return state.clientTransaction
         }
     }
 }

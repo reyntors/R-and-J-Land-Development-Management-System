@@ -28,27 +28,29 @@
 
           <client-profile v-if="clientProfileVisibleComputed" :client="client" @pass-data="getProfile"/>
           <client-payment v-if="clientPaymentVisibleComputed"/>
-          <client-forms  v-if="clientFormsVisibleComputed"/>
+          <client-forms  v-if="clientFormsVisibleComputed"/> 
 
     </section>
   </div>
 </template>
 
 <script>
-import ClientForms from './ClientProfile/ClientForms.vue';
-import ClientPayment from './ClientProfile/ClientPayment.vue';
-import ClientProfile from './ClientProfile/ClientProfile.vue';
+import ClientPayment from '../article/PAYMENT/PaymentDetails.vue';
+import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
+import ClientForms from '../article/FORMS/FormsDetails.vue'
+
 export default {
   props: ['client'],
-  components: {ClientProfile, ClientForms,ClientPayment},
+  components: {
+    ClientProfile,
+    ClientForms,
+    ClientPayment
+  },
   data(){
     return{
       clientProfileVisible: true,
       clientPaymentVisible: false,
       clientFormsVisible: false,
-
-      //OBJECTS DATA
-      profileData: null,
     }
   },
 
@@ -67,11 +69,6 @@ export default {
       this.clientProfileVisible = false
       this.clientPaymentVisible = false
       this.clientFormsVisible = false
-    },
-
-    //getting data
-    getProfile(payload){
-      this.profileData = payload
     },
 
     //delete
