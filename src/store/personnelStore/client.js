@@ -4,7 +4,30 @@ export default{
 
     state(){
         return {
-            clients: [
+            clientsPending: [
+                {
+                    id: '101',
+                    fullname: 'ahahahah ako',
+                    email: 'borromeojhafdsa7@gmail.com',
+                    address: 'Pasay Cityfdsfsad'
+                },
+                {
+                    id: '102',
+                    fullname: 'hehe ifdsa qmeo',
+                    email: 'borromeojhaerix27@gmail.com',
+                    address: 'Py City'
+                },
+                {
+                    id: '103',
+                    fullname: 'Jhafdsafasmeo',
+                    email: 'borromefsdafojhaerix27@gmail.com',
+                    address: 'Pafdsay'
+                },
+            ],
+
+            searchResult: null,
+
+            clientsAdded: [
                 {
                     id: 1,
                     fullname: 'Jhaerix Ompoy Borromeo',
@@ -16,26 +39,45 @@ export default{
     },
     mutations:{
 
+        searchClient(state,id){
+            const index = state.clientsPending.findIndex(item => item.id === id)
+            if(index>=0){
+                console.log(state.clientsPending[index])
+                state.searchResult = state.clientsPending[index]
+            }else{
+                state.searchResult = null
+                console.log('nothing found!')
+            }
+        },
+
+        //CRUD CLIENTADDED
         addClient(state,payload){
             console.log('added')
-            state.clients.push(payload)
+            state.clientsAdded.push(payload)
         },
 
         updateClient(state,payload){
-            const index = state.clients.findIndex(item => item.id === payload.id)
+            const index = state.clientsAdded.findIndex(item => item.id === payload.id)
             if(index>=0){
-               state.clients[index] = payload
+               state.clientsAdded[index] = payload
             }    
         },
 
         deleteClient(state,id){
-            const index = state.clients.findIndex(item => item.id === id)
-            state.clients.splice(index,1)
+            const index = state.clientsAdded.findIndex(item => item.id === id)
+            state.clientsAdded.splice(index,1)
         }
     },
     getters:{
+        searchResultGetter(state){
+            if(state.searchResult){
+               return state.searchResult 
+            }else{
+                return null
+            }
+        },
         clientsGetter(state){
-            return state.clients
+            return state.clientsAdded
         }
     }
 }

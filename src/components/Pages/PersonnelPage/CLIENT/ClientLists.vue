@@ -57,7 +57,7 @@ import ViewClient from './ViewClient.vue'
 
       data(){
         return{
-          addFormVisible: false,
+          addFormVisible: true,
           profileClientVisible: false,
           selectedClient: null,
         }
