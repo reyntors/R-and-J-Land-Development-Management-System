@@ -16,6 +16,7 @@
             <label for="address">Address:</label><input type="text" id="address" v-model="address" :readonly="!editableComputed">            
         </section>
     </form>
+    <button @click="saveNow">Save</button>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
     data(){
         return{
             editable: false,
+            editOccured: false,
 
             fullname: this.client.fullname,
             email: this.client.email,
@@ -41,13 +43,26 @@ export default {
                 address: this.address,
             }
         },
+        toggleEdit(){
+            this.editable = !this.editable
+        },
         passData(){
             const payload = this.getDetails();
             this.$emit('pass-data',payload)
         },
-        toggleEdit(){
-            this.editable = !this.editable
-        }
+        saveNow(){
+            if(this.editOccured){
+                const obj = {
+                id: this.client.id,
+                fullname: this.fullname,
+                email: this.email,
+                address: this.address,
+                }
+                this.$store.commit('client/updateClient',obj)
+            }else{
+                console.log('no changes')
+            }
+        },
     },
 
     computed:{
@@ -67,19 +82,25 @@ export default {
         fullname(dataNew){
             if(dataNew !== this.client.fullname){
                 // console.log('updating name')
-                this.passData();
+                this.editOccured = true;
+            }else{
+                this.editOccured = false
             }      
         },
         email(dataNew){
             if(dataNew !== this.client.email){
                 // console.log('updating email')
-                this.passData();
+                this.editOccured = true;
+            }else{
+                this.editOccured = false
             }
         },
         address(dataNew){
             if(dataNew !== this.client.address){
                 // console.log('updating address')
-                this.passData();
+                this.editOccured = true;
+            }else{
+                this.editOccured = false
             }
         }
     }
@@ -92,7 +113,8 @@ export default {
 .c-container{
     display: flex;
     flex-direction: column;
-
+    height: 100%;
+    justify-content: space-between;
 }
 .c-container .header{
     display: flex;

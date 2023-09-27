@@ -10,16 +10,16 @@
         <div>
           <button :class="{flat:clientProfileVisibleComputed}" @click="goto('profile')">Buyer's Profile</button> 
           
-          <button :class="{flat:clientIncomeVisibleComputed}" @click="goto('income')">Source of Income</button>
-
-          <button :class="{flat:clientAccountDetailsVisibleComputed}" @click="goto('accountDetails')">Account details</button>
+          <button :class="{flat:clientPaymentVisibleComputed}" @click="goto('payment')">Payment Details</button>
 
           <button :class="{flat:clientFormsVisibleComputed}" @click="goto('forms')">Forms</button>
+
+          <button class="delBtn" @click="deleteNow(client.id)" v-if="authorizationRoleAdmin">Delete</button>
         </div>
 
         <div>
           <!-- <button class="saveBtn" @click="saveNow">Save</button> -->
-          <button class="delBtn" @click="deleteNow(client.id)" v-if="authorizationRoleAdmin">Delete</button>
+          <!-- <button class="delBtn" @click="deleteNow(client.id)" v-if="authorizationRoleAdmin">Delete</button> -->
         </div>
       
     </section>
@@ -27,8 +27,7 @@
     <section class="section-right">
 
           <client-profile v-if="clientProfileVisibleComputed" :client="client" @pass-data="getProfile"/>
-          <client-income v-if="clientIncomeVisibleComputed"/>
-          <client-account  v-if="clientAccountDetailsVisibleComputed"/>
+          <client-payment v-if="clientPaymentVisibleComputed"/>
           <client-forms  v-if="clientFormsVisibleComputed"/>
 
     </section>
@@ -37,17 +36,15 @@
 
 <script>
 import ClientForms from './ClientProfile/ClientForms.vue';
-import ClientIncome from './ClientProfile/ClientIncome.vue';
-import ClientAccount from './ClientProfile/ClientAccount.vue';
+import ClientPayment from './ClientProfile/ClientPayment.vue';
 import ClientProfile from './ClientProfile/ClientProfile.vue';
 export default {
   props: ['client'],
-  components: {ClientProfile, ClientForms,ClientIncome,ClientAccount},
+  components: {ClientProfile, ClientForms,ClientPayment},
   data(){
     return{
       clientProfileVisible: true,
-      clientIncomeVisible: false,
-      clientAccountDetailsVisible: false,
+      clientPaymentVisible: false,
       clientFormsVisible: false,
 
       //OBJECTS DATA
@@ -60,39 +57,21 @@ export default {
       this.reset();
       if(params === 'profile'){
         this.clientProfileVisible = true
-      }else if(params === 'income'){
-        this.clientIncomeVisible = true
-      }else if(params === 'accountDetails'){
-        this.clientAccountDetailsVisible = true
+      }else if(params === 'payment'){
+        this.clientPaymentVisible = true
       }else{
         this.clientFormsVisible = true
       }
     },
     reset(){
       this.clientProfileVisible = false
-      this.clientIncomeVisible = false
-      this.clientAccountDetailsVisible = false
+      this.clientPaymentVisible = false
       this.clientFormsVisible = false
     },
-
 
     //getting data
     getProfile(payload){
       this.profileData = payload
-    },
-
-
-    //save
-    saveNow(){
-      if(this.profileData){
-        const obj = {
-          id: this.client.id,
-          ...this.profileData
-        }
-        this.$store.commit('client/updateClient',obj)
-      }else{
-        console.log('no changes')
-      }
     },
 
     //delete
@@ -107,11 +86,8 @@ export default {
     clientProfileVisibleComputed(){
       return this.clientProfileVisible
     },
-    clientIncomeVisibleComputed(){
-      return this.clientIncomeVisible
-    },
-    clientAccountDetailsVisibleComputed(){
-      return this.clientAccountDetailsVisible
+    clientPaymentVisibleComputed(){
+      return this.clientPaymentVisible
     },
     clientFormsVisibleComputed(){
       return this.clientFormsVisible
@@ -142,7 +118,6 @@ button{
   padding: .5rem;
   display: flex;
   gap: 1rem;
-  border: 1px solid black;
 }
 .c-container .section-left{
   width: 25%;
@@ -161,7 +136,7 @@ button{
   width: 90%;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: .5rem;
   align-items: center;
 }
 .c-container .section-left div button{
@@ -172,7 +147,7 @@ button{
   padding: .3rem;
 }
 img{
-  width: 60%;
+  width: 100%;
   border-radius: 100%;
   border: 1px solid black;
   margin-top: 1rem;

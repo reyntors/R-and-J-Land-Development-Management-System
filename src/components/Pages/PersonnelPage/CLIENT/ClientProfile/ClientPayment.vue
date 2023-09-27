@@ -1,6 +1,6 @@
 <template>
   <div>
-    ACCOUNT DETAILS
+    PAYMENT
   </div>
 </template>
 
