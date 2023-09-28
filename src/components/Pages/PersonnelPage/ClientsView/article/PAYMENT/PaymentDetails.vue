@@ -35,7 +35,7 @@
             <td>PURPOSE</td>
             <td>ATTACHEMENTS</td>
           </tr>
-          <tbody v-for="transaction in paymentTransaction" :key="transaction">
+          <tbody v-for="transaction in clientObj.transaction" :key="transaction">
             <tr>
               <td>{{ transaction.date }}</td>
               <td>{{ transaction.amountPaid }}</td>
@@ -49,7 +49,7 @@
       </section>
     </div>
 
-    <add-payment v-if="addPaymentForm" @exit-btn="toggleAddPayment"/>
+    <add-payment v-if="addPaymentForm" :id="clientObj.profile.id" @exit-btn="toggleAddPayment"/>
 
   </div>
 </template>
@@ -58,6 +58,7 @@
 import AddPayment from './AddPayment.vue'
 export default {
     components: {AddPayment },
+    props: ['clientObj'],
     data(){
       return{
           addPaymentForm: false,
@@ -65,14 +66,10 @@ export default {
     },
     methods:{
       toggleAddPayment(){
+        console.log(this.clientObj.profile.id)
         this.addPaymentForm = !this.addPaymentForm
       }
     },
-    computed:{
-      paymentTransaction(){
-        return this.$store.getters['client/clientTransactionGetter']
-      }
-    }
 }
 </script>
 

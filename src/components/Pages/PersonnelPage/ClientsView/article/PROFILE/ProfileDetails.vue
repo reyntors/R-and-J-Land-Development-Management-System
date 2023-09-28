@@ -1,8 +1,8 @@
 <template>
-    <div class="cost-profile">
+    <div class="cost-profileDetails">
       
       <div class="header">
-          <h3>Profile Details</h3>
+          <h3>ProfileDetails Details</h3>
           <button @click="toggleEdit">{{ editBtnText }}</button>
       </div>
       <form>
@@ -118,14 +118,14 @@
   <script>
   export default {
       emits: ['pass-data'],
-      props: ['client'],
+      props: ['profileDetails'],
       data(){
           return{
               editable: false,
               editOccured: false,
   
-              buyerName: this.client.fullname,
-              address: this.client.address,
+              buyerName: this.profileDetails.fullname,
+              address: this.profileDetails.address,
               contactNo: '',
               civilStatus: '',
               spouseName: '',
@@ -161,9 +161,9 @@
           saveNow(){
               if(this.editOccured){
                   const obj = {
-                  id: this.client.id,
+                  id: this.profileDetails.id,
                   fullname: this.buyerName,
-                  email: this.client.email,
+                  email: this.profileDetails.email,
                   address: this.address,
                   }
                   this.$store.commit('client/updateClient',obj)
@@ -187,25 +187,22 @@
       },
   
       watch:{
-          fullname(dataNew){
-              if(dataNew !== this.client.fullname){
-                  // console.log('updating name')
+          buyerName(dataNew){
+              if(dataNew !== this.profileDetails.fullname){
                   this.editOccured = true;
               }else{
                   this.editOccured = false
               }      
           },
           email(dataNew){
-              if(dataNew !== this.client.email){
-                  // console.log('updating email')
+              if(dataNew !== this.profileDetails.email){
                   this.editOccured = true;
               }else{
                   this.editOccured = false
               }
           },
           address(dataNew){
-              if(dataNew !== this.client.address){
-                  // console.log('updating address')
+              if(dataNew !== this.profileDetails.address){
                   this.editOccured = true;
               }else{
                   this.editOccured = false
@@ -218,13 +215,13 @@
   
   
   <style scoped>
-  .cost-profile{
+  .cost-profileDetails{
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       padding-bottom: 1rem;
   }
-  .cost-profile .header{
+  .cost-profileDetails .header{
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -233,15 +230,15 @@
   
       /* border: 1px solid black; */
   }
-  .cost-profile .header button{
+  .cost-profileDetails .header button{
       padding: 2px .5rem;
       background-color: #31A72A;
       color:white;
   }
-  .cost-profile .header button:hover{
+  .cost-profileDetails .header button:hover{
       background-color: #30a72a8e;
   }
-  .cost-profile .header button:active{
+  .cost-profileDetails .header button:active{
       color: black;
   }
   .items-form{

@@ -1,6 +1,6 @@
 <template>
   <div></div>
-  <form @submit.prevent="" enctype="multipart/form-data">
+  <form @submit.prevent="submit" enctype="multipart/form-data">
     <section class="form-controls-icon">
         <font-awesome-icon class="icon" icon="fa-solid fa-x" @click="close"/>
     </section>
@@ -27,7 +27,7 @@
     </section>
 
     <section class="c-btn">
-      <button @click="submit">Submit</button>  
+      <button>Submit</button>  
     </section>
     
   </form>
@@ -36,6 +36,7 @@
 <script>
 export default {
     emits: ['exit-btn'],
+    props: ['id'],
     data(){
         return{
             date: null,
@@ -58,8 +59,10 @@ export default {
             form.append('purpose',this.purpose)
             form.append('attachement',this.attachement)
 
-            this.$store.commit('client/addPayment',form)
+            this.$store.commit('client/addPayment',{form:form,
+                                                    id:this.id})
             form.forEach(element => console.log(element))
+            console.log('id from add payment' +this.id)
 
             try{
                 //request here

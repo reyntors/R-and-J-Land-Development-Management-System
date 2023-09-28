@@ -71,6 +71,7 @@ import BuyerDeclaration from './FormComponents/BuyerDeclaration.vue'
 import LetterIntent from './FormComponents/LetterIntent.vue'
 export default {
   components: { LetterIntent, BuyerDeclaration,BirTin,ContractDetails},
+  props: ['clientObj'],
     data(){
       return{
         formVisible: null,

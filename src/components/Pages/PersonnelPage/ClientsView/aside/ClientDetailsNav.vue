@@ -4,7 +4,7 @@
     <section class="section-left">
         <div>
           <img src="@/assets/profile.png">
-          <h6>{{client.fullname}}</h6>
+          <h6>{{clientObj.profile.fullname}}</h6>
         </div>
         
         <div>
@@ -14,22 +14,19 @@
 
           <button :class="{flat:clientFormsVisibleComputed}" @click="goto('forms')">Forms</button>
 
-          <button class="delBtn" @click="deleteNow(client.id)" v-if="authorizationRoleAdmin">Delete</button>
         </div>
 
         <div>
           <!-- <button class="saveBtn" @click="saveNow">Save</button> -->
-          <!-- <button class="delBtn" @click="deleteNow(client.id)" v-if="authorizationRoleAdmin">Delete</button> -->
+          <button class="delBtn" @click="deleteNow(clientObj.profile.id)" v-if="authorizationRoleAdmin">Delete</button>
         </div>
       
     </section>
 
     <section class="section-right">
-
-          <client-profile v-if="clientProfileVisibleComputed" :client="client" @pass-data="getProfile"/>
-          <client-payment v-if="clientPaymentVisibleComputed"/>
-          <client-forms  v-if="clientFormsVisibleComputed"/> 
-
+           <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj.profile" @pass-data="getProfile"/>
+          <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj"/>
+         <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
     </section>
   </div>
 </template>
@@ -40,7 +37,7 @@ import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
 import ClientForms from '../article/FORMS/FormsDetails.vue'
 
 export default {
-  props: ['client'],
+  props: ['clientObj'],
   components: {
     ClientProfile,
     ClientForms,
@@ -55,6 +52,9 @@ export default {
   },
 
   methods:{
+    print(){
+      console.log(this.clientObj,this.clientId)
+    },
     goto(params){
       this.reset();
       if(params === 'profile'){
@@ -93,8 +93,11 @@ export default {
     authorizationRoleAdmin(){
       return this.$store.getters['auth/authorizationRoleAdmin']
     }
-  }
+  },
 
+  created(){
+    this.print();
+  }
 }
 </script>
 
@@ -118,7 +121,7 @@ button{
 }
 .c-container .section-left{
   width: 25%;
-  /* height: 95%; */
+  box-shadow: 0 0 3px 1px black;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -161,6 +164,7 @@ img{
   width: 75%;
   height: 100%;
   border: 1px solid black;
+  box-shadow: 0 0 3px 1px black;
   padding: 1rem;
   background-color: white;
   overflow-y: auto;

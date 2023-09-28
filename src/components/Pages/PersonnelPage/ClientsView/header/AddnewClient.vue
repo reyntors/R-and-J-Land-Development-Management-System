@@ -76,10 +76,39 @@ export default{
 
         addNow(){
             const payload = {
-                id: this.id,
-                fullname: this.fullname,
-                email: this.fullname,
-                address: this.address
+                profile:{
+                    id: this.id,
+                    fullname: this.fullname,
+                    email: this.fullname,
+                    address: this.address                    
+                },
+                accountDetails: {
+
+                },
+                paymentDetails: {
+
+                },
+                accountingDetails:{
+
+                },
+                transaction:[
+                     
+                ],
+                letterIntent:{
+
+                },
+                individualDeclaration: {
+
+                },
+                BirTinReques: {
+
+                },
+                ContractDetails: {
+
+                },
+                scannedFiles:[
+
+                ]
             }
             this.$store.commit('client/addClient',payload)
             this.back();

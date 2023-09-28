@@ -18,18 +18,17 @@
               <th>Address</th>
               <th>Action</th>
             </tr>
-            <tbody v-for="client in clientsComputed" :key="client.id">
+            <tbody v-for="(client,index) in clientsComputed" :key="index">
               <tr>
-              
-                  <td>{{ client.fullname }}</td>
-                  <td>{{ client.email }}</td>
-                  <td>{{ client.address }}</td>
+                  <td>{{ client.profile.fullname }}</td>
+                  <td>{{ client.profile.email }}</td>
+                  <td>{{ client.profile.address }}</td>
                   <td><span @click="showClientProfile(client)">Show/Update</span></td> 
               </tr>  
               <tr v-if="client === selectedClient">
                 <td :colspan="4">
                   <!-- <view-client :client="client"/>    -->
-                  <client-details-nav :client="client"></client-details-nav>          
+                  <client-details-nav :client-obj="client"></client-details-nav>          
                 </td>
               </tr>            
             </tbody>
@@ -130,7 +129,6 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
   .displayPart{
     height: 90%;
     width:100%;
-    /* background-color: bisque; */
   }
   table{
     width: 100%;
