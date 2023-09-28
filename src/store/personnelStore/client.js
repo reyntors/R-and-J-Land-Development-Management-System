@@ -70,7 +70,7 @@ export default{
                     individualDeclaration: {
 
                     },
-                    BirTinReques: {
+                    BirTinRequest: {
 
                     },
                     ContractDetails: {

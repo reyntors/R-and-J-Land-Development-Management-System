@@ -27,7 +27,6 @@
               </tr>  
               <tr v-if="client === selectedClient">
                 <td :colspan="4">
-                  <!-- <view-client :client="client"/>    -->
                   <client-details-nav :client-obj="client"></client-details-nav>          
                 </td>
               </tr>            
@@ -40,13 +39,11 @@
 
       <addnew-client v-if="addFormVisibleComputed" @go-back="toggleShowAddForm"/>
     </div>
-    <!-- <client-details-nav></client-details-nav> -->
     
   </template>
   
   <script>
 import AddnewClient from './header/AddnewClient.vue'
-// import ViewClient from '../CLIENT/ViewClient.vue'
 import ClientDetailsNav from './aside/ClientDetailsNav.vue'
 
 
@@ -54,7 +51,6 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
 
       components: {
             AddnewClient,
-            // ViewClient,
             ClientDetailsNav
       },
 
