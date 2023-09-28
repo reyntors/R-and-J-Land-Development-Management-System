@@ -4,7 +4,8 @@ import axios from 'axios';
 
 
 
-const BASE_URL = 'https://node-mongodb-api-u5qu.onrender.com/';
+// const BASE_URL = 'https://node-mongodb-api-u5qu.onrender.com/';
+const BASE_URL = 'http://localhost:4000/';
 
 export const login = async (credentials) => {
     try {
@@ -110,6 +111,33 @@ export const createContractDetails = async (contractDetailsData) => {
       
       
       return response.data;
+  } catch (error) {
+      throw error.response.data.message;
+  }
+};
+
+export const getUserDetails = async (userDetailsData) => {
+  try {
+
+
+      
+      const token = getToken();
+
+      
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(`${BASE_URL}users/`, userDetailsData, {
+        headers: headers,
+          
+
+         
+      
+      });
+      console.log(response.data);
+      return response.data;
+     
   } catch (error) {
       throw error.response.data.message;
   }

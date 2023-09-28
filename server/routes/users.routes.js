@@ -1,5 +1,8 @@
 const userController = require("../controllers/users.controller");
 const lotController = require("../controllers/lot.controller");
+const transactiontController = require("../controllers/transaction.controller");
+const legitClientController = require("../controllers/legitimateClient.controller");
+const paymentDetailsController = require('../controllers/paymentdetails.controller');
 const auth = require("../middlewares/auth");
 const express = require("express");
 
@@ -16,6 +19,12 @@ router.get("/user-profile", auth.authenticateToken, userController.userProfile);
 router.post("/addnewclient", auth.authenticateToken, userController.restrict('staff'), userController.register);
 router.get("/:id?", auth.authenticateToken, userController.restrict('staff'), userController.getUserDetails);
 router.put("/:id", auth.authenticateToken, userController.restrict('staff'), userController.updateUser);
+router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict('staff'), transactiontController.addTransaction);
+router.get("/client/legit-clients", auth.authenticateToken, userController.restrict('staff'), legitClientController.listLegitimateClients);
+router.put("/update-legitimacy/:id", auth.authenticateToken, userController.restrict('staff'), legitClientController.updateLegitimacy);
+router.post('/addpayment/:id', auth.authenticateToken, userController.restrict('staff'), paymentDetailsController.createUserWithPaymentDetails);
+
+
 
 
 //admin
@@ -26,7 +35,7 @@ router.delete("/:id", auth.authenticateToken, userController.restrict('admin'), 
 
 
 //lot
-router.post("/lot", auth.authenticateToken, lotController.createLot);
+router.post("/addlot/:id", auth.authenticateToken, userController.restrict('staff'), lotController.createLot);
 
 
 

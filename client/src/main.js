@@ -10,9 +10,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
-import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, faCaretUp, faArrowLeftLong, faPlus} from '@fortawesome/free-solid-svg-icons'
+import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, faCaretUp, faArrowLeftLong, faPlus, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 /* add icons to the library */
-library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,faCaretDown,faCaretUp,faArrowLeftLong, faPlus)
+library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,faCaretDown,faCaretUp,faArrowLeftLong, faPlus, faMagnifyingGlass)
 
 
 import TheHeader from './components/Reusable/TheHeader.vue'

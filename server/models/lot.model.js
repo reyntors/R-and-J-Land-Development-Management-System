@@ -8,22 +8,25 @@ const lotSchema = new Schema({
         required: true,
         unique: true,
     },
-    lotSize: {
+    totalSqm: {
         type: Number,
-        required: true,
-    },
-    lotDescription: {
-        type: String,
         required: true,
     },
     amountperSquare: {
         type: Number,
         required: true,
     },
-    totalSqm: {
+    totalAmountDue: {
         type: Number,
         required: true,
-    }
+    },
+    createdBy: {
+        type: Schema.Types.ObjectId, 
+        ref: 'user', 
+        required: true,
+    },
+    
+    
 });
 
 lotSchema.set('timestamps', true);
