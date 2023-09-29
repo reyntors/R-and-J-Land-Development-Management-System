@@ -1,8 +1,10 @@
 import { createStore } from "vuex";
 import auth from './authStore/authStore.js'
+
 import personnel from './personnelStore/personnel.js'
 import client from './personnelStore/client.js'
 import report from './personnelStore/report.js'
+import properties from './personnelStore/properties.js'
 
 const store = createStore({
         modules:{
@@ -10,6 +12,7 @@ const store = createStore({
             personnel,
             client,
             report,
+            properties,
         },
         state(){
             return{
