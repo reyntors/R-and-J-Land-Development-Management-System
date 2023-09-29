@@ -34,6 +34,7 @@
   </template>
   
   <script>
+  
   export default{
       emits: ['go-back'],
       data(){
@@ -49,6 +50,15 @@
           }
       },
       methods: {
+
+        async fetchData() {
+            
+                try {
+                await this.$store.dispatch('client/getPendingClients');
+                } catch (error) {
+                console.error(error);
+                }
+            },
           back(){
               this.$emit('go-back')
           },
@@ -63,8 +73,10 @@
               const result = this.$store.getters['client/searchResultGetter']
               if(result){
                   console.log('true')
+                  console.log(result.userId);
+                  this.id = result.userId
                   this.searchTrue = true;
-                  this.id = result.id
+                //   this.id = result.id
                   this.fullname = result.fullname
                   this.email  =result.email
                   this.address = result.address
@@ -75,42 +87,7 @@
           },
   
           addNow(){
-              const payload = {
-                  profile:{
-                      id: this.id,
-                      fullname: this.fullname,
-                      email: this.fullname,
-                      address: this.address                    
-                  },
-                  accountDetails: {
-  
-                  },
-                  paymentDetails: {
-  
-                  },
-                  accountingDetails:{
-  
-                  },
-                  transaction:[
-                       
-                  ],
-                  letterIntent:{
-  
-                  },
-                  individualDeclaration: {
-  
-                  },
-                  BirTinReques: {
-  
-                  },
-                  ContractDetails: {
-  
-                  },
-                  scannedFiles:[
-  
-                  ]
-              }
-              this.$store.commit('client/addClient',payload)
+              this.$store.dispatch('client/addClient',this.id)
               this.back();
           }
       },
@@ -118,6 +95,9 @@
           searchResultComputed(){
               return  this.searchTrue       
           },
+      },
+      created(){
+        this.fetchData();
       }
   }
   </script>

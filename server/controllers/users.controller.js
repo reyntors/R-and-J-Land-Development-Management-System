@@ -24,7 +24,13 @@ exports.register = (req, res, next) => {
 exports.login = async (req, res, next) => {
     const {username, password, roles} = req.body;
 
-    const userRoles = await User.findOne({ username });
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(401).send({
+          message: 'Invalid username. Please try again.',
+      });
+  }
 
     if (!roles){
         return res.status(402).send({
@@ -32,7 +38,7 @@ exports.login = async (req, res, next) => {
         });
     }
 
-    if (roles !== userRoles.roles ) {
+    if (roles !== user.roles ) {
         return res.status(400).send({
             message: 'Invalid roles.',
         });
@@ -92,7 +98,7 @@ exports.getUserDetails = async (req, res, next) => {
     } catch (error) {
         return next(error);
     }
-  }
+  };
 
   exports.updateUser = async (req, res, next) => {
     const { id } = req.params;

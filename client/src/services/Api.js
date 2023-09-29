@@ -116,26 +116,64 @@ export const createContractDetails = async (contractDetailsData) => {
   }
 };
 
-export const getUserDetails = async (userDetailsData) => {
+export const getAllUsers = async () => {
   try {
 
-
-      
       const token = getToken();
 
-      
       const headers = {
         Authorization: `Bearer ${token}`,
       };
 
-      const response = await axios.get(`${BASE_URL}users/`, userDetailsData, {
-        headers: headers,
-          
-
-         
+      const response = await axios.get(`${BASE_URL}users`, {
+        headers: headers,  
       
       });
-      console.log(response.data);
+      
+      return response.data;
+     
+  } catch (error) {
+      throw error.response.data.message;
+  }
+};
+
+export const updateLegitimacy = async (userId) => {
+  console.log("I am from API:", userId);
+  try {
+
+      const token = getToken();
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.put(`${BASE_URL}users/update-legitimacy/${userId}`, userId, {
+        headers: headers,  
+      
+      });
+      
+      return response.data;
+     
+  } catch (error) {
+      throw error.response.data.message;
+  }
+};
+
+export const listLegitimateClients = async () => {
+  
+  try {
+
+      const token = getToken();
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await axios.get(`${BASE_URL}users/client/legit-clients`,  {
+        headers: headers,  
+      
+      });
+      
       return response.data;
      
   } catch (error) {

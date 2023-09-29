@@ -8,12 +8,14 @@ exports.createLetterOfIntent = async (req, res, next) => {
     try {
         const letterOfIntentData = req.body;
         const username = req.user.username;
+
+        console.log(username);
         
         
 
        
         const user = await User.findOne({ username });
-
+        console.log(user);
         
         
          const newLetterOfIntent = new LetterOfIntent({
@@ -24,6 +26,12 @@ exports.createLetterOfIntent = async (req, res, next) => {
 
        
         const savedLetterOfIntent = await newLetterOfIntent.save();
+
+        user.letterOfIntent = savedLetterOfIntent;
+
+        await user.save();
+
+       
 
         return res.status(200).send({
             message: `${username}! Your Letter of Intent successfully created!`,

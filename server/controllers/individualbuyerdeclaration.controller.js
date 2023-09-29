@@ -25,6 +25,10 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
        
         const savedIndividualBuyerDeclaration = await newIndividualBuyerDeclaration.save();
 
+        user.individualDeclaration = savedIndividualBuyerDeclaration;
+
+        await user.save();
+
         return res.status(200).send({
             message: `${username}! Your Individual Buyer Declaration successfully created!`,
             data: savedIndividualBuyerDeclaration});

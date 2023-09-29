@@ -22,9 +22,9 @@ import StaffAppprovePayment from './components/Pages/FormPage/StaffForms/StaffSu
 //ADMIN & STAFF PAGE
 import PersonnelHomePage from './components/Pages/PersonnelPage/PersonnelPage.vue'
 import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/DashboardView.vue'
-import PersonnelReports from './components/Pages/PersonnelPage/SubComponents/ReportsView.vue'
+import PersonnelReports from './components/Pages/PersonnelPage/ReportsView/ReportsView.vue'
 import PersonnelInquiries from './components/Pages/PersonnelPage/SubComponents/InquiriesView.vue'
-import PersonnelProperties from './components/Pages/PersonnelPage/SubComponents/PropertiesView.vue'
+import PersonnelProperties from './components/Pages/PersonnelPage/PropertiesView/PropertiesView.vue'
 import PersonnelCustomer from './components/Pages/PersonnelPage/ClientsView/ClientView.vue'
 import PersonnelPayment from './components/Pages/PersonnelPage/SubComponents/PaymentView.vue'
 

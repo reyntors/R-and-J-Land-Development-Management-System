@@ -25,6 +25,10 @@ exports.createBirTinRequest = async (req, res, next) => {
        
         const savedBirTinRequest = await newBirTinRequest.save();
 
+        user.BirTinRequest = savedBirTinRequest;
+
+        await user.save();
+
         return res.status(200).send({
             message: `${username}! Your BIR Tin Request successfully created!`,
             data: savedBirTinRequest});

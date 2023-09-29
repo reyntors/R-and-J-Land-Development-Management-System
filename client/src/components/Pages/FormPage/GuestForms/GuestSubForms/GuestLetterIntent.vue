@@ -291,7 +291,7 @@ methods: {
       try {
        
         await this.$store.dispatch('auth/createLetterOfIntent', letterOfIntentData);
-
+        
         
        
       } catch (error) {

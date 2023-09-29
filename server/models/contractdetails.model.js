@@ -381,8 +381,8 @@ const contractDetailsSchema = new Schema({
         required: false,
     },
     createdBy: {
-        type: Schema.Types.ObjectId, 
-        ref: 'User', 
+        type: String, 
+        ref: 'user', 
         required: true,
     },
     

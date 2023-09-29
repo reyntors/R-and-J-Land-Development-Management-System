@@ -28,9 +28,6 @@ exports.createLot = async (req, res, next) => {
       user.accountDetails = savedLot;
 
   
-
-      
-      // Save the user to update the association
       await user.save();
 
       return res.status(201).json({ message: "Lot created and associated with the user successfully", data: savedLot });

@@ -1,3 +1,10 @@
+import { getAllUsers } from '@/services/Api';
+import  AuthenticationService  from '@/services/AuthenticationService';
+
+
+
+
+
 export default{
 
     namespaced: true,
@@ -5,90 +12,95 @@ export default{
     state(){
         return {
             clientsPending: [
-                {
-                    id: '101',
-                    fullname: 'ahahahah ako',
-                    email: 'borromeojhafdsa7@gmail.com',
-                    address: 'Pasay Cityfdsfsad'
-                },
-                {
-                    id: '102',
-                    fullname: 'hehe ifdsa qmeo',
-                    email: 'borromeojhaerix27@gmail.com',
-                    address: 'Py City'
-                },
-                {
-                    id: '103',
-                    fullname: 'Jhafdsafasmeo',
-                    email: 'borromefsdafojhaerix27@gmail.com',
-                    address: 'Pafdsay'
-                },
+                // {
+                //     contactNumber:"09123456789",
+                // },
+                // {
+                //     id: '102',
+                //     fullname: 'hehe ifdsa qmeo',
+                //     email: 'borromeojhaerix27@gmail.com',
+                //     address: 'Py City'
+                // },
+                // {
+                //     id: '103',
+                //     fullname: 'Jhafdsafasmeo',
+                //     email: 'borromefsdafojhaerix27@gmail.com',
+                //     address: 'Pafdsay'
+                // },
             ],
 
             searchResult: null,
 
             clientsAdded: [
-                {
-                    profile: {
-                        id: 1,
-                        fullname: 'Jhaerix Ompoy Borromeo',
-                        email: 'borromeojhaerix27@gmail.com',
-                        address: 'Pasay City'  
-                    },
-                    accountDetails: {
+                // {
+                //     profile: {
+                //         userId: 1,
+                //         fullname: 'Jhaerix Ompoy Borromeo',
+                //         email: 'borromeojhaerix27@gmail.com',
+                //         address: 'Pasay City'  
+                //     },
+                //     accountDetails: {
 
-                    },
-                    paymentDetails: {
+                //     },
+                //     paymentDetails: {
 
-                    },
-                    accountingDetails:{
+                //     },
+                //     accountingDetails:{
 
-                    },
-                    transaction:[
-                        {
-                            date: '2023-08-09',
-                            amountPaid: '5,000',
-                            purpose: 'Reservation Fee',
-                            attachement: ['receipt1']
-                        },
-                        {
-                            date: '2023-09-09',
-                            amountPaid: '50,000',
-                            purpose: 'Downpayment',
-                            attachement: ['receipt1', 'downpayment receipt']
-                        },  
-                        {
-                            date: '2023-10-09',
-                            amountPaid: '10,000',
-                            purpose: 'Monthly Payment',
-                            attachement: ['receipt1', 'downpayment receipt']
-                        },                        
-                    ],
-                    letterIntent:{
+                //     },
+                //     transaction:[
+                //         {
+                //             date: '2023-08-09',
+                //             amountPaid: '5,000',
+                //             purpose: 'Reservation Fee',
+                //             attachement: ['receipt1']
+                //         },
+                //         {
+                //             date: '2023-09-09',
+                //             amountPaid: '50,000',
+                //             purpose: 'Downpayment',
+                //             attachement: ['receipt1', 'downpayment receipt']
+                //         },  
+                //         {
+                //             date: '2023-10-09',
+                //             amountPaid: '10,000',
+                //             purpose: 'Monthly Payment',
+                //             attachement: ['receipt1', 'downpayment receipt']
+                //         },                        
+                //     ],
+                //     letterIntent:{
 
-                    },
-                    individualDeclaration: {
+                //     },
+                //     individualDeclaration: {
 
-                    },
-                    BirTinReques: {
+                //     },
+                //     BirTinRequest: {
 
-                    },
-                    ContractDetails: {
+                //     },
+                //     ContractDetails: {
 
-                    },
-                    scannedFiles:[
-                        'contractdetails.pdf','birtinrewue.pdf'
-                    ]
-                },
+                //     },
+                //     scannedFiles:[
+                //         'contractdetails.pdf','birtinrewue.pdf'
+                //     ]
+                // },
             ]
         }
     },
     mutations:{
 
+        setPendingClients(state, responseData){
+            responseData.forEach((item)=>{
+                // console.log(item)
+                state.clientsPending.push(item)
+            })
+            // console.log(state.clientsPending)
+        },
+
         searchClient(state,id){
-            const index = state.clientsPending.findIndex(item => item.id === id)
+            const index = state.clientsPending.findIndex(item => item.userId === id)
             if(index>=0){
-                console.log(state.clientsPending[index])
+                // console.log(state.clientsPending[index])
                 state.searchResult = state.clientsPending[index]
             }else{
                 state.searchResult = null
@@ -96,10 +108,13 @@ export default{
             }
         },
 
+
         //CRUD CLIENTADDED
-        addClient(state,payload){
-            console.log('added')
-            state.clientsAdded.push(payload)
+        setList(state,payload){
+            payload.forEach(element => {
+                state.clientsAdded.push(element)
+            })
+            console.log(state.clientsAdded)
         },
 
         updateClient(state,payload){
@@ -128,12 +143,68 @@ export default{
             const index = state.clientsAdded.findIndex(item => item.profile.id === payload.id)
             if(index>=0){
                 state.clientsAdded[index].transaction.push(obj)
-            }
-            
+            }      
         }
     },
     actions:{
-        //do the http request functions here
+
+        async getPendingClients(context){
+            
+            try {
+
+                const responseData = await getAllUsers();
+
+                context.commit('setPendingClients', responseData.data);
+
+
+                return responseData;
+                
+            } catch (error) {
+                console.log(error)
+                throw error
+            }
+            
+        },
+        
+        async addClient(context, userId){
+            console.log(userId)
+            try {               
+                const responseData = await AuthenticationService.updateLegitimacy(userId);
+                console.log(responseData)
+                
+
+            } catch (error) {
+                console.log(error)
+                throw error              
+            }                 
+        },
+
+        async getLegitClients(context,legitimateClients){
+            console.log("try get list legit")
+            try{                
+                const responseData = await AuthenticationService.listLegitimateClients(legitimateClients)
+                console.log(typeof(responseData));
+                context.commit('setList',responseData)
+            
+            }catch(error){
+                console.log(error)
+            }
+        },
+
+        updateClient(context,payload){
+            context.commit('updateClient',payload)
+            //http request for updating the specific legit client
+        },
+        deleteClient(context,id){
+            context.commit('deleteClient',id)
+            //http request for deleting specific legit client
+        },
+        addPayment(context,payload){
+            context.commit('addPayment',payload)
+            //http request for adding payment transactions
+        },
+
+
     },
     getters:{
         searchResultGetter(state){
@@ -144,6 +215,7 @@ export default{
             }
         },
         clientsGetter(state){
+            console.log(state.clientsAdded)
             return state.clientsAdded
         },
         clientTransactionGetter(state,id){

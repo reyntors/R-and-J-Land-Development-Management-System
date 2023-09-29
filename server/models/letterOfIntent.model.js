@@ -50,12 +50,12 @@ const letterOfIntentSchema = new Schema({
         required: true,
     },
     reservationTimeSpan: {
-        type: String, // You can adjust the data type if needed (e.g., Number, Date, etc.)
+        type: String, 
         required: true,
     },
     createdBy: {
-        type: Schema.Types.ObjectId, // Assuming this is a reference to the user who created it
-        ref: 'User', // Reference to the User model
+        type: Schema.Types.ObjectId, 
+        ref: 'user', 
         required: true,
     },
     

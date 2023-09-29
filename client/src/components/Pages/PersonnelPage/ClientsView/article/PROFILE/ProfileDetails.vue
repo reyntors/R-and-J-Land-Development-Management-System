@@ -166,7 +166,7 @@
                   email: this.profileDetails.email,
                   address: this.address,
                   }
-                  this.$store.commit('client/updateClient',obj)
+                  this.$store.dispatch('client/updateClient',obj)
               }else{
                   console.log('no changes')
               }

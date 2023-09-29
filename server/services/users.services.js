@@ -10,9 +10,9 @@ async function login({username, password, roles}, callback){
             const user = await User.findOne({ username });
              
             
-            if (user === null) {
+            if (username !== user.username) {
 
-                return callback({ message: 'Invalid username or password'});
+                return callback({ message: 'Invalid username'});
             }
 
             const isPasswordValid = await bcrypt.compare(password, user.password);

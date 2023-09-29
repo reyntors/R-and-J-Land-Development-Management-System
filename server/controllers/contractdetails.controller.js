@@ -18,12 +18,16 @@ exports.createContractDetails = async (req, res, next) => {
         
          const newcontractDetailsData = new createContractDetails({
             ...contractDetailsData,
-            createdBy: user._id, 
+            createdBy: user.userId, 
         });
         
 
        
         const savedcreateContractDetails = await newcontractDetailsData.save();
+
+        user.ContractDetails = savedcreateContractDetails;
+
+        await user.save();
 
         return res.status(200).send({
             message: `${username}! Your Contract Details successfully created!`,
