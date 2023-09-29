@@ -113,6 +113,7 @@ export default {
 .property-cont{
     background-color: rgba(0, 0, 0, 0.1);
     padding: .5rem;
+    border: 1px
 }
 .property-cont header{
     display: flex;
