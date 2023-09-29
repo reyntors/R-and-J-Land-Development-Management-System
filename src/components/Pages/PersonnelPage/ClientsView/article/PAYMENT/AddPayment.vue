@@ -59,7 +59,7 @@ export default {
             form.append('purpose',this.purpose)
             form.append('attachement',this.attachement)
 
-            this.$store.commit('client/addPayment',{form:form,
+            this.$store.dispatch('client/addPayment',{form:form,
                                                     id:this.id})
             form.forEach(element => console.log(element))
             console.log('id from add payment' +this.id)
