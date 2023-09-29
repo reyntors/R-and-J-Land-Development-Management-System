@@ -74,7 +74,7 @@ export default {
     //delete
     deleteNow(id){
       alert('Deleting now')
-      this.$store.commit('client/deleteClient',id)
+      this.$store.dispatch('client/deleteClient',id)
     }
   },
 

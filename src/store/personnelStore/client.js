@@ -128,12 +128,28 @@ export default{
             const index = state.clientsAdded.findIndex(item => item.profile.id === payload.id)
             if(index>=0){
                 state.clientsAdded[index].transaction.push(obj)
-            }
-            
+            }      
         }
     },
     actions:{
         //do the http request functions here
+        addClient(context,payload){
+            context.commit('addClient',payload)
+            //http request for adding guest into legit client
+        },
+        updateClient(context,payload){
+            context.commit('updateClient',payload)
+            //http request for updating the specific legit client
+        },
+        deleteClient(context,id){
+            context.commit('deleteClient',id)
+            //http request for deleting specific legit client
+        },
+        addPayment(context,payload){
+            context.commit('addPayment',payload)
+            //http request for adding payment transactions
+        }
+
     },
     getters:{
         searchResultGetter(state){

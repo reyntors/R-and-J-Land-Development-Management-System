@@ -110,7 +110,7 @@ export default{
 
                 ]
             }
-            this.$store.commit('client/addClient',payload)
+            this.$store.dispatch('client/addClient',payload)
             this.back();
         }
     },
