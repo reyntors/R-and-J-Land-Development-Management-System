@@ -18,15 +18,15 @@
 
       <article @click="toggleMonthly">
         <header>
-          Monthly Collection Reports
+          Custom Collection Reports
         </header>
         <section>
             Collection Summary
         </section>
       </article>
 
-      <daily-report v-if="dailyVisibleComputed"/>
-      <monthly-report v-if="monthlyVisibleComputed"/>
+      <daily-report v-if="dailyVisibleComputed" @close-dialog="toggleDaily"/>
+      <monthly-report v-if="monthlyVisibleComputed"  @close-dialog="toggleMonthly"/>
 
     </div>
   </div>
@@ -93,7 +93,7 @@ export default {
     height: 90%;
     background-color: bisque;
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     padding: 1rem;
     gap: 1rem;
     position: relative;
@@ -113,7 +113,7 @@ export default {
 .div2 article header{
     padding: .5rem;
     font-weight: 700;
-    background-color: #31A72A;
+    background-color: blue;
     color: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -129,7 +129,7 @@ export default {
     justify-content: center;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    background: linear-gradient(66deg,#0000ff,#31a72a,#ffffff);
+    background: linear-gradient(66deg,#0000ff3c,#31a72a,#ffffff);
     background-size: 180% 180%;
     animation: gradient-animation 3s ease infinite;
 }
