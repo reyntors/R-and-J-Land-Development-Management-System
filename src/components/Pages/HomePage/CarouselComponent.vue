@@ -1,5 +1,5 @@
 <template>
-  <div id="carousel-control" class="carousel slide carousel-fade carousel-dark " data-bs-ride="carousel" data-bs-interval="3000">
+  <div id="carousel-control" class="carousel slide carousel-fade carousel-dark " data-bs-ride="carousel" data-bs-interval="1000">
     <div class="carousel-indicators c-">  
   
       <button type="button" data-bs-target="#carousel-control" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -10,22 +10,28 @@
     
     <div class="carousel-inner">
       <div class="carousel-item active c-item">
-        <img src="https://picsum.photos/id/10/200/200" class="d-block w-100 c-img" alt="...">
+        <article id="img1"></article>
+
         <div class="carousel-caption d-md-block c-desc ">
           <h1 class="title">R & J Land Development Corporation</h1>
         </div>
+
       </div>
       <div class="carousel-item c-item">
-        <img src="https://picsum.photos/id/11/200/200" class="d-block w-100 c-img" alt="...">
+        <article id="img2"></article>
+
         <div class="carousel-caption d-md-block c-desc">
           <h1 class="title">R & J Land Development Corporation</h1>
         </div>
+
       </div>
       <div class="carousel-item c-item" >
-        <img src="https://picsum.photos/id/12/200/200" class="d-block w-100 c-img" alt="...">
+        <article id="img3"></article>
+ 
         <div class="carousel-caption d-md-block c-desc">
           <h1 class="title">R & J Land Development Corporation</h1>
         </div>
+
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carousel-control" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -57,17 +63,45 @@ export default {
   text-transform: uppercase;
   font-weight: 900;
   font-size: clamp(2rem, 5vw, 5rem);
-  text-shadow: 0 3px 5px white;
+  text-shadow: 0 2px 2px white;
 } 
 .c-item{
   height: 85vh;
   box-sizing: border-box;
 }
-.c-img{
-  height: 85vh;
+.carousel-control-prev-icon,
+.carousel-control-next-icon{
+  background-color: red;
+  color: white;
 }
+
+#img1{
+  background-image: url(https://media.istockphoto.com/id/152494090/photo/aerial-home-housing-development-community-images.jpg?s=612x612&w=0&k=20&c=sHjAG8aUMgxcuFxuN91FATVWO6-LxHBAlyAExwxBOmo=);
+  height: 85vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.392);
+  background-blend-mode: darken;
+}
+#img2{
+  background-image: url(https://media.istockphoto.com/id/182247315/photo/for-sale-everywhere.jpg?s=612x612&w=0&k=20&c=3jwniCEd1YJ4OsxXgW6bjUOeqgFGiUJuhAQCM4lEpLw=);
+  height: 85vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.392);
+  background-blend-mode: darken;
+}
+#img3{
+  background-image: url(https://media.istockphoto.com/id/1091532578/photo/homes-in-a-suburban-master-planned-subdivision.jpg?s=612x612&w=0&k=20&c=pNkSfDVjDOCmAKBPk8oScXFTOtSVrwh1IABLF1AJemA=);
+  height: 85vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.392);
+  background-blend-mode: darken;
+}
+
 .c-desc{
-  position: absolute;
+  /* position: absolute; */
   top: 50px;
 }
 

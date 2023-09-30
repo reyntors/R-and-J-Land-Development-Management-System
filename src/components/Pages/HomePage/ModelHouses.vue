@@ -131,13 +131,13 @@
     background-color: #86D916;;
   }
   .images{
-    width: 90%;
+    width: 100%;
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    gap: 1rem;
-    padding: .2rem;
+    gap: .1rem;
+    /* padding: .2rem; */
   }
   .virtualViewContainer{
     display: flex;
