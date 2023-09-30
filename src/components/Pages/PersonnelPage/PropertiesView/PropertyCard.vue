@@ -3,15 +3,24 @@
     <!-- {{ property }} -->
     <header>
         <button class="option" @click="toggleOption" v-if="!optionClicked">Option <font-awesome-icon class="icon" icon="fa-solid fa-gear" /></button>
-        <button class="option" v-if="optionClicked" @click="update">Update</button>
+        <button class="option" id="updateProperty" v-if="optionClicked" @click="update">Update</button>
         <button class="option" @click="toggleOption" v-if="optionClicked">Cancel</button>
     </header>
 
     <section>
         <div class="div1">
-            //image
+            <img :src="displayedImg">    
         </div>
+        <!-- <property-carousel/> -->
         <div class="div2">
+            <!-- <section> -->
+            <span v-if="optionClicked">
+                <input id="uploadImage" type="file" name="myImage" accept="image/*" @change="getUploadedImg"/>                
+            </span>
+
+ 
+            <!-- </section> -->
+            
             <section>
                 <label :for="property.block_Lot_No">Block and Lot No. </label>:<input :id="property.block_Lot_No" readonly v-model="lotNo">
             </section>
@@ -38,9 +47,11 @@
 </template>
 
 <script>
+// import PropertyCarousel from './PropertyCarousel.vue'
 export default {
     emits: ['close-one'],
     props: ['property'],
+    // components: {PropertyCarousel},
     data(){
         return{
             lotNo: this.property.block_Lot_No,
@@ -48,10 +59,11 @@ export default {
             amountPerSq: this.property.amount_per_Sq,
             amountDue: this.property.total_Amount_Due,
             status: this.property.status,
+            displayedImg: this.property.imageUrl,
 
             optionClicked: false,
             editable: false,
-            selectDisabled: true,
+            selectDisabled: true, 
         }
     },
     
@@ -65,6 +77,8 @@ export default {
             const select = document.getElementById(id)
             const bool = this.selectDisabled
             select.disabled = bool;
+
+            this.cancelSavingUploadedImg()
         },
         disableSelect(){     
             const id = this.lotNo + 'selectPropertyStatus'
@@ -72,17 +86,52 @@ export default {
             select.disabled = true;         
         },
 
+        checkIfDataChanged(){
+            if(
+                this.totalSq === this.property.total_Sq_M &&
+                this.amountPerSq === this.property.amount_per_Sq &&
+                this.amountDue === this.property.total_Amount_Due &&
+                this.status === this.property.status && 
+                this.displayedImg === this.property.imageUrl){
+
+                return false
+            }else{
+                return true
+            }       
+        },
+
         update(){
-            const payload = {
-                block_Lot_No: this.lotNo,
-                total_Sq_M: this.totalSq,
-                amount_per_Sq: this.amountPerSq,
-                total_Amount_Due: this.amountDue,
-                status: this.status
+            const isUpdated = this.checkIfDataChanged()
+            if(isUpdated){
+                const payload = {
+                    block_Lot_No: this.lotNo,
+                    total_Sq_M: this.totalSq,
+                    amount_per_Sq: this.amountPerSq,
+                    total_Amount_Due: this.amountDue,
+                    status: this.status,
+                    imageUrl: this.displayedImg
+                }
+                this.$store.dispatch('properties/update',payload)
+                this.toggleOption()
+                 this.$emit('close-one')              
+            }else{
+                console.log('nothing changed')
             }
-            this.$store.dispatch('properties/update',payload)
-            this.toggleOption()
-            this.$emit('close-one')
+
+            
+        },
+
+        getUploadedImg(event){
+            const uploadedFile = event.target.files[0]
+            if(uploadedFile){
+                const blob = new Blob([uploadedFile])
+                const url = URL.createObjectURL(blob)
+                this.displayedImg =  url
+            }
+        },
+
+        cancelSavingUploadedImg(){
+            this.displayedImg = this.property.imageUrl
         }
     },
 
@@ -100,7 +149,7 @@ export default {
         },
         idSelect(){
             return this.lotNo + 'selectPropertyStatus'
-        }
+        },
     },
 
     mounted(){
@@ -115,7 +164,7 @@ export default {
 .property-cont{
     background-color: rgba(0, 0, 0, 0.1);
     padding: .5rem;
-    border: 1px
+    border: 1px solid black;
 }
 .property-cont header{
     display: flex;
@@ -125,19 +174,30 @@ export default {
 }
 .property-cont > section{
     display: flex;
+    flex-direction: column;
     gap: .2rem;
+    /* height: 50vh; */
 }
-.property-cont section .div1{
-    width: calc(100%/3);
-    /* border:1px solid black; */
-}
+ .property-cont section .div1{
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    border: 1px solid black;
+    /* height: 200px; */
+    /* width: calc(100%/3); */
+} 
+
+.property-cont section .div1 img{
+    object-fit: cover;
+    height: 100%;
+} 
+
 .property-cont section .div2{
-    width: calc(100%/3*2);
-    /* border:1px solid black; */
+    /* width: calc(100%/3*2); */
     display: flex;
     flex-direction: column;
     gap: 5px;
-}
+} 
 
 .property-cont section .div2 section{
     display: flex;

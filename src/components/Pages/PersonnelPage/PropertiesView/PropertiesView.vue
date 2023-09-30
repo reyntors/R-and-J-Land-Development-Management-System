@@ -26,7 +26,8 @@
       <div class="div2">
         
         <ul v-if="showOnlyOne">
-          <property-card :property="searchResultComputed" @close-one="showAll"/>  
+          <property-card v-if="!issearchedResultEmptyComputed" :property="searchResultComputed" @close-one="showAll"/> 
+          <h1 v-else>Nothing found</h1> 
         </ul>
 
         <ul v-else>
@@ -73,11 +74,11 @@ import PropertyCard from './PropertyCard.vue'
       
       searchNow(){
         if(this.searchValue.length>0){
-          console.log('searching now',this.searchValue)
           this.$store.commit('properties/searchNow',this.searchValue)
           this.showOnlyOne = true;
+          console.log('searching now',this.searchValue)
         }else{
-          console.log('empty value')
+          console.log('empty value to search')
         }
         this.isSearching = false
           
@@ -97,6 +98,9 @@ import PropertyCard from './PropertyCard.vue'
       },
       searchResultComputed(){
         return this.$store.getters['properties/searchedResultGetter']
+      },
+      issearchedResultEmptyComputed(){
+        return this.$store.getters['properties/issearchedResultEmptyGetter']
       }
     },
 
@@ -123,6 +127,9 @@ import PropertyCard from './PropertyCard.vue'
   width: 100%;
     height: 85vh;
     padding: 1rem;
+}
+.properties-cont h4{
+  cursor: pointer;
 }
 .div1{
     width:100%;

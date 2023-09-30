@@ -4,79 +4,70 @@ export default {
         return {
             properties: [
                 {
-                    imageUrl: '/image1',
-                    block_Lot_No:'1',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'1',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 200000,
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image2',
-                    block_Lot_No:'2',
+                    imageUrl: 'https://picsum.photos/200/300.jpg',                    block_Lot_No:'2',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 400000,
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image3',
-                    block_Lot_No:'3',
-                    total_Sq_M: 100,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 200000,
-                    status: 'reserved'
-                },
-                {
-                    imageUrl: '/image4',
-                    block_Lot_No:'4',
-                    total_Sq_M: 200,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 400000,
-                    status: 'sale'
-                },
-                {
-                    imageUrl: '/image5',
-                    block_Lot_No:'5',
-                    total_Sq_M: 200,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 400000,
-                    status: 'sale'
-                },
-                {
-                    imageUrl: '/image6',
-                    block_Lot_No:'6',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'3',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 200000,
                     status: 'reserved'
                 },
                 {
-                    imageUrl: '/image7',
-                    block_Lot_No:'7',
+                    imageUrl: 'https://picsum.photos/200/300.jpg',                    block_Lot_No:'4',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 400000,
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image8',
-                    block_Lot_No:'8',
+                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    block_Lot_No:'5',
+                    total_Sq_M: 200,
+                    amount_per_Sq: 2000,
+                    total_Amount_Due: 400000,
+                    status: 'sale'
+                },
+                {
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'6',
+                    total_Sq_M: 100,
+                    amount_per_Sq: 2000,
+                    total_Amount_Due: 200000,
+                    status: 'reserved'
+                },
+                {
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'7',
+                    total_Sq_M: 200,
+                    amount_per_Sq: 2000,
+                    total_Amount_Due: 400000,
+                    status: 'sale'
+                },
+                {
+                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    block_Lot_No:'8',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 200000,
                     status: 'sold'
                 },
                 {
-                    imageUrl: '/image9',
-                    block_Lot_No:'9',
+                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    block_Lot_No:'9',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 400000,
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image10',
+                    imageUrl: 'https://picsum.photos/200/300.jpg',
                     block_Lot_No: '10',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -85,7 +76,7 @@ export default {
                 },
 
                 {
-                    imageUrl: '/image11',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'11',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
@@ -93,7 +84,7 @@ export default {
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image12',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'12',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -101,7 +92,7 @@ export default {
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image13',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'13',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
@@ -109,7 +100,7 @@ export default {
                     status: 'reserved'
                 },
                 {
-                    imageUrl: '/image14',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'14',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -117,7 +108,7 @@ export default {
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image25',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'25',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -125,7 +116,7 @@ export default {
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image26',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'26',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
@@ -133,7 +124,7 @@ export default {
                     status: 'reserved'
                 },
                 {
-                    imageUrl: '/image37',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'37',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -141,7 +132,7 @@ export default {
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image38',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'38',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
@@ -149,7 +140,7 @@ export default {
                     status: 'sold'
                 },
                 {
-                    imageUrl: '/image39',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No:'39',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -157,7 +148,7 @@ export default {
                     status: 'sale'
                 },
                 {
-                    imageUrl: '/image40',
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
                     block_Lot_No: '40',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -188,13 +179,25 @@ export default {
         },
         searchNow(state,searchValue){
             const index = state.properties.findIndex(item => item.block_Lot_No === searchValue)
-            state.searchedResult = state.properties[index]
+            if(index>=0){
+                state.searchedResult = state.properties[index]                
+            }else{
+                state.searchedResult = []
+            }
+        },
+        setList(){
+            //do something to set the list
         }
     },
 
     actions:{
         update(context,payload){
             context.commit('update',payload)
+            //here for update http request
+        },
+        getPropertyList(context){
+            //here for get the list of all properties
+            context.commit('setList')
         }
     },
     
@@ -207,6 +210,13 @@ export default {
         },
         searchedResultGetter(state){
             return state.searchedResult
+        },
+        issearchedResultEmptyGetter(state){
+            if(state.searchedResult.length === 0){
+                return true
+            }else{
+                return false
+            }
         }
     }
 }
