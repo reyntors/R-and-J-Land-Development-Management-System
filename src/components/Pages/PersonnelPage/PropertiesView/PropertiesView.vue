@@ -14,7 +14,7 @@
           <span class="suggestion-tabs" v-if="isSearching">
             <li v-for="item in listSearchSuggestions" :key="item+'a'">
 
-                <button @click="clickSuggested(item.block_Lot_No)"> {{ item.block_Lot_No }}</button>
+                <button @click="clickSuggested(item.block_Lot_No)" @close-one="showAll"> {{ item.block_Lot_No }}</button>
 
             </li>          
           </span>
@@ -26,7 +26,7 @@
       <div class="div2">
         
         <ul v-if="showOnlyOne">
-          <property-card :property="searchResultComputed" @close-Focus="showAll"/>  
+          <property-card :property="searchResultComputed" @close-one="showAll"/>  
         </ul>
 
         <ul v-else>
@@ -79,6 +79,7 @@ import PropertyCard from './PropertyCard.vue'
         }else{
           console.log('empty value')
         }
+        this.isSearching = false
           
       },
 

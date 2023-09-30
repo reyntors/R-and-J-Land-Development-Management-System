@@ -39,6 +39,7 @@
 
 <script>
 export default {
+    emits: ['close-one'],
     props: ['property'],
     data(){
         return{
@@ -81,6 +82,7 @@ export default {
             }
             this.$store.dispatch('properties/update',payload)
             this.toggleOption()
+            this.$emit('close-one')
         }
     },
 
