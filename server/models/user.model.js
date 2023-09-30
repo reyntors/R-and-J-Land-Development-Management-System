@@ -20,21 +20,22 @@ const transactionSchema = new Schema({
 const accountDetailsSchema = new Schema({
     lotNumber: {
         type: String,
+        default: null,
         ref: 'Lot', 
     },
     totalSqm: {
         type: Number,
-        required: true,
+        default: null,
         ref: 'Lot', 
     },
     amountperSquare: {
         type: Number,
-        required: true,
+        default: null,
         ref: 'Lot', 
     },
     totalAmountDue: {
         type: Number,
-        required: true,
+        default: null,
         ref: 'Lot', 
     },
 });
@@ -42,26 +43,35 @@ const accountDetailsSchema = new Schema({
 
 const paymentDetailsSchema = new Schema({
     reservationPayment: {
-        type: Number,   
+        type: Number, 
+        default: null,  
     },
     downPayment: {
-        type: Number,   
+        type: Number,  
+        default: null, 
     },
     monthlyAmortizationDue:{
         type: Number,
+        default: null,
     }
 
 });
 
 const accountingDetailsSchema = new Schema({
    totalAmountDue: {
-        type: Number,   
+        type: Number,  
+        default: null,
+       
     },
     totalPayment: {
-        type: Number,   
+        type: Number,  
+        default: null,
+       
     },
    totalAmountPayable:{
         type: Number,
+        default: null,
+       
     }
 
 });
@@ -69,87 +79,87 @@ const accountingDetailsSchema = new Schema({
 const profileSchema = new Schema({
     fullname: {
         type: String,
-        required: true,
-        ref: 'user', 
+        default: null,
+       
     },
     contactNumber: {
         type: String,
-        required: true,
-        ref: 'user', 
+        default: null,
+       
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
-        ref: 'user', 
+        default: null,
+        unique: false,
+        
     },
     address: {
         type: String,
-        required: true,
-        ref: 'user', 
+        default: null,
+       
     },
 });
 
 const letterOfIntentSchema = new Schema({
     date: {
         type: Date,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
         
     },
     purchase: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     project: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     locationPH: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     locationBlk: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     locationLotOrUnit: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     name: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     address: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     citizenship: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     contactNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     emailAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
     reservationTimeSpan: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'Letter of Intent',
     },
 });
@@ -157,44 +167,39 @@ const letterOfIntentSchema = new Schema({
 const individualBuyerDeclarationSchema = new Schema({
     date: {
         type: Date,
-        required: true,
+        default: null,
         ref: 'Individual Buyer Declaration'
         
     },
     name: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Individual Buyer Declaration'
     },
     BIRtaxID: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Individual Buyer Declaration'
     },
     businessName: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Individual Buyer Declaration'
     },
     engagedInBusiness: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Individual Buyer Declaration'
     },
     businessRegisteredUnder: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Individual Buyer Declaration'
     },
     businessUsingMyTIN: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Individual Buyer Declaration'
-    },
-    createdBy: {
-        type: Schema.Types.ObjectId, 
-        ref: 'User', 
-        required: true,
     },
     
 });
@@ -202,88 +207,88 @@ const individualBuyerDeclarationSchema = new Schema({
 const birTinRequestSchema = new Schema({
     date: {
         type: Date,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
         
     },
     authorizedTo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     name: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     address: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     birthday: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     tinNumber: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     respectfulYours: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     spaName: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     spaAge: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     spaResident: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     spaAttyName: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     spaAttyAge: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     spaAttyResident: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     witnessDay: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     witnessMonth: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     witnessYear: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     witnessAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'BIR Tin Request'
     },
     
@@ -292,472 +297,472 @@ const birTinRequestSchema = new Schema({
 const contractDetailsSchema = new Schema({ 
     property: {
         type: String,
-        required: true,  
+        default: null,
         ref: 'Contract Details'
     },
     typeBuyer: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerLastname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerFirstname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerMiddlename: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerOccupation: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerPrimaryAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerPrimaryZip: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerCivilStatus: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerAge: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerSecondaryAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerSecondaryZip: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerSex: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerBirthday: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerPlaceBirth: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerHomePhoneNo: {
         type: String, 
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerFaxNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerIncludeCountry: {
         type: String,
-        required: true,
+      
         ref: 'Contract Details'
     },
     buyerMobileNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerEmail: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerTIN: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerCitizen: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerReligion: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     buyerIssuedID: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     businessName: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     businessAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     businessPhoneNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     businessfaxNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     businessPosition: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     businessProfession: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     businessEmploymentStatus: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseLastname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseFirstname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseMiddleName: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseOccupation: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spousePhoneNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseMobileNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseEmail: {   
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseTIN: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseCitizenship: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseFaxNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseSex: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseEmployment: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     spouseNoChildren: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyLastname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyFirstname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'         
     },
     attyMiddlename: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyOccupation: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyPrimaryAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyPrimaryZip: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyCivilStatus: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyAge: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attySecondaryAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attySecondaryZip: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyBirthdate: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attySex: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyHomeNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyFaxNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyIncludeCountry: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyMobileNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyTIN: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyEmail: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyCitizenship: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     attyGovtIssuedID: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpName: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpBusinessName: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpBusinessAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpZipCode: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpBusinessPhoneNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpFaxNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedLastname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedFirstname: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedMiddlename: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedPosition: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedSecondaryAddress: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedZip: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedBirthdate: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedBirthPlace: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedSex: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedHomePhoneNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedFaxNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedIncludeCtry: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedMobileNo: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedTIN: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedEmail: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedCitizenship: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedCivilStatus: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     corpAuthorizedGovtIssuedID: {
         type: String,
-        required: true,
+        default: null,
         ref: 'Contract Details'
     },
     otherBanks: {
         type: String,
-        required: false,
+        default: null,
         ref: 'Contract Details'
     },
     otherTypeAccount: {
         type: String,
-        required: false,
+        default: null,
         ref: 'Contract Details'
     },
     otherReasonPurchase: {
         type: String,
-        required: false,
+        default: null,
         ref: 'Contract Details'
     },
     otherConsideredFactor: {
         type: String,
-        required: false,
+        default: null,
         ref: 'Contract Details'
     },
     otherWhereHeard: {
         type: String,
-        required: false,
+        default: null,
         ref: 'Contract Details'
     },
     otherPurchasedBefore: {
         type: String,
-        required: false,
+        default: null,
         ref: 'Contract Details'
     },
     
@@ -812,16 +817,55 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    profile: profileSchema,
-    accountDetails: accountDetailsSchema,
-    paymentDetails: paymentDetailsSchema,
-    accountingDetails: accountingDetailsSchema,
+    profile: {
+        type: profileSchema,
+        default: {}
+    },
+     
+      
+    accountDetails: {
+        type: accountDetailsSchema,
+        default: {}
+    },
+      
+    paymentDetails:{
+        type: paymentDetailsSchema,
+        default: {}
+    },
+    
+    
+    accountingDetails: {
+        type: accountingDetailsSchema,
+        default: {}
+    },
+    
+       
     transactions: [transactionSchema],
-    letterOfIntent: letterOfIntentSchema,
-    individualDeclaration: individualBuyerDeclarationSchema,
-    BirTinRequest: birTinRequestSchema,
-    ContractDetails: contractDetailsSchema,
-    scannedFiles:[String],
+     
+   
+    letterOfIntent: {
+        type: letterOfIntentSchema,
+        default: {}
+    },
+       
+    individualDeclaration: {
+        type: individualBuyerDeclarationSchema,
+        default: {}
+    },
+    
+    BirTinRequest: {
+        type: birTinRequestSchema,
+        default: {}
+    },
+    ContractDetails: {
+        type: contractDetailsSchema,
+        default: {}
+    },
+    
+    scannedFiles:{
+        type: [String],
+        default: [],
+    },
 
     
 });
@@ -842,6 +886,7 @@ userSchema.set("toJSON", {
 userSchema.plugin(uniqueValidator, {message: "Email already in use."});
 
 const User = mongoose.model("user", userSchema);
+
 module.exports = User;
 
 

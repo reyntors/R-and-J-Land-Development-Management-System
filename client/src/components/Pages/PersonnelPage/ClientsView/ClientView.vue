@@ -92,7 +92,8 @@ export default {
     },
 
     mounted(){
-      this.$store.dispatch('client/getLegitClients')
+      this.$store.commit('client/resetList');
+      this.$store.dispatch('client/getLegitClients');
     }
 }
 </script>

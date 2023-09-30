@@ -109,9 +109,6 @@ async listLegitimateClients (legitimateClients) {
   try {
     
     const response = await listLegitimateClients(legitimateClients);
-    console.log("HAHA")
-    
-    toast.success(response.message, { autoClose: 2000 });
     
     return response.data; 
   } catch (error) {

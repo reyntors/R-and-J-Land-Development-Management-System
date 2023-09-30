@@ -9,7 +9,7 @@ const errors = require('./middlewares/errors');
 
 
 const app = express();
-app.use(morgan('combine'));
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 

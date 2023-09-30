@@ -11,23 +11,7 @@ export default{
 
     state(){
         return {
-            clientsPending: [
-                // {
-                //     contactNumber:"09123456789",
-                // },
-                // {
-                //     id: '102',
-                //     fullname: 'hehe ifdsa qmeo',
-                //     email: 'borromeojhaerix27@gmail.com',
-                //     address: 'Py City'
-                // },
-                // {
-                //     id: '103',
-                //     fullname: 'Jhafdsafasmeo',
-                //     email: 'borromefsdafojhaerix27@gmail.com',
-                //     address: 'Pafdsay'
-                // },
-            ],
+            clientsPending: [ ],
 
             searchResult: null,
 
@@ -93,8 +77,14 @@ export default{
             responseData.forEach((item)=>{
                 // console.log(item)
                 state.clientsPending.push(item)
+
             })
             // console.log(state.clientsPending)
+        },
+        resetList(state){
+
+            state.clientsAdded = []
+
         },
 
         searchClient(state,id){

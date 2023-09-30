@@ -18,10 +18,13 @@ export const login = async (credentials) => {
   };
   
 
-export const register = async (userData) => {
-    const response = await axios.post(`${BASE_URL}users/register`, userData);
-    return response.data;
-
+  export const register = async (userData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}users/register`, userData);
+        return response.data;
+    } catch (error) {
+      throw (error.response.data.message);
+    }
 };
 
 
