@@ -85,6 +85,10 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
         clientsComputed(){
           return this.$store.getters['client/clientsGetter']
         }
+      },
+
+      mounted(){
+        this.$store.dispatch('client/getPendingList')
       }
   }
   </script>

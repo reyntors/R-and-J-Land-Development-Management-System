@@ -1,3 +1,5 @@
+import * as Client from '@/APIs/ClientAPI.js'
+
 export default{
 
     namespaced: true,
@@ -5,24 +7,24 @@ export default{
     state(){
         return {
             clientsPending: [
-                {
-                    id: '101',
-                    fullname: 'ahahahah ako',
-                    email: 'borromeojhafdsa7@gmail.com',
-                    address: 'Pasay Cityfdsfsad'
-                },
-                {
-                    id: '102',
-                    fullname: 'hehe ifdsa qmeo',
-                    email: 'borromeojhaerix27@gmail.com',
-                    address: 'Py City'
-                },
-                {
-                    id: '103',
-                    fullname: 'Jhafdsafasmeo',
-                    email: 'borromefsdafojhaerix27@gmail.com',
-                    address: 'Pafdsay'
-                },
+                // {
+                //     id: '101',
+                //     fullname: 'ahahahah ako',
+                //     email: 'borromeojhafdsa7@gmail.com',
+                //     address: 'Pasay Cityfdsfsad'
+                // },
+                // {
+                //     id: '102',
+                //     fullname: 'hehe ifdsa qmeo',
+                //     email: 'borromeojhaerix27@gmail.com',
+                //     address: 'Py City'
+                // },
+                // {
+                //     id: '103',
+                //     fullname: 'Jhafdsafasmeo',
+                //     email: 'borromefsdafojhaerix27@gmail.com',
+                //     address: 'Pafdsay'
+                // },
             ],
 
             searchResult: null,
@@ -80,7 +82,8 @@ export default{
                         'contractdetails.pdf','birtinrewue.pdf'
                     ]
                 },
-            ]
+            ],
+
         }
     },
     mutations:{
@@ -132,6 +135,17 @@ export default{
         }
     },
     actions:{
+
+        async getPendingList(){
+            try{
+                const response = await Client.requestList()
+                console.log(response)
+            }catch(error){
+                console.log(error)
+            }
+            
+        },
+
         //do the http request functions here
         addClient(context,payload){
             context.commit('addClient',payload)

@@ -19,12 +19,13 @@
             </div>
 
             <div class="style-form">
-                <input type="password" placeholder=""  v-model.trim="loginPassword">
+                <input type="text" placeholder=""  v-model.trim="loginPassword">
                 <label for="password">Password</label>
             </div>
 
             <div class="style-form">
-                <select v-model="loginRole">
+                <select v-model="roles">
+                  <option value="" disabled selected>Please select a role</option>
                   <option value="guest">Guest</option>
                   <option value="staff">Staff</option>
                   <option value="admin">Admin</option>
@@ -127,7 +128,7 @@ export default {
       //login
       loginUsername: '',
       loginPassword: '',
-      loginRole: 'guest',
+      roles: 'guest',
 
       //signup
       signUpFullname: '',
@@ -144,7 +145,7 @@ export default {
       isRequestError: false,
 
       //user details
-      userOrganization: null,
+      userRole: null,
       userTokenID: null,
       isLoggedInSuccessful: false,
 
@@ -189,24 +190,27 @@ export default {
     },
 
     async login(){
-      if(this.loginUsername !== '' && this.loginPassword !==''){
+      if(this.loginUsername !== '' && this.loginPassword !=='' && this.loginRoles !== ''){
   
         this.isLoginError = false;
         this.isLoading = true;
-        const payload = {
+
+        const credentials = {
           username: this.loginUsername,
           password: this.loginPassword,
-          role    : this.loginRole,
+          roles    : this.roles,
         }
         //FETCH LOGIN REQUEST
         try{
 
-          await this.$store.dispatch('auth/login',payload) 
-          toast.success('Logged in Successfuly!', {autoClose: 2000,});
-          await new Promise(resolve=>(setTimeout(resolve,2000)))
-          this.close()
+          const response  = await this.$store.dispatch('auth/login',credentials) 
 
-          if(this.loginRole=== 'guest'){
+          toast.success(response.message, {autoClose: 2000,});
+          
+          this.close()
+          console.log(response.data.roles)
+
+          if(response.data.roles=== 'guest'){
             this.$router.replace('/home')
           }else{
             this.$router.replace('/personnel/dashboard')

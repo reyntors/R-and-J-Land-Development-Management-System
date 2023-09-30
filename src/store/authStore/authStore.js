@@ -1,15 +1,18 @@
+
+import * as Auth from '@/APIs/AuthAPI.js'
+
 export default {
     namespaced: true,
     
     state(){
         return{
             role: null,
-            tokenId: null,
+            tokenID: null,
         }
     },
     mutations:{
         addStoreState(state,responseData){
-            state.role = responseData.role
+            state.role = responseData.roles
             state.tokenID = responseData.tokenID
         },
         eraseStoreState(state){
@@ -17,7 +20,7 @@ export default {
             state.tokenID = null
         },
         addLocalStorage(_,responseData){
-            localStorage.setItem('user',responseData.role)
+            localStorage.setItem('user',responseData.roles)
             localStorage.setItem('token',responseData.tokenID)
         },
         getLocalStorage(state){
@@ -32,22 +35,22 @@ export default {
     },
     actions:{
         //LOGIN REQUEST
-        async login(context,payload){
+        async login(context, credentials){
             console.log('login clicked')
-            // console.log(payload)
             try{
-                //change this to HTTP REQUEST
-                await new Promise(resolve=> (setTimeout(resolve,1000)))
+               const responseData = await Auth.login(credentials);
 
-                //TOGGLE if we assume ERROR
-                // throw Error('SOMETHING WENT WRONG')
-    
-                //TOGGLE we assume SUCCESS and the user is GUEST
-                const responseData = {
-                    role : payload.role,
-                    tokenID: 'A2pqD123' }
-                context.commit('addLocalStorage',responseData)
-                context.commit('addStoreState',responseData)
+                const Data = {
+                    
+                    tokenID: responseData.data.token,
+                    roles: responseData.data.roles,
+                   
+                }
+
+                context.commit('addLocalStorage',Data)
+                context.commit('addStoreState',Data)
+
+                return responseData;
 
             }catch(error){
                 console.log(error)
@@ -89,6 +92,9 @@ export default {
             }else{
                 return false
             }
+        },
+        getTokenID(state){
+            return state.tokenID
         },
         authorizationRoleGuest(state){
             if(state.role && state.tokenID){

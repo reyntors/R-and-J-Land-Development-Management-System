@@ -82,22 +82,22 @@ const route = createRouter({
         //this condition sets the path that required the user to be authenticated before they can access it
         if(to.meta.requiresAuthGuest && !store.getters['auth/authorizationRoleGuest']){       
             // console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
-            // console.log('NOT AUTHENTICATED AS GUEST and NOT ALLOWED TO ACCESS THIS ROUTE')
+            console.log('NOT AUTHENTICATED AS GUEST and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
         else if(to.meta.requiresAuthGuest && store.getters['auth/authorizationRoleGuest'] && true){
             // console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
-            // console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
+            console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
         else if(to.meta.requiredAuthPersonnel && !store.getters['auth/authorizationPersonnel']){
             // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
-            // console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
+            console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
         else if(to.meta.requiresAuthStaff && store.getters['auth/authorizationPersonnel']){
             // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
-            // console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
+            console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
         else{
