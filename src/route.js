@@ -24,9 +24,8 @@ import PersonnelHomePage from './components/Pages/PersonnelPage/PersonnelPage.vu
 import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/DashboardView.vue'
 import PersonnelReports from './components/Pages/PersonnelPage/ReportsView/ReportsView.vue'
 import PersonnelInquiries from './components/Pages/PersonnelPage/SubComponents/InquiriesView.vue'
-import PersonnelProperties from './components/Pages/PersonnelPage/PropertiesView/PropertiesView.vue'
+import PersonnelSubdivision from './components/Pages/PersonnelPage/SubdivisionView/SubdivisionView.vue'
 import PersonnelCustomer from './components/Pages/PersonnelPage/ClientsView/ClientView.vue'
-import PersonnelPayment from './components/Pages/PersonnelPage/SubComponents/PaymentView.vue'
 
 import store from './store/store.js'
 
@@ -58,9 +57,8 @@ const route = createRouter({
                 children: [
                     {path: 'dashboard', component: PersonnelDashboard},
                     {path: 'client', component: PersonnelCustomer},
-                    {path: 'properties', component: PersonnelProperties},
+                    {path: 'subdivision', component: PersonnelSubdivision},
                     {path: 'inquiries', component: PersonnelInquiries},
-                    {path: 'payment', component: PersonnelPayment},
                     {path: 'reports', component: PersonnelReports}
                 ]
             }

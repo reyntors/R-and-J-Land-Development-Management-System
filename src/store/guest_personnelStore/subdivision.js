@@ -2,65 +2,74 @@ export default {
     namespaced: true,
     state(){
         return {
-            properties: [
+            subdivision: [
                 {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'1',
+                    imageUrl: 'https://picsum.photos/200/300/?blur=2',                    
+                    block_Lot_No:'1',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 200000,
                     status: 'sale'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/200/300.jpg',                    block_Lot_No:'2',
+                    imageUrl: 'https://picsum.photos/200/300.jpg',                    
+                    block_Lot_No:'2',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 400000,
                     status: 'sale'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'3',
-                    total_Sq_M: 100,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 200000,
-                    status: 'reserved'
-                },
-                {
-                    imageUrl: 'https://picsum.photos/200/300.jpg',                    block_Lot_No:'4',
-                    total_Sq_M: 200,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 400000,
-                    status: 'sale'
-                },
-                {
-                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    block_Lot_No:'5',
-                    total_Sq_M: 200,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 400000,
-                    status: 'sale'
-                },
-                {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'6',
+                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    
+                    block_Lot_No:'3',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 200000,
                     status: 'reserved'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    block_Lot_No:'7',
+                    imageUrl: 'https://picsum.photos/200/300.jpg',                    
+                    block_Lot_No:'4',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 400000,
                     status: 'sale'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    block_Lot_No:'8',
+                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    
+                    block_Lot_No:'5',
+                    total_Sq_M: 200,
+                    amount_per_Sq: 2000,
+                    total_Amount_Due: 400000,
+                    status: 'sale'
+                },
+                {
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    
+                    block_Lot_No:'6',
+                    total_Sq_M: 100,
+                    amount_per_Sq: 2000,
+                    total_Amount_Due: 200000,
+                    status: 'reserved'
+                },
+                {
+                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',                    
+                    block_Lot_No:'7',
+                    total_Sq_M: 200,
+                    amount_per_Sq: 2000,
+                    total_Amount_Due: 400000,
+                    status: 'sale'
+                },
+                {
+                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    
+                    block_Lot_No:'8',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 200000,
                     status: 'sold'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    block_Lot_No:'9',
+                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    
+                    block_Lot_No:'9',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
                     total_Amount_Due: 400000,
@@ -76,7 +85,7 @@ export default {
                 },
 
                 {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
+                    imageUrl: 'https://picsum.photos/200/300.webp',
                     block_Lot_No:'11',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
@@ -92,7 +101,7 @@ export default {
                     status: 'sale'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
+                    imageUrl: 'https://picsum.photos/200/300.webp',
                     block_Lot_No:'13',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
@@ -100,7 +109,7 @@ export default {
                     status: 'reserved'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
+                    imageUrl: 'https://picsum.photos/200/300.webp',
                     block_Lot_No:'14',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -140,7 +149,7 @@ export default {
                     status: 'sold'
                 },
                 {
-                    imageUrl: 'https://picsum.photos/seed/picsum/200/300',
+                    imageUrl: 'https://picsum.photos/200/300.webp',
                     block_Lot_No:'39',
                     total_Sq_M: 200,
                     amount_per_Sq: 2000,
@@ -157,55 +166,102 @@ export default {
                 },
             ],
 
+            //guest-end
+            deepCopySubdivision: [],
+            guestSearchedResult: null,
+
+            //peronnel-end
             listSearchResult: [],
             searchedResult: null,
         }
     },
 
     mutations:{
-        update(state,payload){
-            const index = state.properties.findIndex(item => item.block_Lot_No === payload.block_Lot_No)
+        //start - guest
+        initDeepCopySubdivisionList(state){
+            state.deepCopySubdivision = state.subdivision.map(item=>({...item}))
+        },
+        filterList(state,params){
+            console.log(params)
+            if(params !== 'all'){
+                const filtedArray = state.subdivision.filter(item => {
+                    return item.status === params
+                })
+                state.deepCopySubdivision = filtedArray                
+            }else{
+                state.deepCopySubdivision = state.subdivision.map(item=>({...item}))
+            }
+        },
+        searchNowfromGuest(state,id){
+            const index = state.subdivision.findIndex(item => item.block_Lot_No === id)
             if(index>=0){
-                state.properties[index] = payload   
+                state.guestSearchedResult = state.subdivision[index]
+            }else{
+                state.guestSearchedResult = null
+            }
+            
+        },
+        //end - guest
+
+        //start - personnel
+        update(state,payload){
+            const index = state.subdivision.findIndex(item => item.block_Lot_No === payload.block_Lot_No)
+            if(index>=0){
+                state.subdivision[index] = payload   
             }
             console.log('updated',payload.block_Lot_No)
         },
         searchSuggestions(state,searchValue){
             state.listSearchResult = []
-            const arrayResults = state.properties.filter(item => item.block_Lot_No.startsWith(searchValue))
+            const arrayResults = state.subdivision.filter(item => item.block_Lot_No.startsWith(searchValue))
             arrayResults.forEach(element => {
                 state.listSearchResult.push(element)
             });
         },
         searchNow(state,searchValue){
-            const index = state.properties.findIndex(item => item.block_Lot_No === searchValue)
+            const index = state.subdivision.findIndex(item => item.block_Lot_No === searchValue)
             if(index>=0){
-                state.searchedResult = state.properties[index]                
+                state.searchedResult = state.subdivision[index]                
             }else{
                 state.searchedResult = []
             }
         },
         setList(){
             //do something to set the list
-        }
+        },
+        //end- personnel
     },
 
     actions:{
+
+        //start - personnel
         update(context,payload){
             context.commit('update',payload)
             //here for update http request
         },
         getPropertyList(context){
-            //here for get the list of all properties
+            //here for get the list of all Subdivision
             context.commit('setList')
         }
+        //end - personnel
     },
     
     getters: {
-        propertiesGetter(state){
-            return state.properties
+
+        //start - guest
+        deepCopySubdivisionListGetter(state){
+            return state.deepCopySubdivision
         },
-        propertiesSearchResultsGetter(state){
+        guestSearchedResultGetter(state){
+            return state.guestSearchedResult
+        },
+        //end - guest
+
+        //start - personnel
+        subdivisionGetter(state){
+            return state.subdivision
+        },
+        subdivisionSearchResultsGetter(state){
             return state.listSearchResult
         },
         searchedResultGetter(state){
@@ -218,5 +274,6 @@ export default {
                 return false
             }
         }
+        //end - personnel
     }
 }

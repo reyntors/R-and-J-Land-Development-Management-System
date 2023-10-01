@@ -4,7 +4,7 @@ import auth from './authStore/authStore.js'
 import personnel from './personnelStore/personnel.js'
 import client from './personnelStore/client.js'
 import report from './personnelStore/report.js'
-import properties from './personnelStore/properties.js'
+import subdivision from './guest_personnelStore/subdivision.js'
 import guest from './guestStore/guestStore.js'
 
 const store = createStore({
@@ -13,7 +13,7 @@ const store = createStore({
             personnel,
             client,
             report,
-            properties,
+            subdivision,
             guest,
         },
         state(){

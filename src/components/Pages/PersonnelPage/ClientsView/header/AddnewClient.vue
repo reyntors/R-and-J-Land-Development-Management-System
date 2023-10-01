@@ -106,42 +106,42 @@ export default{
         },
 
         addNow(){
-            const payload = {
-                profile:{
-                    id: this.userID,
-                    fullname: this.fullname,
-                    email: this.fullname,
-                    address: this.address                    
-                },
-                accountDetails: {
+            // const payload = {
+            //     profile:{
+            //         id: this.userID,
+            //         fullname: this.fullname,
+            //         email: this.fullname,
+            //         address: this.address                    
+            //     },
+            //     accountDetails: {
 
-                },
-                paymentDetails: {
+            //     },
+            //     paymentDetails: {
 
-                },
-                accountingDetails:{
+            //     },
+            //     accountingDetails:{
 
-                },
-                transaction:[
+            //     },
+            //     transaction:[
                      
-                ],
-                letterIntent:{
+            //     ],
+            //     letterIntent:{
 
-                },
-                individualDeclaration: {
+            //     },
+            //     individualDeclaration: {
 
-                },
-                BirTinReques: {
+            //     },
+            //     BirTinReques: {
 
-                },
-                ContractDetails: {
+            //     },
+            //     ContractDetails: {
 
-                },
-                scannedFiles:[
+            //     },
+            //     scannedFiles:[
 
-                ]
-            }
-            this.$store.dispatch('client/addClient',payload)
+            //     ]
+            // }
+            this.$store.dispatch('client/addClient',this.userId)
             this.back();
         }
     },
@@ -149,6 +149,9 @@ export default{
         searchResultComputed(){
             return  this.searchTrue       
         },
+    },
+    mounted(){
+        this.$store.dispatch('client/getPendingList')
     }
 }
 </script>

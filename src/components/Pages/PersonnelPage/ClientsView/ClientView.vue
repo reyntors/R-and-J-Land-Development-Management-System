@@ -20,9 +20,9 @@
             </tr>
             <tbody v-for="(client,index) in clientsComputed" :key="index">
               <tr>
-                  <td>{{ client.profile.fullname }}</td>
-                  <td>{{ client.profile.email }}</td>
-                  <td>{{ client.profile.address }}</td>
+                  <td>{{ client.fullname }}</td>
+                  <td>{{ client.email }}</td>
+                  <td>{{ client.homeAddress }}</td>
                   <td><span @click="showClientProfile(client)">Show/Update</span></td> 
               </tr>  
               <tr v-if="client === selectedClient">
@@ -85,11 +85,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
         clientsComputed(){
           return this.$store.getters['client/clientsGetter']
         }
-      },
-
-      mounted(){
-        this.$store.dispatch('client/getPendingList')
-      }
+      },   
   }
   </script>
   

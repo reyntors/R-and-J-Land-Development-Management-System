@@ -22,8 +22,10 @@ export default {
     isShowProfile(){
       return this.$store.getters['personnel/isProfileShownGetter']
     }
-  }
-
+  },
+  mounted(){
+        this.$store.dispatch('client/getLegitList')
+    } 
 }
 </script>
 

@@ -9,9 +9,8 @@
     <section class="navigations">
         <router-link to="/personnel/dashboard">DASHBOARD</router-link>
         <router-link to="/personnel/client">CLIENTS</router-link>
-        <router-link to="/personnel/properties">PROPERTIES</router-link>
+        <router-link to="/personnel/subdivision">SUBDIVISION</router-link>
         <router-link to="/personnel/inquiries">INQUIRIES</router-link>
-        <router-link to="/personnel/payment">PAYPMENT</router-link>
         <router-link to="/personnel/reports">REPORTS</router-link>
     </section>
 

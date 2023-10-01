@@ -1,9 +1,9 @@
 <template>
-    <div class="properties-cont">
+    <div class="subdivision-cont">
       
       
       <div class="div1">
-        <h4 @click="showAll">Properties</h4>
+        <h4 @click="showAll">Subdivision</h4>
 
         <span class="search-cont">
           <input class="search-input-field" @keydown="searchEnter" v-model.trim="searchValue" placeholder="Seach Lot no.">
@@ -26,13 +26,13 @@
       <div class="div2">
         
         <ul v-if="showOnlyOne">
-          <property-card v-if="!issearchedResultEmptyComputed" :property="searchResultComputed" @close-one="showAll"/> 
+          <subdivision-card v-if="!issearchedResultEmptyComputed" :subdivision="searchResultComputed" @close-one="showAll"/> 
           <h1 v-else>Nothing found</h1> 
         </ul>
 
         <ul v-else>
-          <li v-for="item in getPorperties" :key="item">
-            <property-card :property="item"/>            
+          <li v-for="item in getSubdivision" :key="item">
+            <subdivision-card :subdivision="item"/>            
           </li>
         </ul>
 
@@ -41,9 +41,9 @@
   </template>
   
   <script>
-import PropertyCard from './PropertyCard.vue'
+import SubdivisionCard from './SubdivisionCard.vue'
   export default {
-  components: { PropertyCard},
+  components: { SubdivisionCard},
     data(){
       return{
         searchValue: '',
@@ -67,14 +67,14 @@ import PropertyCard from './PropertyCard.vue'
 
       getSearchSuggestions(){
         this.listSearchSuggestions = []
-        this.$store.commit('properties/searchSuggestions',this.searchValue)
-        this.listSearchSuggestions = this.$store.getters['properties/propertiesSearchResultsGetter'] 
+        this.$store.commit('subdivision/searchSuggestions',this.searchValue)
+        this.listSearchSuggestions = this.$store.getters['subdivision/subdivisionSearchResultsGetter'] 
         this.showAll()
       },
       
       searchNow(){
         if(this.searchValue.length>0){
-          this.$store.commit('properties/searchNow',this.searchValue)
+          this.$store.commit('subdivision/searchNow',this.searchValue)
           this.showOnlyOne = true;
           console.log('searching now',this.searchValue)
         }else{
@@ -93,14 +93,14 @@ import PropertyCard from './PropertyCard.vue'
     },
 
     computed:{
-      getPorperties(){
-          return this.$store.getters['properties/propertiesGetter']
+      getSubdivision(){
+          return this.$store.getters['subdivision/subdivisionGetter']
       },
       searchResultComputed(){
-        return this.$store.getters['properties/searchedResultGetter']
+        return this.$store.getters['subdivision/searchedResultGetter']
       },
       issearchedResultEmptyComputed(){
-        return this.$store.getters['properties/issearchedResultEmptyGetter']
+        return this.$store.getters['subdivision/issearchedResultEmptyGetter']
       }
     },
 
@@ -123,12 +123,12 @@ import PropertyCard from './PropertyCard.vue'
   </script>
   
   <style scoped>
-.properties-cont{
+.subdivision-cont{
   width: 100%;
     height: 85vh;
     padding: 1rem;
 }
-.properties-cont h4{
+.subdivision-cont h4{
   cursor: pointer;
 }
 .div1{

@@ -125,8 +125,8 @@
               editOccured: false,
   
               buyerName: this.profileDetails.fullname,
-              address: this.profileDetails.address,
-              contactNo: '',
+              address: this.profileDetails.homeAddress,
+              contactNo: this.profileDetails.contactNumber,
               civilStatus: '',
               spouseName: '',
               occupation: '',

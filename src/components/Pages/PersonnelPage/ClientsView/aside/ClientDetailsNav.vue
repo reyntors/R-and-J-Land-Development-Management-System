@@ -4,7 +4,7 @@
     <section class="section-left">
         <div>
           <img src="@/assets/profile.png">
-          <h6>{{clientObj.profile.fullname}}</h6>
+          <h6>{{clientObj.fullname}}</h6>
         </div>
         
         <div>
@@ -24,7 +24,7 @@
     </section>
 
     <section class="section-right">
-           <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj.profile" @pass-data="getProfile"/>
+           <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" @pass-data="getProfile"/>
           <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj"/>
          <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
     </section>
