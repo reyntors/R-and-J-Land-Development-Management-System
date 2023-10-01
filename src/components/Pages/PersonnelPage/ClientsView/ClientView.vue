@@ -108,7 +108,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1rem;
+    padding: .5rem 1rem;
   }
   .searchPart div{
     background-color: #31A72A;
@@ -116,7 +116,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
     font-weight: 600;
     box-shadow: 0 0 1px 1px rgb(0, 0, 0);
     cursor: pointer;
-    margin: 5px 0;
+    /* margin: 5px 0; */
     color: white;
   }
   .searchPart div:hover{

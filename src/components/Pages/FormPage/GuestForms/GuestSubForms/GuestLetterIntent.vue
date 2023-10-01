@@ -11,10 +11,10 @@
       <p>I/We hereby manifest my/our intent to purchase <input v-model.trim="purchase" :class="{empty:isPurchaseEmpty}"> lot(s)/unit(s)</p>
       <div class="checkboxes" :class="{empty:isProjectEmpty}">
         <strong>Project:</strong>
-        <input type="radio" value="type1" id="check1" v-model="project"><label for="check1">Northown</label>
-        <input type="radio" value="type2" id="check2" v-model="project"><label for="check2">Northcrest</label>
-        <input type="radio" value="type3" id="check3" v-model="project"><label for="check3">Eden Ridge</label>
-        <input type="radio" value="type4" id="check4" v-model="project"><label for="check4">Narra Park Residence</label>
+        <input type="radio" value="value1" id="check1" v-model="project"><label for="check1">Northown</label>
+        <input type="radio" value="value2" id="check2" v-model="project"><label for="check2">Northcrest</label>
+        <input type="radio" value="value3" id="check3" v-model="project"><label for="check3">Eden Ridge</label>
+        <input type="radio" value="value4" id="check4" v-model="project"><label for="check4">Narra Park Residence</label>
       </div>
       <div class="location">
         <b>Location:</b>
@@ -88,6 +88,7 @@
 </template>
   
 <script>
+import { toast } from 'vue3-toastify';
 import TheFooter from '@/components/Reusable/TheFooter.vue'
 export default{
   components: { TheFooter },
@@ -277,14 +278,24 @@ export default{
         reservationTimeSpan: this.reservationTimeSpan,
       }
     },
-    submit(){
+    async submit(){
+
       this.checkAllEmpty()
       const isGood = this.checkReadySubmit()
+
       if(isGood){
-        //request here perform try catch
         const payload = this.getAllData()
-        console.log(payload)
-        console.log('submitted')
+
+        try{
+          const response = await this.$store.dispatch('guest/submitLetterOfIntent',payload)
+          toast.success(response, {autoClose: 1000,}); 
+          await new Promise(resolve => setTimeout(resolve, 1000)) 
+          this.$router.replace('/guest-forms')       
+        }catch(error){
+          toast.error(error, {autoClose:1000})
+        }
+
+        
       }else{
         //error
         console.log('submit rejected')
@@ -335,6 +346,7 @@ export default{
   <style scoped>
   #letterOfIntent{
     font-size: clamp(.6rem, 1.2vw, 2rem);
+    width: 90%;
   }
   .empty{
     outline: 1px solid red;

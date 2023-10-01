@@ -89,7 +89,7 @@ export default{
     mutations:{
 
         searchClient(state,id){
-            const index = state.clientsPending.findIndex(item => item.id === id)
+            const index = state.clientsPending.findIndex(item => item.userId=== id)
             if(index>=0){
                 console.log(state.clientsPending[index])
                 state.searchResult = state.clientsPending[index]
@@ -106,7 +106,8 @@ export default{
         },
 
         updateClient(state,payload){
-            const index = state.clientsAdded.findIndex(item => item.profile.id === payload.id)
+            const index = state.clientsAdded.findIndex(item => item.userId
+ === payload.id)
             console.log(index)
             console.log(state.clientsAdded[0].profile)
             if(index>=0){
@@ -132,18 +133,24 @@ export default{
             if(index>=0){
                 state.clientsAdded[index].transaction.push(obj)
             }      
+        },
+
+        setLocalListPending(state,response){
+            response.data.forEach(item => {
+                state.clientsPending.push(item)
+                console.log(item)
+            })
         }
     },
     actions:{
 
-        async getPendingList(){
+        async getPendingList(context){
             try{
                 const response = await Client.requestList()
-                console.log(response)
+                context.commit('setLocalListPending',response)
             }catch(error){
                 console.log(error)
-            }
-            
+            }   
         },
 
         //do the http request functions here

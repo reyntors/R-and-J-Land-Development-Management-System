@@ -2,7 +2,6 @@ import axios from "axios";
 import store from '@/store/store.js'
 const BASE_URL = process.env.VUE_APP_KEY;
 
-
 export const requestList = async () => {
     const token =store.getters['auth/getTokenID']
     try{
@@ -11,7 +10,6 @@ export const requestList = async () => {
                 'Authorization': `Bearer ${token}`
             }
         }) 
-        console.log(response)
         return response.data      
     }catch(error){
         throw (error.response.data.message);

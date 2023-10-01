@@ -5,6 +5,7 @@ import personnel from './personnelStore/personnel.js'
 import client from './personnelStore/client.js'
 import report from './personnelStore/report.js'
 import properties from './personnelStore/properties.js'
+import guest from './guestStore/guestStore.js'
 
 const store = createStore({
         modules:{
@@ -13,6 +14,7 @@ const store = createStore({
             client,
             report,
             properties,
+            guest,
         },
         state(){
             return{
