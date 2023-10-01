@@ -6,6 +6,7 @@ const User = require('../models/user.model');
 
 exports.register = (req, res, next) => {
     const {password} = req.body;
+
     const salt = bcryptjs.genSaltSync(10);
 
     req.body.password = bcryptjs.hashSync(password, salt);
@@ -23,6 +24,7 @@ exports.register = (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     const {username, password, roles} = req.body;
+
 
     const user = await User.findOne({ username });
 

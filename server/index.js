@@ -11,6 +11,8 @@ const errors = require('./middlewares/errors');
 const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cors());
 
 mongoose.set("strictQuery", false);
@@ -26,7 +28,7 @@ mongoose.connect(dbConfig.db, {
 });
 
 app.use(express.json());
-
+app.use(express.static("public"));
 
 
 app.use("/users", require("./routes/users.routes"));
@@ -36,8 +38,9 @@ app.use("/individualbuyer", require("./routes/guestForms.routes"));
 app.use("/contractdetails", require("./routes/guestForms.routes"));
 
 
-app.use("/lot", require("./routes/lot.routes.public"));
+app.use("/lot", require("./routes/lot.routes"));
 app.use("/reservation", require("./routes/reservation.routes"));
+
 
 app.use(errors.errorHandler);
 

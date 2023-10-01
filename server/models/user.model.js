@@ -17,6 +17,13 @@ const transactionSchema = new Schema({
 
 });
 
+const scannedFilesSchema = new Schema({
+    data: Buffer,
+    filename: String,
+    contentType: String
+});
+
+
 const accountDetailsSchema = new Schema({
     lotNumber: {
         type: String,
@@ -862,12 +869,8 @@ const userSchema = new Schema({
         default: {}
     },
     
-    scannedFiles:{
-        type: [String],
-        default: [],
-    },
-
-    
+    scannedFiles:[scannedFilesSchema]
+ 
 });
 
 

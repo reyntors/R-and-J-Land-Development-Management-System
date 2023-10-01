@@ -4,7 +4,9 @@ const transactiontController = require("../controllers/transaction.controller");
 const legitClientController = require("../controllers/legitimateClient.controller");
 const paymentDetailsController = require('../controllers/paymentdetails.controller');
 const formsController = require('../controllers/forms.controller');
+const pdfController = require('../controllers/pdf.controller');
 const letter = require('../controllers/letterofintent.controller');
+const scanfilesController = require('../controllers/scanFiles.controller');
 const auth = require("../middlewares/auth");
 const express = require("express");
 
@@ -39,6 +41,11 @@ router.get('/paymentdetails/:id', auth.authenticateToken, userController.restric
 
 //forms
 router.get('/forms/:id', auth.authenticateToken, userController.restrict('staff'), formsController.getAllFormsById);
+router.post('/generate-pdf',   pdfController.convertToPdf);
+
+//scanfiles
+router.post("/add-scanfiles/:id", auth.authenticateToken, userController.restrict('staff'), scanfilesController.addScanFiles);
+router.get("/all-scanfiles/:id", auth.authenticateToken, userController.restrict('staff'), scanfilesController.getAllScanFilesById);
 
 //admin
 router.post("/addnewclient", auth.authenticateToken, userController.restrict('admin'), userController.register);
@@ -47,8 +54,6 @@ router.put("/:id", auth.authenticateToken, userController.restrict('admin'), use
 router.delete("/:id", auth.authenticateToken, userController.restrict('admin'), userController.deleteUser);
 
 
-//lot
-router.post("/addlot/:id", auth.authenticateToken, userController.restrict('staff'), lotController.createLot);
 
 
 
