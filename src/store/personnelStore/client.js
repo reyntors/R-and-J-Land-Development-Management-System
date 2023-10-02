@@ -1,4 +1,4 @@
-import * as Client from '@/APIs/ClientAPI.js'
+import * as Client from '@/APIs/PERSONNEL/ClientAPI.js'
 
 export default{
 
@@ -120,17 +120,11 @@ export default{
         },
 
         addPayment(state,payload){
-            const obj = {}
-            console.log('id'+ payload.id)
-            payload.form.forEach((value,key) => {
-                if(!Object.prototype.hasOwnProperty.call(obj, key)){
-                    obj[key] = value
-                }
-            });
-            console.log(obj)
-            const index = state.clientsAdded.findIndex(item => item.profile.id === payload.id)
+            const index = state.clientsAdded.findIndex(item => item.userId === payload.id)
+            console.log(index)
             if(index>=0){
-                state.clientsAdded[index].transaction.push(obj)
+                console.log(state.clientsAdded[index])
+                state.clientsAdded[index].transactions.push(payload.body)
             }      
         },
 
@@ -146,6 +140,9 @@ export default{
                 state.clientsAdded.push(item)
             })
         },
+        justprint(state){
+            console.log(state.clientsAdded)
+        }
     },
     actions:{
 
@@ -185,9 +182,22 @@ export default{
             context.commit('deleteClient',id)
             //http request for deleting specific legit client
         },
-        addPayment(context,payload){
-            context.commit('addPayment',payload)
-            //http request for adding payment transactions
+        async addPayment(context,payload){
+            try{
+                const response = await Client.addPaymentTransaction({
+                    id:payload.id,
+                    body:payload.obj})
+
+                context.commit('addPayment',{
+                    id:payload.id,
+                    body:payload.obj})
+
+                context.commit('justprint')
+                return response.message
+            }catch(error){
+                console.log(error)
+                throw error
+            }
         }
 
     },

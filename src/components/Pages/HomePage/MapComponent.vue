@@ -43,6 +43,7 @@
 
 
               </section>
+              //put message here??
               <button v-if="selectedItem.status === 'sale'">
                 Inquire Now
               </button>

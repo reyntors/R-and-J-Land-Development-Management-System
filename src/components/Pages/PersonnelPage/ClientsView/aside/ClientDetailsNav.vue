@@ -53,7 +53,7 @@ export default {
 
   methods:{
     print(){
-      console.log(this.clientObj,this.clientId)
+      // console.log(this.clientObj,this.clientObj.userId)
     },
     goto(params){
       this.reset();

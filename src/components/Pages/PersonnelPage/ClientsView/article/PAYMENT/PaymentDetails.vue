@@ -33,14 +33,14 @@
             <td>DATE</td>
             <td>AMOUNT RECEIVED</td>
             <td>PURPOSE</td>
-            <td>ATTACHEMENTS</td>
+            <td>ATTACHMENTS</td>
           </tr>
-          <tbody v-for="transaction in clientObj.transaction" :key="transaction">
+          <tbody v-for="transaction in clientObj.transactions" :key="transaction">
             <tr>
               <td>{{ transaction.date }}</td>
-              <td>{{ transaction.amountPaid }}</td>
+              <td>{{ transaction.amount }}</td>
               <td>{{ transaction.purpose }}</td>
-              <td> attachements</td>
+              <td>f</td>
             </tr>
           </tbody>
           <!-- {{ paymentTransaction }} -->
@@ -49,7 +49,7 @@
       </section>
     </div>
 
-    <add-payment v-if="addPaymentForm" :id="clientObj.profile.id" @exit-btn="toggleAddPayment"/>
+    <add-payment v-if="addPaymentForm" :id="clientObj.userId" @exit-btn="toggleAddPayment"/>
 
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
     },
     methods:{
       toggleAddPayment(){
-        console.log(this.clientObj.profile.id)
+        // console.log(this.clientObj)
         this.addPaymentForm = !this.addPaymentForm
       }
     },

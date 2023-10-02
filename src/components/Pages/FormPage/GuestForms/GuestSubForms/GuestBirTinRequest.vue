@@ -62,26 +62,26 @@
             </div>
         </div>
     <p>
-        SUBSCRIBED AND SWORN to before me this <input> day of <input> , 20<input> at Davao City, Philippines
+        SUBSCRIBED AND SWORN to before me this <input readonly> day of <input readonly> , 20<input readonly> at Davao City, Philippines
         Affian exhibit to be their Competent Evidence of Identities (CEI) written below their names.
     </p>
     <section class="notary">
             Notary Public
             <div>
                 <label>Doc. No.</label>
-                <input>;
+                <input readonly>;
             </div>
             <div>
                 <label>Page No.</label>
-                <input>;
+                <input readonly>;
             </div>
             <div>
                 <label>Book No.</label>
-                <input>;
+                <input readonly>;
             </div>
             <div>
                 <label>Series of</label>
-                <input>;
+                <input readonly>;
             </div>
         </section>
     </div>
@@ -92,6 +92,7 @@
 
 <script>
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
+import { toast } from 'vue3-toastify'
 export default {
   components: { SubmitFormButton },
     data(){
@@ -330,14 +331,19 @@ export default {
                 }
             },
 
-            submit(){
+            async submit(){
                 this.checkAllEmpty()
                 const isGood = this.checkReadySubmit()
                 if(isGood){
                     const payload = this.getAllData()
-                    console.log(payload)
-
-                    //perform try and catch here
+                    try{
+                        const response = await this.$store.dispatch('guest/submitBirTinRequest',payload)
+                        toast.success(response, {autoClose: 1000,}); 
+                        await new Promise(resolve => setTimeout(resolve, 1000)) 
+                        this.$router.replace('/guest-forms')       
+                    }catch(error){
+                        toast.error(error, {autoClose:1000})
+                    }
                 }else{
                     console.log('submit rejected')
                 }

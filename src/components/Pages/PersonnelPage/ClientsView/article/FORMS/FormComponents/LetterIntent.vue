@@ -7,49 +7,50 @@
       </div>
     
       <h4 style="text-align: center">Letter of Intent</h4>
-      <p style="margin-top: 1rem;">Date: <input type="date"></p> 
+      <p style="margin-top: 1rem;">Date: <input type="date" v-model="date"></p> 
       <br>
       <p>{{ companyName }}</p>
       <p>{{ companyAddress }}</p> 
       <br>
       <p>Gentlemen:</p>
       <p>I/We hereby manifest my/our intent to purchase <input style="border: none;
-        border-bottom: 1px solid black;"  > lot(s)/unit(s)</p>
+        border-bottom: 1px solid black;"  v-model="purchase"> lot(s)/unit(s)</p>
       <div class="checkboxes">
         <strong>Project:</strong>
-        <input type="checkbox" value="" id="check1"><label for="check1">Northown</label>
-        <input type="checkbox" value="" id="check2"><label for="check2">Northcrest</label>
-        <input type="checkbox" value="" id="check3"><label for="check3">Eden Ridge</label>
-        <input type="checkbox" value="" id="check4"><label for="check4">Narra Park Residence</label>
+        <input type="radio" value="value1" id="check1" v-model="project"><label for="check1">Northown</label>
+        <input type="radio" value="value2" id="check2" v-model="project"><label for="check2">Northcrest</label>
+        <input type="radio" value="value3" id="check3" v-model="project"><label for="check3">Eden Ridge</label>
+        <input type="radio" value="value4" id="check4" v-model="project"><label for="check4">Narra Park Residence</label>
       </div>
       <div class="location">
         <b>Location:</b>
-        <div>PH:<input></div>
-        <div>Blk:<input></div>
-        <div>Lot/Unit:<input></div>
+        <div>PH:<input v-model="locationPH"></div>
+        <div>Blk:<input v-model="locationBlk"></div>
+        <div>Lot/Unit:<input v-model="locationLotOrUnit"></div>
       </div>
 
       <section class="reference">
             For your reference, please see my information below;
             <div>
                 <label>Name</label>
-                <input>
+                <input v-model="name">
             </div>
             <div>
                 <label>Address</label>
-                <input>
+                <input v-model="address
+">
             </div>
             <div>
                 <label>Citizenship</label>
-                <input>
+                <input v-model="citizenship">
             </div>
             <div>
                 <label>Contact No.</label>
-                <input>
+                <input v-model="contactNo">
             </div>
             <div>
                 <label>Email Address</label>
-                <input>
+                <input v-model="emailAddress">
             </div>
         </section>
 
@@ -64,7 +65,7 @@
                 WORKING DAYS.</strong>
             </li>
             <li>
-              That I must submit all complete requirements and reservation fee not later than <input style="border: none; border-bottom: 1px solid black;"> to
+              That I must submit all complete requirements and reservation fee not later than <input style="border: none; border-bottom: 1px solid black;" v-model="reservationTimeSpan"> to
               officially record the above-mentioned lot/unit as a safe, otherwise, ALsons Deve will <strong>
                 automatically</strong> open the blocked off lot/unit other interested prospect buyers.
             </li>
@@ -97,16 +98,30 @@
 <script>
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 export default{
-    
+    props: ['clientObj'],
     components: {SubmitFormButton},
     emits:['back-click'],
     data(){
         return{
             editable: false,
+            
+          date: this.clientObj.date,
+          purchase: this.clientObj.purchase,
+          project: this.clientObj.project,
+          locationPH: this.clientObj.locationPH,
+          locationBlk: this.clientObj.locationBlk,
+          locationLotOrUnit: this.clientObj.locationLotOrUnit,
+          name: this.clientObj.name,
+          address: this.clientObj.address,
+          citizenship: this.clientObj.citizenship,
+          contactNo: this.clientObj.contactNo,
+          emailAddress: this.clientObj.emailAddress,
+          reservationTimeSpan: this.clientObj.reservationTimeSpan,
         }
     },
     methods: {
         toggleEdit(){
+          console.log(this.clientObj)
             this.editable = !this.editable
         },
         back(){

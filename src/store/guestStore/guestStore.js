@@ -1,4 +1,4 @@
-import * as API from '@/APIs/GuestAPI.js'
+import * as API from '@/APIs/GUEST/GuestAPI.js'
 
 export default{
 
@@ -13,6 +13,26 @@ export default{
                 console.log(error)
                 throw error
             }
-        }
+        },
+
+        async submitIndividualBuyerDeclaration(_,payload){
+            try{
+                const response = await API.submitIndividualBuyerDeclaration(payload)
+                return response.message
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        },
+        
+        async submitBirTinRequest(_,payload){
+            try{
+                const response = await API.submitBirTinRequest(payload)
+                return response.message
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        },
     }
 }

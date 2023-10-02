@@ -56,10 +56,10 @@
 
     </div>
 
-    <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms"/>
-    <buyer-declaration v-if="formVisible === 'buyerDeclaration'" @back-click="toggleOpenForms"/>
-    <bir-tin v-if="formVisible === 'bir-tin'" @back-click="toggleOpenForms"/>
-    <contract-details v-if="formVisible === 'contractDetails'" @back-click="toggleOpenForms"></contract-details>
+    <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms" :client-obj="clientObj.letterOfIntent"/>
+    <buyer-declaration v-if="formVisible === 'buyerDeclaration'" @back-click="toggleOpenForms" :client-obj="clientObj.individualDeclaration"/>
+    <bir-tin v-if="formVisible === 'bir-tin'" @back-click="toggleOpenForms" :client-obj="clientObj.BirTinRequest"/>
+    <contract-details v-if="formVisible === 'contractDetails'" @back-click="toggleOpenForms" :client-obj="clientObj.ContractDetails"></contract-details>
       
   </div>
 </template>

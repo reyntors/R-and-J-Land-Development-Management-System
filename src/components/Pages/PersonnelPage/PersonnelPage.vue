@@ -13,10 +13,8 @@
 
 <script>
 import ProfileView from './ProfileView.vue'
-// import DashboardView from './SubComponents/DashboardView.vue'
 export default {
   components: {ProfileView,
-    // DashboardView
   },
   computed: {
     isShowProfile(){

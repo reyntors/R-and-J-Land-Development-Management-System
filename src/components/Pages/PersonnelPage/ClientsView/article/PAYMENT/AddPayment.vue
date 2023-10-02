@@ -22,8 +22,8 @@
         
     </section>
     <section class="form-controls">
-        <label for="attachement">Attachements</label>
-        <input id="attachement" type="file" @change="setAttachement">
+        <label for="attacement">Attachemnts</label>
+        <input id="attachment" type="file" accept="image/*" @change="setAttachment">
     </section>
 
     <section class="c-btn">
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
 export default {
     emits: ['exit-btn'],
     props: ['id'],
@@ -42,35 +43,47 @@ export default {
             date: null,
             amount: null,
             purpose: 'monthly-payment',
-            attachement: null,
+            attachment: null,
         }
     },
     methods:{
-        setAttachement(event){
-            this.attachement = event.target.files[0]
+        setAttachment(event){
+            this.attachment = event.target.files[0]
         },
         close(){
             this.$emit('exit-btn')
         },
-        submit(){
-            const form = new FormData()
-            form.append('date',this.date)
-            form.append('amountPaid',this.amount)
-            form.append('purpose',this.purpose)
-            form.append('attachement',this.attachement)
+        async submit(){
+            // const form = new FormData()
+            // form.append('date',this.date)
+            // form.append('amount',this.amount)
+            // form.append('purpose',this.purpose)
+            // form.append('attachment',this.attachment)
+            const obj = {
+                date: this.date,
+                amount: this.amount,
+                purpose: this.purpose,
+                attachment: this.attachment
+            }
+            // console.log(this.attachment)
+            // console.log(form)
 
-            this.$store.dispatch('client/addPayment',{form:form,
-                                                    id:this.id})
-            form.forEach(element => console.log(element))
-            console.log('id from add payment' +this.id)
+            // form.forEach(element => console.log(element))
+            // console.log('id from add payment' +this.id)
+            // console.log('body',body)
+            console.log(this.attachment)
 
             try{
-                //request here
+                const response = this.$store.dispatch('client/addPayment',{
+                    id:this.id,
+                    obj: obj})
+                console.log(response)
+                toast.success(response,1000)
+                new Promise(resolve => setTimeout(resolve,1000))
+                this.close()
             }catch(error){
-                //error
-            }
-
-            this.close()
+                toast.error(error,1000)
+            }          
         }
     }
 

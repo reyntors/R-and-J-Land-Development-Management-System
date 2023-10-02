@@ -9,33 +9,33 @@
         <div class="c-container">
             <input type="date" style="display: block;">
         <br>
-            <p class="text">I,<input> with BIR Tax Identifiaiton No. <input> hereby declares the following information</p>
+            <p class="text">I,<input v-model="name"> with BIR Tax Identifiaiton No. <input v-model="BIRtaxID"> hereby declares the following information</p>
         <br>
             <ol>
                 <li>
                     <p><strong>1.</strong> I am ENGAGED IN BUSINESS</p>
                     <div class="checkboxes-cont">
-                        <section><input type="checkbox" id="yesEngaged"><label for="yesEngaged">Yes</label></section>
-                        <section><input type="checkbox" id="noEngaged"><label for="noEngaged">No</label> </section>
-                        <section><input type="checkbox" id="NAEngaged"><label for="NAEngaged">N/A</label> </section>
+                        <section><input type="radio" value="YES" id="yesEngaged" v-model="engagedInBusiness"><label for="yesEngaged">Yes</label></section>
+                        <section><input type="radio" value="NO" id="noEngaged" v-model="engagedInBusiness"><label for="noEngaged">No</label> </section>
+                        <section><input type="radio" value="N/A" id="NAEngaged" v-model="engagedInBusiness"><label for="NAEngaged">N/A</label> </section>
                     </div>
                 </li>
                 <li>
                     <p><strong>2.</strong> The Business is registered under my name</p>
                     <div class="checkboxes-cont">
-                        <section><input type="checkbox" id="yesBusiness"><label for="yesBusiness">Yes</label></section>
-                        <section><input type="checkbox" id="noBusiness"><label for="noBusiness">No</label> </section>
-                        <section><input type="checkbox" id="NABusiness"><label for="NABusiness">N/A</label> </section>
+                        <section><input type="radio" value="YES" id="yesBusiness" v-model="businessRegisteredUnder"><label for="yesBusiness">Yes</label></section>
+                        <section><input type="radio" value="NO" id="noBusiness" v-model="businessRegisteredUnder"><label for="noBusiness">No</label> </section>
+                        <section><input type="radio" value="N/A" id="NABusiness" v-model="businessRegisteredUnder"><label for="NABusiness">N/A</label> </section>
                     </div>
                 </li>
-                <p>If yes, name of business <input style="border: none;border-bottom: 1px solid black;"></p>
+                <p>If yes, name of business <input style="border: none;border-bottom: 1px solid black;" v-model="businessName"></p>
 
                 <li>
                     <p><strong>3.</strong> The Registered Business is using my TIN</p>
                     <div class="checkboxes-cont">
-                        <section><input type="checkbox" id="yesUseTIN"><label for="yesUseTIN">Yes</label></section>
-                        <section><input type="checkbox" id="noUseTIN"><label for="noUseTIN">No</label> </section>
-                        <section><input type="checkbox" id="NAUseTIN"><label for="NAUseTIN">N/A</label> </section>
+                        <section><input type="radio" value="YES" id="yesUseTIN" v-model="businessUsingMyTIN"><label for="yesUseTIN">Yes</label></section>
+                        <section><input type="radio" value="NO" id="noUseTIN" v-model="businessUsingMyTIN"><label for="noUseTIN">No</label> </section>
+                        <section><input type="radio" value="N/A" id="NAUseTIN" v-model="businessUsingMyTIN"><label for="NAUseTIN">N/A</label> </section>
                     </div>
                 </li>
             </ol>
@@ -64,7 +64,7 @@
             </p>
         <br>
             <p>Certified True and Correct:</p>
-            <input style="display: block; border: none; border-bottom: 1px solid black; margin-top: .5rem;">
+            <input style="display: block; border: none; border-bottom: 1px solid black; margin-top: .5rem;" readonly>
             <p>Signature above printed name</p>
         </div> 
 
@@ -79,10 +79,18 @@
 <script>
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 export default{
+    props: ['clientObj'],
     components: {SubmitFormButton},
     data(){
         return{
             editable: false,
+            date: this.clientObj.date,
+            name: this.clientObj.name,
+            BIRtaxID: this.clientObj.BIRtaxID,
+            businessName: this.clientObj.businessName,
+            engagedInBusiness: this.clientObj.engagedInBusiness,
+            businessRegisteredUnder: this.clientObj.businessRegisteredUnder,
+            businessUsingMyTIN: this.clientObj.businessUsingMyTIN
         }
     },
 
