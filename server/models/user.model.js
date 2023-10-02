@@ -14,12 +14,14 @@ const transactionSchema = new Schema({
     date: String,
     amount: Number,
     purpose: String,
-    attachments: {
-        name: String,
-        size: Number, 
-        type: String 
+    attachments: [
+    {
+        data: Buffer, // Binary data of the attachment
+        filename: String, // File name
+        contentType: String, // File type (e.g., MIME type)
     
     }
+]
 
 });
 
