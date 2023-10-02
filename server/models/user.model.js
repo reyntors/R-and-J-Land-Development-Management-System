@@ -15,9 +15,9 @@ const transactionSchema = new Schema({
     amount: Number,
     purpose: String,
     attachments: {
-        data: Buffer, 
-        filename: String,
-        contentType: String 
+        name: String,
+        size: Number, 
+        type: String 
     
     }
 
