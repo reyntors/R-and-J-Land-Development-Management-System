@@ -3,8 +3,8 @@ const User = require('../models/user.model');
 
 exports.addTransaction = async (req, res, next) => {
     try {
-      const { id} = req.params;
-      const { date, amount, purpose } = req.body;
+      const { id } = req.params;
+      const { date, amount, purpose, attachments } = req.body;
       console.log('Request Body:', req.body);
   
       // Find the client by their userId
@@ -22,6 +22,7 @@ exports.addTransaction = async (req, res, next) => {
         date,
         amount,
         purpose,
+        attachments,
       };
   
       
@@ -32,7 +33,7 @@ exports.addTransaction = async (req, res, next) => {
       await client.save();
   
       return res.status(200).json({
-        message: 'Transaction added successfully.',
+        message: `${client.username}, Transaction added successfully.`,
         data: newTransaction,
       });
     } catch (error) {

@@ -11,9 +11,14 @@ function generateUserId() {
 
 
 const transactionSchema = new Schema({
-    date: Date,
+    date: String,
     amount: Number,
     purpose: String,
+    attachment: {
+        data: Buffer, 
+        filename: String,
+        contentType: String 
+    }
 
 });
 
