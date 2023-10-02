@@ -14,10 +14,11 @@ const transactionSchema = new Schema({
     date: String,
     amount: Number,
     purpose: String,
-    attachment: {
+    attachments: {
         data: Buffer, 
         filename: String,
         contentType: String 
+    
     }
 
 });
