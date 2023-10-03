@@ -1,9 +1,3 @@
-const express = require('express');
-
-const app = express();
-
-
-
 const multer = require('multer');
 const path = require('path');
 
@@ -13,7 +7,12 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads/'); // Destination folder for file uploads
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname)); // Unique filename for each uploaded file
+
+
+    const originalname = path.parse(file.originalname).name;
+    const extension = path.extname(file.originalname);
+    const uniqueName = originalname + extension;
+    cb(null, uniqueName); // Unique filename for each uploaded file
   },
 });
 
@@ -21,10 +20,6 @@ const storage = multer.diskStorage({
 
 // Create a Multer instance for handling a single file with the field name 'file'
 const upload = multer({ storage: storage }).single('file');
-
-
-
-
 
 module.exports = {
   upload

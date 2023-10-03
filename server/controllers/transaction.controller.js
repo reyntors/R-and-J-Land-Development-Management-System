@@ -13,14 +13,9 @@ exports.addTransaction = async (req, res, next) => {
 
       const { id } = req.params;
       const { date, amount, purpose } = req.body;
-      const attachment = req.file; // The uploaded file is now available in req.file
+      const attachments = req.file; // The uploaded file is now available in req.file
 
-      console.log(req.file);
-
-      console.log("Your attachment here:", date);
-      console.log("Your attachment here:", amount);
-      console.log("Your attachment here:", purpose);
-      console.log("Your attachment here:", attachment);
+      console.log("I receieved:" , attachments);
 
       // Find the client by their userId
       const client = await User.findOne({ userId: id, roles: 'guest' });
@@ -40,11 +35,11 @@ exports.addTransaction = async (req, res, next) => {
       };
 
       // Process the uploaded file if it exists
-      if (attachment) {
+      if (attachments) {
         const fileData = {
-          data: attachment.buffer,
-          filename: attachment.originalname,
-          contentType: attachment.mimetype,
+          filename: attachments.originalname,
+          contentType: attachments.mimetype,
+          
         };
         console.log("File Data:", fileData);
 
@@ -71,7 +66,6 @@ exports.addTransaction = async (req, res, next) => {
 
 exports.getTransaction = async (req, res, next) => {
 
-
     try {
 
         const { id } = req.params;
@@ -89,9 +83,6 @@ exports.getTransaction = async (req, res, next) => {
           return res.status(200).json({message: `${user.username}, All transactions`, data: allTransactions});
 
         }
-
-
-
 
       
     } catch (error) {

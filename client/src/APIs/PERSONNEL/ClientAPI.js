@@ -1,22 +1,8 @@
 import axios from "axios";
 import store from '@/store/store.js'
-
 const BASE_URL = 'http://localhost:4000/'
 
-export const requestPendingList = async () => {
-    console.log('API requestPendingList executed')
-    const token =store.getters['auth/getTokenID']
-    try{
-        const response = await axios.get(`${BASE_URL}users`,{
-            headers:{
-                'Authorization': `Bearer ${token}`
-            }
-        }) 
-        return response.data      
-    }catch(error){
-        throw (error.response.data.message);
-    }
-}
+//start initializer when entering the CLIENT DIMENSION
 export const requestLegitList = async () => {
     console.log('API requestLegitList executed')
     const token =store.getters['auth/getTokenID']
@@ -31,6 +17,24 @@ export const requestLegitList = async () => {
         throw (error.response.data.message);
     }
 }
+//end initializer when entering the CLIENT DIMENSION
+
+//start header
+export const requestPendingList = async () => {
+    console.log('API requestPendingList executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.get(`${BASE_URL}users`,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        }) 
+        return response.data      
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+
 export const addToLegitClient = async (id) => {
     console.log('API addToLegitClient executed')
     const token =store.getters['auth/getTokenID']
@@ -45,27 +49,52 @@ export const addToLegitClient = async (id) => {
         throw (error.response.data.message);
     }
 }
+//end header
 
-export const addPaymentTransaction = async (payload) => {
+//start article/payment
+export const getListTransaction = async (id) => {
     console.log('API addPaymentTransaction executed')
-    
-   
+    const token =store.getters['auth/getTokenID']
     try{
-
-        const token = store.getters['auth/getTokenID']
-
-
-
-        const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.id}`,
-        payload.body,
-        {
+        const response = await axios.get(`${BASE_URL}users/alltransaction/${id}`,{
             headers:{
-                'Authorization': `Bearer ${token}`,
-
+                'Authorization': `Bearer ${token}`
             }
         }) 
-        return response.data      
+        return response.data    
     }catch(error){
         throw (error.response.data.message);
     }
 }
+export const addPaymentTransaction = async (payload) => {
+    console.log('API addPaymentTransaction executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.id}`,payload.obj,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        }) 
+        return response.data    
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+
+export const retrieveUploadedFile = async (id, filename) => {
+    console.log('API addPaymentTransaction executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.get(`${BASE_URL}users/retrieve-upload/${id}/${filename}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            },
+            responseType: 'blob'
+        }) 
+        console.log(response.data)
+        return response.data     
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+

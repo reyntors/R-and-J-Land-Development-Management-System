@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 import { createApp } from 'vue'
+// import { toast } from 'vue3-toastify'
 import App from './App.vue'
 import router from './route.js'
 import store from './store/store.js'
@@ -35,6 +36,5 @@ app.component('form-card',FormCard)
 app.component('progress-loading',ProgressLoading)
 app.component('form-thumbnail', FormThumbnail)
 app.component('submit-form-button',SubmitFormButton)
-
 
 app.mount('#app')

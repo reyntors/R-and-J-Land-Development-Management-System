@@ -8,31 +8,31 @@
     <h4 style="text-align: center">BIR Tin Request</h4>
 
     <div class="c-container">
-            <input style="display: block; border: none; border-bottom: 1px solid black;">
+            <input style="display: block; border: none; border-bottom: 1px solid black;" v-model="date">
         <br>    
             <p>BUREAU OF INTERNAL REVENUE</p>
             <p>Davao City</p>
         <br>
-            <p>This is to authorize Mr./Mrs. <input  style="border: none; border-bottom: 1px solid black;"> to get my Tax Identification Number 
+            <p>This is to authorize Mr./Mrs. <input  style="border: none; border-bottom: 1px solid black;" v-model="authorizedTo"> to get my Tax Identification Number 
                 Verification Slip (TIN Verification Slip) in my behalf.</p>
             <p>Please find below the details:</p>
             
             <div class="details">
                 <section>
-                    <span>Name</span>:<input></section>
+                    <span>Name</span>:<input v-model="name"></section>
                 <section>
-                    <span>Address</span>:<input></section>
+                    <span>Address</span>:<input v-model="address"></section>
                 <section>
-                    <span>Birthday</span>:<input></section>
+                    <span>Birthday</span>:<input v-model="birthday"></section>
                 <section>
-                    <span>TIN Number</span>:<input></section>  
+                    <span>TIN Number</span>:<input v-model="tinNumber"></section>  
             </div>
         <br>
             <p>Thank you.</p>
         <br>
             <p>Respectful Yours,</p>
         <br>
-            <input style="border: none; border-bottom: 1px solid black;">
+            <input style="border: none; border-bottom: 1px solid black;" v-model="respectfulYours">
     </div>
     </form-card>
 
@@ -42,14 +42,14 @@
         
         <div class="center">
             <p>
-                That I,<input> single/married, of legal age, <input> and resident of <input>, do hereby appoint, name consittute and appoint,
-                <input>, single/married of legal age, <input> and a resident of <input>. tp be my true and lawfule <strong>Attorney-In-Face</strong>,
+                That I,<input v-model="spaName"> single/married, of legal age, <input v-model="spaAge"> and resident of <input v-model="spaResident">, do hereby appoint, name consittute and appoint,
+                <input v-model="spaAttyName">, single/married of legal age, <input v-model="spaAttyAge"> and a resident of <input v-model="spaAttyResident">. tp be my true and lawfule <strong>Attorney-In-Face</strong>,
                 for me and in my name, to do and perfrom any or all of the following act or acts, to wit:
             </p>
             <br>
             <p> 1.  To secure Tax Identification Number (TIN) Verification Slip from the Bureau of Internal Revenue (BIR).</p>
             <br>
-            <p><strong>IN WITNESS OF,</strong> we have hereunto set our hands this <input> day of <input>, 20<input> at <input>, Philippines.</p>
+            <p><strong>IN WITNESS OF,</strong> we have hereunto set our hands this <input v-model="witnessMonth"> day of <input v-model="witnessDay">, 20<input v-model="witnessYear"> at <input v-model="witnessAddress">, Philippines.</p>
             <br>
             <div class="signature-flex">
                 <section>
@@ -102,14 +102,34 @@
 <script>
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 export default {
+    props: ['clientObj'],
     components: {SubmitFormButton},
     data(){
         return{
             editable: false,
+
+            date: this.clientObj.date,
+            authorizedTo: this.clientObj.authorizedTo,
+            name: this.clientObj.name,
+            address: this.clientObj.address,
+            birthday: this.clientObj.birthday,
+            tinNumber: this.clientObj.tinNumber,
+            respectfulYours: this.clientObj.respectfulYours,
+            spaName: this.clientObj.spaName,
+            spaAge: this.clientObj.spaAge,
+            spaResident: this.clientObj.spaResident,
+            spaAttyName: this.clientObj.spaAttyName,
+            spaAttyAge: this.clientObj.spaAttyAge,
+            spaAttyResident: this.clientObj.spaAttyResident,
+            witnessDay: this.clientObj.witnessDay,
+            witnessMonth: this.clientObj.witnessMonth,
+            witnessYear: this.clientObj.witnessYear,
+            witnessAddress: this.clientObj.witnessAddress
         }
     },
     methods: {
         toggleEdit(){
+            console.log(this.clientObj)
             this.editable = !this.editable
         },
         back(){

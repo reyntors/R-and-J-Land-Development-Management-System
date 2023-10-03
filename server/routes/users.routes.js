@@ -7,6 +7,7 @@ const formsController = require('../controllers/forms.controller');
 const pdfController = require('../controllers/pdf.controller');
 const letter = require('../controllers/letterofintent.controller');
 const scanfilesController = require('../controllers/scanFiles.controller');
+const uploadedController = require('../controllers/uploaded.controller');
 const auth = require("../middlewares/auth");
 const express = require("express");
 
@@ -53,6 +54,8 @@ router.get("/:id?", auth.authenticateToken, userController.restrict('admin'), us
 router.put("/:id", auth.authenticateToken, userController.restrict('admin'), userController.updateUser);
 router.delete("/:id", auth.authenticateToken, userController.restrict('admin'), userController.deleteUser);
 
+//files
+router.get("/retrieve-upload/:id/:filename", auth.authenticateToken, userController.restrict('staff'), uploadedController.retrieveUploadedFile )
 
 
 

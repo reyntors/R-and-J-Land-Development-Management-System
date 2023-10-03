@@ -162,7 +162,7 @@ export default {
 }
 .subdivision-card-cont header{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     gap: .5rem;
     margin-bottom: .5rem;
 }

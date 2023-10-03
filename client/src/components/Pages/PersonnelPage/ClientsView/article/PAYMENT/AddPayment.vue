@@ -1,6 +1,6 @@
 <template>
   <div></div>
-  <form @submit.prevent="submit"  method="POST" enctype="multipart/form-data">
+  <form @submit.prevent="submit" enctype="multipart/form-data" method="POST">
     <section class="form-controls-icon">
         <font-awesome-icon class="icon" icon="fa-solid fa-x" @click="close"/>
     </section>
@@ -22,9 +22,11 @@
         
     </section>
     <section class="form-controls">
-        <label for="attachment">Attachments</label>
-        <input id="attachment" type="file" accept="image/*" @change="setAttachment">
+        <label for="attacement">Attachemnts</label>
+        <input id="attachment" type="file" accept=".pdf" @change="setAttachment">
     </section>
+
+    <!-- <a :href="url" download="aw.pdf">Donwlod here</a> -->
 
     <section class="c-btn">
       <button>Submit</button>  
@@ -34,11 +36,9 @@
 </template>
 
 <script>
-import axios from 'axios';
-import store from '@/store/store.js'
 import { toast } from 'vue3-toastify'
 export default {
-    emits: ['exit-btn'],
+    emits: ['exit-btn','refresh'],
     props: ['id'],
     data(){
         return{
@@ -46,43 +46,59 @@ export default {
             amount: null,
             purpose: 'monthly-payment',
             attachment: null,
+
+            // url:'',
         }
     },
     methods:{
+
         setAttachment(event){
             this.attachment = event.target.files[0]
-            console.log("Selected file:", this.attachment);
+            // const blob = new Blob([this.attachment],{type: 'application/pdf'})
+            // console.log('Blob content:', blob);
+            // this.url = URL.createObjectURL(blob)
         },
         close(){
             this.$emit('exit-btn')
+            this.$emit('refresh',this.id)
+        },
+        checkAllowedSubmit(){
+            if( this.date !== null &&
+                this.amount > 0 &&
+                this.attachment !== null){
+                
+                    return true
+                }else{
+                    return false
+                }
         },
         async submit(){
-          
-            const formData = new FormData();
-            formData.append('file', this.attachment); // Ensure 'file' matches your server's field name
-            formData.append('date', this.date);
-            formData.append('amount', this.amount);
-            formData.append('purpose', this.purpose);
+            const isGood = this.checkAllowedSubmit()
+            if(isGood){
+                const obj = new FormData()
+                obj.append('date',this.date)
+                obj.append('amount',this.amount)
+                obj.append('purpose',this.purpose)
+                obj.append('file',this.attachment)
 
+                console.log(this.attachment)
 
-            console.log("I AM ATTACHMENT:",this.attachment)
+                try{
+                    const response = await this.$store.dispatch('client/addPayment',{
+                        id:this.id,
+                        obj: obj})
+                    console.log(response)
+                    toast.success(response,1000)
+                    await new Promise(resolve => setTimeout(resolve,1000))
+                    this.close()
 
-            try{
-                const BASE_URL = 'http://localhost:4000/'
-                const token = store.getters['auth/getTokenID']
-
-                  const response = await axios.post(`${BASE_URL}users/add-transaction/${this.id}`, formData, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`, // Ensure the correct content type
-                 },
-                });
-                console.log(response.data)
-                toast.success(response,1000)
-                new Promise(resolve => setTimeout(resolve,1000))
-                this.close()
-            }catch(error){
-                toast.error(error,1000)
-            }          
+                }catch(error){
+                    toast.error(error,1000)
+                }                  
+            }else{
+                console.log('not allowed to add empty fields')
+            }
+        
         }
     }
 

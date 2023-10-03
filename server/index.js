@@ -10,13 +10,12 @@ const errors = require('./middlewares/errors');
 
 
 
-
 const app = express();
 
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.static('public'))
 app.use(cors());
 
 mongoose.set("strictQuery", false);
