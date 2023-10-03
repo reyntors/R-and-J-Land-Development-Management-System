@@ -28,33 +28,36 @@
           <h5>TRANSACTIONS</h5> 
           <button @click="toggleAddPayment">ADD TRANSACTION</button>
         </header>
-        <table>
+        <table v-if="!isLoading">
           <tr>
             <td>DATE</td>
             <td>AMOUNT RECEIVED</td>
             <td>PURPOSE</td>
             <td>ATTACHMENTS</td>
           </tr>
-          <tbody v-for="transaction in clientObj.transactions" :key="transaction">
-            <tr>
-              <td>{{ transaction.date }}</td>
-              <td>{{ transaction.amount }}</td>
-              <td>{{ transaction.purpose }}</td>
-              <td>f</td>
-            </tr>
-          </tbody>
+            <tbody v-for="(transaction,index) in clientTransactionGetter" :key="index">
+              <tr>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.purpose }}</td>
+                <td><a :href="transaction.url" :download="transaction.download">{{ transaction.attachments[0].filename }}</a></td>
+                <!-- <td>{{ transaction.attachments[0].filename }}</td> -->
+              </tr>
+            </tbody>            
           <!-- {{ paymentTransaction }} -->
         </table>
+        <h2 v-if="isLoading">Loading...</h2>
                 
       </section>
     </div>
 
-    <add-payment v-if="addPaymentForm" :id="clientObj.userId" @exit-btn="toggleAddPayment"/>
+    <add-payment v-if="addPaymentForm" :id="clientObj.userId" @exit-btn="toggleAddPayment" @refresh="getListTransaction"/>
 
   </div>
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
 import AddPayment from './AddPayment.vue'
 export default {
     components: {AddPayment },
@@ -62,14 +65,41 @@ export default {
     data(){
       return{
           addPaymentForm: false,
+          isLoading: false,
       }
     },
     methods:{
+
       toggleAddPayment(){
-        // console.log(this.clientObj)
         this.addPaymentForm = !this.addPaymentForm
-      }
+      },
+
+      async getListTransaction(id){
+        this.isLoading = true
+        try{
+          const response = await this.$store.dispatch('client/getListTransaction',id)
+          toast.success(response.message, {autoClose:500})
+        }catch(error){
+          toast.error(error,{autoClose:500})
+        }
+        this.isLoading = false
+      },
+
     },
+
+
+    computed: {
+      clientTransactionGetter(){
+        const transactionList =  this.$store.getters['client/clientTransactionGetter']
+        //  this.createUrl(transactionList.attachments[0])
+         return transactionList
+      },
+    },
+
+
+    mounted(){
+      this.getListTransaction(this.clientObj.userId)
+    }
 }
 </script>
 

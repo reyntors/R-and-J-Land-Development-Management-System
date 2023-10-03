@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 import { createApp } from 'vue'
+// import { toast } from 'vue3-toastify'
 import App from './App.vue'
 import router from './route.js'
 import store from './store/store.js'

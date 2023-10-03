@@ -6,83 +6,13 @@ export default{
 
     state(){
         return {
-            clientsPending: [
-                // {
-                //     id: '101',
-                //     fullname: 'ahahahah ako',
-                //     email: 'borromeojhafdsa7@gmail.com',
-                //     address: 'Pasay Cityfdsfsad'
-                // },
-                // {
-                //     id: '102',
-                //     fullname: 'hehe ifdsa qmeo',
-                //     email: 'borromeojhaerix27@gmail.com',
-                //     address: 'Py City'
-                // },
-                // {
-                //     id: '103',
-                //     fullname: 'Jhafdsafasmeo',
-                //     email: 'borromefsdafojhaerix27@gmail.com',
-                //     address: 'Pafdsay'
-                // },
-            ],
+            clientsPending: [],
 
             searchResult: null,
 
-            clientsAdded: [
-                // {
-                //     profile: {
-                //         id: 1,
-                //         fullname: 'Jhaerix Ompoy Borromeo',
-                //         email: 'borromeojhaerix27@gmail.com',
-                //         address: 'Pasay City'  
-                //     },
-                //     accountDetails: {
+            clientsAdded: [],
 
-                //     },
-                //     paymentDetails: {
-
-                //     },
-                //     accountingDetails:{
-
-                //     },
-                //     transaction:[
-                //         {
-                //             date: '2023-08-09',
-                //             amountPaid: '5,000',
-                //             purpose: 'Reservation Fee',
-                //             attachement: ['receipt1']
-                //         },
-                //         {
-                //             date: '2023-09-09',
-                //             amountPaid: '50,000',
-                //             purpose: 'Downpayment',
-                //             attachement: ['receipt1', 'downpayment receipt']
-                //         },  
-                //         {
-                //             date: '2023-10-09',
-                //             amountPaid: '10,000',
-                //             purpose: 'Monthly Payment',
-                //             attachement: ['receipt1', 'downpayment receipt']
-                //         },                        
-                //     ],
-                //     letterIntent:{
-
-                //     },
-                //     individualDeclaration: {
-
-                //     },
-                //     BirTinRequest: {
-
-                //     },
-                //     ContractDetails: {
-
-                //     },
-                //     scannedFiles:[
-                //         'contractdetails.pdf','birtinrewue.pdf'
-                //     ]
-                // },
-            ],
+            listCurrentClientTransactions: []
 
         }
     },
@@ -119,15 +49,6 @@ export default{
             state.clientsAdded.splice(index,1)
         },
 
-        addPayment(state,payload){
-            const index = state.clientsAdded.findIndex(item => item.userId === payload.id)
-            console.log(index)
-            if(index>=0){
-                console.log(state.clientsAdded[index])
-                state.clientsAdded[index].transactions.push(payload.body)
-            }      
-        },
-
         setLocalListPending(state,response){
             response.data.forEach(item => {
                 state.clientsPending.push(item)
@@ -140,9 +61,28 @@ export default{
                 state.clientsAdded.push(item)
             })
         },
-        justprint(state){
-            console.log(state.clientsAdded)
+
+        /*start payment transactions */
+        pushCurrentClientTransactions(state,list){
+            state.listCurrentClientTransactions = []
+            if(list.length>0){
+                list.forEach(item => {
+   
+                    //generated download
+                    console.log(item.attachments[0])
+                    const blob = new Blob([item.attachments[0]],{type: 'application/pdf'})
+                    console.log('Blob content:', blob);
+                    const url = URL.createObjectURL(blob)
+                    const download = item.attachments[0].filename
+                    item.url = url;
+                    item.download = download;
+                    state.listCurrentClientTransactions.push(item)   
+                    
+                })
+            }
         }
+        /*end payment transactions */
+        
     },
     actions:{
 
@@ -182,23 +122,33 @@ export default{
             context.commit('deleteClient',id)
             //http request for deleting specific legit client
         },
-        async addPayment(context,payload){
+
+        //start payment transactions
+        async getListTransaction(context,id){
+            console.log(id)
+            try{
+                const response = await Client.getListTransaction(id)
+                // console.log(response)
+                context.commit('pushCurrentClientTransactions',response.data)
+                return response
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        },
+        async addPayment(_,payload){
             try{
                 const response = await Client.addPaymentTransaction({
                     id:payload.id,
-                    body:payload.obj})
-
-                context.commit('addPayment',{
-                    id:payload.id,
-                    body:payload.obj})
-
-                context.commit('justprint')
+                    obj:payload.obj})
+                console.log(response)
                 return response.message
             }catch(error){
                 console.log(error)
                 throw error
             }
         }
+        //end payment transactions
 
     },
     getters:{
@@ -210,13 +160,15 @@ export default{
             }
         },
         clientsGetter(state){
+            // console.log(state.clientsAdded)
             return state.clientsAdded
         },
-        clientTransactionGetter(state,id){
-            
-            const index = state.clientsAdded.findIndex(item => item.profile.id === id)
-            console.log(state.clientsAdded[index].transaction)
-            return state.clientsAdded[index].transaction
+
+        /*start transaction payment */
+        clientTransactionGetter(state){ 
+            console.log(state.listCurrentClientTransactions )
+            return state.listCurrentClientTransactions 
         }
+        /*end transaction payment */
     }
 }

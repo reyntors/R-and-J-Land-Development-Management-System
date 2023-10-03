@@ -52,12 +52,25 @@ export const addToLegitClient = async (id) => {
 //end header
 
 //start article/payment
+export const getListTransaction = async (id) => {
+    console.log('API addPaymentTransaction executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.get(`${BASE_URL}users/alltransaction/${id}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        }) 
+        return response.data    
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
 export const addPaymentTransaction = async (payload) => {
     console.log('API addPaymentTransaction executed')
     const token =store.getters['auth/getTokenID']
-    console.log(payload)
     try{
-        const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.id}`,payload.body,{
+        const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.id}`,payload.obj,{
             headers:{
                 'Authorization': `Bearer ${token}`
             }
