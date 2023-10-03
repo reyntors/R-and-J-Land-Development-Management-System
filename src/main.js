@@ -36,5 +36,4 @@ app.component('progress-loading',ProgressLoading)
 app.component('form-thumbnail', FormThumbnail)
 app.component('submit-form-button',SubmitFormButton)
 
-
 app.mount('#app')
