@@ -80,4 +80,20 @@ export const addPaymentTransaction = async (payload) => {
         throw (error.response.data.message);
     }
 }
+export const retrieveUploadedFile = async (id, filename) => {
+    console.log('API retrieveUploadedFile executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.get(`${BASE_URL}users/retrieve-upload/${id}/${filename}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            },
+            responseType: 'blob'
+        }) 
+        console.log(response.data)
+        return response.data     
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
 //end article/payment

@@ -23,7 +23,7 @@ import StaffAppprovePayment from './components/Pages/FormPage/StaffForms/StaffSu
 import PersonnelHomePage from './components/Pages/PersonnelPage/PersonnelPage.vue'
 import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/DashboardView.vue'
 import PersonnelReports from './components/Pages/PersonnelPage/ReportsView/ReportsView.vue'
-import PersonnelInquiries from './components/Pages/PersonnelPage/SubComponents/InquiriesView.vue'
+import PersonnelInquiries from './components/Pages/PersonnelPage/InquiriesView/InquiriesView.vue'
 import PersonnelSubdivision from './components/Pages/PersonnelPage/SubdivisionView/SubdivisionView.vue'
 import PersonnelCustomer from './components/Pages/PersonnelPage/ClientsView/ClientView.vue'
 

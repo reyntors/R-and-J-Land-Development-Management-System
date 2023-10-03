@@ -63,21 +63,23 @@ export default{
         },
 
         /*start payment transactions */
-        pushCurrentClientTransactions(state,list){
+        pushCurrentClientTransactions(state,payload){
             state.listCurrentClientTransactions = []
-            if(list.length>0){
-                list.forEach(item => {
-   
-                    //generated download
-                    console.log(item.attachments[0])
-                    const blob = new Blob([item.attachments[0]],{type: 'application/pdf'})
-                    console.log('Blob content:', blob);
-                    const url = URL.createObjectURL(blob)
-                    const download = item.attachments[0].filename
-                    item.url = url;
-                    item.download = download;
-                    state.listCurrentClientTransactions.push(item)   
+            if(payload.list.length>0){
+                payload.list.forEach(async (item) => {
                     
+                    try{
+                        const file = await Client.retrieveUploadedFile(payload.id,item.attachments[0].filename)
+                        const blob = new Blob([file],{type: 'application/pdf'})
+                        const url = URL.createObjectURL(blob)
+                        const download = item.attachments[0].filename
+                        item.url = url;
+                        item.download = download;
+                        state.listCurrentClientTransactions.push(item)                         
+                    }catch(error){
+                        console.log(error)
+                    }
+   
                 })
             }
         }
@@ -129,7 +131,9 @@ export default{
             try{
                 const response = await Client.getListTransaction(id)
                 // console.log(response)
-                context.commit('pushCurrentClientTransactions',response.data)
+                context.commit('pushCurrentClientTransactions',{
+                    id: id,
+                    list:response.data})
                 return response
             }catch(error){
                 console.log(error)
