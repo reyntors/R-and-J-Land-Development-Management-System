@@ -18,15 +18,15 @@
     <div class="virtualViewContainer">
         <button class="btn-item" @click="toggleVirtualView">{{ buttonName }}</button>
         <!-- <button @click="toggleVirtualView">{{ buttonName }}</button> -->
-        <virtual-view v-if="virtualViewVisibleComputed"/>      
+        <!-- <virtual-view v-if="virtualViewVisibleComputed"/>       -->
     </div>
         
   </template>
   
   <script>
-  import VirtualView from './subfolder/VirtualView.vue'
+//   import VirtualView from './subfolder/VirtualView.vue'
   export default {
-    components: {VirtualView},
+    // components: {VirtualView},
     data(){
         return{
             value: 1,
@@ -131,13 +131,13 @@
     background-color: #86D916;;
   }
   .images{
-    width: 90%;
+    width: 100%;
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    gap: 1rem;
-    padding: .2rem;
+    gap: .1rem;
+    /* padding: .2rem; */
   }
   .virtualViewContainer{
     display: flex;

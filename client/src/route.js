@@ -24,9 +24,8 @@ import PersonnelHomePage from './components/Pages/PersonnelPage/PersonnelPage.vu
 import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/DashboardView.vue'
 import PersonnelReports from './components/Pages/PersonnelPage/ReportsView/ReportsView.vue'
 import PersonnelInquiries from './components/Pages/PersonnelPage/SubComponents/InquiriesView.vue'
-import PersonnelProperties from './components/Pages/PersonnelPage/PropertiesView/PropertiesView.vue'
+import PersonnelSubdivision from './components/Pages/PersonnelPage/SubdivisionView/SubdivisionView.vue'
 import PersonnelCustomer from './components/Pages/PersonnelPage/ClientsView/ClientView.vue'
-import PersonnelPayment from './components/Pages/PersonnelPage/SubComponents/PaymentView.vue'
 
 import store from './store/store.js'
 
@@ -58,9 +57,8 @@ const route = createRouter({
                 children: [
                     {path: 'dashboard', component: PersonnelDashboard},
                     {path: 'client', component: PersonnelCustomer},
-                    {path: 'properties', component: PersonnelProperties},
+                    {path: 'subdivision', component: PersonnelSubdivision},
                     {path: 'inquiries', component: PersonnelInquiries},
-                    {path: 'payment', component: PersonnelPayment},
                     {path: 'reports', component: PersonnelReports}
                 ]
             }
@@ -82,22 +80,22 @@ const route = createRouter({
         //this condition sets the path that required the user to be authenticated before they can access it
         if(to.meta.requiresAuthGuest && !store.getters['auth/authorizationRoleGuest']){       
             // console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
-            // console.log('NOT AUTHENTICATED AS GUEST and NOT ALLOWED TO ACCESS THIS ROUTE')
+            console.log('NOT AUTHENTICATED AS GUEST and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
         else if(to.meta.requiresAuthGuest && store.getters['auth/authorizationRoleGuest'] && true){
             // console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
-            // console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
+            console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
         else if(to.meta.requiredAuthPersonnel && !store.getters['auth/authorizationPersonnel']){
             // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
-            // console.log('NOT AUTHORIZED AS STAFF and NOT ALLOWED TO ACCESS THIS ROUTE')
+            console.log('NOT AUTHORIZED AS PERSONNEL and NOT ALLOWED TO ACCESS THIS ROUTE')
             next('/home');
         }
-        else if(to.meta.requiresAuthStaff && store.getters['auth/authorizationPersonnel']){
+        else if(to.meta.requiredAuthPersonnel && store.getters['auth/authorizationPersonnel']){
             // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
-            // console.log('AUTHORIZED AS STAFF and ALLOWED TO ACCESS THIS ROUTE')
+            console.log('AUTHORIZED AS PERSONNEL and ALLOWED TO ACCESS THIS ROUTE')
             next();
         }
         else{

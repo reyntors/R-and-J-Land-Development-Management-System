@@ -1,7 +1,7 @@
 <template>
     <the-header></the-header>
     <carousel-component></carousel-component>
-    <about-component></about-component>
+    <!-- <model-houses></model-houses> -->
     <map-component></map-component>
     <!-- <search-component></search-component> -->
     <the-footer></the-footer>
@@ -9,13 +9,14 @@
 
 <script>
 
-import AboutComponent from './ModelHouses.vue'
+// import ModelHouses from './ModelHouses.vue'
 import CarouselComponent from './CarouselComponent.vue'
 import MapComponent from './MapComponent.vue'
 // import SearchComponent from './SearchComponent.vue'
 export default {
     components: {CarouselComponent, 
-        AboutComponent, MapComponent,
+        // ModelHouses, 
+        MapComponent,
         // SearchComponent,
     },
 }

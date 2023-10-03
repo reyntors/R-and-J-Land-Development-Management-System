@@ -6,6 +6,13 @@
           <button @click="toggleEdit">{{ editBtnText }}</button>
       </div>
       <form>
+        <section class="items-form">
+              <label for="buyerID">
+                  Buyer's ID:
+              </label>
+              <input id="buyerID" type="text" v-model="userId" readonly>
+          </section>
+
           <section class="items-form">
               <label for="buyerName">
                   Buyer's Name:
@@ -124,9 +131,10 @@
               editable: false,
               editOccured: false,
   
+              userId: this.profileDetails.userId,
               buyerName: this.profileDetails.fullname,
-              address: this.profileDetails.address,
-              contactNo: '',
+              address: this.profileDetails.homeAddress,
+              contactNo: this.profileDetails.contactNumber,
               civilStatus: '',
               spouseName: '',
               occupation: '',

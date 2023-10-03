@@ -1,21 +1,21 @@
 export default{
-    namespaced: true,
+        namespaced: true,
 
-    state(){
-        return {
-            isProfileShown: true,
-        }
-    },
-    mutations:{
-        togglePofileShow(state){
-            state.isProfileShown = !state.isProfileShown
-        }
-    },
+        state(){
+            return {
+                isProfileShown: true,
+            }
+        },
+        mutations:{
+            togglePofileShow(state){
+                state.isProfileShown = !state.isProfileShown
+            }
+        },
 
 
-    getters: {
-        isProfileShownGetter(state){
-            return state.isProfileShown
+        getters: {
+            isProfileShownGetter(state){
+                return state.isProfileShown
+            }
         }
-    }
 }   

@@ -53,7 +53,7 @@ import BuyerSpa from './ContractDetailsSubFiles/BuyerSpa.vue'
 import CorporateBuyer from './ContractDetailsSubFiles/CorporateBuyer.vue'
 import OtherDetails from './ContractDetailsSubFiles/OtherDetails.vue'
 export default {
-  components: { SubmitFormButton, PropertyDetails ,ContactDetails, BusinessEmployment, SpouseInformation , BuyerSpa, CorporateBuyer, OtherDetails},
+  components: { PropertyDetails ,ContactDetails, BusinessEmployment, SpouseInformation , BuyerSpa, CorporateBuyer, OtherDetails, SubmitFormButton},
     data(){
         return{
             propertyData: null,
@@ -87,23 +87,13 @@ export default {
         getOtherData(payload){
             this.otherData = payload
         },
-       async submit(){
-
-            const contractDetailsData = {...this.propertyData, ...this.contactData, 
+        submit(){
+            const payload = {...this.propertyData, ...this.contactData, 
                 ...this.businessData, ...this.spouseData, ...this.buyerSPAData,
                 ...this.corporateBuyerData, ...this.otherData
             }
-
-            try {
-
-                
-                await this.$store.dispatch('auth/createContractDetails', contractDetailsData);
-
-
-            }catch (error) {
-                console.error( error);
-            }
-           
+            console.log(payload)
+            //REQUEST HERE
         }
 
     },

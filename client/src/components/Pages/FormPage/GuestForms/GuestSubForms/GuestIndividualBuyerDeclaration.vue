@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
 export default{
     data(){
         return{
@@ -136,41 +137,28 @@ export default{
                 engagedInBusiness: this.engagedInBusiness,
                 businessRegisteredUnder: this.businessRegisteredUnder,
                 businessUsingMyTIN: this.businessUsingMyTIN,
-
             }
         },
 
-       async submit(){
+        async submit(){
             this.checkAllEmpty()
             const isGood = this.checkReadySubmit()
             if(isGood){
-        
-
-        const individualBuyerDeclarationtData = {
-                date: this.date,
-                name: this.name,
-                BIRtaxID: this.BIRtaxID,
-                businessName: this.businessName,
-                engagedInBusiness: this.engagedInBusiness,
-                businessRegisteredUnder: this.businessRegisteredUnder,
-                businessUsingMyTIN: this.businessUsingMyTIN,
-        // Add any other data you need here
-      };
-   
-
-      try {
-       
-        await this.$store.dispatch('auth/createIndividualBuyerDeclaration', individualBuyerDeclarationtData);
-
-        
-       
-      } catch (error) {
-        
-        console.error( error);
-      }
-    }
+                const payload = this.getAllData()
+                try{
+                    const response = await this.$store.dispatch('guest/submitIndividualBuyerDeclaration',payload)
+                    toast.success(response, {autoClose: 1000,}); 
+                    await new Promise(resolve => setTimeout(resolve, 1000)) 
+                    this.$router.replace('/guest-forms')       
+                }catch(error){
+                    toast.error(error, {autoClose:1000})
+                }
+                console.log('submitted')
+            }else{
+                console.log('submit rejected')
+            }
             
-        },
+        }
         
 
         

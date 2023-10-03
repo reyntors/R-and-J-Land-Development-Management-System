@@ -67,3 +67,43 @@ exports.addTransaction = async (req, res, next) => {
     return next(error);
   }
 };
+
+
+exports.getTransaction = async (req, res, next) => {
+
+
+    try {
+
+        const { id } = req.params;
+
+        const user = await User.findOne({userId: id});
+
+        if (!user) {
+
+          return res.status(404).json({message: 'User is not found'});
+
+        }else{
+
+         const allTransactions = user.transactions;
+
+          return res.status(200).json({message: `${user.username}, All transactions`, data: allTransactions});
+
+        }
+
+
+
+
+      
+    } catch (error) {
+
+      return res.status(500).json({message: 'Internal Server Error'});
+      
+    }
+
+
+
+
+
+
+
+}

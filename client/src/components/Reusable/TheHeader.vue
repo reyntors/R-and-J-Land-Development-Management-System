@@ -2,16 +2,19 @@
 
   <div class="header">
 
-    <img class="logo" :src="logo" alt="ERROR" @click="goToHome" v-if="!authorizationRoleStaff && !authorizationRoleAdmin">      
-    <div class="logoStaffAdmin" v-if="authorizationRoleStaff || authorizationRoleAdmin">
+    <!-- show when logged in as GUEST -->
+    <img class="logo" :src="logo" alt="ERROR" @click="goToHome" v-if="!authorizationPersonnel"> 
+    
+    <!-- show when logged in as personnel -->
+    <div class="logoStaffAdmin" v-if="authorizationRoleStaff || authorizationPersonnel">
       <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="barsStaffAdmin" @click="toggleProfile" />
       <img class="logo" :src="logo" alt="ERROR">       
     </div>
  
 
     <!-- ROW NAV-->
-    <!-- show when not logged in as admin or staff and also not -->
-    <nav class="rowNav" v-if="!authorizationRoleStaff && !authorizationRoleAdmin">
+    <!-- show when logged in as GUEST-->
+    <nav class="rowNav" v-if="!authorizationPersonnel">
       <router-link to="/about" >ABOUT</router-link>
       <router-link to="/projects" >PROJECTS</router-link>
       <router-link to="/gallery" >GALLERY</router-link>
@@ -21,26 +24,25 @@
       <button @click="logout" v-if="isUserValidComputed">LOG OUT</button>
     </nav>
 
-    <div class="navStaffAdmin" v-if="authorizationRoleStaff || authorizationRoleAdmin">
-      <font-awesome-icon icon="fa-solid fa-circle-user" size="2x" /> <span></span><p>Welcome, Admin </p>
+    <!-- show when log in as personnel -->
+    <div class="navStaffAdmin" v-if="authorizationPersonnel">
+      <font-awesome-icon icon="fa-solid fa-circle-user" size="2x" /> <span></span><p>Welcome {{ authorizationPersonnelTEXT }}</p>
       <font-awesome-icon class="icon" v-if="!isShowStaffAdminColumnComputed" :icon="['fas', 'caret-down']" @click="toggleStaffAdminColumn" />
       <font-awesome-icon class="icon" v-if="isShowStaffAdminColumnComputed" :icon="['fas', 'caret-up']" @click="toggleStaffAdminColumn" />
       <div v-if="isShowStaffAdminColumnComputed">
         <button>SOMETHING1</button>
         <button>SOMETHING2</button>
         <button @click="logout">LOG OUT</button>
-      </div>
-      
+      </div>  
     </div>
-
 
 
     <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
 
     <!-- COLLUMN NAV-->
-    <!-- <div v-if="!authorizationRoleStaff && !authorizationRoleAdmin"> -->
-    <font-awesome-icon v-if="!authorizationRoleStaff && !authorizationRoleAdmin" icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
-    <column-nav v-if="isShowColumnNavComputed && !authorizationRoleStaff && !authorizationRoleAdmin" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)"></column-nav>      
+    <!-- show when loggedin as GUEST -->
+    <font-awesome-icon v-if="!authorizationPersonnel" icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
+    <column-nav v-if="isShowColumnNavComputed && !authorizationPersonnel" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)"></column-nav>      
 
 
   </div>
@@ -108,12 +110,19 @@ export default {
     authorizationRoleGuest(){
         return this.$store.getters['auth/authorizationRoleGuest']
     },
-    authorizationRoleStaff(){
-      return this.$store.getters['auth/authorizationRoleStaff']
+    // authorizationRoleStaff(){
+    //   return this.$store.getters['auth/authorizationRoleStaff']
+    // },
+    // authorizationRoleAdmin(){
+    //   return this.$store.getters['auth/authorizationRoleAdmin']
+    // },
+    authorizationPersonnel(){
+      return this.$store.getters['auth/authorizationPersonnel']
     },
-    authorizationRoleAdmin(){
-      return this.$store.getters['auth/authorizationRoleAdmin']
+    authorizationPersonnelTEXT(){
+      return this.$store.getters['auth/authorizationPersonnelTEXT']
     }
+
   },
 }
 </script>

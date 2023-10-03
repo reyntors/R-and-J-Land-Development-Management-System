@@ -14,7 +14,7 @@ export default {
 
 <style scoped>
 .card-container{
-    width: 85vw;
+    width: 100%;
     height: auto;
     outline: 1px solid black;
     box-shadow: 0 0 2px 1px black;

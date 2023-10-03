@@ -1,9 +1,4 @@
-import { getAllUsers } from '@/services/Api';
-import  AuthenticationService  from '@/services/AuthenticationService';
-
-
-
-
+import * as Client from '@/APIs/PERSONNEL/ClientAPI.js'
 
 export default{
 
@@ -11,14 +6,33 @@ export default{
 
     state(){
         return {
-            clientsPending: [ ],
+            clientsPending: [
+                // {
+                //     id: '101',
+                //     fullname: 'ahahahah ako',
+                //     email: 'borromeojhafdsa7@gmail.com',
+                //     address: 'Pasay Cityfdsfsad'
+                // },
+                // {
+                //     id: '102',
+                //     fullname: 'hehe ifdsa qmeo',
+                //     email: 'borromeojhaerix27@gmail.com',
+                //     address: 'Py City'
+                // },
+                // {
+                //     id: '103',
+                //     fullname: 'Jhafdsafasmeo',
+                //     email: 'borromefsdafojhaerix27@gmail.com',
+                //     address: 'Pafdsay'
+                // },
+            ],
 
             searchResult: null,
 
             clientsAdded: [
                 // {
                 //     profile: {
-                //         userId: 1,
+                //         id: 1,
                 //         fullname: 'Jhaerix Ompoy Borromeo',
                 //         email: 'borromeojhaerix27@gmail.com',
                 //         address: 'Pasay City'  
@@ -68,29 +82,16 @@ export default{
                 //         'contractdetails.pdf','birtinrewue.pdf'
                 //     ]
                 // },
-            ]
+            ],
+
         }
     },
     mutations:{
 
-        setPendingClients(state, responseData){
-            responseData.forEach((item)=>{
-                // console.log(item)
-                state.clientsPending.push(item)
-
-            })
-            // console.log(state.clientsPending)
-        },
-        resetList(state){
-
-            state.clientsAdded = []
-
-        },
-
         searchClient(state,id){
-            const index = state.clientsPending.findIndex(item => item.userId === id)
+            const index = state.clientsPending.findIndex(item => item.userId=== id)
             if(index>=0){
-                // console.log(state.clientsPending[index])
+                console.log(state.clientsPending[index])
                 state.searchResult = state.clientsPending[index]
             }else{
                 state.searchResult = null
@@ -98,17 +99,14 @@ export default{
             }
         },
 
-
         //CRUD CLIENTADDED
-        setList(state,payload){
-            payload.forEach(element => {
-                state.clientsAdded.push(element)
-            })
-            console.log(state.clientsAdded)
+        addClient(state,payload){
+            console.log('added')
+            state.clientsAdded.push(payload)
         },
 
         updateClient(state,payload){
-            const index = state.clientsAdded.findIndex(item => item.profile.id === payload.id)
+            const index = state.clientsAdded.findIndex(item => item.userId=== payload.id)
             console.log(index)
             console.log(state.clientsAdded[0].profile)
             if(index>=0){
@@ -122,65 +120,60 @@ export default{
         },
 
         addPayment(state,payload){
-            const obj = {}
-            console.log('id'+ payload.id)
-            payload.form.forEach((value,key) => {
-                if(!Object.prototype.hasOwnProperty.call(obj, key)){
-                    obj[key] = value
-                }
-            });
-            console.log(obj)
-            const index = state.clientsAdded.findIndex(item => item.profile.id === payload.id)
+            const index = state.clientsAdded.findIndex(item => item.userId === payload.id)
+            console.log(index)
             if(index>=0){
-                state.clientsAdded[index].transaction.push(obj)
+                console.log(state.clientsAdded[index])
+                state.clientsAdded[index].transactions.push(payload.body)
             }      
+        },
+
+        setLocalListPending(state,response){
+            response.data.forEach(item => {
+                state.clientsPending.push(item)
+                console.log(item)
+            })
+        },
+
+        setLocalLegitList(state,response){
+            response.data.forEach(item => {
+                state.clientsAdded.push(item)
+            })
+        },
+        justprint(state){
+            console.log(state.clientsAdded)
         }
     },
     actions:{
 
-        async getPendingClients(context){
-            
-            try {
-
-                const responseData = await getAllUsers();
-
-                context.commit('setPendingClients', responseData.data);
-
-
-                return responseData;
-                
-            } catch (error) {
+        async getPendingList(context){
+            try{
+                const response = await Client.requestPendingList()
+                context.commit('setLocalListPending',response)
+            }catch(error){
                 console.log(error)
-                throw error
-            }
-            
-        },
-        
-        async addClient(context, userId){
-            console.log(userId)
-            try {               
-                const responseData = await AuthenticationService.updateLegitimacy(userId);
-                console.log(responseData)
-                
-
-            } catch (error) {
-                console.log(error)
-                throw error              
-            }                 
+            }   
         },
 
-        async getLegitClients(context,legitimateClients){
-            console.log("try get list legit")
-            try{                
-                const responseData = await AuthenticationService.listLegitimateClients(legitimateClients)
-                console.log(typeof(responseData));
-                context.commit('setList',responseData)
-            
+        async getLegitList(context){
+            try{
+                const response = await Client.requestLegitList()
+                context.commit('setLocalLegitList',response)
             }catch(error){
                 console.log(error)
             }
         },
 
+        //do the http request functions here
+        async addClient(context,id){   
+            try{
+                const payload = await Client.addToLegitClient(id)
+                context.commit('addClient',payload.data)
+                console.log(payload)
+            }catch(error){
+                console.log(error)
+            }
+        },
         updateClient(context,payload){
             context.commit('updateClient',payload)
             //http request for updating the specific legit client
@@ -189,11 +182,23 @@ export default{
             context.commit('deleteClient',id)
             //http request for deleting specific legit client
         },
-        addPayment(context,payload){
-            context.commit('addPayment',payload)
-            //http request for adding payment transactions
-        },
+        async addPayment(context,payload){
+            try{
+                const response = await Client.addPaymentTransaction({
+                    id:payload.id,
+                    body:payload.obj})
 
+                context.commit('addPayment',{
+                    id:payload.id,
+                    body:payload.obj})
+
+                context.commit('justprint')
+                return response.message
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        }
 
     },
     getters:{
@@ -205,7 +210,6 @@ export default{
             }
         },
         clientsGetter(state){
-            console.log(state.clientsAdded)
             return state.clientsAdded
         },
         clientTransactionGetter(state,id){

@@ -29,7 +29,7 @@ router.put("/:id", auth.authenticateToken, userController.restrict('staff'), use
 
 //add transaction
 router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict('staff'), transactiontController.addTransaction);
-
+router.get("/alltransaction/:id", auth.authenticateToken, userController.restrict('staff'), transactiontController.getTransaction);
 
 //add legit clients
 router.get("/client/legit-clients", auth.authenticateToken, userController.restrict('staff'), legitClientController.listLegitimateClients);

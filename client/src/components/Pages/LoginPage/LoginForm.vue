@@ -19,7 +19,7 @@
             </div>
 
             <div class="style-form">
-                <input type="password" placeholder=""  v-model.trim="loginPassword">
+                <input type="text" placeholder=""  v-model.trim="loginPassword">
                 <label for="password">Password</label>
             </div>
 
@@ -128,7 +128,7 @@ export default {
       //login
       loginUsername: '',
       loginPassword: '',
-      roles: '',
+      roles: 'guest',
 
       //signup
       signUpFullname: '',
@@ -139,7 +139,6 @@ export default {
       signUpUsername: '',
       signUpPassword: '',
       signUpPasswordRepeat: '',
-      signUpRoles: '',
 
       //pending boolean
       isLoading: false,
@@ -190,64 +189,63 @@ export default {
       }
     },
 
-    async login() {
-        if (this.loginUsername !== '' && this.loginPassword !== '' && this.loginRoles !== '') {
-          this.isLoginError = false;
-          this.isLoading = true;
+    async login(){
+      if(this.loginUsername !== '' && this.loginPassword !=='' && this.loginRoles !== ''){
+  
+        this.isLoginError = false;
+        this.isLoading = true;
 
-          let response;
-
-          // FETCH LOGIN REQUEST
-
-          const credentials = {
-            username: this.loginUsername,
-            password: this.loginPassword,
-            roles:    this.roles,
-          }
-
-          try {
-            response = await this.$store.dispatch('auth/login', credentials);
-
-            
-              toast.success(response.message, { autoClose: 1000 });
-              this.close()
-              if(this.roles === 'guest'){
-                this.$router.replace('/home');
-            }else{
-              this.$router.replace('/personnel/dashboard');
-            }
-            
-         
-           
-          } catch (error) {
-
-            toast.error(error, { autoClose: 1000 });
-          }
-
-          this.isLoading = false;
-        } else {
-          // If the username, password, or roles are not provided
-          this.isLoginError = true;
-          toast.error("Please complete the form.", { autoClose: 1000 });
+        const credentials = {
+          username: this.loginUsername,
+          password: this.loginPassword,
+          roles    : this.roles,
         }
-      },
+        //FETCH LOGIN REQUEST
+        try{
+
+          const response  = await this.$store.dispatch('auth/login',credentials) 
+
+          toast.success(response.message, {autoClose: 2000,});
+          
+          this.close()
+          console.log(response.data.roles)
+
+          if(response.data.roles=== 'guest'){
+            this.$router.replace('/home')
+          }else{
+            this.$router.replace('/personnel/dashboard')
+          }
+          
+          
+        }catch(error){
+          
+          toast.error(error+'', {autoClose: 3000,});
+
+        }
+        this.isLoading = false;
+       
+      }else{
+        //error
+        console.log('ERROR LOGIN FORM ')
+        this.isLoginError = true;
+      }
+    },
 
     async signup(){
       this.passwordStrongChecker(this.signUpPassword)
       this.passwordMatchChecker(this.signUpPasswordRepeat)
       this.isLoginError = false;
-      this.isLoading = true;
-
+      
       if(this.signUpAddress !== '' && this.signUpContact !== '' &&
         this.signUpEmail !== '' && this.signUpFbLink !== '' && 
         this.signUpFullname !== '' && this.signUpUsername !== '' && 
         this.passwordStrong === true && this.passwordMatch === true){
           
           //request SIGNUP
-          this.isLoading = true;
           this.isSignupError = false
+          this.isLoading = true;
 
-        
+
           const credentials = {
             fullname: this.signUpFullname,
             email: this.signUpEmail,
@@ -256,33 +254,25 @@ export default {
             fbAccount: this.signUpFbLink,
             username: this.signUpUsername,
             password: this.signUpPasswordRepeat,
-           
-          };
-
-
-
-          try {
-              const response = await this.$store.dispatch('auth/signup', credentials); // Assign the response
-
-              if (response.message) {
-                toast.success(response.message, { autoClose: 2000 });
-                this.close();
-                this.$router.replace('/home');
-              } else {
-                // Handle cases where there might not be a message in the response
-                toast.success('Signed up successfully!', { autoClose: 2000 });
-                this.close();
-                this.$router.replace('/home');
-              }
-            } catch (error) {
-              toast.error(error + '', { autoClose: 2000 });
-            }
-            this.isLoading = false;
-          } else {
-            console.log('ERROR SIGNING UP FORM');
-            this.isSignupError = true;
+            organizaton: this.signUploginRole
           }
+
+          try{
+            await this.$store.dispatch('auth/signup',credentials)
+            toast.success('Successfuly created your account!', {autoClose: 2000,});
+            await new Promise(resolve=>(setTimeout(resolve,2000)))
+            this.close()
+            this.$router.replace('/home')
+          }catch(error){
+            toast.error(error+'', {autoClose: 3000,});
+          }
+          this.isLoading = false;
+          
+        }else{
+          console.log('ERROR SIGNING UP FORM ')
+          this.isSignupError = true
         }
+    }
   },
 
   computed: {

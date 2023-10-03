@@ -1,23 +1,22 @@
-import AuthenticationService from '@/services/AuthenticationService';
-import { register } from '@/services/Api';
 
+import * as Auth from '@/APIs/BOTH/AuthAPI.js'
 
 export default {
     namespaced: true,
     
     state(){
         return{
-            roles: null,
-            tokenId: null,
+            role: null,
+            tokenID: null,
         }
     },
     mutations:{
         addStoreState(state,responseData){
-            state.roles = responseData.roles
+            state.role = responseData.roles
             state.tokenID = responseData.tokenID
         },
         eraseStoreState(state){
-            state.roles = null;
+            state.role = null;
             state.tokenID = null
         },
         addLocalStorage(_,responseData){
@@ -25,7 +24,7 @@ export default {
             localStorage.setItem('token',responseData.tokenID)
         },
         getLocalStorage(state){
-            state.roles = localStorage.getItem('user')
+            state.role = localStorage.getItem('user')
             state.tokenID = localStorage.getItem('token')
         },
         eraseLocalStorage(){
@@ -37,56 +36,17 @@ export default {
     actions:{
         //LOGIN REQUEST
         async login(context, credentials){
-           
+            console.log('login clicked')
+            try{
+               const responseData = await Auth.login(credentials);
 
-           try {
-                
-                const responseData = await AuthenticationService.login(credentials);
-
-                
-                  // Assuming responseData contains user data and a token,
-                  // store this data in Vuex or local storage and commit it to the Vuex store
                 const Data = {
-                    // user: responseData.data.fullname,
+                    
                     tokenID: responseData.data.token,
                     roles: responseData.data.roles,
-                    // status: responseData.data,
-                    // message: responseData.message,
+                   
                 }
-                console.log(Data);
-                
 
-                context.commit('addLocalStorage', Data);
-                context.commit('addStoreState', Data);
-            
-                
-                return responseData; 
-                
-            }catch (error) {
-              
-                console.error(error);
-                throw error
-               
-            }
-        },
-
-        //SIGNUP REQUEST
-        async signup(context, credentials){
-            
-            try{
-
-                const responseData = await register(credentials);
-                
-                const Data = {
-                    contactNumber: responseData.data.fullname,
-                    email: responseData.data.email,
-                    fbAccount: responseData.data.fbAccount,
-                    fullname: responseData.data.fullname,
-                    homeAddress: responseData.data.homeAddress,
-                    password: responseData.data.password,
-                    username: responseData.data.username,
-                }
-                
                 context.commit('addLocalStorage',Data)
                 context.commit('addStoreState',Data)
 
@@ -99,110 +59,46 @@ export default {
   
         },
 
-        async createLetterOfIntent(context, letterOfIntentData) {
-            try {
-              
-                const response = await AuthenticationService.createLetterOfIntent(letterOfIntentData);
-                
-                const Data = {
-                    date: this.date,
-                    
-                }
-                
-                context.commit('addLocalStorage',Data)
-                context.commit('addStoreState',Data)
-               
-                
-               
-                return response.data;
-            } catch (error) {
-                console.error(error);
-                throw error;
-            }
-        },
+        //SIGNUP REQUEST
+        async signup(context,payload){
+            console.log('signup clicked')
+            console.log(payload)
+            try{
+                //change this to HTTP REQUEST
+                await new Promise(resolve=> (setTimeout(resolve,1000))) 
 
-        async createIndividualBuyerDeclaration(context, individualBuyerDeclarationtData) {
-            try {
-              
-                const response = await AuthenticationService.createIndividualBuyerDeclaration(individualBuyerDeclarationtData);
-                
-                const Data = {
-                    date: this.date,
-                    
-                }
-                
-                context.commit('addLocalStorage',Data)
-                context.commit('addStoreState',Data)
-               
-                
-               
-                return response.data;
-            } catch (error) {
-                console.error(error);
-                throw error;
-            }
-        },
+                //TOGGLE if we assume ERROR
+                // throw Error('SOMETHING WENT WRONG')
 
-        async createBirTinRequest(context,birTinRequestData) {
-            try {
-              
-                const response = await AuthenticationService.createBirTinRequest(birTinRequestData);
-                
-                const Data = {
-                    date: this.date,
-                    
-                }
-                
-                context.commit('addLocalStorage',Data)
-                context.commit('addStoreState',Data)
-               
-                
-               
-                return response.data;
-            } catch (error) {
-                console.error(error);
-                throw error;
-            }
-        },
+                // //TOGGLE we assume SUCCESS and the user is GUEST
+                const responseData = {
+                    user : 'guest',
+                    tokenID: 'A2pqD123' }
+                context.commit('addLocalStorage',responseData)
+                context.commit('addStoreState',responseData)
 
-        async createContractDetails(context,contractDetailsData) {
-            try {
-              
-                const response = await AuthenticationService.createContractDetails(contractDetailsData);
-                
-                const Data = {
-                    date: this.date,
-                    
-                }
-                
-                context.commit('addLocalStorage',Data)
-                context.commit('addStoreState',Data)
-               
-                
-               
-                return response.data;
-            } catch (error) {
-                console.error(error);
-                throw error;
+            }catch(error){
+                console.log(error)
+                throw error
             }
-        },
-
+  
+        }
     },
-
     getters: {
         authGetter(state){
-          
-            if(state.roles && state.tokenID){
-                
+            // console.log(state.role)
+            if(state.role && state.tokenID){
                 return true
             }else{
                 return false
             }
         },
+        getTokenID(state){
+            return state.tokenID
+        },
         authorizationRoleGuest(state){
-            if(state.roles && state.tokenID){
-    
-                if(state.roles === 'guest'){
+            if(state.role && state.tokenID){
+                if(state.role === 'guest'){
                     return true
                 }else{
                     return false
@@ -212,8 +108,8 @@ export default {
             }
         },
         authorizationRoleStaff(state){
-            if(state.roles && state.tokenID){
-                if(state.roles === 'staff'){
+            if(state.role && state.tokenID){
+                if(state.role === 'staff'){
                     return true
                 }else{
                     return false
@@ -223,8 +119,8 @@ export default {
             }
         },
         authorizationRoleAdmin(state){
-            if(state.roles && state.tokenID){
-                if(state.roles === 'admin'){
+            if(state.role && state.tokenID){
+                if(state.role === 'admin'){
                     return true
                 }else{
                     return false
@@ -234,8 +130,8 @@ export default {
             }
         },
         authorizationPersonnel(state){
-            if(state.roles && state.tokenID){
-                if(state.roles !== 'guest'){
+            if(state.role && state.tokenID){
+                if(state.role !== 'guest'){
                     return true
                 }else{
                     return false
@@ -255,13 +151,14 @@ export default {
                 return 'SOMETHING UNKNONW'
             }
         },
+
         getRoleType(state){
-            if(state.roles && state.tokenID){
-                return state.roles
+            if(state.role && state.tokenID){
+                return state.role
             }else{
                 return undefined
             }
-         }
-
+        }
     }
+
 }
