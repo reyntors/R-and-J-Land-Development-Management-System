@@ -34,5 +34,15 @@ export default{
                 throw error
             }
         },
+
+        async submitContractForm(_,payload){
+            try{
+                const response = await API.submitContractForm(payload)
+                return response.message
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        },
     }
 }

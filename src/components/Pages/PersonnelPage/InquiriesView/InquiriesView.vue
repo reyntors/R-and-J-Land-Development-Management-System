@@ -6,20 +6,27 @@
 
       <div class="div2">
         <table>
-          <tr v-for="(item,index) in request" :key="index">
-            <td class="name">{{ item.name }}</td>
-            <td class="about">{{ item.subject }}{{ item.message }}</td>
-            <td class="date">
-              
-              <span class="dateText">
-                {{ item.date }}
-              </span>
-
-              <font-awesome-icon class="trash-icon" icon="fa-solid fa-trash-can" />
-
-            </td>
-          </tr>
+          <tbody v-for="(item,index) in listInquiries" :key="index">
+            <tr @click="showCard(index)">
+              <td class="name">{{ item.name }}</td>
+              <td class="about">{{ item.subject }}{{ item.message }}</td>
+              <td class="date">               
+                <span class="dateText">
+                  {{ item.date }}
+                </span>
+                <!-- <font-awesome-icon class="trash-icon" icon="fa-solid fa-trash-can"/> -->
+              </td>
+            </tr>
+            <inquiries-card
+              v-if="index === focusedIndex"
+              :obj="item"
+              @close-card="closeCard"
+            />
+ 
+   
+          </tbody>
         </table>
+        
       </div>
 
       
@@ -27,33 +34,26 @@
   </template>
   
   <script>
+  import InquiriesCard from './InquiriesCard.vue';
   export default {
+    components: {InquiriesCard},
     data(){
       return{
-        request: [
-          {
-            id: 1,
-            name: "Karl Borromeo",
-            subject: "Donwpayment",
-            message: "fsdaf we af ewr w fd asf ser fkarr ahhaa rewq vvur ",
-            date: '2023-10-3'
-          },
-          {
-            id: 2,
-            name: "Reynard Torculas",
-            subject: "Donwpayment",
-            message: "fsdaf we af ewr w fd asf ser fkarr ahhaa rewq ",
-            date: '2023-10-1'
-          },
-          {
-            id: 3,
-            name: "Jhaerix Borromeo",
-            subject: "Donwpayment",
-            message: "hello po I am interfdfdfs",
-            date: '2023-9-30'
-          },
-          
-        ]
+        focusedIndex: null,
+      }
+    },
+    methods: {
+      showCard(index){
+        this.focusedIndex = index
+        console.log(this.focusedIndex)
+      },
+      closeCard(){
+        this.focusedIndex = null
+      },
+    },
+    computed:{
+      listInquiries(){
+        return this.$store.getters['inquiries/listInquiriesGetter']
       }
     }
   
@@ -61,12 +61,15 @@
   </script>
   
   <style scoped>
+.visible{
+  display: block;
+}
 .inquiries-cont{
     width: 100%;
     height: 85vh;
     padding: 1rem;
 }
-  .div1{
+.inquiries-cont .div1{
     width:100%;
     height: 10%;
     background-color: bisque;
@@ -76,7 +79,7 @@
     align-items: center;
     padding: 0 1rem;
 }
-.div2{
+.inquiries-cont .div2{
     width:100%;
     height: 90%;
     background-color: bisque;
@@ -87,56 +90,49 @@
     gap: 1rem;
     position: relative;
     overflow-y: auto;
+    border: 1px solid black;
 }
-table{
+.inquiries-cont .div2 table{
   width: 100%;
+  table-layout: fixed;
 }
 tr{
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   cursor: pointer;
-}
-td{
-  border: 1px solid black;
-  padding: .5em 0;
-}
-.name{
-  width:25%;
-  text-align: start;
-  padding-left: 1rem;
-}
-.about{
-  width:55%;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100px; /* Set a fixed width for the container */
-}
-.date{
-  width:20%;
-  position: relative;
-  text-align: center;
-  background-color: transparent;
-}
-table tr:nth-child(-n+5){
-  background-color: rgba(0, 0, 0, 0.2);
-  font-weight: 700;
+  width: 100%;
 }
 .trash-icon{
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  scale: 1.2;
-  margin-right: 1rem;
-  display: none;
+  visibility: hidden;
+}
+.trash-icon:hover{
+  color: #b0bbcf;
+}
+.trash-icon:active{
+  color: black;
 }
 tr:hover{
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 1);
-}
-tr:active{
-  color: rgba(255, 255, 255, 0.321);
+  box-shadow: 0 0 2px 1px black;
 }
 tr:hover .trash-icon{
-  display: block;
+  visibility: visible;
 }
-
+.name{
+  padding-left: 1rem;
+  width: 20%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.about{
+  /* border: 1px solid black; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 60%;
+  padding: 0 2rem 0 1rem;
+}
+.date{
+  width:15%;
+  text-align: center;
+}
   </style>

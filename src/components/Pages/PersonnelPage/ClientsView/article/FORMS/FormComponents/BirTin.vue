@@ -102,7 +102,7 @@
 <script>
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 export default {
-    props: ['clientObj'],
+    props: ['clientObj', 'wholeObject'],
     components: {SubmitFormButton},
     data(){
         return{
@@ -124,7 +124,7 @@ export default {
             witnessDay: this.clientObj.witnessDay,
             witnessMonth: this.clientObj.witnessMonth,
             witnessYear: this.clientObj.witnessYear,
-            witnessAddress: this.clientObj.witnessAddress
+            witnessAddress: this.clientObj.witnessAddress,
         }
     },
     methods: {
@@ -148,6 +148,10 @@ export default {
                 return 'Edit'
             }
         },
+    },
+
+    mounted(){
+        console.log(this.wholeObject)
     }
 }
 </script>

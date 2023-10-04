@@ -1,6 +1,6 @@
 <template>
          <div class="c-cont contact-details">
-            <header>CONTACT DETAILS - PRINCIPAL BUYER</header>
+            <header>CONTRACT DETAILS - PRINCIPAL BUYER</header>
             <article>
 
                 <section class="section1">
@@ -140,8 +140,8 @@
                             <p>RELIGION</p>    
                             <span><input type="radio" id="buyerRelgionCatholic" value="roman catholic" v-model="buyerReligion"><label for="buyerRelgionCatholic">Roman Catholic</label></span>
                             <span><input type="radio" id="buyerRelgionProtestant" value="protestant" v-model="buyerReligion"><label for="buyerRelgionProtestant">Protestant</label><br></span>
-                            <span><input type="radio" id="buyerRelgionOthers" :value="buyerReligionOtherComputed" v-model="buyerReligion"><label for="buyerRelgionOthers">Others (pl. specify)</label><br></span>
-                            <input v-model="buyerReligionOther" @input="setBuyerReligion">                            
+                            <span><input type="radio" id="buyerRelgionOthers" :value="buyerReligionOther" v-model="buyerReligion"><label for="buyerRelgionOthers">Others (pl. specify)</label><br></span>
+                            <input v-model="buyerReligionOther" @input="setBuyerReligion" >                            
                         </article>
 
                     </div>
@@ -331,33 +331,98 @@ export default {
             this.IDNO = this.idOthers
             this.passData()
         },
+
+        checkAllEmpty(){
+            this.checkbuyerLastname()
+            this.checkbuyerFirstname()
+            this.checkbuyerMiddlename()
+            this.checkbuyerOccupation()
+            this.checkbuyerPrimaryAddress()
+            this.checkbuyerPrimaryZip()
+            this.checkbuyerCivilStatus()
+            this.checkbuyerAge()
+            this.checkbuyerSecondaryAddress()
+            this.checkbuyerSecondaryZip()
+            this.checkbuyerSex()
+            this.checkbuyerBirthday()
+            this.checkbuyerPlaceBirth()
+            this.checkbuyerHomePhoneNo()
+            this.checkbuyerFaxNo()
+            this.checkbuyerIncludeCountry()
+            this.checkbuyerMobileNo()
+            this.checkbuyerEmail()
+            this.checkbuyerTIN()
+            this.checkbuyerCitizen()
+            this.checkbuyerReligion()
+            this.checkbuyerIssuedID()
+        },
+
+        checkReadyPass(){
+            if(
+                !this.checkbuyerLastname() &&
+                !this.checkbuyerFirstname() &&
+                !this.checkbuyerMiddlename() &&
+                !this.checkbuyerOccupation() &&
+                !this.checkbuyerPrimaryAddress() &&
+                !this.checkbuyerPrimaryZip() &&
+                !this.checkbuyerCivilStatus() &&
+                !this.checkbuyerAge() &&
+                !this.checkbuyerSecondaryAddress() &&
+                !this.checkbuyerSecondaryZip() &&
+                !this.checkbuyerSex() &&
+                !this.checkbuyerBirthday() &&
+                !this.checkbuyerPlaceBirth() &&
+                !this.checkbuyerHomePhoneNo() &&
+                !this.checkbuyerFaxNo() &&
+                !this.checkbuyerIncludeCountry() &&
+                !this.checkbuyerMobileNo() &&
+                !this.checkbuyerEmail() &&
+                !this.checkbuyerTIN() &&
+                !this.checkbuyerCitizen() &&
+                !this.checkbuyerReligion() &&
+                !this.checkbuyerIssuedID()                
+            ){
+                return true
+            }else{
+                return false
+            }
+        },
         //////////////////////////////////////////////////////////////
         passData(){
-            const payload = {
-                buyerLastname: this.buyerLastname,
-                buyerFirstname: this.buyerFirstname,
-                buyerMiddlename: this.buyerMiddlename,
-                buyerOccupation: this.buyerOccupation,
-                buyerPrimaryAddress: this.buyerPrimaryAddress,
-                buyerPrimaryZip: this.buyerPrimaryZip,
-                buyerCivilStatus: this.buyerCivilStatus,
-                buyerAge: this.buyerAge,
-                buyerSecondaryAddress: this.buyerSecondaryAddress,
-                buyerSecondaryZip: this.buyerSecondaryZip,
-                buyerSex: this.buyerSex,
-                buyerBirthday: this.buyerBirthday,
-                buyerPlaceBirth: this.buyerPlaceBirth,
-                buyerHomePhoneNo: this.buyerHomePhoneNo,
-                buyerFaxNo: this.buyerFaxNo,
-                buyerIncludeCountry: this.buyerIncludeCountry,
-                buyerMobileNo: this.buyerMobileNo,
-                buyerEmail: this.buyerEmail,
-                buyerTIN: this.buyerTIN,
-                buyerCitizen: this.buyerCitizen,
-                buyerReligion: this.buyerReligion,
-                buyerIssuedID: this.buyerIssuedID +' ID = ' + this.IDNO,
+            this.checkAllEmpty()
+            const ready = this.checkReadyPass()
+            if(ready){
+                const payload = {
+                    buyerLastname: this.buyerLastname,
+                    buyerFirstname: this.buyerFirstname,
+                    buyerMiddlename: this.buyerMiddlename,
+                    buyerOccupation: this.buyerOccupation,
+                    buyerPrimaryAddress: this.buyerPrimaryAddress,
+                    buyerPrimaryZip: this.buyerPrimaryZip,
+                    buyerCivilStatus: this.buyerCivilStatus,
+                    buyerAge: this.buyerAge,
+                    buyerSecondaryAddress: this.buyerSecondaryAddress,
+                    buyerSecondaryZip: this.buyerSecondaryZip,
+                    buyerSex: this.buyerSex,
+                    buyerBirthday: this.buyerBirthday,
+                    buyerPlaceBirth: this.buyerPlaceBirth,
+                    buyerHomePhoneNo: this.buyerHomePhoneNo,
+                    buyerFaxNo: this.buyerFaxNo,
+                    buyerIncludeCountry: this.buyerIncludeCountry,
+                    buyerMobileNo: this.buyerMobileNo,
+                    buyerEmail: this.buyerEmail,
+                    buyerTIN: this.buyerTIN,
+                    buyerCitizen: this.buyerCitizen,
+                    buyerReligion: this.buyerReligion,
+                    buyerIssuedID: this.buyerIssuedID +' ID = ' + this.IDNO,
+                }
+                this.$emit('pass-data',payload)    
+                console.log('complete')     
+            }else{
+                this.$emit('pass-data',{})
+                console.log('not complete')    
             }
-            this.$emit('pass-data',payload)
+
         }
     },
 

@@ -5,7 +5,7 @@
         
         <property-details @pass-data="getPropertyData"/>
 
-        <contact-details @pass-data="getContactData"/>
+        <contact-details @pass-data="getContractData"/>
 
         <business-employment @pass-data="getBusinessData"/>
 
@@ -44,9 +44,10 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 import PropertyDetails from './ContractDetailsSubFiles/PropertyDetails.vue'
-import ContactDetails from './ContractDetailsSubFiles/ContactDetails.vue'
+import ContactDetails from './ContractDetailsSubFiles/ContractDetails.vue'
 import BusinessEmployment from './ContractDetailsSubFiles/BusinessEmployment.vue'
 import SpouseInformation from './ContractDetailsSubFiles/SpouseInformation.vue'
 import BuyerSpa from './ContractDetailsSubFiles/BuyerSpa.vue'
@@ -56,21 +57,21 @@ export default {
   components: { PropertyDetails ,ContactDetails, BusinessEmployment, SpouseInformation , BuyerSpa, CorporateBuyer, OtherDetails, SubmitFormButton},
     data(){
         return{
-            propertyData: null,
-            contactData: null,
-            businessData: null,
-            spouseData: null,
-            buyerSPAData: null,
-            corporateBuyerData: null,
-            otherData: null,
+            propertyData: {},
+            contractData: {},
+            businessData: {},
+            spouseData: {},
+            buyerSPAData: {},
+            corporateBuyerData: {},
+            otherData: {},
         }
     },
     methods: {
         getPropertyData(payload){
             this.propertyData = payload
         },
-        getContactData(payload){
-            this.contactData = payload
+        getContractData(payload){
+            this.contractData = payload
         },
         getBusinessData(payload){
             this.businessData = payload
@@ -87,13 +88,39 @@ export default {
         getOtherData(payload){
             this.otherData = payload
         },
-        submit(){
-            const payload = {...this.propertyData, ...this.contactData, 
-                ...this.businessData, ...this.spouseData, ...this.buyerSPAData,
-                ...this.corporateBuyerData, ...this.otherData
+
+        checkValidSubmit(){
+            if(
+                Object.keys(this.propertyData).length > 0 &&
+                Object.keys(this.contractData).length > 0 &&
+                Object.keys(this.businessData).length > 0 &&
+                Object.keys(this.spouseData).length > 0
+            ){
+                return true
+            }else{
+                return false
             }
-            console.log(payload)
-            //REQUEST HERE
+        },
+        
+        async submit(){
+            console.log(this.propertyData)
+            const allGood = this.checkValidSubmit()
+            if(allGood){
+                const payload = {
+                    ...this.propertyData, ...this.contractData, 
+                    ...this.businessData, ...this.spouseData, ...this.buyerSPAData,
+                    ...this.corporateBuyerData, ...this.otherData
+                }
+                try{
+                    const response = await this.$store.dispatch('guest/submitContractForm',payload)
+                    toast.success(response,{autoClose: 1000})
+                }catch(error){
+                    toast.error(error,{autoClose: 1000})
+                }
+            }else{
+                console.log('required fields are property,contract,business and spouse only')
+            }
+
         }
 
     },

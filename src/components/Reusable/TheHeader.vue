@@ -58,7 +58,7 @@ export default {
   data(){
     return{
       logo: logo,
-      isLoginBool: false,
+      // isLoginBool: false,
       isShowColumnNav: false,
 
       //user details
@@ -73,7 +73,8 @@ export default {
   },
   methods: {
     closeOrOpenForm(bool){
-        this.isLoginBool = bool
+        // this.isLoginBool = bool
+        this.$store.commit('auth/toggleLoginForm',bool)
     },
     showColumnNav(bool){
       this.isShowColumnNav = bool;
@@ -96,7 +97,8 @@ export default {
   computed: {
 
     isLoginBoolComputed(){
-      return this.isLoginBool
+      // return this.isLoginBool
+      return this.$store.getters['auth/openLoginFormGetter']
     },
     isShowColumnNavComputed(){
       return this.isShowColumnNav

@@ -74,18 +74,52 @@ export default {
         checkbusinessProfession(){return this.businessProfessionEmpty = this.businessProfession!==""?false:true},
         checkbusinessEmploymentStatus(){return this.businessEmploymentStatusEmpty = this.businessEmploymentStatus!==""?false:true},
 
+
+        checkAllEmpty(){
+            this.checkbusinessName()
+            this.checkbusinessAddress()
+            this.checkbusinessPhoneNo()
+            this.checkbusinessfaxNo()
+            this.checkbusinessPosition()
+            this.checkbusinessProfession()
+            this.checkbusinessEmploymentStatus()
+        },
+
+        checkReadyPass(){
+            if(
+                !this.checkbusinessName() &&
+                !this.checkbusinessAddress() &&
+                !this.checkbusinessPhoneNo() &&
+                !this.checkbusinessfaxNo() &&
+                !this.checkbusinessPosition() &&
+                !this.checkbusinessProfession() &&
+                !this.checkbusinessEmploymentStatus()                
+            ){
+                return true
+            }else{
+                return false
+            }
+        },
+
         //////////////////////////////////////////////////////////////
         passData(){
-            const payload = {
-                businessName: this.businessName,
-                businessAddress: this.businessAddress,
-                businessPhoneNo: this.businessPhoneNo,
-                businessfaxNo: this.businessfaxNo,
-                businessPosition: this.businessPosition,
-                businessProfession: this.businessProfession,
-                businessEmploymentStatus: this.businessEmploymentStatus,
+            this.checkAllEmpty()
+            const ready = this.checkReadyPass()
+            if(ready){
+                const payload = {
+                    businessName: this.businessName,
+                    businessAddress: this.businessAddress,
+                    businessPhoneNo: this.businessPhoneNo,
+                    businessfaxNo: this.businessfaxNo,
+                    businessPosition: this.businessPosition,
+                    businessProfession: this.businessProfession,
+                    businessEmploymentStatus: this.businessEmploymentStatus,
+                }
+                this.$emit('pass-data',payload)                
+            }else{
+                this.$emit('pass-data',{})
             }
-            this.$emit('pass-data',payload)
+
         }
         
     },

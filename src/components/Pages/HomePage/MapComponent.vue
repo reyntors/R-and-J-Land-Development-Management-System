@@ -43,10 +43,13 @@
 
 
               </section>
-              //put message here??
-              <button v-if="selectedItem.status === 'sale'">
-                Inquire Now
-              </button>
+              <div class="input-inquire" v-if="selectedItem.status === 'sale'">
+                <textarea placeholder="leave a message..." v-model.trim="message"/>
+                <button @click="inquireNow">
+                  Inquire Now
+                </button>                
+              </div>
+
           </div>
 
           <section class="buttons">
@@ -81,6 +84,8 @@ export default {
 
       searchValue: '',
       notfound: false,
+
+      message: '',
     }
   },
   computed: {
@@ -90,6 +95,9 @@ export default {
     selectedComputed(){
       return this.selectedItem
     },
+    // authorizationRoleGuestComputed(){
+    //   return this.$store.getters['auth/authorizationRoleGuest']
+    // }
   },
 
   methods: {
@@ -150,6 +158,21 @@ export default {
           this.notfound = true
         }
       } 
+    },
+    //end search
+
+    //start send message
+    inquireNow(){
+      if(this.message.length > 10){
+        const isGuest = this.$store.getters['auth/authorizationRoleGuest']
+        if(isGuest){
+          console.log('submiting the request')
+        }else{
+          this.$store.commit('auth/toggleLoginForm',true)
+        }
+      }else{
+        console.log('message too short')
+      }
     }
 
   },
@@ -159,7 +182,7 @@ export default {
     const x = subdivision.offsetLeft
     const y = subdivision.offsetTop
     this.XSubdivisionCont = x
-    this.YSubdivisionCont = y
+    this.YSubdivisionCont = y - 100
 
     this.$store.commit('subdivision/initDeepCopySubdivisionList')
   }
@@ -212,8 +235,9 @@ export default {
     transform: translateY(-50%);
   }
   .subdivision{
-    width: 95%;
+    width: 100%;
     margin: auto;
+    border: 1px solid black;
   }
 
   .subdivision .buttons{
@@ -229,7 +253,6 @@ export default {
     min-width: 80px;
     border-radius: 10px;
   }
-
   .subdivision .selected{
     width: 95%;
     margin:  .5rem auto 1rem;
@@ -254,10 +277,23 @@ export default {
     padding-left: .5rem;
   }
   .subdivision .selected button{
-    border: none;
-    outline: 1px solid black;
     padding: .5rem;
-    background-color: #31A72A;
+    color: white;
+    font-weight: 500;
+    height: 100%;
+    display: flex;
+    border-top: 1px solid black;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(66deg,#0000ff3c,#31a72a,#ffffff);
+    background-size: 180% 180%;
+    animation: gradient-animation 3s ease infinite;
+  }
+  
+  .subdivision .selected button:active{
+    color: black;
+    box-shadow: none;
   }
   .subdivision .selected img{
     width: 100%;
@@ -289,6 +325,11 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
+  @media screen and (min-width: 1024px) {
+    .subdivision .grid{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  }
   .subdivision .grid li{
     padding: 0;
     margin: 0;
@@ -297,7 +338,39 @@ export default {
   }
   .subdivision .grid img{
     width: 100%;
-    /* padding: .2rem; */
+    cursor: pointer;
   }
+  .subdivision .grid img:hover{
+    scale: 1.009;
+    outline: 2px solid orange;
+    box-shadow: 0 0 5px 1px orange;
+  }
+  .subdivision .grid img:active{
+    scale: 1;
+  }
+.input-inquire{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.input-inquire textarea{
+  resize: none;
+  padding: 1rem;
+}
 
+
+
+
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
   </style>

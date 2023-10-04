@@ -64,13 +64,36 @@ export default {
             return this.typeBuyerEmpty = this.typeBuyer!==''?false:true
         },
 
+        checkAllEmpty(){
+            this.checkproperty()
+            this.checktypeBuyer()
+        },
+
+        checkReadyPass(){
+            if(
+                !this.checkproperty() &&
+                !this.checktypeBuyer()
+            ){
+                return true
+            }else{
+                return false
+            }
+        },
+
         //////////////////////////////////////////////////////////////
         passData(){
-            const payload = {
-                property: this.property,
-                typeBuyer: this.typeBuyer, 
+            this.checkAllEmpty()
+            const ready = this.checkReadyPass()
+            if(ready){
+                const payload = {
+                    property: this.property,
+                    typeBuyer: this.typeBuyer, 
+                }
+                this.$emit('pass-data', payload)                
+            }else{
+                this.$emit('pass-data', {}) 
             }
-            this.$emit('pass-data', payload)
+
         }
     },
     computed:{    

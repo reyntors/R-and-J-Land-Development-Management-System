@@ -6,6 +6,7 @@ import client from './personnelStore/client.js'
 import report from './personnelStore/report.js'
 import subdivision from './guest_personnelStore/subdivision.js'
 import guest from './guestStore/guestStore.js'
+import inquiries from "./personnelStore/inquiries.js";
 
 const store = createStore({
         modules:{
@@ -15,6 +16,7 @@ const store = createStore({
             report,
             subdivision,
             guest,
+            inquiries,
         },
         state(){
             return{

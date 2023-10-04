@@ -83,6 +83,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
           return this.profileClientVisible
         },
         clientsComputed(){
+          console.log(this.$store.getters['client/clientsGetter'])
           return this.$store.getters['client/clientsGetter']
         }
       },   

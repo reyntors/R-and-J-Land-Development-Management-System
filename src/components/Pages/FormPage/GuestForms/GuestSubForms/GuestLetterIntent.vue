@@ -346,7 +346,7 @@ export default{
   <style scoped>
   #letterOfIntent{
     font-size: clamp(.6rem, 1.2vw, 2rem);
-    width: 90%;
+    /* width: 90%; */
   }
   .empty{
     outline: 1px solid red;

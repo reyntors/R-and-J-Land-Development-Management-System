@@ -4,7 +4,7 @@ export default {
         return {
             subdivision: [
                 {
-                    imageUrl: 'https://picsum.photos/200/300/?blur=2',                    
+                    imageUrl: 'https',                    
                     block_Lot_No:'1',
                     total_Sq_M: 100,
                     amount_per_Sq: 2000,
@@ -239,11 +239,15 @@ export default {
             context.commit('update',payload)
             //here for update http request
         },
+        //end - personnel
+
+        //start guest and pesonnel access
         getPropertyList(context){
             //here for get the list of all Subdivision
             context.commit('setList')
         }
-        //end - personnel
+        //end guest and pesonnel access
+        
     },
     
     getters: {

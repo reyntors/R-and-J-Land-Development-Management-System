@@ -63,6 +63,7 @@ import CorporateBuyer from './ContractSub/CorporateBuyer.vue'
 import OtherDetails from './ContractSub/OtherDetails.vue'
 export default {
   components: { SubmitFormButton,PropertyDetails ,ContactDetails, BusinessEmployment, SpouseInformation , BuyerSpa, CorporateBuyer, OtherDetails},
+    props: ['clientObj'],
     data(){
         return{
             propertyData: null,
@@ -128,6 +129,10 @@ export default {
                 return 'Edit'
             }
         },
+    },
+
+    mounted(){
+        console.log(this.clientObj)
     }
 
 }

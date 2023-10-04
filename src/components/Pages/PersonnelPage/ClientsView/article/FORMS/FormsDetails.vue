@@ -56,9 +56,9 @@
 
     </div>
 
-    <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms" :client-obj="clientObj.letterOfIntent"/>
+    <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms" :client-obj="clientObj.letterOfIntent" :whole-object="clientObj"/>
     <buyer-declaration v-if="formVisible === 'buyerDeclaration'" @back-click="toggleOpenForms" :client-obj="clientObj.individualDeclaration"/>
-    <bir-tin v-if="formVisible === 'bir-tin'" @back-click="toggleOpenForms" :client-obj="clientObj.BirTinRequest"/>
+    <bir-tin v-if="formVisible === 'bir-tin'" @back-click="toggleOpenForms" :client-obj="clientObj.BirTinRequest" :whole-object="clientObj"/>
     <contract-details v-if="formVisible === 'contractDetails'" @back-click="toggleOpenForms" :client-obj="clientObj.ContractDetails"></contract-details>
       
   </div>

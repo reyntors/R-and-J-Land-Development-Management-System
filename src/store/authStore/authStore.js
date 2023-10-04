@@ -8,10 +8,16 @@ export default {
         return{
             role: null,
             tokenID: null,
+
+            openLoginForm: false,
         }
     },
     mutations:{
+        toggleLoginForm(state,bool){
+            state.openLoginForm = bool
+        },
         addStoreState(state,responseData){
+            console.log(responseData)
             state.role = responseData.roles
             state.tokenID = responseData.tokenID
         },
@@ -20,6 +26,7 @@ export default {
             state.tokenID = null
         },
         addLocalStorage(_,responseData){
+            console.log(responseData)
             localStorage.setItem('user',responseData.roles)
             localStorage.setItem('token',responseData.tokenID)
         },
@@ -90,6 +97,9 @@ export default {
         }
     },
     getters: {
+        openLoginFormGetter(state){
+            return state.openLoginForm
+        },
         authGetter(state){
             // console.log(state.role)
             if(state.role && state.tokenID){

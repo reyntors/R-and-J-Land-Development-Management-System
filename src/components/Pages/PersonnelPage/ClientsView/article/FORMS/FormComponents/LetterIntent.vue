@@ -91,14 +91,14 @@
             <submit-form-button @click="submit">Save</submit-form-button>
             <submit-form-button @click="submit">Download</submit-form-button>
         </span>
-        
+        <a :href="downloadURL" :download="downloadName">DOWNLOAD</a>
     </form-card>
 </template>
   
 <script>
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 export default{
-    props: ['clientObj'],
+    props: ['clientObj', 'wholeObject'],
     components: {SubmitFormButton},
     emits:['back-click'],
     data(){
@@ -117,6 +117,9 @@ export default{
           contactNo: this.clientObj.contactNo,
           emailAddress: this.clientObj.emailAddress,
           reservationTimeSpan: this.clientObj.reservationTimeSpan,
+
+          downloadURL: this.wholeObject.LetterOfIntentURL,
+          downloadName: this.wholeObject.LetterOfIntentFilename
         }
     },
     methods: {

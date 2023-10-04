@@ -12,7 +12,9 @@ export default{
 
             clientsAdded: [],
 
-            listCurrentClientTransactions: []
+            listCurrentClientTransactions: [],
+
+            objectValuesEmpty: false,
 
         }
     },
@@ -56,8 +58,53 @@ export default{
             })
         },
 
+        //start check object null value or not
+        areObjectValuesNull(state,obj){
+            delete obj['_id']
+            let ctr = 0;
+            for(const keys in obj){
+                if(obj[keys] !== null){
+                    ctr+=1;
+                }
+            }
+            if(ctr>0){
+                state.objectValuesEmpty = false
+            }else{
+                state.objectValuesEmpty = true
+            }
+        },
+        //start check object null value or not
+
+        //start of letter intent downloadable
+
+        //start of letter intent downloadable
+
+
+
         setLocalLegitList(state,response){
-            response.data.forEach(item => {
+            response.data.forEach(async (item) => {
+
+                //start CREATE donwloadable letterofIntent
+                this.commit('client/areObjectValuesNull',item.letterOfIntent) 
+                const LetterOfIntentFilename = `${item.userId}_${item.fullname}_letter_of_intent.pdf`  
+                var LetterOfIntentURL = '' 
+
+                const hasLetterOfIntent = state.objectValuesEmpty
+                if(!hasLetterOfIntent){
+                    try{
+                        const downloadableLetterOfIntent = await Client.retrieveUploadedForm(item.userId,LetterOfIntentFilename)
+                        const LetterOfIntentBlob = new Blob([downloadableLetterOfIntent], {type: 'application/pdf'})
+                        LetterOfIntentURL = URL.createObjectURL(LetterOfIntentBlob)                        
+                    }catch(error){
+                        console.log(error)
+                    }
+                }
+                item.LetterOfIntentURL = LetterOfIntentURL
+                item.LetterOfIntentFilename = LetterOfIntentFilename
+                //start CREATE donwloadable letterofIntent
+
+                
+
                 state.clientsAdded.push(item)
             })
         },
@@ -151,8 +198,23 @@ export default{
                 console.log(error)
                 throw error
             }
-        }
+        },
         //end payment transactions
+
+        //start downloadable Form
+        async retrieveUploadedForm(_,payload){
+            try{
+                const response = await Client.retrieveUploadedForm({
+                    id: payload.id,
+                    filename: payload.filename
+                })
+                return response
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        }
+        //end downloadable Form
 
     },
     getters:{
@@ -164,7 +226,6 @@ export default{
             }
         },
         clientsGetter(state){
-            // console.log(state.clientsAdded)
             return state.clientsAdded
         },
 
@@ -172,7 +233,7 @@ export default{
         clientTransactionGetter(state){ 
             console.log(state.listCurrentClientTransactions )
             return state.listCurrentClientTransactions 
-        }
+        },
         /*end transaction payment */
     }
 }

@@ -90,10 +90,29 @@ export const retrieveUploadedFile = async (id, filename) => {
             },
             responseType: 'blob'
         }) 
-        console.log(response.data)
+        // console.log(response.data)
         return response.data     
     }catch(error){
         throw (error.response.data.message);
     }
 }
 //end article/payment
+
+//start downloadable form
+export const retrieveUploadedForm = async (id, filename) => {
+    console.log('API retrieveUploadedForm executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.get(`${BASE_URL}users/retrieveForm/${id}/${filename}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            },
+            responseType: 'blob'
+        }) 
+        console.log(response.data)
+        return response.data     
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+//end downloadable form

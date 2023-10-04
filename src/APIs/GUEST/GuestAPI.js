@@ -57,3 +57,21 @@ export const submitBirTinRequest = async (credentials) => {
         
     }
 }
+
+export const submitContractForm = async (credentials) => {
+    console.log('API submitContractForm executed')
+    const token =store.getters['auth/getTokenID']
+    try {
+        const response = await axios.post(`${BASE_URL}contractdetails/addcontract`,credentials,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            } 
+        },);
+        
+        return response.data
+
+    } catch (error) {
+        throw (error.response.data.message);
+        
+    }
+}

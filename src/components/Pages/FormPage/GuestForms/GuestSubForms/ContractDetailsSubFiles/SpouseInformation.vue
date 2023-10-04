@@ -133,24 +133,67 @@ export default {
         checkspouseEmployment(){return this.spouseEmploymentEmpty = this.spouseEmployment!==""?false:true},
         checkspouseNoChildren(){return this.spouseNoChildrenEmpty = this.spouseNoChildren!==""?false:true},
 
+        checkAllEmpty(){
+            this.checkspouseLastname()
+            this.checkspouseFirstname()
+            this.checkspouseMiddleName()
+            this.checkspouseOccupation()
+            this.checkspousePhoneNo()
+            this.checkspouseMobileNo()
+            this.checkspouseEmail()
+            this.checkspouseTIN()
+            this.checkspouseCitizenship()
+            this.checkspouseFaxNo()
+            this.checkspouseSex()
+            this.checkspouseEmployment()
+            this.checkspouseNoChildren()      
+        },
+
+        checkReadyPass(){
+            if(
+                !this.checkspouseLastname()&&
+                !this.checkspouseFirstname()&&
+                !this.checkspouseMiddleName()&&
+                !this.checkspouseOccupation()&&
+                !this.checkspousePhoneNo()&&
+                !this.checkspouseMobileNo()&&
+                !this.checkspouseEmail()&&
+                !this.checkspouseTIN()&&
+                !this.checkspouseCitizenship()&&
+                !this.checkspouseFaxNo()&&
+                !this.checkspouseSex()&&
+                !this.checkspouseEmployment()&&
+                !this.checkspouseNoChildren()
+            ){
+                return true
+            }else{
+                return false
+            }
+        },
         //////////////////////////////////////////////////////////////
         passData(){
-            const payload = {
-                spouseLastname: this.spouseLastname,
-                spouseFirstname: this.spouseFirstname,
-                spouseMiddleName: this.spouseMiddleName,
-                spouseOccupation: this.spouseOccupation,
-                spousePhoneNo: this.spousePhoneNo,
-                spouseMobileNo: this.spouseMobileNo,
-                spouseEmail: this.spouseEmail,
-                spouseTIN: this.spouseTIN,
-                spouseCitizenship: this.spouseCitizenship,
-                spouseFaxNo: this.spouseFaxNo,
-                spouseSex: this.spouseSex,
-                spouseEmployment: this.spouseEmployment,
-                spouseNoChildren: this.spouseNoChildren,
+            this.checkAllEmpty()
+            const ready = this.checkReadyPass()
+            if(ready){
+                const payload = {
+                    spouseLastname: this.spouseLastname,
+                    spouseFirstname: this.spouseFirstname,
+                    spouseMiddleName: this.spouseMiddleName,
+                    spouseOccupation: this.spouseOccupation,
+                    spousePhoneNo: this.spousePhoneNo,
+                    spouseMobileNo: this.spouseMobileNo,
+                    spouseEmail: this.spouseEmail,
+                    spouseTIN: this.spouseTIN,
+                    spouseCitizenship: this.spouseCitizenship,
+                    spouseFaxNo: this.spouseFaxNo,
+                    spouseSex: this.spouseSex,
+                    spouseEmployment: this.spouseEmployment,
+                    spouseNoChildren: this.spouseNoChildren,
+                }
+                this.$emit('pass-data',payload)                
+            }else{
+                this.$emit('pass-data',{})  
             }
-            this.$emit('pass-data',payload)
         }
     },
     computed: {
