@@ -1,6 +1,8 @@
 const BirTinRequest = require('../models/birtinrequest.model');
 const User = require('../models/user.model');
-
+const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
+const fs = require('fs');
+const path = require('path');
 
 
 // Create a new letter of intent
@@ -14,7 +16,11 @@ exports.createBirTinRequest = async (req, res, next) => {
        
         const user = await User.findOne({ username });
 
-        
+          // Create a new PDF document
+          const pdfDoc = await PDFDocument.create();
+         await generateBirTinRequestPDF(pdfDoc, user, birTinRequestData);
+ 
+ 
         
          const newBirTinRequest = new BirTinRequest({
             ...birTinRequestData,
@@ -38,6 +44,135 @@ exports.createBirTinRequest = async (req, res, next) => {
         return next(error);
     }
 };
+
+// Function to generate PDF content for Letter of Intent
+async function  generateBirTinRequestPDF(pdfDoc, user, birTinRequestData) {
+
+    try {
+    // Define A4 page dimensions
+    const pageWidth = 595.276; 
+    const pageHeight = 841.890; 
+
+    const page1 = pdfDoc.addPage([pageWidth, pageHeight]); 
+    const page2 = pdfDoc.addPage([pageWidth, pageHeight]);
+
+    
+   // Create a font - Use StandardFonts.Helvetica
+   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+   
+   // Define coordinates for text placement
+   let x1 = 50;
+   let y1 = 850;
+
+   // Define coordinates for text placement on page 2
+   let x2 = 50;
+   let y2 = 850;
+
+
+   let content1 = '';
+   let content2 = '';
+   
+
+   // Add content to the PDF page (simulate HTML content)
+    content1 = `
+        
+    Date: ${birTinRequestData.date}
+    BUREAU OF INTERNAL REVENUE
+    Davao City
+
+    This is to authorize Mr./Mrs. ${birTinRequestData.date} to get my Tax 
+    Identification Number Verification Slip (TIN Verification Slip) in my behalf.
+    Please find below the details:
+
+        Name: ${birTinRequestData.name}
+        Address: ${birTinRequestData.address}
+        Birthday: ${birTinRequestData.birthday}
+        TIN Number: ${birTinRequestData.tinNumber}
+
+    Thank you.
+
+
+    Respectful Yours,
+
+    ${birTinRequestData.respectfulYours}
+
+
+
+   `;
+
+   content2 = `
+   
+        ${' '.repeat(55)}SPECIAL POWER OF ATTORNEY
+   
+   KNOW ALL, MEN BY THESE PRESENTS:
+   
+   That I, ${birTinRequestData.spaName} single/married, of legal age, ${birTinRequestData.spaAge} and resident of  ${birTinRequestData.spaResident}, do hereby
+   Atty, name consittute and Atty ${birTinRequestData.spaAttyName}, single/married of legal age,${birTinRequestData.spaAttyAge} and a resident of
+   ${birTinRequestData.spaAttyResident}. to be my true and lawful Attorney-In-Face, for me and in my name, to do and perfrom any or all of the following act 
+   or acts, to wit:
+
+   1. To secure Tax Identification Number (TIN) Verification Slip from the Bureau of Internal Revenue (BIR).
+
+   IN WITNESS OF, we have hereunto set our hands this ${birTinRequestData.witnessDay} day of ${birTinRequestData.witnessMonth}, 20
+   ${birTinRequestData.witnessYear} at ${birTinRequestData.witnessAdress}. Philippines.
+
+   GRANTOR:                                         GRANTEE:
+
+   _______________________                          ___________________________________
+           CEI:                                                     CEI:
+
+   SUBSCRIBED AND SWORN to before me this __________ day of ___________ , 20  at Davao City, 
+   Philippines Affian exhibit to be their Competent Evidence of Identities (CEI) written below their names.
+
+   Notary Public
+   Doc. No. ___________ ;
+   Page No. ___________ ;
+   Book No. ___________ ;
+   Series of __________ ;
+
+   `
+
+    // Split the content into lines and draw them on page 1
+    const lines1 = content1.split('\n');
+    lines1.forEach((line) => {
+        page1.drawText(line, {
+            x: x1,
+            y: y1,
+            size: 9,
+            font,
+            color: rgb(0, 0, 0),
+        });
+        y1 -= 20; // Adjust the vertical position for the next line
+    });
+
+    // Split the content into lines and draw them on page 2
+    const lines2 = content2.split('\n');
+    lines2.forEach((line) => {
+        page2.drawText(line, {
+            x: x2,
+            y: y2,
+            size: 9,
+            font,
+            color: rgb(0, 0, 0),
+        });
+        y2 -= 20; // Adjust the vertical position for the next line
+    });
+
+
+   const pdfBytes = await pdfDoc.save();
+
+   const pdfPath = path.join(__dirname, '../public/templates/BirTinRequest.pdf');
+
+    // Save the PDF buffer to a file
+    fs.writeFileSync(pdfPath, pdfBytes);
+
+    return pdfPath;
+
+    }catch (error) {
+        throw error;
+    }
+
+}
 
 
 exports.getBirTinRequest = async (req, res, next) => {

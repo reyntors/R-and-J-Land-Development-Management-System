@@ -137,7 +137,7 @@ async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
 
    const pdfBytes = await pdfDoc.save();
 
-   const pdfPath = path.join(__dirname, '../public/templates/letter_of_intent.pdf');
+   const pdfPath = path.join(__dirname, `../public/templates/${user.userId}_${user.fullname}_letter_of_intent.pdf`);
 
     // Save the PDF buffer to a file
     fs.writeFileSync(pdfPath, pdfBytes);

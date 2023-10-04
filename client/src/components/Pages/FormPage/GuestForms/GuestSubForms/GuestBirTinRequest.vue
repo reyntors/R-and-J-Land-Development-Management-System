@@ -1,7 +1,7 @@
 <template>
     <the-header/>
 
-    <form-card title="BIR Tin Request">fdsafa
+    <form-card title="BIR Tin Request">
     <div class="c-container">
             <input type="date" style="display: block; border: none; border-bottom: 1px solid black;" :class="{empty:isdateEmpty}" v-model.trim="date">
         <br>    

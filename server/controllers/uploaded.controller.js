@@ -18,7 +18,7 @@ exports.retrieveUploadedFile = async (req, res, next) => {
           }
 
            // Specify the path to the uploaded file
-         const filePath = path.join(__dirname, '..', 'public', 'uploads', filename);
+         const filePath = path.join(__dirname, '..', 'public', 'uploads', filename );
     
            // Check if the file exist
             if (fs.existsSync(filePath)) {
@@ -35,11 +35,13 @@ exports.retrieveUploadedFile = async (req, res, next) => {
 
 }
 
-exports.retrieveLetterOfIntent = async (req, res, next) => {
+exports.retrieveForm = async (req, res, next) => {
 
   try {
 
          const { id, filename } = req.params;
+
+         console.log(filename)
         
         const user = await User.findOne({ userId: id });
 
