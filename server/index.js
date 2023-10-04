@@ -7,9 +7,6 @@ const dbConfig = require('./config/db.config');
 const errors = require('./middlewares/errors');
 
 
-
-
-
 const app = express();
 
 app.use(morgan('combined'));

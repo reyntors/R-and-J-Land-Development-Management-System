@@ -364,22 +364,10 @@ const contractDetailsSchema = new Schema({
         type: String,
         required: false,
     },
-    otherReasonPurchase: {
-        type: String,
-        required: false,
-    },
-    otherConsideredFactor: {
-        type: String,
-        required: false,
-    },
-    otherWhereHeard: {
-        type: String,
-        required: false,
-    },
-    otherPurchasedBefore: {
-        type: String,
-        required: false,
-    },
+    otherReasonPurchase: [String],
+    otherConsideredFactor: [String],
+    otherWhereHeard: [String],
+    otherPurchasedBefore: [String],
     createdBy: {
         type: String, 
         ref: 'user', 
