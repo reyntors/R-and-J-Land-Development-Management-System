@@ -182,179 +182,179 @@ const contractDetailsSchema = new Schema({
     },
     attyLastname: {
         type: String,
-        required: true,
+        required: false,
     },
     attyFirstname: {
         type: String,
-        required: true,
+        required: false,
     },
     attyMiddlename: {
         type: String,
-        required: true,
+        required: false,
     },
     attyOccupation: {
         type: String,
-        required: true,
+        required: false,
     },
     attyPrimaryAddress: {
         type: String,
-        required: true,
+        required: false,
     },
     attyPrimaryZip: {
         type: String,
-        required: true,
+        required: false,
     },
     attyCivilStatus: {
         type: String,
-        required: true,
+        required: false,
     },
     attyAge: {
         type: String,
-        required: true,
+        required: false,
     },
     attySecondaryAddress: {
         type: String,
-        required: true,
+        required: false,
     },
     attySecondaryZip: {
         type: String,
-        required: true,
+        required: false,
     },
     attyBirthdate: {
         type: String,
-        required: true,
+        required: false,
     },
     attySex: {
         type: String,
-        required: true,
+        required: false,
     },
     attyHomeNo: {
         type: String,
-        required: true,
+        required: false,
     },
     attyFaxNo: {
         type: String,
-        required: true,
+        required: false,
     },
     attyIncludeCountry: {
         type: String,
-        required: true,
+        required: false,
     },
     attyMobileNo: {
         type: String,
-        required: true,
+        required: false,
     },
     attyTIN: {
         type: String,
-        required: true,
+        required: false,
     },
     attyEmail: {
         type: String,
-        required: true,
+        required: false,
     },
     attyCitizenship: {
         type: String,
-        required: true,
+        required: false,
     },
     attyGovtIssuedID: {
         type: String,
-        required: true,
+        required: false,
     },
     corpName: {
         type: String,
-        required: true,
+        required: false,
     },
     corpBusinessName: {
         type: String,
-        required: true,
+        required: false,
     },
     corpBusinessAddress: {
         type: String,
-        required: true,
+        required: false,
     },
     corpZipCode: {
         type: String,
-        required: true,
+        required: false,
     },
     corpBusinessPhoneNo: {
         type: String,
-        required: true,
+        required: false,
     },
     corpFaxNo: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedLastname: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedFirstname: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedMiddlename: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedPosition: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedSecondaryAddress: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedZip: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedBirthdate: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedBirthPlace: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedSex: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedHomePhoneNo: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedFaxNo: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedIncludeCtry: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedMobileNo: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedTIN: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedEmail: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedCitizenship: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedCivilStatus: {
         type: String,
-        required: true,
+        required: false,
     },
     corpAuthorizedGovtIssuedID: {
         type: String,
-        required: true,
+        required: false,
     },
     otherBanks: {
         type: String,
