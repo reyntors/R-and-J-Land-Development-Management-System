@@ -14,7 +14,7 @@ const transactionSchema = new Schema({
     date: String,
     amount: Number,
     purpose: String,
-    attachments: []
+    attachments: [],
 
 });
 
@@ -110,7 +110,7 @@ const profileSchema = new Schema({
 
 const letterOfIntentSchema = new Schema({
     date: {
-        type: Date,
+        type: String,
         default: null,
         ref: 'Letter of Intent',
         
@@ -753,26 +753,34 @@ const contractDetailsSchema = new Schema({
         default: null,
         ref: 'Contract Details'
     },
-    otherReasonPurchase: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    otherConsideredFactor: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    otherWhereHeard: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    otherPurchasedBefore: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
+    otherReasonPurchase: [
+        {
+            type: String,
+            default: null,
+            ref: 'Contract Details'
+        }
+    ],
+    otherConsideredFactor: [
+        {
+            type: String,
+            default: null,
+            ref: 'Contract Details'
+        }
+    ],
+    otherWhereHeard: [
+        {
+            type: String,
+            default: null,
+            ref: 'Contract Details'
+        }
+    ],
+    otherPurchasedBefore: [
+        {
+            type: String,
+            default: null,
+            ref: 'Contract Details'
+        }
+    ]
     
 });
 

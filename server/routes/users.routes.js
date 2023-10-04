@@ -57,11 +57,9 @@ router.delete("/:id", auth.authenticateToken, userController.restrict('admin'), 
 
 //files
 router.get("/retrieve-upload/:id/:filename", auth.authenticateToken, userController.restrict('staff'), uploadedController.retrieveUploadedFile )
+//files
+router.get("/retrieve-letter/:id/:filename", auth.authenticateToken, userController.restrict('staff'), uploadedController.retrieveLetterOfIntent )
 
-
-//pdf
-
-router.post("/generate-pdf", pdfController.createPdfTemplate);
 
 
 
