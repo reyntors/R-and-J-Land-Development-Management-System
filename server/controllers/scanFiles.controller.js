@@ -1,18 +1,25 @@
 const User = require('../models/user.model');
-
+const { upload } = require('../middlewares/multer');
 
 exports.addScanFiles = async (req, res, next) => {
+
     try {
-      const { id} = req.params;
-      const {  data, filename, contentType } = req.body;
+      upload(req, res, async function (err) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ message: 'File upload failed', error: err });
+        }
+
+      const { id } = req.params;
+      const uploadedFile = req.file;
+
+      console.log(uploadedFile);
     
   
       // Find the client by their userId
-      const client = await User.findOne({ userId: id, roles: 'guest' });
-
-      console.log('Client After ScanFiles:', client);
+      const user = await User.findOne({ userId: id });
   
-      if (!client) {
+      if (!user) {
         return res.status(404).json({
           message: 'Client not found or you do not have permission to add a scannedFiles for this client.',
         });
@@ -20,25 +27,27 @@ exports.addScanFiles = async (req, res, next) => {
   
       // Create a new ScannedFiles
       const newScannedFiles = {
-            data ,
-            filename,
-            contentType ,
+
+            filename: uploadedFile.originalname,
+            contentType: uploadedFile.mimetype,
       };
   
       
-      client.scannedFiles.push(newScannedFiles);
+      user.scannedFiles.push(newScannedFiles);
       
   
       // Save the updated user record
-      await client.save();
+      await user.save();
   
       return res.status(200).json({
         message: 'ScannedFiles added successfully.',
         data: newScannedFiles,
       });
+    }); 
     } catch (error) {
       return next(error);
     }
+ 
   };
 
 exports.getAllScanFilesById = async (req, res) => {
