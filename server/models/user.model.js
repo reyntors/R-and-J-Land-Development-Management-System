@@ -214,7 +214,7 @@ const individualBuyerDeclarationSchema = new Schema({
 
 const birTinRequestSchema = new Schema({
     date: {
-        type: Date,
+        type: String,
         default: null,
         ref: 'BIR Tin Request'
         

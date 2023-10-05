@@ -75,15 +75,15 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
 
    projectContent1 = `
 
-   [${ individualBuyerDeclarationtData.engagedInBusiness === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.engagedInBusiness === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.engagedInBusiness === 'N/A' ? 'X' : ' '}] N/A    
+   1. I am ENGAGED IN BUSINESS [${ individualBuyerDeclarationtData.engagedInBusiness === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.engagedInBusiness === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.engagedInBusiness === 'N/A' ? 'X' : ' '}] N/A    
    
    
    `;
 
    projectContent2 = `
 
-   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'N/A' ? 'X' : ' '}] N/A    
-   
+   2. The Business is registered under my name [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'N/A' ? 'X' : ' '}] N/A    
+      If yes, name of business ${individualBuyerDeclarationtData.businessName}
    
    `;
 
@@ -106,9 +106,9 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
 
     I ${individualBuyerDeclarationtData.name} with BIR Tax Identification No. ${individualBuyerDeclarationtData.BIRtaxID} hereby declares the following information
    
-        1. I am ENGAGED IN BUSINESS                        ${projectContent1}    
-        2. The Business is registered under my name        ${projectContent2}  
-           If yes, name of business ________
+                               ${projectContent1}    
+               ${projectContent2}  
+           
         3. The Registered Business is using my TIN         ${projectContent3}  
     
     
