@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const birTinRequestSchema = new Schema({
     date: {
-        type: Date,
+        type: String,
         required: true,
         
     },

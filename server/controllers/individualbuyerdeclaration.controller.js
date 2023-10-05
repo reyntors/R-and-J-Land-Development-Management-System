@@ -1,5 +1,9 @@
 const IndividualBuyerDeclaration = require('../models/individualbuyerdeclaration.model');
 const User = require('../models/user.model');
+const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
+const fs = require('fs');
+const path = require('path');
+
 
 
 
@@ -85,7 +89,7 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
 
    projectContent3 = `
 
-   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'YES' ? 'X' : ' '}] Yes   [${ businessUsingMyTIN === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'N/A' ? 'X' : ' '}] N/A    
+   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'N/A' ? 'X' : ' '}] N/A    
    
    
    `;
@@ -102,10 +106,10 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
 
     I ${individualBuyerDeclarationtData.name} with BIR Tax Identification No. ${individualBuyerDeclarationtData.BIRtaxID} hereby declares the following information
    
-        1. I am ENGAGED IN BUSINESS                        []Yes       []No       []N/A     
-        2. The Business is registered under my name        []Yes       []No       []N/A 
+        1. I am ENGAGED IN BUSINESS                        ${projectContent1}    
+        2. The Business is registered under my name        ${projectContent2}  
            If yes, name of business ________
-        3. The Registered Business is using my TIN         []Yes       []No       []N/A 
+        3. The Registered Business is using my TIN         ${projectContent3}  
     
     
     I acknowledge and understood the Bureau of Internan Revenue (BIR) Revenue Regulations No.:17-2003, Section 2.57.2.J which states that
