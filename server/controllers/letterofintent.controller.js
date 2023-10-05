@@ -37,7 +37,6 @@ exports.createLetterOfIntent = async (req, res, next) => {
         // Save the LetterOfIntent to the database
         const savedLetterOfIntent = await newLetterOfIntent.save();
 
-        console.log(savedLetterOfIntent)
 
          // Update the user's letterOfIntent field with the savedLetterOfIntent
         user.letterOfIntent = savedLetterOfIntent;

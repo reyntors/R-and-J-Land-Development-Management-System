@@ -48,6 +48,7 @@ router.get('/forms/:id', auth.authenticateToken, userController.restrict('staff'
 //scanfiles
 router.post("/add-scanfiles/:id", auth.authenticateToken, userController.restrict('staff'), scanfilesController.addScanFiles);
 router.get("/all-scanfiles/:id", auth.authenticateToken, userController.restrict('staff'), scanfilesController.getAllScanFilesById);
+router.get("/retrieve-scanfiles/:id/:filename", auth.authenticateToken, userController.restrict('staff'), scanfilesController.retrieveScanFile);
 
 //admin
 router.post("/addnewclient", auth.authenticateToken, userController.restrict('admin'), userController.register);
