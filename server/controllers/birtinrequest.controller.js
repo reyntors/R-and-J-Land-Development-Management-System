@@ -161,7 +161,7 @@ async function  generateBirTinRequestPDF(pdfDoc, user, birTinRequestData) {
 
    const pdfBytes = await pdfDoc.save();
 
-   const pdfPath = path.join(__dirname, '../public/templates/BirTinRequest.pdf');
+   const pdfPath = path.join(__dirname, `../public/templates/${user.userId}_${user.fullname}_BirTinRequest.pdf`);
 
     // Save the PDF buffer to a file
     fs.writeFileSync(pdfPath, pdfBytes);

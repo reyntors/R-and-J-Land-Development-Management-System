@@ -8,17 +8,24 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
     try {
         const individualBuyerDeclarationtData = req.body;
         const username = req.user.username;
-        
-        
-
        
         const user = await User.findOne({ username });
 
+        if (!user) {
+
+            return res.status(404).json({message: 'User not found!'})
+        }
+
         
+         // Create a new PDF document
+         const pdfDoc = await PDFDocument.create();
+         const pdfPath = await generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDeclarationtData);
+
         
          const newIndividualBuyerDeclaration = new IndividualBuyerDeclaration({
             ...individualBuyerDeclarationtData,
             createdBy: user._id, 
+            pdfPath: pdfPath,
         });
         
 
@@ -39,6 +46,119 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
     }
 };
 
+
+async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDeclarationtData) {
+
+    try {
+    // Define A4 page dimensions
+    const pageWidth = 595.276; 
+    const pageHeight = 841.890; 
+    const page = pdfDoc.addPage([pageWidth, pageHeight]); // Specify page dimensions
+
+    
+   // Create a font - Use StandardFonts.Helvetica
+   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+   
+   // Define coordinates for text placement
+   let x = 50;
+   let y = 850;
+
+
+   let content = '';
+   let projectContent1 = '';
+   let projectContent2 = '';
+   let projectContent3 = '';
+
+   projectContent1 = `
+
+   [${ individualBuyerDeclarationtData.engagedInBusiness === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.engagedInBusiness === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.engagedInBusiness === 'N/A' ? 'X' : ' '}] N/A    
+   
+   
+   `;
+
+   projectContent2 = `
+
+   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'N/A' ? 'X' : ' '}] N/A    
+   
+   
+   `;
+
+   projectContent3 = `
+
+   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'YES' ? 'X' : ' '}] Yes   [${ businessUsingMyTIN === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'N/A' ? 'X' : ' '}] N/A    
+   
+   
+   `;
+
+
+
+   // Add content to the PDF page (simulate HTML content)
+    content = `
+                           
+
+               ${' '.repeat(55)}Individual Buyer's Declaration
+
+    Date: ${individualBuyerDeclarationtData.date}
+
+    I ${individualBuyerDeclarationtData.name} with BIR Tax Identification No. ${individualBuyerDeclarationtData.BIRtaxID} hereby declares the following information
+   
+        1. I am ENGAGED IN BUSINESS                        []Yes       []No       []N/A     
+        2. The Business is registered under my name        []Yes       []No       []N/A 
+           If yes, name of business ________
+        3. The Registered Business is using my TIN         []Yes       []No       []N/A 
+    
+    
+    I acknowledge and understood the Bureau of Internan Revenue (BIR) Revenue Regulations No.:17-2003, Section 2.57.2.J which states that
+
+        "However, if the buyer is engaged in trade or business, whether a corporations or otherwise, these rules shall apply:
+
+
+        If the sale is a sale of property on the installment plan{i.ee..payments in the year of sale do not exceed twenty five percent (25%) of 
+        the selling price},the tax shall be deducted and withheld by the ubyer from every installment which tax shall be based on the ratio of 
+        actual colleciton of the consideration against the agreed consideration appearing in the Contract to Sell applied to the gross selling price
+        or fair market value of the property at the time of the execution of the Contract to Sell whichever is higher.""
+        
+        
+        I agree that any additional taxes, interest or penalty that may be incurred by R&J Land Development Corporation due to my improper or 
+        non-disclosure of the above needed information shall be to my soleaccount and responsibility.
+        
+        
+        Thus, I hereby authorize R&J Land Development Corporation to charge whatever is due me said taxes, interest, penalty and other charges arising
+        therefrom and hold release of my land title until full settlement of said account.
+
+        Certified True and Correct:
+   
+        ____________________________
+        Signature above printed name
+    `;
+
+   // Split the content into lines and draw them on the page
+   const lines = content.split('\n');
+   lines.forEach((line) => {
+       page.drawText(line, {
+           x,
+           y,
+           size: 9,
+           font,
+           color: rgb(0, 0, 0),
+       });
+       y -= 20; // Adjust the vertical position for the next line
+   });
+
+   const pdfBytes = await pdfDoc.save();
+
+   const pdfPath = path.join(__dirname, `../public/templates/${user.userId}_${user.fullname}_individual_buyer_declaration.pdf`);
+
+    // Save the PDF buffer to a file
+    fs.writeFileSync(pdfPath, pdfBytes);
+
+    return pdfPath;
+
+    }catch (error) {
+        throw error;
+    }
+
+}
 
 exports.getIndividualBuyerDeclaration = async (req, res, next) => {
     try {
