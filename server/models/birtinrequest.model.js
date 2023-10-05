@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 
 const birTinRequestSchema = new Schema({
+    isSubmitted: {
+        type: Boolean,
+        default: false
+    },
     date: {
         type: String,
         required: true,

@@ -20,7 +20,7 @@ exports.createLetterOfIntent = async (req, res, next) => {
             return res.status(404).json({message: 'User not found!'})
         }
 
-        
+
          // Create a new PDF document
          const pdfDoc = await PDFDocument.create();
          const pdfPath = await generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData);
@@ -30,18 +30,23 @@ exports.createLetterOfIntent = async (req, res, next) => {
             ...letterOfIntentData,
             createdBy: user._id, 
             pdfPath: pdfPath,
+            isSubmitted: true
         });
         
 
         // Save the LetterOfIntent to the database
         const savedLetterOfIntent = await newLetterOfIntent.save();
 
+        console.log(savedLetterOfIntent)
+
          // Update the user's letterOfIntent field with the savedLetterOfIntent
         user.letterOfIntent = savedLetterOfIntent;
 
+        
+
         await user.save();
 
-       
+        
 
         return res.status(200).send({
             message: `${username}! Your Letter of Intent successfully created!`,

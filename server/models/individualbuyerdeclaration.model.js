@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 
 const individualBuyerDeclarationSchema = new Schema({
+    isSubmitted: {
+        type: Boolean,
+        default: false
+    },
     date: {
         type: Date,
         required: true,

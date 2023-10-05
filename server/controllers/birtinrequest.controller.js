@@ -25,6 +25,7 @@ exports.createBirTinRequest = async (req, res, next) => {
          const newBirTinRequest = new BirTinRequest({
             ...birTinRequestData,
             createdBy: user._id, 
+            isSubmitted: true
         });
         
 

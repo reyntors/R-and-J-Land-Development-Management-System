@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 
 const contractDetailsSchema = new Schema({ 
+    isSubmitted: {
+        type: Boolean,
+        default: false
+    },
     property: {
         type: String,
         required: true,  

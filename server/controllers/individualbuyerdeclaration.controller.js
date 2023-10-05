@@ -30,6 +30,7 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
             ...individualBuyerDeclarationtData,
             createdBy: user._id, 
             pdfPath: pdfPath,
+            isSubmitted: true
         });
         
 
