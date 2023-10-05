@@ -73,26 +73,12 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
    let projectContent2 = '';
    let projectContent3 = '';
 
-   projectContent1 = `
+   projectContent1 = `1. I am ENGAGED IN BUSINESS [${ individualBuyerDeclarationtData.engagedInBusiness === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.engagedInBusiness === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.engagedInBusiness === 'N/A' ? 'X' : ' '}] N/A`;
 
-   1. I am ENGAGED IN BUSINESS [${ individualBuyerDeclarationtData.engagedInBusiness === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.engagedInBusiness === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.engagedInBusiness === 'N/A' ? 'X' : ' '}] N/A    
-   
-   
-   `;
+   projectContent2 = `2. The Business is registered under my name [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'N/A' ? 'X' : ' '}] N/A    
+                         If yes, name of business ${individualBuyerDeclarationtData.businessName}`;
 
-   projectContent2 = `
-
-   2. The Business is registered under my name [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessRegisteredUnder === 'N/A' ? 'X' : ' '}] N/A    
-      If yes, name of business ${individualBuyerDeclarationtData.businessName}
-   
-   `;
-
-   projectContent3 = `
-
-   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'N/A' ? 'X' : ' '}] N/A    
-   
-   
-   `;
+   projectContent3 = `3. The Registered Business is using my TIN   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'YES' ? 'X' : ' '}] Yes   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'NO' ? 'X' : ' '}] No   [${ individualBuyerDeclarationtData.businessUsingMyTIN === 'N/A' ? 'X' : ' '}] N/A `;
 
 
 
@@ -104,13 +90,12 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
 
     Date: ${individualBuyerDeclarationtData.date}
 
-    I ${individualBuyerDeclarationtData.name} with BIR Tax Identification No. ${individualBuyerDeclarationtData.BIRtaxID} hereby declares the following information
+    I, ${individualBuyerDeclarationtData.name} with BIR Tax Identification No. ${individualBuyerDeclarationtData.BIRtaxID} hereby declares the following information
    
-                               ${projectContent1}    
-               ${projectContent2}  
-           
-        3. The Registered Business is using my TIN         ${projectContent3}  
-    
+            ${projectContent1}    
+            ${projectContent2}  
+            ${projectContent3}  
+            
     
     I acknowledge and understood the Bureau of Internan Revenue (BIR) Revenue Regulations No.:17-2003, Section 2.57.2.J which states that
 
@@ -127,8 +112,8 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
         non-disclosure of the above needed information shall be to my soleaccount and responsibility.
         
         
-        Thus, I hereby authorize R&J Land Development Corporation to charge whatever is due me said taxes, interest, penalty and other charges arising
-        therefrom and hold release of my land title until full settlement of said account.
+        Thus, I hereby authorize R&J Land Development Corporation to charge whatever is due me said taxes, interest, penalty and other charges 
+        arising therefrom and hold release of my land title until full settlement of said account.
 
         Certified True and Correct:
    
@@ -142,7 +127,7 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
        page.drawText(line, {
            x,
            y,
-           size: 9,
+           size: 8,
            font,
            color: rgb(0, 0, 0),
        });
