@@ -1,12 +1,12 @@
 const User = require('../models/user.model');
-const { upload } = require('../middlewares/multer');
+const { uploadAttachment } = require('../middlewares/multer');
 
 
 
 exports.addTransaction = async (req, res, next) => {
   try {
     // Add the singleFileUpload middleware here to handle the single file upload
-    upload(req, res, async function (err) {
+    uploadAttachment(req, res, async function (err) {
       if (err) {
         return res.status(500).json({ message: 'File upload failed', error: err });
       }

@@ -1,12 +1,12 @@
 const User = require('../models/user.model');
-const { upload } = require('../middlewares/multer');
+const { uploadScannedFile} = require('../middlewares/multer');
 const fs = require('fs');
 const path = require('path');
 
 exports.addScanFiles = async (req, res, next) => {
 
     try {
-      upload(req, res, async function (err) {
+      uploadScannedFile(req, res, async function (err) {
         if (err) {
           console.log(err);
           return res.status(500).json({ message: 'File upload failed', error: err });
