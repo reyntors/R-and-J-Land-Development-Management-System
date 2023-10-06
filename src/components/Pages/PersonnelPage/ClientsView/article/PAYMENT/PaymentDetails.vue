@@ -5,7 +5,7 @@
     </header>
     <div>
       <section>
-        <h6>Account Detials</h6> 
+        <h6>Account Details</h6> 
           <p>Block and Lot No.:</p>  
           <p>Total Sq. Mtrs:</p>  
           <p>Amount per Sq.:</p>   
@@ -98,6 +98,7 @@ export default {
 
 
     mounted(){
+      console.log(this.clientObj.userId)
       this.getListTransaction(this.clientObj.userId)
     }
 }

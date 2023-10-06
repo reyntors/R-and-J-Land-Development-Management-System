@@ -1,12 +1,12 @@
 <template>
-  <button>
+  <a>
     <slot></slot>
-  </button>
+  </a>
 </template>
 
 
 <style scoped>
-button{
+a{
     display: block;
     border: none;
     width: 20%;
@@ -18,11 +18,15 @@ button{
     box-shadow: 0 1px 1px 1px gray;
     font-weight: 500;
     border-radius: 10px;
+    text-align: center;
+    color: black;
+    text-decoration: none;
 }
-button:hover{
-    outline: 1px solid black;  
+a:hover{
+    background-color: #84d91697; 
 }
-button:active{
+a:active{
     background-color: #84d91697;
+    outline: 1px solid black;
 }
 </style>

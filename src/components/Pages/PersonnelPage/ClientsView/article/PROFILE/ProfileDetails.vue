@@ -2,7 +2,7 @@
     <div class="cost-profileDetails">
       
       <div class="header">
-          <h3>ProfileDetails Details</h3>
+          <h3>Profile Details</h3>
           <button @click="toggleEdit">{{ editBtnText }}</button>
       </div>
       <form>
@@ -216,6 +216,10 @@
                   this.editOccured = false
               }
           }
+      },
+
+      mounted(){
+        this.$store.commit('client/resetTempArrays')
       }
   
   }
@@ -223,6 +227,15 @@
   
   
   <style scoped>
+  input{
+    border: none;
+    border-bottom: 1px solid black;
+    padding-left: 1rem;
+    overflow: visible;
+  }
+  input:focus{
+    outline: none;
+  }
   .cost-profileDetails{
       display: flex;
       flex-direction: column;

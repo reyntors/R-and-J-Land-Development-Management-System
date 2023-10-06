@@ -25,7 +25,8 @@ import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/D
 import PersonnelReports from './components/Pages/PersonnelPage/ReportsView/ReportsView.vue'
 import PersonnelInquiries from './components/Pages/PersonnelPage/InquiriesView/InquiriesView.vue'
 import PersonnelSubdivision from './components/Pages/PersonnelPage/SubdivisionView/SubdivisionView.vue'
-import PersonnelCustomer from './components/Pages/PersonnelPage/ClientsView/ClientView.vue'
+import PersonnelClient from './components/Pages/PersonnelPage/ClientsView/ClientView.vue'
+import PersonnelForm from './components/Pages/PersonnelPage/EmptyForms/EmptyForms.vue'
 
 import store from './store/store.js'
 
@@ -56,9 +57,10 @@ const route = createRouter({
             {path: '/personnel', component: PersonnelHomePage, meta:{requiredAuthPersonnel:true},
                 children: [
                     {path: 'dashboard', component: PersonnelDashboard},
-                    {path: 'client', component: PersonnelCustomer},
+                    {path: 'client', component: PersonnelClient},
                     {path: 'subdivision', component: PersonnelSubdivision},
                     {path: 'inquiries', component: PersonnelInquiries},
+                    {path: 'emptyForms', component: PersonnelForm},
                     {path: 'reports', component: PersonnelReports}
                 ]
             }

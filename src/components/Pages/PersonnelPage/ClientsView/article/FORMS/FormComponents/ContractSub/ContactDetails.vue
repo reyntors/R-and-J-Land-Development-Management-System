@@ -9,15 +9,15 @@
                         <br>
                         <div class="names">
                             <section>
-                                <input type="text" :class="{empty:isbuyerLastnameEmpty}" v-model="buyerLastname">
+                                <input type="text"  v-model="buyerLastname" readonly>
                                 <p>Last Name</p>
                             </section>
                             <section>
-                                <input type="text" :class="{empty:isbuyerFirstnameEmpty}" v-model="buyerFirstname">
+                                <input type="text"  v-model="buyerFirstname" readonly>
                                 <p>First Name</p>
                             </section>
                             <section>
-                                <input type="text" :class="{empty:isbuyerMiddlenameEmpty}" v-model="buyerMiddlename">
+                                <input type="text" v-model="buyerMiddlename" readonly>
                                 <p>Middle Name</p>
                             </section>
                         </div>
@@ -26,7 +26,7 @@
                     <div class="section1-right">
                         <p>Occupation / Profession</p>
                         <br>
-                        <input :class="{empty:isbuyerOccupationEmpty}" v-model="buyerOccupation">
+                        <input  v-model="buyerOccupation" readonly>
                         <br>
                     </div>
                     
@@ -36,25 +36,25 @@
                     <div class="div1">
                         <div>
                             <p>PRIMARY/MAILING ADDRESS</p>
-                            <input style="width:100%;" :class="{empty:isbuyerPrimaryAddressEmpty}" v-model="buyerPrimaryAddress">
+                            <input style="width:100%;"  v-model="buyerPrimaryAddress" readonly>
                             <br><br>
-                            <p>Zip Code: <input style="width:100%;" :class="{empty:isbuyerPrimaryZipEmpty}" v-model="buyerPrimaryZip"></p>                            
+                            <p>Zip Code: <input style="width:100%;" v-model="buyerPrimaryZip" readonly></p>                            
                         </div>
 
                     </div>
-                    <div class="div2" :class="{empty:isbuyerCivilStatusEmpty}">
+                    <div class="div2">
                         <p>Civil Status</p>
                         <div class="status" >
-                            <section><input type="radio" id="buyerSingle" value="single" v-model="buyerCivilStatus"><label for="buyerSingle">Single</label></section>
-                            <section><input type="radio" id="buyerWidow" value="widow/er" v-model="buyerCivilStatus"><label for="buyerWidow">Widow/er</label></section>
-                            <section><input type="radio" id="buyerMarried" value="married" v-model="buyerCivilStatus"><label for="buyerMarried">Married</label></section>
-                            <section><input type="radio" id="buyerSeparated" value="separated" v-model="buyerCivilStatus"><label for="buyerSeparated">Separated</label></section>
+                            <section><input type="radio" id="buyerSingle" value="single" v-model="buyerCivilStatus" disabled><label for="buyerSingle">Single</label></section>
+                            <section><input type="radio" id="buyerWidow" value="widow/er" v-model="buyerCivilStatus" disabled><label for="buyerWidow">Widow/er</label></section>
+                            <section><input type="radio" id="buyerMarried" value="married" v-model="buyerCivilStatus" disabled><label for="buyerMarried">Married</label></section>
+                            <section><input type="radio" id="buyerSeparated" value="separated" v-model="buyerCivilStatus" disabled><label for="buyerSeparated">Separated</label></section>
                         </div>
                     </div>
                     <div class="div3">
                         <div>
                             <p>Age</p>
-                            <input style="display: block;" :class="{empty:isbuyerAgeEmpty}" v-model="buyerAge">                            
+                            <input style="display: block;"  v-model="buyerAge" readonly>                            
                         </div>
 
                     </div>
@@ -64,24 +64,24 @@
                     <div class="div1">
                         <div>
                             <p>SECONDARY ADDRESS</p>
-                            <input style="width:100%;" :class="{empty:isbuyerSecondaryAddressEmpty}" v-model="buyerSecondaryAddress">
+                            <input style="width:100%;" v-model="buyerSecondaryAddress" readonly>
                             <br><br>
-                            <p>Zip Code: <input style="width:100%;" :class="{empty:isbuyerSecondaryZipEmpty}" v-model="buyerSecondaryZip"></p>                         
+                            <p>Zip Code: <input style="width:100%;"  v-model="buyerSecondaryZip" readonly></p>                         
                         </div>
 
                     </div>
-                    <div class="div2" :class="{empty:isbuyerSexEmpty}">
+                    <div class="div2" >
                         <p>Sex</p>
                         <div class="status">
-                            <section><input type="radio" id="buyerMale" value="male" v-model="buyerSex"><label for="buyerMale">Male</label></section>
-                            <section><input type="radio" id="buyerFemale" value="female"  v-model="buyerSex"><label for="buyerFemale">Female</label></section>  
+                            <section><input type="radio" id="buyerMale" value="male" v-model="buyerSex" disabled><label for="buyerMale">Male</label></section>
+                            <section><input type="radio" id="buyerFemale" value="female"  v-model="buyerSex" disabled><label for="buyerFemale">Female</label></section>  
                         </div>
                     </div>
                     <div class="div3">
                         <p>Birthdate</p>
-                        <input style="display: block;" type="date" :class="{empty:isbuyerBirthdayEmpty}" v-model="buyerBirthday">
+                        <input style="display: block;" type="date"  v-model="buyerBirthday" readonly>
                         <p>Place of Birth</p>
-                        <input style="border: none; border-bottom: 1px solid black;" :class="{empty:isbuyerPlaceBirthEmpty}" v-model="buyerPlaceBirth">
+                        <input style="border: none; border-bottom: 1px solid black;"  v-model="buyerPlaceBirth" readonly>
                     </div>
                 </section>
 
@@ -91,16 +91,16 @@
                             <section>
                                 <div>
                                     <p>HOME PHONE NO.</p>
-                                    <input :class="{empty:isbuyerHomePhoneNoEmpty}" v-model="buyerHomePhoneNo">
+                                    <input  v-model="buyerHomePhoneNo" readonly>
                                 </div>
                                 <div>
                                     <p>FAX NO.</p>
-                                    <input :class="{empty:isbuyerFaxNoEmpty}" v-model="buyerFaxNo">
+                                    <input v-model="buyerFaxNo" readonly>
                                 </div>
                             </section>
                             <span style="display:block">
                                 <p style="font-size: clamp(.5rem, 1vw, 1rem);">(please incluse country and area codes, if possible)</p>
-                                <input type="text" style="display: block;" :class="{empty:isbuyerIncludeCountryEmpty}" v-model="buyerIncludeCountry"> 
+                                <input type="text" style="display: block;"  v-model="buyerIncludeCountry" readonly> 
                             </span>
                             
                         </article>
@@ -111,11 +111,11 @@
                         <article>
                             <section>
                                 <p>MOBILE NO.</p>
-                                <input :class="{empty:isbuyerMobileNoEmpty}" v-model="buyerMobileNo">
+                                <input  v-model="buyerMobileNo" readonly>
                             </section>
                             <section>
                                 <p>EMAIL ADDRESS.</p>
-                                <input style="display: block;" :class="{empty:isbuyerEmailEmpty}" v-model="buyerEmail">
+                                <input style="display: block;"  v-model="buyerEmail" readonly>
                             </section>
                         </article>
 
@@ -125,23 +125,23 @@
                         <article>
                             <section>
                                 <p>T.I.N.</p>
-                                <input :class="{empty:isbuyerTINEmpty}" v-model="buyerTIN">
+                                <input  v-model="buyerTIN" readonly>
                             </section>
                             <section>
                                 <p>CITIZENSHIP.</p>
-                                <input :class="{empty:isbuyerCitizenEmpty}" v-model="buyerCitizen">
+                                <input v-model="buyerCitizen" readonly>
                             </section>
                         </article>
 
                     </div>
 
                     <div class="div4">
-                        <article :class="{empty:isbuyerReligionEmpty}">
+                        <article >
                             <p>RELIGION</p>    
-                            <span><input type="radio" id="buyerRelgionCatholic" value="roman catholic" v-model="buyerReligion"><label for="buyerRelgionCatholic">Roman Catholic</label></span>
-                            <span><input type="radio" id="buyerRelgionProtestant" value="protestant" v-model="buyerReligion"><label for="buyerRelgionProtestant">Protestant</label><br></span>
-                            <span><input type="radio" id="buyerRelgionOthers" :value="buyerReligionOtherComputed" v-model="buyerReligion"><label for="buyerRelgionOthers">Others (pl. specify)</label><br></span>
-                            <input v-model="buyerReligionOther" @input="setBuyerReligion">                            
+                            <span><input type="radio" id="buyerRelgionCatholic" value="roman catholic" v-model="buyerReligion" disabled><label for="buyerRelgionCatholic">Roman Catholic</label></span>
+                            <span><input type="radio" id="buyerRelgionProtestant" value="protestant" v-model="buyerReligion" disabled><label for="buyerRelgionProtestant">Protestant</label><br></span>
+                            <span><input type="radio" id="buyerRelgionOthers" :value="buyerReligionOtherComputed" v-model="buyerReligion" disabled><label for="buyerRelgionOthers">Others (pl. specify)</label><br></span>
+                            <input v-model="buyerReligionOther" @input="setBuyerReligion" readonly>                            
                         </article>
 
                     </div>
@@ -150,26 +150,26 @@
                 <section class="section5">
                     <article>
                         <p>ANY GOVERNEMNT ISSUED I.D. (<span style="font-style: oblique;">please check one</span>)</p>
-                        <div :class="{empty:isbuyerIssuedIDEmpty}">
+                        <div >
                             <section>
-                                <span><input type="radio" id="govtIdSSS/GSIS" value="SSS" v-model="buyerIssuedID"><label for="govtIdSSS/GSIS">SSS/GSIS</label> </span>:
-                                      <input v-model="idSSS" :readonly="isSSSWrite" @input="setidSSS">
+                                <span><input type="radio" id="govtIdSSS/GSIS" value="SSS" v-model="buyerIssuedID" disabled><label for="govtIdSSS/GSIS">SSS/GSIS</label> </span>:
+                                      <input v-model="idSSS" readonly @input="setidSSS">
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdDriverLicense" value="DRIVER" v-model="buyerIssuedID"><label for="govtIdDriverLicense">Driver's License</label> </span>:
-                                      <input v-model="idDriver" :readonly="isDRIVERWrite" @input="setidDriver">
+                                <span><input type="radio" id="govtIdDriverLicense" value="DRIVER" v-model="buyerIssuedID" disabled><label for="govtIdDriverLicense">Driver's License</label> </span>:
+                                      <input v-model="idDriver" readonly @input="setidDriver">
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdPRC" value="PRC" v-model="buyerIssuedID"><label for="govtIdPRC">PRC</label> </span>:
-                                      <input v-model="idPrc" :readonly="isPRCWrite" @input="setidPrc">
+                                <span><input type="radio" id="govtIdPRC" value="PRC" v-model="buyerIssuedID" disabled><label for="govtIdPRC">PRC</label> </span>:
+                                      <input v-model="idPrc" readonly @input="setidPrc">
                             </section>
                             <section>
-                                <span><input type="radio" id="govtIdPassport" value="PASSPORT" v-model="buyerIssuedID"><label for="govtIdPassport">Passport</label> </span>:
-                                    <input v-model="idPassport" :readonly="isPASSPORTWrite" @input="setidPassport">
+                                <span><input type="radio" id="govtIdPassport" value="PASSPORT" v-model="buyerIssuedID" disabled><label for="govtIdPassport">Passport</label> </span>:
+                                    <input v-model="idPassport" readonly @input="setidPassport">
                             </section>
                             <section>
-                                <span><input type="radio" id="others" value="OTHERS" v-model="buyerIssuedID"><label for="others">Others</label> </span>:
-                                    <input v-model="idOthers" :readonly="isOTHERWrite" @input="setidOthers">
+                                <span><input type="radio" id="others" value="OTHERS" v-model="buyerIssuedID" disabled><label for="others">Others</label> </span>:
+                                    <input v-model="idOthers" readonly @input="setidOthers">
                             </section>
                         </div>                        
                     </article>
@@ -181,357 +181,91 @@
 
 <script>
 export default {
+    props: ['clientObj'],
     data(){
         return {
             //contact details
-            buyerLastname: '',
-            buyerLastnameEmpty: false,
-            buyerFirstname: '',
-            buyerFirstnameEmpty: false,
-            buyerMiddlename: '',
-            buyerMiddlenameEmpty: false,
-            buyerOccupation: '',
-            buyerOccupationEmpty: false,
-            buyerPrimaryAddress: '',
-            buyerPrimaryAddressEmpty: false,
-            buyerPrimaryZip: '',
-            buyerPrimaryZipEmpty: false,
-            buyerCivilStatus: '',
-            buyerCivilStatusEmpty: false,
-            buyerAge: '',
-            buyerAgeEmpty: false,
-            buyerSecondaryAddress: '',
-            buyerSecondaryAddressEmpty: false,
-            buyerSecondaryZip: '',
-            buyerSecondaryZipEmpty: false,
-            buyerSex: '',
-            buyerSexEmpty: false,
-            buyerBirthday: '',
-            buyerBirthdayEmpty: false,
-            buyerPlaceBirth: '',
-            buyerPlaceBirthEmpty: false,
-            buyerHomePhoneNo: '',
-            buyerHomePhoneNoEmpty: false,
-            buyerFaxNo: '',
-            buyerFaxNoEmpty: false,
-            buyerIncludeCountry: '',
-            buyerIncludeCountryEmpty: false,
-            buyerMobileNo: '',
-            buyerMobileNoEmpty: false,
-            buyerEmail: '',
-            buyerEmailEmpty: false,
-            buyerTIN: '',
-            buyerTINEmpty: false,
-            buyerCitizen: '',
-            buyerCitizenEmpty: false,
-            buyerReligion: '', buyerReligionOther:null,
-            buyerReligionEmpty: false,
-            buyerIssuedID: '',
-            buyerIssuedIDEmpty: false,
+            buyerLastname: this.clientObj.buyerLastname,
 
-            IDNO: '',
-            idSSS: '',
-            idDriver: '',
-            idPrc: '',
-            idPassport: '',
-            idOthers: ''
+            buyerFirstname: this.clientObj.buyerFirstname,
+    
+            buyerMiddlename: this.clientObj.buyerMiddlename,
+    
+            buyerOccupation: this.clientObj.buyerOccupation,
+    
+            buyerPrimaryAddress: this.clientObj.buyerPrimaryAddress,
+        
+            buyerPrimaryZip: this.clientObj.buyerPrimaryZip,
+    
+            buyerCivilStatus: this.clientObj.buyerCivilStatus,
+    
+            buyerAge: this.clientObj.buyerAge,
+            buyerSecondaryAddress: this.clientObj.buyerSecondaryAddress,
+        
+            buyerSecondaryZip: this.clientObj.buyerSecondaryZip,
+    
+            buyerSex: this.clientObj.buyerSex,
+
+            buyerBirthday: this.clientObj.buyerBirthday,
+
+            buyerPlaceBirth: this.clientObj.buyerPlaceBirth,
+
+            buyerHomePhoneNo: this.clientObj.buyerHomePhoneNo,
+    
+            buyerFaxNo: this.clientObj.buyerFaxNo,
+
+            buyerIncludeCountry: this.clientObj.buyerIncludeCountry,
+        
+            buyerMobileNo: this.clientObj.buyerMobileNo,
+
+            buyerEmail: this.clientObj.buyerEmail,
+
+            buyerTIN: this.clientObj.buyerTIN,
+
+            buyerCitizen: this.clientObj.buyerCitizen,
+
+            buyerReligionOther: null,
 
         }
     },
-    methods:{
-        checkbuyerLastname(){
-            return this.buyerLastnameEmpty = this.buyerLastname!==''?false:true
-        },
-        checkbuyerFirstname(){
-            return this.buyerFirstnameEmpty = this.buyerFirstname!==''?false:true
-        },
-        checkbuyerMiddlename(){
-            return this.buyerMiddlenameEmpty = this.buyerMiddlename!==''?false:true
-        },
-        checkbuyerOccupation(){
-            return this.buyerOccupationEmpty = this.buyerOccupation!==''?false:true
-        },
-        checkbuyerPrimaryAddress(){
-            return this.buyerPrimaryAddressEmpty = this.buyerPrimaryAddress!==''?false:true
-        },
-        checkbuyerPrimaryZip(){
-            return this.buyerPrimaryZipEmpty = this.buyerPrimaryZip!==''?false:true
-        },
-        checkbuyerCivilStatus(){
-            return this.buyerCivilStatusEmpty = this.buyerCivilStatus!==''?false:true
-        },
-        checkbuyerAge(){
-            return this.buyerAgeEmpty = this.buyerAge!==''?false:true
-        },
-        checkbuyerSecondaryAddress(){
-            return this.buyerSecondaryAddressEmpty = this.buyerSecondaryAddress!==''?false:true
-        },
-        checkbuyerSecondaryZip(){
-            return this.buyerSecondaryZipEmpty = this.buyerSecondaryZip!==''?false:true
-        },
-        checkbuyerSex(){
-            return this.buyerSexEmpty = this.buyerSex!==''?false:true
-        },
-        checkbuyerBirthday(){
-            return this.buyerBirthdayEmpty = this.buyerBirthday!==''?false:true
-        },
-        checkbuyerPlaceBirth(){
-            return this.buyerPlaceBirthEmpty = this.buyerPlaceBirth!==''?false:true
-        },
-        checkbuyerHomePhoneNo(){
-            return this.buyerHomePhoneNoEmpty = this.buyerHomePhoneNo!==''?false:true
-        },
-        checkbuyerFaxNo(){
-            return this.buyerFaxNoEmpty = this.buyerFaxNo!==''?false:true
-        },
-        checkbuyerIncludeCountry(){
-            return this.buyerIncludeCountryEmpty = this.buyerIncludeCountry!==''?false:true
-        },
-        checkbuyerMobileNo(){
-            return this.buyerMobileNoEmpty = this.buyerMobileNo!==''?false:true
-        },
-        checkbuyerEmail(){
-            return this.buyerEmailEmpty = this.buyerEmail!==''?false:true
-        },
-        checkbuyerTIN(){
-            return this.buyerTINEmpty = this.buyerTIN!==''?false:true
-        },
-        checkbuyerCitizen(){
-            return this.buyerCitizenEmpty = this.buyerCitizen!==''?false:true
-        },
-        checkbuyerReligion(){
-            return this.buyerReligionEmpty = this.buyerReligion!==''?false:true
-        },
-        checkbuyerIssuedID(){
-            return this.buyerIssuedIDEmpty = this.buyerIssuedID!==''?false:true
-        },
 
-        //////////////////////////////////////////////////////////////
-        setBuyerReligion(){
-            this.buyerReligion = this.buyerReligionOther
-        },
-        //////////////////////////////////////////////////////////////
-        setidSSS(){
-            this.IDNO = this.idSSS
-            this.passData()
-        },
-        setidDriver(){
-            this.IDNO = this.idDriver
-            this.passData()
-        },
-        setidPrc(){
-            this.IDNO = this.idPrc
-            this.passData()
-        },
-        setidPassport(){
-            this.IDNO = this.idPassport
-            this.passData()
-        },
-        setidOthers(){
-            this.IDNO = this.idOthers
-            this.passData()
-        },
-        //////////////////////////////////////////////////////////////
-        passData(){
-            const payload = {
-                buyerLastname: this.buyerLastname,
-                buyerFirstname: this.buyerFirstname,
-                buyerMiddlename: this.buyerMiddlename,
-                buyerOccupation: this.buyerOccupation,
-                buyerPrimaryAddress: this.buyerPrimaryAddress,
-                buyerPrimaryZip: this.buyerPrimaryZip,
-                buyerCivilStatus: this.buyerCivilStatus,
-                buyerAge: this.buyerAge,
-                buyerSecondaryAddress: this.buyerSecondaryAddress,
-                buyerSecondaryZip: this.buyerSecondaryZip,
-                buyerSex: this.buyerSex,
-                buyerBirthday: this.buyerBirthday,
-                buyerPlaceBirth: this.buyerPlaceBirth,
-                buyerHomePhoneNo: this.buyerHomePhoneNo,
-                buyerFaxNo: this.buyerFaxNo,
-                buyerIncludeCountry: this.buyerIncludeCountry,
-                buyerMobileNo: this.buyerMobileNo,
-                buyerEmail: this.buyerEmail,
-                buyerTIN: this.buyerTIN,
-                buyerCitizen: this.buyerCitizen,
-                buyerReligion: this.buyerReligion,
-                buyerIssuedID: this.buyerIssuedID +' ID = ' + this.IDNO,
-            }
-            this.$emit('pass-data',payload)
+    mounted(){
+
+        const religion = this.clientObj.buyerReligion
+        if(religion === 'roman catholic' || religion === 'protestant'){
+            this.buyerReligion = religion
+        }else{
+            this.buyerReligionOther = religion
         }
-    },
 
-    computed:{
-        isbuyerLastnameEmpty(){return this.buyerLastnameEmpty},
-        isbuyerFirstnameEmpty(){return this.buyerFirstnameEmpty},
-        isbuyerMiddlenameEmpty(){return this.buyerMiddlenameEmpty},
-        isbuyerOccupationEmpty(){return this.buyerOccupationEmpty},
-        isbuyerPrimaryAddressEmpty(){return this.buyerPrimaryAddressEmpty},
-        isbuyerPrimaryZipEmpty(){return this.buyerPrimaryZipEmpty},
-        isbuyerCivilStatusEmpty(){return this.buyerCivilStatusEmpty},
-        isbuyerAgeEmpty(){return this.buyerAgeEmpty},
-        isbuyerSecondaryAddressEmpty(){return this.buyerSecondaryAddressEmpty},
-        isbuyerSecondaryZipEmpty(){return this.buyerSecondaryZipEmpty},
-        isbuyerSexEmpty(){return this.buyerSexEmpty},
-        isbuyerBirthdayEmpty(){return this.buyerBirthdayEmpty},
-        isbuyerPlaceBirthEmpty(){return this.buyerPlaceBirthEmpty},
-        isbuyerHomePhoneNoEmpty(){return this.buyerHomePhoneNoEmpty},
-        isbuyerFaxNoEmpty(){return this.buyerFaxNoEmpty},
-        isbuyerIncludeCountryEmpty(){return this.buyerIncludeCountryEmpty},
-        isbuyerMobileNoEmpty(){return this.buyerMobileNoEmpty},
-        isbuyerEmailEmpty(){return this.buyerEmailEmpty},
-        isbuyerTINEmpty(){return this.buyerTINEmpty},
-        isbuyerCitizenEmpty(){return this.buyerCitizenEmpty},
-        isbuyerReligionEmpty(){return this.buyerReligionEmpty},
-        isbuyerIssuedIDEmpty(){return this.buyerIssuedIDEmpty},
 
-        /////////////////////////////////////////////////////////
-        buyerReligionOtherComputed(){
-            return this.buyerReligionOther            
-        },
-        /////////////////////////////////////////////////////////
-        isSSSWrite(){
-            return this.buyerIssuedID==='SSS'?false:true
-        },
-        isDRIVERWrite(){
-            return this.buyerIssuedID==='DRIVER'?false:true
-        },
-        isPRCWrite(){
-            return this.buyerIssuedID==='PRC'?false:true
-        },
-        isPASSPORTWrite(){
-            return this.buyerIssuedID==='PASSPORT'?false:true
-        },
-        isOTHERWrite(){
-            return this.buyerIssuedID==='OTHERS'?false:true
-        },
-
-    },
-    watch: {
-        buyerLastname(){
-            this.checkbuyerLastname()
-            this.passData()
-        },
-        buyerFirstname(){
-            this.checkbuyerFirstname()
-            this.passData()
-        },
-        buyerMiddlename(){
-            this.checkbuyerMiddlename()
-            this.passData()
-        },
-        buyerOccupation(){
-            this.checkbuyerOccupation()
-            this.passData()
-        },
-        buyerPrimaryAddress(){
-            this.checkbuyerPrimaryAddress()
-            this.passData()
-        },
-        buyerPrimaryZip(){
-            this.checkbuyerPrimaryZip()
-            this.passData()
-        },
-        buyerCivilStatus(){
-            this.checkbuyerCivilStatus()
-            this.passData()
-        },
-        buyerAge(){
-            this.checkbuyerAge()
-            this.passData()
-        },
-        buyerSecondaryAddress(){
-            this.checkbuyerSecondaryAddress()
-            this.passData()
-        },
-        buyerSecondaryZip(){
-            this.checkbuyerSecondaryZip()
-            this.passData()
-        },
-        buyerSex(){
-            this.checkbuyerSex()
-            this.passData()
-        },
-        buyerBirthday(){
-            this.checkbuyerBirthday()
-            this.passData()
-        },
-        buyerPlaceBirth(){
-            this.checkbuyerPlaceBirth()
-            this.passData()
-        },
-        buyerHomePhoneNo(){
-            this.checkbuyerHomePhoneNo()
-            this.passData()
-        },
-        buyerFaxNo(){
-            this.checkbuyerFaxNo()
-            this.passData()
-        },
-        buyerIncludeCountry(){
-            this.checkbuyerIncludeCountry()
-            this.passData()
-        },
-        buyerMobileNo(){
-            this.checkbuyerMobileNo()
-            this.passData()
-        },
-        buyerEmail(){
-            this.checkbuyerEmail()
-            this.passData()
-        },
-        buyerTIN(){
-            this.checkbuyerTIN()
-            this.passData()
-        },
-        buyerCitizen(){
-            this.checkbuyerCitizen()
-            this.passData()
-        },
-        buyerReligion(){
-            this.checkbuyerReligion()
-            this.passData()
-        },
-        buyerIssuedID(latest){
-            if(latest === 'SSS'){
-                this.idDriver=''
-                this.idPrc=''
-                this.idPassport=''
-                this.idOthers=''
-                this.IDNO = ''
-            }else if(latest === 'DRIVER'){
-                this.idSSS=''
-                this.idPrc=''
-                this.idPassport=''
-                this.idOthers=''
-                this.IDNO = ''
-            }else if(latest === 'PRC'){
-                this.idSSS=''
-                this.idDriver=''
-                this.idPassport=''
-                this.idOthers=''
-                this.IDNO = ''
-            }else if(latest === 'PASSPORT'){
-                this.idSSS=''
-                this.idDriver=''
-                this.idPrc=''
-                this.idOthers=''
-                this.IDNO = ''
-            }else{
-                this.idSSS=''
-                this.idDriver=''
-                this.idPrc=''
-                this.idPassport=''
-                this.IDNO = ''
-            }
-            this.checkbuyerIssuedID()
-            this.passData()
-        },    
+        const parts = this.clientObj.buyerIssuedID.split(" ID = ");
+        const typeOfId = parts[0]
+        const numberID = parts[1]
+        this.buyerIssuedID = parts[0]
+        if(typeOfId === 'SSS'){
+            this.idSSS = numberID
+        }else if(typeOfId === 'DRIVER'){
+            this.idDriver = numberID
+        }else if(typeOfId === 'PRC'){
+            this.idPrc = numberID
+        }else if(typeOfId === 'PASSPORT'){
+            this.idPassport = numberID
+        }else{
+            this.idOthers = numberID
+        }
     }
 }
 </script>
 
 <style scoped>
+input{
+    border: none;
+    border-bottom: 1px solid black;
+}
+input:focus{
+    outline: none;
+}
 *{
     font-size: clamp(.6rem, 1.2vw, 2rem);
 }

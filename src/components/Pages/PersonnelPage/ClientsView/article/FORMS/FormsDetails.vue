@@ -8,22 +8,22 @@
         <h6>Request Forms</h6>
         
         <div class="flexCont">
-            <section @click="openForm('letterIntent')">
+            <section @click="openForm('letterIntent')" v-if="clientObj.letterOfIntentURL !== ''">
               <p>Letter of Intent</p>
               <img src="@/assets/form-thumbnails/Letter-of-intent.png">              
             </section>
 
-            <section @click="openForm('buyerDeclaration')">
+            <section @click="openForm('buyerDeclaration')" v-if="clientObj.individualDeclarationURL !== ''">
               <p>Individual Declaration</p>
               <img src="@/assets/form-thumbnails/individual-buyer-declaration.png">              
             </section>
 
-            <section @click="openForm('bir-tin')">
+            <section @click="openForm('bir-tin')" v-if="clientObj.BirTinRequestURL !== ''">
               <p>BIR-TIN-Request</p>
               <img src="@/assets/form-thumbnails/BIR-TIN-Request.png">              
             </section>
 
-            <section  @click="openForm('contractDetails')">
+            <section  @click="openForm('contractDetails')" v-if="clientObj.ContractFormURL !== ''">
               <p>Contract Details</p>
               <img src="@/assets/form-thumbnails/contract-details.png">              
             </section>
@@ -31,11 +31,16 @@
           
         </div>
       </section>
-<br>
+<hr>
       <section class="section2">
         <h6>Upload here</h6>
-        
-        <form enctype="multipart/form-data" @submit.prevent="">
+        <p v-if="islistUploadedScannedFilesEmpty">NOTHING UPLOADED YET</p>
+        <ul v-else>
+          <li v-for="(file,index) in listUploadedScannedFiles" :key="index">
+              <a :href="file.url" :download="file.filename">{{ file.filename }}</a>
+          </li>
+        </ul>
+        <form enctype="multipart/form-data" @submit.prevent="submitUpload">
           <label class="uploadCont" for="upload">
             <font-awesome-icon class="icon" icon="fa-solid fa-plus" beat size="2x"/>
             <p class="fs-6">Upload File</p>
@@ -43,7 +48,7 @@
           <div v-if="uploadedFile">
             {{uploadedFileNameComputed}}
           </div>
-          <button @click="submitUpload">Upload</button>
+          <button>Upload</button>
           <input 
           id="upload" 
           type="file"
@@ -57,7 +62,7 @@
     </div>
 
     <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms" :client-obj="clientObj.letterOfIntent" :whole-object="clientObj"/>
-    <buyer-declaration v-if="formVisible === 'buyerDeclaration'" @back-click="toggleOpenForms" :client-obj="clientObj.individualDeclaration"/>
+    <buyer-declaration v-if="formVisible === 'buyerDeclaration'" @back-click="toggleOpenForms" :client-obj="clientObj.individualDeclaration" :whole-object="clientObj"/>
     <bir-tin v-if="formVisible === 'bir-tin'" @back-click="toggleOpenForms" :client-obj="clientObj.BirTinRequest" :whole-object="clientObj"/>
     <contract-details v-if="formVisible === 'contractDetails'" @back-click="toggleOpenForms" :client-obj="clientObj.ContractDetails"></contract-details>
       
@@ -65,6 +70,7 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
 import ContractDetails from './FormComponents/ContractDetails.vue'
 import BirTin from './FormComponents/BirTin.vue'
 import BuyerDeclaration from './FormComponents/BuyerDeclaration.vue'
@@ -79,6 +85,9 @@ export default {
 
         uploadedFile : null,
         uploadedFileName: null,
+
+        listWithUrl: [],
+        emptyList: true,
       }
     },
     methods: {
@@ -102,35 +111,63 @@ export default {
       setUploadedFile(event){
         this.uploadedFile = event.target.files[0]
         this.uploadedFileName = this.uploadedFile.name
-        // console.log(this.uploadedFileName)
+        console.log(this.uploadedFile)
+      },
+      setUpDonwloadable(file){
+        const blob = new Blob([file],{type: 'application/pdf'})
+        const url = URL.createObjectURL(blob)
+        this.uploadedScannedFileURL = url
       },
 
       //submit uploads
-      submitUpload(){
+      async submitUpload(){
         if(this.uploadedFile && this.uploadedFileName){
           const data = new FormData()
           data.append('file',this.uploadedFile)
-          data.forEach(element => {
-            console.log(element)
-          });
+          console.log(data)
           try{
-            //request here
-            //use data as payload
+            console.log(data)
+            const response = await this.$store.dispatch('client/uploadScannedFile',{
+                                id: this.clientObj.userId,
+                                data: data
+                              })
+            toast.success(response)
           }catch(error){
             console.log(error)
+            toast.success(error)
           }
+          
+          this.$store.dispatch('client/getListScannedFile', this.clientObj.userId)
         }else{
           console.log('no uploaded')
         }
       }
     },
+
+
+
     computed:{
       openFormsComputed(){
           return this.openForms
       },
       uploadedFileNameComputed(){
         return this.uploadedFileName
-      }      
+      },
+      islistUploadedScannedFilesEmpty(){
+        const list = this.$store.getters['client/listCurrentClientScannedFilesGetter']
+        if(list.length <= 0){
+          return true
+        }else{
+          return false
+        }
+      },   
+      listUploadedScannedFiles(){
+        return this.$store.getters['client/listCurrentClientScannedFilesGetter']
+      }     
+    },
+
+    mounted(){
+      this.$store.dispatch('client/getListScannedFile', this.clientObj.userId)
     }
  
 }
@@ -143,9 +180,20 @@ p{
 .form-container{
   overflow-y: auto;
   padding: .5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .header{
   margin-bottom: 1rem;
+}
+.folderCont{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.folderCont .section1{
+  flex-grow: 1;
 }
 .folderCont .section1 .flexCont{
   /* display: flex;

@@ -6,11 +6,11 @@
                     <!-- <div> -->
                         <section>
                             <p>Company / Business Name</p>
-                            <input v-model="businessName" :class="{empty:isbusinessNameEmpty}">
+                            <input v-model="businessName" readonly>
                         </section>
                         <section>
                             <p>Company / Business Address</p>
-                            <input v-model="businessAddress" :class="{empty:isbusinessAddressEmpty}">
+                            <input v-model="businessAddress" readonly>
                         </section>                        
                     <!-- </div> -->
 
@@ -19,26 +19,26 @@
                 <div class="div2">
                     <section class="section1">
                         <p>Office / Business Phone No.</p>
-                        <input v-model="businessPhoneNo" :class="{empty:isbusinessPhoneNoEmpty}">
+                        <input v-model="businessPhoneNo" readonly>
                     </section>
                     <section class="section2">
                         <p>Fax No.</p>
-                        <input v-model="businessfaxNo" :class="{empty:isbusinessfaxNoEmpty}">
+                        <input v-model="businessfaxNo" readonly>
                     </section>
                     <section class="section3">
                         <p>Position</p>
-                        <input v-model="businessPosition" :class="{empty:isbusinessPositionEmpty}">
+                        <input v-model="businessPosition" readonly>
                     </section>
                     <section class="section4">
                         <p>Profession</p>
-                        <input v-model="businessProfession" :class="{empty:isbusinessProfessionEmpty}">
+                        <input v-model="businessProfession" readonly>
                     </section>
-                    <section class="section5" :class="{empty:isbusinessEmploymentStatusEmpty}">
+                    <section class="section5">
                         <p>Employment Status</p>
                         <div>
-                            <span><input type="radio" value="local" v-model="businessEmploymentStatus" id="busEmplLocal"><label for="busEmplLoca">Local</label> </span>
-                            <span><input type="radio" value="OFW" v-model="businessEmploymentStatus" id="busEmplOFW"> <label for="busEmplOFW">OFW</label></span>
-                            <span><input type="radio" value="self-employed" v-model="businessEmploymentStatus" id="busEmplSelfEmployed"> <label for="busEmplSelfEmployed">self-Employed</label></span>
+                            <span><input type="radio" value="local" v-model="businessEmploymentStatus" id="busEmplLocal" disabled><label for="busEmplLoca">Local</label> </span>
+                            <span><input type="radio" value="OFW" v-model="businessEmploymentStatus" id="busEmplOFW" disabled> <label for="busEmplOFW">OFW</label></span>
+                            <span><input type="radio" value="self-employed" v-model="businessEmploymentStatus" id="busEmplSelfEmployed" disabled> <label for="busEmplSelfEmployed">self-Employed</label></span>
                         </div>
                     </section>
                 </div>
@@ -47,87 +47,25 @@
 
 <script>
 export default {
+    props: ['clientObj'],
     data(){
         return {
-            businessName: '',
-            businessNameEmpty: false,
-            businessAddress: '',
-            businessAddressEmpty: false,
-            businessPhoneNo: '',
-            businessPhoneNoEmpty: false,
-            businessfaxNo: '',
-            businessfaxNoEmpty: false,
-            businessPosition: '',
-            businessPositionEmpty: false,
-            businessProfession: '',
-            businessProfessionEmpty: false,
-            businessEmploymentStatus: '',
-            businessEmploymentStatusEmpty: false,
-        }
-    },
-    methods:{
-        checkbusinessName(){return this.businessNameEmpty = this.businessName!==""?false:true},
-        checkbusinessAddress(){return this.businessAddressEmpty = this.businessAddress!==""?false:true},
-        checkbusinessPhoneNo(){return this.businessPhoneNoEmpty = this.businessPhoneNo!==""?false:true},
-        checkbusinessfaxNo(){return this.businessfaxNoEmpty = this.businessfaxNo!==""?false:true},
-        checkbusinessPosition(){return this.businessPositionEmpty = this.businessPosition!==""?false:true},
-        checkbusinessProfession(){return this.businessProfessionEmpty = this.businessProfession!==""?false:true},
-        checkbusinessEmploymentStatus(){return this.businessEmploymentStatusEmpty = this.businessEmploymentStatus!==""?false:true},
+            businessName: this.clientObj.businessName,
 
-        //////////////////////////////////////////////////////////////
-        passData(){
-            const payload = {
-                businessName: this.businessName,
-                businessAddress: this.businessAddress,
-                businessPhoneNo: this.businessPhoneNo,
-                businessfaxNo: this.businessfaxNo,
-                businessPosition: this.businessPosition,
-                businessProfession: this.businessProfession,
-                businessEmploymentStatus: this.businessEmploymentStatus,
-            }
-            this.$emit('pass-data',payload)
+            businessAddress: this.clientObj.businessAddress,
+   
+            businessPhoneNo: this.clientObj.businessPhoneNo,
+   
+            businessfaxNo: this.clientObj.businessfaxNo,
+ 
+            businessPosition: this.clientObj.businessPosition,
+    
+            businessProfession: this.clientObj.businessProfession,
+      
+            businessEmploymentStatus: this.clientObj.businessEmploymentStatus,
+            
         }
-        
     },
-    computed:{
-        isbusinessNameEmpty(){return this.businessNameEmpty},
-        isbusinessAddressEmpty(){return this.businessAddressEmpty},
-        isbusinessPhoneNoEmpty(){return this.businessPhoneNoEmpty},
-        isbusinessfaxNoEmpty(){return this.businessfaxNoEmpty},
-        isbusinessPositionEmpty(){return this.businessPositionEmpty},
-        isbusinessProfessionEmpty(){return this.businessProfessionEmpty},
-        isbusinessEmploymentStatusEmpty(){return this.businessEmploymentStatusEmpty},
-    },
-    watch:{
-        businessName(){
-            this.checkbusinessName() 
-            this.passData()
-        },
-        businessAddress(){
-            this.checkbusinessAddress()
-            this.passData()
-        },
-        businessPhoneNo(){
-            this.checkbusinessPhoneNo()
-            this.passData()
-        },
-        businessfaxNo(){
-            this.checkbusinessfaxNo()
-            this.passData()
-        },
-        businessPosition(){
-            this.checkbusinessPosition()
-            this.passData()
-        },
-        businessProfession(){
-            this.checkbusinessProfession()
-            this.passData()
-        },
-        businessEmploymentStatus(){
-            this.checkbusinessEmploymentStatus()
-            this.passData()
-        },
-    }
 }
 </script>
 
@@ -142,6 +80,11 @@ export default {
 }
 input{
     text-align: center;
+    border: none;
+    border-bottom: 1px solid black;
+}
+input:focus{
+    outline: none;
 }
 .c-cont header{
     padding: .2rem 0;

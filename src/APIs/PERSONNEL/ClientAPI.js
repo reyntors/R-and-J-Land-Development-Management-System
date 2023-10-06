@@ -34,7 +34,6 @@ export const requestPendingList = async () => {
         throw (error.response.data.message);
     }
 }
-
 export const addToLegitClient = async (id) => {
     console.log('API addToLegitClient executed')
     const token =store.getters['auth/getTokenID']
@@ -60,7 +59,7 @@ export const getListTransaction = async (id) => {
             headers:{
                 'Authorization': `Bearer ${token}`
             }
-        }) 
+        })
         return response.data    
     }catch(error){
         throw (error.response.data.message);
@@ -80,8 +79,8 @@ export const addPaymentTransaction = async (payload) => {
         throw (error.response.data.message);
     }
 }
-export const retrieveUploadedFile = async (id, filename) => {
-    console.log('API retrieveUploadedFile executed')
+export const retrieveUploadedAttachment = async (id, filename) => {
+    console.log('API retrieveUploadedAttachment executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/retrieve-upload/${id}/${filename}`,{
@@ -90,15 +89,16 @@ export const retrieveUploadedFile = async (id, filename) => {
             },
             responseType: 'blob'
         }) 
-        // console.log(response.data)
+        console.log('HAHAHAHAH')
         return response.data     
     }catch(error){
+        console.log('AGAY')
         throw (error.response.data.message);
     }
 }
 //end article/payment
 
-//start downloadable form
+//start article/form
 export const retrieveUploadedForm = async (id, filename) => {
     console.log('API retrieveUploadedForm executed')
     const token =store.getters['auth/getTokenID']
@@ -108,11 +108,56 @@ export const retrieveUploadedForm = async (id, filename) => {
                 'Authorization': `Bearer ${token}`
             },
             responseType: 'blob'
-        }) 
-        console.log(response.data)
+        })
+        // console.log(response.data)
         return response.data     
     }catch(error){
         throw (error.response.data.message);
     }
 }
-//end downloadable form
+export const uploadScannedFile = async (id, file) => {
+    console.log('API uploadScannedFile executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.post(`${BASE_URL}users/add-scanfiles/${id}`,file,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        return response.data     
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+export const listScannedFile = async (id) => {
+    console.log('API listScannedFile executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.get(`${BASE_URL}users/all-scanfiles/${id}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        // console.log(response)
+        return response.data.data
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+export const retrieveSpecificScannedFile = async (id,filename) => {
+    console.log('API retrieveSpecificScannedFile executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.get(`${BASE_URL}users/retrieve-scanfiles/${id}/${filename}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+            responseType: 'blob'
+        })
+        return response.data
+    }catch(error){
+        console.log(error)
+        throw (error.response.data.message);
+    }
+}
+//end article/form

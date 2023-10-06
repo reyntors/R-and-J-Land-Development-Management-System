@@ -5,23 +5,23 @@
                 <section class="section1" :class="{empty:ispropertyEmpty}">
                     <div>
                         <span>
-                            <input type="radio" id="propertyradio1" value="Northtown" v-model="property">
+                            <input type="radio" id="propertyradio1" value="v1" v-model="property">
                             <label for="propertyradio1">Northtown</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio2" value="Northcrest" v-model="property">
+                            <input type="radio" id="propertyradio2" value="v2" v-model="property">
                             <label for="propertyradio2">Northcrest</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio3" value="Woodlane Residence" v-model="property">
+                            <input type="radio" id="propertyradio3" value="v3" v-model="property">
                             <label for="propertyradio3">Woodlane Residence</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio4" value="Fernwood" v-model="property"  >
+                            <input type="radio" id="propertyradio4" value="v4" v-model="property"  >
                             <label for="propertyradio4">Fernwood</label>
                         </span>
                         <span>
-                            <input type="radio" id="propertyradio5" value="Eden Ridge" v-model="property"  >
+                            <input type="radio" id="propertyradio5" value="v5" v-model="property"  >
                             <label for="propertyradio5">Eden Ridge</label>
                         </span>
                         <span>

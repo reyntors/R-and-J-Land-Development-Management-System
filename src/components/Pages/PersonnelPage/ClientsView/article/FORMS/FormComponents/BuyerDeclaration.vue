@@ -2,30 +2,29 @@
     <form-card>
         <div class="navigation">
         <font-awesome-icon class="icon" icon="fa-solid fa-arrow-left-long" size="2x" @click="back"/> 
-        <button @click="toggleEdit">{{ editBtnText }}</button>
         </div>
 
         <h4 style="text-align: center">Individual Buyer's Declaration</h4>
         <div class="c-container">
-            <input type="date" style="display: block;">
+            <input type="date" style="display: block;" readonly>
         <br>
-            <p class="text">I,<input v-model="name"> with BIR Tax Identifiaiton No. <input v-model="BIRtaxID"> hereby declares the following information</p>
+            <p class="text">I,<input v-model="name" readonly> with BIR Tax Identifiaiton No. <input v-model="BIRtaxID" readonly> hereby declares the following information</p>
         <br>
             <ol>
                 <li>
                     <p><strong>1.</strong> I am ENGAGED IN BUSINESS</p>
                     <div class="checkboxes-cont">
-                        <section><input type="radio" value="YES" id="yesEngaged" v-model="engagedInBusiness"><label for="yesEngaged">Yes</label></section>
-                        <section><input type="radio" value="NO" id="noEngaged" v-model="engagedInBusiness"><label for="noEngaged">No</label> </section>
-                        <section><input type="radio" value="N/A" id="NAEngaged" v-model="engagedInBusiness"><label for="NAEngaged">N/A</label> </section>
+                        <section><input type="radio" value="YES" id="yesEngaged" v-model="engagedInBusiness" disabled><label for="yesEngaged">Yes</label></section>
+                        <section><input type="radio" value="NO" id="noEngaged" v-model="engagedInBusiness" disabled><label for="noEngaged">No</label> </section>
+                        <section><input type="radio" value="N/A" id="NAEngaged" v-model="engagedInBusiness" disabled><label for="NAEngaged">N/A</label> </section>
                     </div>
                 </li>
                 <li>
                     <p><strong>2.</strong> The Business is registered under my name</p>
                     <div class="checkboxes-cont">
-                        <section><input type="radio" value="YES" id="yesBusiness" v-model="businessRegisteredUnder"><label for="yesBusiness">Yes</label></section>
-                        <section><input type="radio" value="NO" id="noBusiness" v-model="businessRegisteredUnder"><label for="noBusiness">No</label> </section>
-                        <section><input type="radio" value="N/A" id="NABusiness" v-model="businessRegisteredUnder"><label for="NABusiness">N/A</label> </section>
+                        <section><input type="radio" value="YES" id="yesBusiness" v-model="businessRegisteredUnder" disabled><label for="yesBusiness">Yes</label></section>
+                        <section><input type="radio" value="NO" id="noBusiness" v-model="businessRegisteredUnder" disabled><label for="noBusiness">No</label> </section>
+                        <section><input type="radio" value="N/A" id="NABusiness" v-model="businessRegisteredUnder" disabled><label for="NABusiness">N/A</label> </section>
                     </div>
                 </li>
                 <p>If yes, name of business <input style="border: none;border-bottom: 1px solid black;" v-model="businessName"></p>
@@ -33,9 +32,9 @@
                 <li>
                     <p><strong>3.</strong> The Registered Business is using my TIN</p>
                     <div class="checkboxes-cont">
-                        <section><input type="radio" value="YES" id="yesUseTIN" v-model="businessUsingMyTIN"><label for="yesUseTIN">Yes</label></section>
-                        <section><input type="radio" value="NO" id="noUseTIN" v-model="businessUsingMyTIN"><label for="noUseTIN">No</label> </section>
-                        <section><input type="radio" value="N/A" id="NAUseTIN" v-model="businessUsingMyTIN"><label for="NAUseTIN">N/A</label> </section>
+                        <section><input type="radio" value="YES" id="yesUseTIN" v-model="businessUsingMyTIN" disabled><label for="yesUseTIN">Yes</label></section>
+                        <section><input type="radio" value="NO" id="noUseTIN" v-model="businessUsingMyTIN" disabled><label for="noUseTIN">No</label> </section>
+                        <section><input type="radio" value="N/A" id="NAUseTIN" v-model="businessUsingMyTIN" disabled><label for="NAUseTIN">N/A</label> </section>
                     </div>
                 </li>
             </ol>
@@ -69,8 +68,7 @@
         </div> 
 
         <span style="display: flex">
-            <submit-form-button @click="submit">Save</submit-form-button>
-            <submit-form-button @click="submit">Download</submit-form-button>
+            <submit-form-button @click="submit" :href="downloadURL" :download="downloadName">Download</submit-form-button>
         </span>
 
     </form-card>
@@ -79,7 +77,7 @@
 <script>
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 export default{
-    props: ['clientObj'],
+    props: ['clientObj','wholeObject'],
     components: {SubmitFormButton},
     data(){
         return{
@@ -90,7 +88,11 @@ export default{
             businessName: this.clientObj.businessName,
             engagedInBusiness: this.clientObj.engagedInBusiness,
             businessRegisteredUnder: this.clientObj.businessRegisteredUnder,
-            businessUsingMyTIN: this.clientObj.businessUsingMyTIN
+            businessUsingMyTIN: this.clientObj.businessUsingMyTIN,
+
+            downloadURL: this.wholeObject.individualDeclarationURL,
+            downloadName: this.wholeObject.individualDeclarationFilename
+
         }
     },
 
@@ -116,19 +118,30 @@ export default{
             return 'Edit'
         }
     },
-
-
     companyName(){
       return this.$store.getters.companyName
     },
     companyAddress(){
       return this.$store.getters.companyAddress
     }
+  },
+
+  mounted(){
+    console.log(this.wholeObject.individualDeclarationURL)
+    console.log(this.wholeObject.individualDeclarationFilename)
   }
 }
 </script>
 
 <style scoped>
+input{
+    border: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+input:focus{
+    outline: none;
+}
   /* NAVIGATION */
   .navigation{
     display: flex;

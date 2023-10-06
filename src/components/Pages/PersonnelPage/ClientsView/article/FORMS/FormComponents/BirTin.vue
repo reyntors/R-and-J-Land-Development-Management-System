@@ -2,37 +2,36 @@
     <form-card>
     <div class="navigation">
         <font-awesome-icon class="icon" icon="fa-solid fa-arrow-left-long" size="2x" @click="back"/> 
-        <button @click="toggleEdit">{{ editBtnText }}</button>
     </div>
     
     <h4 style="text-align: center">BIR Tin Request</h4>
 
     <div class="c-container">
-            <input style="display: block; border: none; border-bottom: 1px solid black;" v-model="date">
+            <input style="display: block; border: none; border-bottom: 1px solid black;" v-model="date" readonly>
         <br>    
             <p>BUREAU OF INTERNAL REVENUE</p>
             <p>Davao City</p>
         <br>
-            <p>This is to authorize Mr./Mrs. <input  style="border: none; border-bottom: 1px solid black;" v-model="authorizedTo"> to get my Tax Identification Number 
+            <p>This is to authorize Mr./Mrs. <input  style="border: none; border-bottom: 1px solid black;" v-model="authorizedTo" readonly> to get my Tax Identification Number 
                 Verification Slip (TIN Verification Slip) in my behalf.</p>
             <p>Please find below the details:</p>
             
             <div class="details">
                 <section>
-                    <span>Name</span>:<input v-model="name"></section>
+                    <span>Name</span>:<input v-model="name" readonly></section>
                 <section>
-                    <span>Address</span>:<input v-model="address"></section>
+                    <span>Address</span>:<input v-model="address" readonly></section>
                 <section>
-                    <span>Birthday</span>:<input v-model="birthday"></section>
+                    <span>Birthday</span>:<input v-model="birthday" readonly></section>
                 <section>
-                    <span>TIN Number</span>:<input v-model="tinNumber"></section>  
+                    <span>TIN Number</span>:<input v-model="tinNumber" readonly></section>  
             </div>
         <br>
             <p>Thank you.</p>
         <br>
             <p>Respectful Yours,</p>
         <br>
-            <input style="border: none; border-bottom: 1px solid black;" v-model="respectfulYours">
+            <input style="border: none; border-bottom: 1px solid black;" v-model="respectfulYours" readonly>
     </div>
     </form-card>
 
@@ -42,58 +41,57 @@
         
         <div class="center">
             <p>
-                That I,<input v-model="spaName"> single/married, of legal age, <input v-model="spaAge"> and resident of <input v-model="spaResident">, do hereby appoint, name consittute and appoint,
-                <input v-model="spaAttyName">, single/married of legal age, <input v-model="spaAttyAge"> and a resident of <input v-model="spaAttyResident">. tp be my true and lawfule <strong>Attorney-In-Face</strong>,
+                That I,<input v-model="spaName" readonly> single/married, of legal age, <input v-model="spaAge" readonly> and resident of <input v-model="spaResident" readonly>, do hereby appoint, name consittute and appoint,
+                <input v-model="spaAttyName" readonly>, single/married of legal age, <input v-model="spaAttyAge" readonly> and a resident of <input v-model="spaAttyResident" readonly>. tp be my true and lawfule <strong>Attorney-In-Face</strong>,
                 for me and in my name, to do and perfrom any or all of the following act or acts, to wit:
             </p>
             <br>
             <p> 1.  To secure Tax Identification Number (TIN) Verification Slip from the Bureau of Internal Revenue (BIR).</p>
             <br>
-            <p><strong>IN WITNESS OF,</strong> we have hereunto set our hands this <input v-model="witnessMonth"> day of <input v-model="witnessDay">, 20<input v-model="witnessYear"> at <input v-model="witnessAddress">, Philippines.</p>
+            <p><strong>IN WITNESS OF,</strong> we have hereunto set our hands this <input v-model="witnessMonth" readonly> day of <input v-model="witnessDay" readonly>, 20<input v-model="witnessYear" readonly> at <input v-model="witnessAddress" readonly>, Philippines.</p>
             <br>
             <div class="signature-flex">
                 <section>
                     <strong style="display: block;">GRANTOR</strong>
                     <br>
-                    <input style="display: block;">
+                    <input style="display: block;" readonly>
                     <p>CEI:</p>
                 </section>
                 <section>
                     <strong style="display: block;">GRANTEE</strong>
                     <br>
-                    <input style="display: block;">
+                    <input style="display: block;" readonly>
                     <p>CEI:</p>
                 </section>
             </div>
         </div>
     <p>
-        SUBSCRIBED AND SWORN to before me this <input> day of <input> , 20<input> at Davao City, Philippines
+        SUBSCRIBED AND SWORN to before me this <input v-model="witnessMonth" readonly> day of <input v-model="witnessDay" readonly> , 20<input v-model="witnessYear" readonly> at Davao City, Philippines
         Affian exhibit to be their Competent Evidence of Identities (CEI) written below their names.
     </p>
     <section class="notary">
             Notary Public
             <div>
                 <label>Doc. No.</label>
-                <input>;
+                <input readonly>;
             </div>
             <div>
                 <label>Page No.</label>
-                <input>;
+                <input readonly>;
             </div>
             <div>
                 <label>Book No.</label>
-                <input>;
+                <input readonly>;
             </div>
             <div>
                 <label>Series of</label>
-                <input>;
+                <input readonly>;
             </div>
         </section>
     </div>
 
         <span style="display: flex">
-            <submit-form-button @click="submit">Save</submit-form-button>
-            <submit-form-button @click="submit">Download</submit-form-button>
+            <submit-form-button @click="submit" :href="downloadURL" :download="downloadName">Download</submit-form-button>
         </span>
 
     </form-card>
@@ -125,6 +123,10 @@ export default {
             witnessMonth: this.clientObj.witnessMonth,
             witnessYear: this.clientObj.witnessYear,
             witnessAddress: this.clientObj.witnessAddress,
+
+            downloadURL: this.wholeObject.BirTinRequestURL,
+            downloadName: this.wholeObject.BirTinRequestFilename
+
         }
     },
     methods: {
@@ -160,6 +162,14 @@ export default {
 <style scoped>
 
   /* NAVIGATION */
+  input{
+    border: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+  }
+  input:focus{
+    outline: none;
+  }
   .navigation{
     display: flex;
     justify-content: space-between;

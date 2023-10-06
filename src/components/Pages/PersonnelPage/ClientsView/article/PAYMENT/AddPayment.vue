@@ -54,6 +54,7 @@ export default {
 
         setAttachment(event){
             this.attachment = event.target.files[0]
+            console.log(this.attachment)
             // const blob = new Blob([this.attachment],{type: 'application/pdf'})
             // console.log('Blob content:', blob);
             // this.url = URL.createObjectURL(blob)
@@ -96,7 +97,7 @@ export default {
                     toast.error(error,1000)
                 }                  
             }else{
-                console.log('not allowed to add empty fields')
+                toast.error('not allowed to add empty fields')
             }
         
         }

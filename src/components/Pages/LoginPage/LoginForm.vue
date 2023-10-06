@@ -19,7 +19,7 @@
             </div>
 
             <div class="style-form">
-                <input type="text" placeholder=""  v-model.trim="loginPassword">
+                <input type="text" placeholder=""  v-model.trim="loginPassword" @keydown="keydown">
                 <label for="password">Password</label>
             </div>
 
@@ -186,6 +186,12 @@ export default {
         this.passwordMatch = true
       }else{
         this.passwordMatch = false
+      }
+    },
+
+    keydown(event){
+      if(event.key === 'Enter'){
+        this.login()
       }
     },
 

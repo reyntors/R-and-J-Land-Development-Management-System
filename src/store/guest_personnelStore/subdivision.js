@@ -4,36 +4,36 @@ export default {
         return {
             subdivision: [
                 {
-                    imageUrl: 'https',                    
+                    imageUrl: '',                    
                     block_Lot_No:'1',
-                    total_Sq_M: 100,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 200000,
-                    status: 'sale'
+                    total_Sq_M:'' ,
+                    amount_per_Sq: '',
+                    total_Amount_Due: '',
+                    status: ''
                 },
                 {
-                    imageUrl: 'https://picsum.photos/200/300.jpg',                    
+                    imageUrl: '',                    
                     block_Lot_No:'2',
-                    total_Sq_M: 200,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 400000,
-                    status: 'sale'
+                    total_Sq_M: '',
+                    amount_per_Sq: '',
+                    total_Amount_Due: '',
+                    status: ''
                 },
                 {
-                    imageUrl: 'https://picsum.photos/200/300?grayscale',                    
+                    imageUrl: '',                    
                     block_Lot_No:'3',
-                    total_Sq_M: 100,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 200000,
-                    status: 'reserved'
+                    total_Sq_M: '',
+                    amount_per_Sq: '',
+                    total_Amount_Due: '',
+                    status: ''
                 },
                 {
-                    imageUrl: 'https://picsum.photos/200/300.jpg',                    
+                    imageUrl: '',                    
                     block_Lot_No:'4',
-                    total_Sq_M: 200,
-                    amount_per_Sq: 2000,
-                    total_Amount_Due: 400000,
-                    status: 'sale'
+                    total_Sq_M: '',
+                    amount_per_Sq: '',
+                    total_Amount_Due: '',
+                    status: ''
                 },
                 {
                     imageUrl: 'https://picsum.photos/200/300?grayscale',                    

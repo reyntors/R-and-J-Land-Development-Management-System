@@ -8,15 +8,15 @@
                         <br>
                         <div class="names">
                             <section>
-                                <input type="text" v-model="spouseLastname" :class="{empty:isspouseLastnameEmpty}">
+                                <input type="text" v-model="spouseLastname" readonly>
                                 <p>Last Name</p>
                             </section>
                             <section>
-                                <input type="text" v-model="spouseFirstname" :class="{empty:isspouseFirstnameEmpty}">
+                                <input type="text" v-model="spouseFirstname"  readonly>
                                 <p>First Name</p>
                             </section>
                             <section>
-                                <input type="text" v-model="spouseMiddleName" :class="{empty:isspouseMiddleNameEmpty}">
+                                <input type="text" v-model="spouseMiddleName"  readonly>
                                 <p>Middle Name</p>
                             </section>
                         </div>
@@ -25,7 +25,7 @@
                     <div class="section1-right">
                         <p>Occupation / Profession</p>
                         <br>
-                        <input v-model="spouseOccupation" :class="{empty:isspouseOccupationEmpty}">
+                        <input v-model="spouseOccupation"  readonly>
                          <br>
                     </div>
             </div>
@@ -33,53 +33,53 @@
             <div class="div2">
                 <section class="section1">
                     <p>HOME PHONE NO.</p>
-                    <input style="display: block;" v-model="spousePhoneNo" :class="{empty:isspousePhoneNoEmpty}">
+                    <input style="display: block;" v-model="spousePhoneNo"  readonly>
                 </section>
                 <section class="section2">
                     <p>MOBILE NO.</p>
-                    <input style="display: block;" v-model="spouseMobileNo" :class="{empty:isspouseMobileNoEmpty}">
+                    <input style="display: block;" v-model="spouseMobileNo"  readonly>
                 </section>
                 <section class="section3">
                     <p>EMAIL ADDRESS</p>
-                    <input style="display: block;" v-model="spouseEmail" :class="{empty:isspouseEmailEmpty}">
+                    <input style="display: block;" v-model="spouseEmail" readonly>
                 </section>
                 <section class="section4">
                     <p>T.I.N.</p>
-                    <input style="display: block;" v-model="spouseTIN" :class="{empty:isspouseTINEmpty}">
+                    <input style="display: block;" v-model="spouseTIN" readonly>
                 </section>
                 <section class="section5">
                     <p>CITIZENSHIP</p>
-                    <input style="display: block;" v-model="spouseCitizenship" :class="{empty:isspouseCitizenshipEmpty}">
+                    <input style="display: block;" v-model="spouseCitizenship" readonly>
                 </section>
             </div>
 
             <div class="div3">
                 <section class="section1">
                     <p>FAX NO.</p>
-                    <input v-model="spouseFaxNo" :class="{empty:isspouseFaxNoEmpty}">
+                    <input v-model="spouseFaxNo"  readonly>
                 </section>
 
                 <section class="section2" :class="{empty:isspouseSexEmpty}">
                     Sex
                     <div>
-                        <span><input type="radio" value="Male" id="spouseMale" v-model="spouseSex"><label for="spouseMale">Male</label></span>
-                        <span><input type="radio" value="Female" id="spouseFemale" v-model="spouseSex"><label for="spouseFemale">Female</label></span>
+                        <span><input type="radio" value="Male" id="spouseMale" v-model="spouseSex" disabled><label for="spouseMale">Male</label></span>
+                        <span><input type="radio" value="Female" id="spouseFemale" v-model="spouseSex" disabled><label for="spouseFemale">Female</label></span>
                     </div>
                 </section>
 
                 <section class="section3" :class="{empty:isspouseEmploymentEmpty}">
                     <p>Employment Status</p>
                     <div>
-                        <span><input type="radio" value="Local" id="spouseLocal" v-model="spouseEmployment"><label for="spouseLocal">Local</label></span>
-                        <span><input type="radio" value="Self-Employed" id="spouseSE" v-model="spouseEmployment"><label for="spouseSE">Self-Employed</label></span>
-                        <span><input type="radio" value="OFW" id="spouseOFW" v-model="spouseEmployment"><label for="spouseOFW">OFW</label></span>
-                        <span><input type="radio" value="Expatriate" id="spouseExp" v-model="spouseEmployment"><label for="spouseExp">Expatriate</label></span>
+                        <span><input type="radio" value="Local" id="spouseLocal" v-model="spouseEmployment" disabled><label for="spouseLocal">Local</label></span>
+                        <span><input type="radio" value="Self-Employed" id="spouseSE" v-model="spouseEmployment" disabled><label for="spouseSE">Self-Employed</label></span>
+                        <span><input type="radio" value="OFW" id="spouseOFW" v-model="spouseEmployment" disabled><label for="spouseOFW">OFW</label></span>
+                        <span><input type="radio" value="Expatriate" id="spouseExp" v-model="spouseEmployment" disabled><label for="spouseExp">Expatriate</label></span>
                     </div>
                 </section>
 
                 <section class="section4">
                     <p>No. of Children</p>
-                    <input v-model="spouseNoChildren" :class="{empty:isspouseNoChildrenEmpty}">
+                    <input v-model="spouseNoChildren" readonly>
                 </section>
             </div>
 
@@ -88,144 +88,49 @@
 
 <script>
 export default {
+    props: ['clientObj'],
     data(){
         return{
-            spouseLastname: '',
-            spouseLastnameEmpty: false,
-            spouseFirstname: '',
-            spouseFirstnameEmpty: false,
-            spouseMiddleName: '',
-            spouseMiddleNameEmpty: false,
-            spouseOccupation: '',
-            spouseOccupationEmpty: false,
-            spousePhoneNo: '',
-            spousePhoneNoEmpty: false,
-            spouseMobileNo: '',
-            spouseMobileNoEmpty: false,
-            spouseEmail: '',
-            spouseEmailEmpty: false,
-            spouseTIN: '',
-            spouseTINEmpty: false,
-            spouseCitizenship: '',
-            spouseCitizenshipEmpty: false,
-            spouseFaxNo: '',
-            spouseFaxNoEmpty: false,
-            spouseSex: '',
-            spouseSexEmpty: false,
-            spouseEmployment: '',
-            spouseEmploymentEmpty: false,
-            spouseNoChildren: '',
-            spouseNoChildrenEmpty: false,
+            spouseLastname: this.clientObj.spouseLastname,
+        
+            spouseFirstname: this.clientObj.spouseFirstname,
+        
+            spouseMiddleName: this.clientObj.spouseMiddleName,
+        
+            spouseOccupation: this.clientObj.spouseOccupation,
+        
+            spousePhoneNo: this.clientObj.spousePhoneNo,
+        
+            spouseMobileNo: this.clientObj.spouseMobileNo,
+        
+            spouseEmail: this.clientObj.spouseEmail,
+    
+            spouseTIN: this.clientObj.spouseTIN,
+    
+            spouseCitizenship: this.clientObj.spouseCitizenship,
+            
+            spouseFaxNo: this.clientObj.spouseFaxNo,
+    
+            spouseSex: this.clientObj.spouseSex,
+    
+            spouseEmployment: this.clientObj.spouseEmployment,
+        
+            spouseNoChildren: this.clientObj.spouseNoChildren,
+        
         }
     },
-    methods:{
-        checkspouseLastname(){return this.spouseLastnameEmpty = this.spouseLastname!==""?false:true},
-        checkspouseFirstname(){return this.spouseFirstnameEmpty = this.spouseFirstname!==""?false:true},
-        checkspouseMiddleName(){return this.spouseMiddleNameEmpty = this.spouseMiddleName!==""?false:true},
-        checkspouseOccupation(){return this.spouseOccupationEmpty = this.spouseOccupation!==""?false:true},
-        checkspousePhoneNo(){return this.spousePhoneNoEmpty = this.spousePhoneNo!==""?false:true},
-        checkspouseMobileNo(){return this.spouseMobileNoEmpty = this.spouseMobileNo!==""?false:true},
-        checkspouseEmail(){return this.spouseEmailEmpty = this.spouseEmail!==""?false:true},
-        checkspouseTIN(){return this.spouseTINEmpty = this.spouseTIN!==""?false:true},
-        checkspouseCitizenship(){return this.spouseCitizenshipEmpty = this.spouseCitizenship!==""?false:true},
-        checkspouseFaxNo(){return this.spouseFaxNoEmpty = this.spouseFaxNo!==""?false:true},
-        checkspouseSex(){return this.spouseSexEmpty = this.spouseSex!==""?false:true},
-        checkspouseEmployment(){return this.spouseEmploymentEmpty = this.spouseEmployment!==""?false:true},
-        checkspouseNoChildren(){return this.spouseNoChildrenEmpty = this.spouseNoChildren!==""?false:true},
-
-        //////////////////////////////////////////////////////////////
-        passData(){
-            const payload = {
-                spouseLastname: this.spouseLastname,
-                spouseFirstname: this.spouseFirstname,
-                spouseMiddleName: this.spouseMiddleName,
-                spouseOccupation: this.spouseOccupation,
-                spousePhoneNo: this.spousePhoneNo,
-                spouseMobileNo: this.spouseMobileNo,
-                spouseEmail: this.spouseEmail,
-                spouseTIN: this.spouseTIN,
-                spouseCitizenship: this.spouseCitizenship,
-                spouseFaxNo: this.spouseFaxNo,
-                spouseSex: this.spouseSex,
-                spouseEmployment: this.spouseEmployment,
-                spouseNoChildren: this.spouseNoChildren,
-            }
-            this.$emit('pass-data',payload)
-        }
-    },
-    computed: {
-        isspouseLastnameEmpty(){return this.spouseLastnameEmpty},
-        isspouseFirstnameEmpty(){return this.spouseFirstnameEmpty},
-        isspouseMiddleNameEmpty(){return this.spouseMiddleNameEmpty},
-        isspouseOccupationEmpty(){return this.spouseOccupationEmpty},
-        isspousePhoneNoEmpty(){return this.spousePhoneNoEmpty},
-        isspouseMobileNoEmpty(){return this.spouseMobileNoEmpty},
-        isspouseEmailEmpty(){return this.spouseEmailEmpty},
-        isspouseTINEmpty(){return this.spouseTINEmpty},
-        isspouseCitizenshipEmpty(){return this.spouseCitizenshipEmpty},
-        isspouseFaxNoEmpty(){return this.spouseFaxNoEmpty},
-        isspouseSexEmpty(){return this.spouseSexEmpty},
-        isspouseEmploymentEmpty(){return this.spouseEmploymentEmpty},
-        isspouseNoChildrenEmpty(){return this.spouseNoChildrenEmpty},
-    },
-    watch:{
-        spouseLastname(){
-            this.checkspouseLastname()
-            this.passData()
-        },
-        spouseFirstname(){
-            this.checkspouseFirstname()
-            this.passData()
-        },
-        spouseMiddleName(){
-            this.checkspouseMiddleName()
-            this.passData()
-        },
-        spouseOccupation(){
-            this.checkspouseOccupation()
-            this.passData()
-        },
-        spousePhoneNo(){
-            this.checkspousePhoneNo()
-            this.passData()
-        },
-        spouseMobileNo(){
-            this.checkspouseMobileNo()
-            this.passData()
-        },
-        spouseEmail(){
-            this.checkspouseEmail()
-            this.passData()
-        },
-        spouseTIN(){
-            this.checkspouseTIN()
-            this.passData()
-        },
-        spouseCitizenship(){
-            this.checkspouseCitizenship()
-            this.passData()
-        },
-        spouseFaxNo(){
-            this.checkspouseFaxNo()
-            this.passData()
-        },
-        spouseSex(){
-            this.checkspouseSex()
-            this.passData()
-        },
-        spouseEmployment(){
-            this.checkspouseEmployment()
-            this.passData()
-        },
-        spouseNoChildren(){
-            this.checkspouseNoChildren()
-            this.passData()
-        },
-    }
 }
 </script>
 
 <style scoped>
+input{
+    border: none;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+input:focus{
+    outline: none;
+}
 *{
     font-size: clamp(.6rem, 1.2vw, 2rem);
 }

@@ -4,24 +4,23 @@
     <form-card>
         <div class="navigation">
             <font-awesome-icon class="icon" icon="fa-solid fa-arrow-left-long" size="2x" @click="back"/> 
-            <button @click="toggleEdit">{{ editBtnText }}</button>
         </div>
     
         <h4 style="text-align: center">CONTRACT DETAILS FORM</h4>
         
-        <property-details @pass-data="getPropertyData" class="overrideWidth"/>
+        <property-details @pass-data="getPropertyData" class="overrideWidth" :client-obj="clientObj"/>
 
-        <contact-details @pass-data="getContactData" class="overrideWidth"/>
+        <contact-details @pass-data="getContactData" class="overrideWidth" :client-obj="clientObj"/>
 
-        <business-employment @pass-data="getBusinessData" class="overrideWidth"/>
+        <business-employment @pass-data="getBusinessData" class="overrideWidth" :client-obj="clientObj"/>
 
-        <spouse-information @pass-data="getSpouseData" class="overrideWidth"/>
+        <spouse-information @pass-data="getSpouseData" class="overrideWidth" :client-obj="clientObj"/>
 
-        <buyer-spa @pass-data="getBuyerSPAData" class="overrideWidth"/>
+        <buyer-spa @pass-data="getBuyerSPAData" class="overrideWidth" :client-obj="clientObj"/>
 
-        <corporate-buyer @pass-data="getCorpBuyerData" class="overrideWidth"/>
+        <corporate-buyer @pass-data="getCorpBuyerData" class="overrideWidth" :client-obj="clientObj"/>
 
-        <other-details @pass-data="getOtherData" class="overrideWidth"/>
+        <other-details @pass-data="getOtherData" class="overrideWidth" :client-obj="clientObj"/>
 
 
         <!-- <div class="remarks">
@@ -43,7 +42,6 @@
             
         </div> -->
         <span style="display: flex">
-            <submit-form-button @click="submit">Save</submit-form-button>
             <submit-form-button @click="submit">Download</submit-form-button>
         </span>
         

@@ -11,7 +11,7 @@
         <router-link to="/personnel/client">CLIENTS</router-link>
         <router-link to="/personnel/subdivision">SUBDIVISION</router-link>
         <router-link to="/personnel/inquiries">INQUIRIES</router-link>
-        <router-link to="/personnel/reports">FORMS</router-link>
+        <router-link to="/personnel/emptyForms">EMPTY FORMS</router-link>
         <router-link to="/personnel/reports">REPORTS</router-link>
     </section>
 

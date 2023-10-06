@@ -183,23 +183,24 @@ li{
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
 ul{
   list-style: none;
   padding: 0; 
   display: grid;
   grid-template-columns: 1fr 1fr ;
   gap: .5rem;
+}
+@media screen and (max-width: 425px) {
+  ul{
+    grid-template-columns: 1fr;
+  }
+  
+}
+@media screen and (min-width: 1024px) {
+  ul{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  
 }
 
   </style>

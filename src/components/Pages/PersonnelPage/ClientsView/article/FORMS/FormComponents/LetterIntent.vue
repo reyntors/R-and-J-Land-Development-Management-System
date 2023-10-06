@@ -3,54 +3,52 @@
     <form-card id="letterOfIntent" >
       <div class="navigation">
         <font-awesome-icon class="icon" icon="fa-solid fa-arrow-left-long" size="2x" @click="back"/> 
-        <button @click="toggleEdit">{{ editBtnText }}</button>
       </div>
     
       <h4 style="text-align: center">Letter of Intent</h4>
-      <p style="margin-top: 1rem;">Date: <input type="date" v-model="date"></p> 
+      <p style="margin-top: 1rem;">Date: <input type="date" v-model="date" readonly></p> 
       <br>
       <p>{{ companyName }}</p>
       <p>{{ companyAddress }}</p> 
       <br>
       <p>Gentlemen:</p>
       <p>I/We hereby manifest my/our intent to purchase <input style="border: none;
-        border-bottom: 1px solid black;"  v-model="purchase"> lot(s)/unit(s)</p>
+        border-bottom: 1px solid black;"  v-model="purchase" readonly> lot(s)/unit(s)</p>
       <div class="checkboxes">
         <strong>Project:</strong>
-        <input type="radio" value="value1" id="check1" v-model="project"><label for="check1">Northown</label>
-        <input type="radio" value="value2" id="check2" v-model="project"><label for="check2">Northcrest</label>
-        <input type="radio" value="value3" id="check3" v-model="project"><label for="check3">Eden Ridge</label>
-        <input type="radio" value="value4" id="check4" v-model="project"><label for="check4">Narra Park Residence</label>
+        <input type="radio" value="value1" id="check1" v-model="project" disabled><label for="check1">Northown</label>
+        <input type="radio" value="value2" id="check2" v-model="project" disabled><label for="check2">Northcrest</label>
+        <input type="radio" value="value3" id="check3" v-model="project" disabled><label for="check3">Eden Ridge</label>
+        <input type="radio" value="value4" id="check4" v-model="project" disabled><label for="check4">Narra Park Residence</label>
       </div>
       <div class="location">
         <b>Location:</b>
-        <div>PH:<input v-model="locationPH"></div>
-        <div>Blk:<input v-model="locationBlk"></div>
-        <div>Lot/Unit:<input v-model="locationLotOrUnit"></div>
+        <div>PH:<input v-model="locationPH" readonly></div>
+        <div>Blk:<input v-model="locationBlk" readonly></div>
+        <div>Lot/Unit:<input v-model="locationLotOrUnit" readonly></div>
       </div>
 
       <section class="reference">
             For your reference, please see my information below;
             <div>
                 <label>Name</label>
-                <input v-model="name">
+                <input v-model="name" readonly>
             </div>
             <div>
                 <label>Address</label>
-                <input v-model="address
-">
+                <input v-model="address" readonly>
             </div>
             <div>
                 <label>Citizenship</label>
-                <input v-model="citizenship">
+                <input v-model="citizenship" readonly>
             </div>
             <div>
                 <label>Contact No.</label>
-                <input v-model="contactNo">
+                <input v-model="contactNo" readonly>
             </div>
             <div>
                 <label>Email Address</label>
-                <input v-model="emailAddress">
+                <input v-model="emailAddress" readonly>
             </div>
         </section>
 
@@ -65,7 +63,7 @@
                 WORKING DAYS.</strong>
             </li>
             <li>
-              That I must submit all complete requirements and reservation fee not later than <input style="border: none; border-bottom: 1px solid black;" v-model="reservationTimeSpan"> to
+              That I must submit all complete requirements and reservation fee not later than <input style="border: none; border-bottom: 1px solid black;" v-model="reservationTimeSpan" readonly> to
               officially record the above-mentioned lot/unit as a safe, otherwise, ALsons Deve will <strong>
                 automatically</strong> open the blocked off lot/unit other interested prospect buyers.
             </li>
@@ -88,10 +86,8 @@
         </div>
 
         <span style="display: flex">
-            <submit-form-button @click="submit">Save</submit-form-button>
-            <submit-form-button @click="submit">Download</submit-form-button>
+            <submit-form-button :href="downloadURL" :download="downloadName">Download</submit-form-button>
         </span>
-        <a :href="downloadURL" :download="downloadName">DOWNLOAD</a>
     </form-card>
 </template>
   
@@ -118,44 +114,40 @@ export default{
           emailAddress: this.clientObj.emailAddress,
           reservationTimeSpan: this.clientObj.reservationTimeSpan,
 
-          downloadURL: this.wholeObject.LetterOfIntentURL,
-          downloadName: this.wholeObject.LetterOfIntentFilename
+          downloadURL: this.wholeObject.letterOfIntentURL,
+          downloadName: this.wholeObject.letterOfIntentFilename
         }
     },
     methods: {
-        toggleEdit(){
-          console.log(this.clientObj)
-            this.editable = !this.editable
-        },
         back(){
             this.$emit('back-click')
         }
     },
     computed: {
-        //navigation
-        editableComputed(){
-            return this.editable
-        },
-        editBtnText(){
-            if(this.editable === true){
-                return 'Cancel'
-            }else{
-                return 'Edit'
-            }
-        },
-
         companyName(){
         return this.$store.getters.companyName
         },
         companyAddress(){
         return this.$store.getters.companyAddress
         }
+  },
+
+  mounted(){
+    // console.log(this.wholeObject)
   }
 }
 </script>
   
   <style scoped>
   /* NAVIGATION */
+input{
+  border: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+input:focus{
+  outline: none;
+}
   .navigation{
     display: flex;
     justify-content: space-between;
