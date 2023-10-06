@@ -1,5 +1,5 @@
 
-import * as Auth from '@/APIs/BOTH/AuthAPI.js'
+import * as Auth from '@/APIs/AUTH/AuthAPI.js'
 
 export default {
     namespaced: true,

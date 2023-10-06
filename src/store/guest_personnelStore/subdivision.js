@@ -1,3 +1,5 @@
+import * as API from '@/APIs/BOTH/BothAPI.js'
+
 export default {
     namespaced: true,
     state(){
@@ -226,8 +228,8 @@ export default {
                 state.searchedResult = []
             }
         },
-        setList(){
-            //do something to set the list
+        setList(state,list){
+            state.listLot = list
         },
         //end- personnel
     },
@@ -237,14 +239,17 @@ export default {
         //start - personnel
         update(context,payload){
             context.commit('update',payload)
-            //here for update http request
         },
         //end - personnel
 
         //start guest and pesonnel access
-        getPropertyList(context){
-            //here for get the list of all Subdivision
-            context.commit('setList')
+        async getPropertyList(context){
+            try{
+                const response =  await API.getListSubdivision()
+                context.commit('setList',response.data)
+            }catch(error){
+                console.log(error)
+            }   
         }
         //end guest and pesonnel access
         

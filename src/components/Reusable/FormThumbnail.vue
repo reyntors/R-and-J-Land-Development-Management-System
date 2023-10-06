@@ -16,6 +16,8 @@ import individual from '@/assets/form-thumbnails/individual-buyer-declaration.pn
 import BIR_TIN_Request from '@/assets/form-thumbnails/BIR-TIN-Request.png';
 import ApprovedPaymentScheme from '@/assets/form-thumbnails/approve-payment.png';
 import ChecklistClosingSale from '@/assets/form-thumbnails/checklist-for-closing.png';
+import CallSlip from '@/assets/form-thumbnails/call-slip.png';
+import ReservationPayment from '@/assets/form-thumbnails/reservation.png';
 export default {
     props: ['title','imgThumbTitle'],
     data(){
@@ -26,7 +28,7 @@ export default {
     computed:{
         imgLink(){
             if(this.imgThumbTitle === 'letterOfIntent'){
-                    return LetterOfIntent
+                return LetterOfIntent
             }else if(this.imgThumbTitle === 'contractDetails'){
                 return ContractDetails
             }else if(this.imgThumbTitle === 'individualBuyerDeclaration'){
@@ -35,8 +37,11 @@ export default {
                 return ApprovedPaymentScheme
             }else if(this.imgThumbTitle === 'checklist'){
                 return ChecklistClosingSale
-            }
-            else{
+            }else if(this.imgThumbTitle === 'call-slip'){
+                return CallSlip
+            }else if(this.imgThumbTitle === 'reservation'){
+                return ReservationPayment
+            }else{
                 return BIR_TIN_Request
             }
         }
@@ -47,13 +52,14 @@ export default {
 
 <style scoped>
 header{
-      font-size: clamp(.8rem, 1.5vw, 2rem);
+      font-size: clamp(.8rem, 1vw, 2rem);
 }
 .card-container{
     /* width: 70%; */
     margin: auto;
     box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    cursor: pointer;
 }
 .card-container:hover{
     margin: auto;

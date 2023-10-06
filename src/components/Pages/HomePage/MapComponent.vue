@@ -178,6 +178,7 @@ export default {
   },
 
   mounted(){
+    this.$store.dispatch('subdivision/getPropertyList')
     const subdivision = document.getElementById('subdivison')
     const x = subdivision.offsetLeft
     const y = subdivision.offsetTop
