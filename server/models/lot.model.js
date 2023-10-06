@@ -1,37 +1,45 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const uniqueValidator = require("mongoose-unique-validator");
+
+
 
 const lotSchema = new Schema({
-    lotNumber: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    totalSqm: {
-        type: Number,
-        required: true,
-    },
-    amountperSquare: {
-        type: Number,
-        required: true,
-    },
-    totalAmountDue: {
-        type: Number,
-        required: true,
-    },
-    createdBy: {
-        type: Schema.Types.ObjectId, 
-        ref: 'user', 
-        required: true,
-    },
-    
-    
+    subdivision: [{
+        image: [],
+        lotNumber: {
+            type: Number,
+            unique: true,
+        },
+        totalSqm: {
+            type: Number,
+            default: null,
+        },
+        amountperSquare: {
+            type: Number,
+            default: null,
+        },
+        totalAmountDue: {
+            type: Number,
+            default: null,
+        },
+        status: {
+            type: String,
+            default: null
+        },
+
+    }]
 });
 
-lotSchema.set('timestamps', true);
 
-// Apply uniqueValidator plugin before exporting the model
-lotSchema.plugin(uniqueValidator, { message: "This lot already exists." });
+
+lotSchema.set("toJSON", {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject.__id;
+        delete returnedObject.__v;
+    },
+});
+
+
 
 module.exports = mongoose.model('Lot', lotSchema);

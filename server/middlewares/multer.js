@@ -28,14 +28,30 @@ const attachmentsStorage = multer.diskStorage({
   },
 });
 
+// Define storage for attachments
+const lotImagesStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/lotImages/'); // Destination folder for attachments
+  },
+  filename: function (req, file, cb) {
+    const originalname = path.parse(file.originalname).name;
+    const extension = path.extname(file.originalname);
+    const uniqueName = originalname + extension;
+    cb(null, uniqueName); // Unique filename for each attachment
+  },
+});
+
+
 // Create a Multer instance for handling a single file with the field name 'file'
 const uploadScannedFile = multer({ storage: scannedFilesStorage }).single('file');
 
 // Create a Multer instance for handling attachments with the field name 'attachment'
 const uploadAttachment = multer({ storage: attachmentsStorage }).single('file');
 
+const uploadlotImage = multer({ storage: lotImagesStorage }).single('file');
 
 module.exports = {
   uploadScannedFile,
-  uploadAttachment
+  uploadAttachment,
+  uploadlotImage
 };
