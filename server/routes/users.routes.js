@@ -57,7 +57,7 @@ router.put("/:id", auth.authenticateToken, userController.restrict('admin'), use
 router.delete("/:id", auth.authenticateToken, userController.restrict('admin'), userController.deleteUser);
 
 //files
-router.get("/retrieve-upload/:id/:filename", auth.authenticateToken, userController.restrict('staff'), uploadedController.retrieveUploadedFile )
+router.get("/retrieve-upload/:id/:filename", auth.authenticateToken, userController.restrict('staff'), uploadedController.retrieveAttachmentFile )
 router.get("/retrieveForm/:id/:filename", auth.authenticateToken, userController.restrict('staff'), uploadedController.retrieveForm )
 
 

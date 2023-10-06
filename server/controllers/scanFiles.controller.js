@@ -98,7 +98,7 @@ exports.retrieveScanFile = async (req, res) => {
 
 
        // Specify the path to the uploaded file
-       const filePath = path.join(__dirname, '..', 'public', 'uploads', filename );
+       const filePath = path.join(__dirname, '..', 'public', 'uploads','scannedFiles', filename );
     
        // Check if the file exist
         if (fs.existsSync(filePath)) {

@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 
-exports.retrieveUploadedFile = async (req, res, next) => {
+exports.retrieveAttachmentFile = async (req, res, next) => {
 
   try {
 
@@ -18,7 +18,7 @@ exports.retrieveUploadedFile = async (req, res, next) => {
           }
 
            // Specify the path to the uploaded file
-         const filePath = path.join(__dirname, '..', 'public', 'uploads', filename );
+         const filePath = path.join(__dirname, '..', 'public', 'uploads','attachments', filename );
     
            // Check if the file exist
             if (fs.existsSync(filePath)) {
