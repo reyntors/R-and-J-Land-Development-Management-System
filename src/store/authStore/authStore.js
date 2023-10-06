@@ -57,11 +57,6 @@ export default {
                 context.commit('addLocalStorage',Data)
                 context.commit('addStoreState',Data)
 
-                var chatbox = document.getElementById('fb-customer-chat');
-                chatbox.setAttribute("page_id", "107489495346145");
-                chatbox.setAttribute("attribution", "biz_inbox");
-
-
                 return responseData;
 
             }catch(error){
