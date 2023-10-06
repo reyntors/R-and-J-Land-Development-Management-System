@@ -48,7 +48,7 @@ const uploadScannedFile = multer({ storage: scannedFilesStorage }).single('file'
 // Create a Multer instance for handling attachments with the field name 'attachment'
 const uploadAttachment = multer({ storage: attachmentsStorage }).single('file');
 
-const uploadlotImage = multer({ storage: lotImagesStorage }).single('file');
+const uploadlotImage = multer({ storage: lotImagesStorage }).single('image');
 
 module.exports = {
   uploadScannedFile,

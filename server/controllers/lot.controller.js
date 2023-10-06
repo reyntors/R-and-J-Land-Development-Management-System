@@ -1,6 +1,8 @@
 
 const Lot = require("../models/lot.model");
-
+const { uploadlotImage } = require('../middlewares/multer');
+const fs = require('fs');
+const path = require('path');
 
 
 exports.createLot = async (req, res, next) => {
@@ -117,48 +119,63 @@ exports.getPublicLotDetails = async (req, res, next) => {
 };
 
 exports.updateLot = async (req, res, next) => {
+
   try {
-    const { lotNumber } = req.params;
-    const lotUpdateData = req.body;
+    uploadlotImage(req, res, async function (err){
 
-    console.log(lotUpdateData)
-    console.log(lotNumber)
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'File upload failed', error: err });
+      }
 
-    const updatedLot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
+        const { lotNumber } = req.params;
+        const  updateLotData = req.body;
+        const uploadedImage = req.file
+        
 
-    if (!updatedLot) {
-      return res.status(404).json({ message: "Lot not found" });
-    }
+        const updatedLot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
 
-    array = lotNumber - 1;
+        if (!updatedLot) {
+          return res.status(404).json({ message: "Lot not found" });
+        }
+        array = lotNumber - 1;
 
-   
+        // Create a new ScannedFiles
+      const newImageFiles = {
 
+              filename: uploadedImage.originalname,
+              contentType: uploadedImage.mimetype,
+        };
 
-    if (req.file) {
-   
-      const imageData = {
-        filename: req.file.originalname,
-        contentType: req.file.mimetype,
-      };
+    
+        updatedLot.subdivision[array].image.push(newImageFiles);
+        
 
-  
+        if (updateLotData.totalSqm) {
+          updatedLot.subdivision[array].totalSqm = updateLotData.totalSqm;
+        }
+        if (updateLotData.amountperSquare) {
+          updatedLot.subdivision[array].amountperSquare = updateLotData.amountperSquare;
+        }
+        if (updateLotData.totalAmountDue) {
+          updatedLot.subdivision[array].totalAmountDue = updateLotData.totalAmountDue;
+        }
+        if (updateLotData.status) {
+          updatedLot.subdivision[array].status = updateLotData.status;
+        }
+        
 
-      updatedLot.subdivision[array].image.push(imageData);
-    }
+        
 
-    // Update other fields if provided in the request
-    if (lotUpdateData.amountperSquare) {
-      updatedLot.subdivision[array].amountperSquare = lotUpdateData.amountperSquare;
-    }
+        // Save the updated lot
+        const savedLot = await updatedLot.save();
 
-    // Save the updated lot
-    const savedLot = await updatedLot.save();
-
-    return res.status(200).json({
-      message: "Lot Information Successfully updated",
-      data: savedLot.subdivision[array],
+        return res.status(200).json({
+          message: "Lot Information Successfully updated",
+          data: savedLot.subdivision[array],
     });
+  });
+    
   } catch (error) {
     return next(error);
   }
