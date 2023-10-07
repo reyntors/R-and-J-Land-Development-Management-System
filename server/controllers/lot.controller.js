@@ -177,7 +177,7 @@ exports.createLot = async (req, res, next) => {
             
           },
           {
-            image: null,
+            image: [],
             lotNumber: 19,
             totalSqm: null,
             amountperSquare: null,
