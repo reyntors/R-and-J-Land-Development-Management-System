@@ -77,9 +77,6 @@ exports.retrieveLotImage = async (req, res) => {
 
       const { lotNumber, filename } = req.params;
 
-      console.log("my file:", filename)
-      console.log("my lotNumber:", lotNumber)
-
       const lot = await Lot.findOne({ "subdivision.lotNumber": lotNumber })
 
       if (!lot) {
@@ -90,17 +87,26 @@ exports.retrieveLotImage = async (req, res) => {
       const arr = lotNumber - 1; 
 
 
-      const image = lot.subdivision[arr].image[0].filename;
+      // const image = lot.subdivision[arr].image[0];
 
-      console.log("i am from",image)
 
-      if (image !== filename) {
-        console.log(image !== filename)
-        console.log(image)
-        console.log(filename)
-        return res.status(404).json({ message: 'Image not found' });
+      let foundImage = null;
+
+      for (const imageObj of lot.subdivision[arr].image) {
+
+        if (imageObj.filename === filename) {
+          foundImage = imageObj;
+          break; 
+        }
       }
-     
+
+      if (foundImage) {
+        // You found the image, do something with it
+        console.log("Image found:", foundImage);
+      } else {
+        // Image not found in any image object
+        console.log("Image not found");
+      }
        const filePath = path.join(__dirname, '..', 'public', 'uploads','images', filename);
     
      

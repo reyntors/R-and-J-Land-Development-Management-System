@@ -177,7 +177,7 @@ exports.createLot = async (req, res, next) => {
             
           },
           {
-            image: [],
+            image: null,
             lotNumber: 19,
             totalSqm: null,
             amountperSquare: null,
@@ -269,8 +269,6 @@ exports.updateLot = async (req, res, next) => {
         array = lotNumber - 1;
 
         // Create a new ScannedFiles
-
-  
 
         if(uploadedImage){
           const newImageFiles = {
