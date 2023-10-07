@@ -31,7 +31,7 @@ const attachmentsStorage = multer.diskStorage({
 // Define storage for attachments
 const lotImagesStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/uploads/lotImages/'); // Destination folder for attachments
+    cb(null, 'public/uploads/images/'); // Destination folder for attachments
   },
   filename: function (req, file, cb) {
     const originalname = path.parse(file.originalname).name;

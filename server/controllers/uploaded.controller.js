@@ -75,41 +75,48 @@ exports.retrieveLotImage = async (req, res) => {
 
   try {
 
-      const { lotNumber } = req.params;
+      const { lotNumber, filename } = req.params;
+
+      console.log("my file:", filename)
+      console.log("my lotNumber:", lotNumber)
 
       const lot = await Lot.findOne({ "subdivision.lotNumber": lotNumber })
 
-      console.log(lot.subdivision[0].image)
-
       if (!lot) {
 
-          return res.status(404).json({message: 'user not found'});
+          return res.status(404).json({message: 'lot  not found'});
       }
 
-      array = lotNumber - 1
+      const arr = lotNumber - 1; 
 
-      if (!lot.subdivision[array].image) {
-        return res.status(404).json({ message: 'Image not found for this lot' });
+
+      const image = lot.subdivision[arr].image[0].filename;
+
+      console.log("i am from",image)
+
+      if (image !== filename) {
+        console.log(image !== filename)
+        console.log(image)
+        console.log(filename)
+        return res.status(404).json({ message: 'Image not found' });
       }
-
-      const imageData = lot.subdivision[array].image;
-
-
-
-       // Specify the path to the uploaded file
-       const filePath = path.join(__dirname, '..', 'public', 'uploads','lotImages', imageData[array].filename );
+     
+       const filePath = path.join(__dirname, '..', 'public', 'uploads','images', filename);
     
-       // Check if the file exist
+     
         if (fs.existsSync(filePath)) {
-        // Serve the file using Express's res.sendFile()
+       
         res.sendFile(filePath);
-        } else {
+
+        } 
+        else {
         console.error(`File not found: ${filePath}`);
         res.status(404).json({ message: 'File not found' });
         }
 
       
   } catch (error) {
+    console.log(error);
 
       return res.status(500).json({ error: 'Internal server error' });
       
