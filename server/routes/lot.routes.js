@@ -9,6 +9,6 @@ router.get("/allLot",  lotController.getPublicLotDetails);
 router.get("/:lotNumber", lotController.getPublicLotDetails);
 router.post("/addlot", auth.authenticateToken, userController.restrict('staff'), lotController.createLot);
 router.put("/updatelot/:lotNumber", auth.authenticateToken, userController.restrict('staff'), lotController.updateLot);
-router.get("/retrieve-lotImage/:lotNumber/:filename", auth.authenticateToken, userController.restrict('staff'), uploadedController.retrieveLotImage);
+router.get("/retrieve-lotImage/:lotNumber/:filename", uploadedController.retrieveLotImage);
 
 module.exports = router;

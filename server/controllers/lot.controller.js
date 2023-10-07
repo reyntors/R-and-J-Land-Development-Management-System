@@ -68,6 +68,132 @@ exports.createLot = async (req, res, next) => {
             status: null,
             
           },
+          {
+            image: [],
+            lotNumber: 7,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 8,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 9,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 10,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 11,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 12,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 13,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 14,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 15,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 16,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 17,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 18,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 19,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
+          {
+            image: [],
+            lotNumber: 20,
+            totalSqm: null,
+            amountperSquare: null,
+            totalAmountDue: null,
+            status: null,
+            
+          },
         ],
       });
 
