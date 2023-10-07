@@ -4,14 +4,7 @@ const { Schema } = mongoose;
 
 
 const formsSchema = new Schema({
-    forms: [{
-        filename:{ 
-            type: String
-        },
-        mimetype: {
-            type: String
-        }
-    }]
+    forms: []
 });
 
 

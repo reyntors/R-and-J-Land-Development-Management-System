@@ -64,7 +64,7 @@ const uploadAttachment = multer({ storage: attachmentsStorage }).single('file');
 
 const uploadlotImage = multer({ storage: lotImagesStorage }).single('image');
 
-const uploadForms = multer({ storage: formsStorage }).array('file', 10);
+const uploadForms = multer({ storage: formsStorage }).single('file');
 
 module.exports = {
   uploadScannedFile,

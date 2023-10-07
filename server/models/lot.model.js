@@ -7,7 +7,7 @@ const lotSchema = new Schema({
     subdivision: [{
         image: [],
         lotNumber: {
-            type: Number,
+            type: String,
             unique: true,
         },
         totalSqm: {

@@ -9,6 +9,7 @@ const letter = require('../controllers/letterofintent.controller');
 const scanfilesController = require('../controllers/scanFiles.controller');
 const uploadedController = require('../controllers/uploaded.controller');
 
+
 const auth = require("../middlewares/auth");
 const express = require("express");
 
@@ -43,6 +44,7 @@ router.get('/paymentdetails/:id', auth.authenticateToken, userController.restric
 
 //forms
 router.get('/forms/:id', auth.authenticateToken, userController.restrict('staff'), formsController.getAllFormsById);
+router.get('/retrieve-raw-forms/:filename', auth.authenticateToken, userController.restrict('staff'), formsController.retrieveForms);
 
 
 //scanfiles
