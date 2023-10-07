@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const dbConfig = require('./config/db.config');
 const errors = require('./middlewares/errors');
+const { GridFSBucket } = require('mongodb');
 
 
 const app = express();
@@ -26,6 +27,10 @@ mongoose.connect(dbConfig.db, {
 .catch((error) => {
     console.error(error);
 });
+
+// Initialize GridFS
+const db = mongoose.connection;
+
 
 app.use(express.json());
 app.use(express.static("public"));

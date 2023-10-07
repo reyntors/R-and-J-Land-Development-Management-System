@@ -5,7 +5,9 @@ const User = require('../models/user.model');
 
 exports.createPdfTemplate = async (req, res) => {
 
-        const { id } = req.params
+        const { id } = req.params;
+        const { formType } = req.body;
+
 
     try {
 
@@ -146,6 +148,89 @@ exports.createPdfTemplate = async (req, res) => {
         }
 
         return res.status(200).json({message: 'PDF template created sucessfully!'})
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+exports.generatePDF = async (req, res, next) => {
+
+    const { id } = req.params;
+    const { formType } = req.body; // You can pass the formType in the request body
+
+    try {
+        const user = await User.findOne({ userId: id });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found!' });
+        }
+
+        // Create a new PDF document
+        const pdfDoc = await PDFDocument.create();
+
+        // Define A4 page dimensions
+        const pageWidth = 595.276;
+        const pageHeight = 841.890;
+        const page = pdfDoc.addPage([pageWidth, pageHeight]);
+
+        // Create a font - Use StandardFonts.Helvetica
+        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+        // Define coordinates for text placement
+        let x = 50;
+        let y = 850;
+
+        let content = '';
+        let projectContent = '';
+        let outputPath = '';
+
+        // Generate content based on the formType passed in the request body
+        switch (formType) {
+            case 'letterOfIntent':
+                // Generate content for Letter of Intent form
+                // ...
+                break;
+            case 'contractDetails':
+                // Generate content for Contract Details form
+                // ...
+                break;
+            case 'individual':
+                // Generate content for Individual Declaration form
+                // ...
+                break;
+            case 'birtin':
+                // Generate content for BIR TIN Request form
+                // ...
+                break;
+            default:
+                return res.status(400).json({ message: 'Invalid form type' });
+        }
+
+        // Split the content into lines and draw them on the page
+        const lines = content.split('\n');
+        lines.forEach((line) => {
+            page.drawText(line, {
+                x,
+                y,
+                size: 9,
+                font,
+                color: rgb(0, 0, 0),
+            });
+            y -= 20; // Adjust the vertical position for the next line
+        });
+
+        // Serialize the PDF document to a buffer
+        const pdfBytes = await pdfDoc.save();
+
+        // Define the output path based on the formType
+        outputPath = path.join(__dirname, `../public/templates/${formType}.pdf`);
+
+        // Save the PDF buffer to a file
+        fs.writeFileSync(outputPath, pdfBytes);
+
+        return res.status(200).json({ message: `${formType} PDF created successfully!`, outputPath });
     } catch (error) {
         console.error(error);
         throw error;

@@ -1,33 +1,38 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-
+const imageSchema = new mongoose.Schema({
+    filename: String,
+    contentType: String,
+    fileId: String, // Store fileId as a string
+});
+const subdivisionSchema = new mongoose.Schema({
+    // other fields
+    image: [imageSchema], // Define image as an array of images
+    lotNumber: {
+        type: String,
+        unique: true,
+    },
+    totalSqm: {
+        type: Number,
+        default: null,
+    },
+    amountperSquare: {
+        type: Number,
+        default: null,
+    },
+    totalAmountDue: {
+        type: Number,
+        default: null,
+    },
+    status: {
+        type: String,
+        default: null
+    },
+});
 
 const lotSchema = new Schema({
-    subdivision: [{
-        image: [],
-        lotNumber: {
-            type: String,
-            unique: true,
-        },
-        totalSqm: {
-            type: Number,
-            default: null,
-        },
-        amountperSquare: {
-            type: Number,
-            default: null,
-        },
-        totalAmountDue: {
-            type: Number,
-            default: null,
-        },
-        status: {
-            type: String,
-            default: null
-        },
-
-    }]
+    subdivision: [subdivisionSchema],
 });
 
 

@@ -70,9 +70,8 @@ async function  generateContractDetailsPDF(pdfDoc, user, contractDetailsData) {
     content = `           
                ${' '.repeat(55)}CONTRACT DETAILS FORM
     ______________________________________________________________________________________________           
-   |            ${' '.repeat(55)}PROPERTY DETAILS                                                |
-   |_____________________________________________________________________________________________|
-   
+               ${' '.repeat(55)}PROPERTY DETAILS                                                
+
      
    `;
 

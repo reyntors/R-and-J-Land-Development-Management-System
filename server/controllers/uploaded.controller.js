@@ -2,7 +2,11 @@ const User = require('../models/user.model')
 const Lot = require("../models/lot.model");
 const path = require('path');
 const fs = require('fs');
-
+const mongoose = require('mongoose');
+const { GridFSBucket } = require('mongodb');
+const { isModuleNamespaceObject } = require('util/types');
+const db = mongoose.connection;
+const gridFSBucket = new GridFSBucket(db);
 
 exports.retrieveAttachmentFile = async (req, res, next) => {
 
@@ -75,9 +79,13 @@ exports.retrieveLotImage = async (req, res) => {
 
   try {
 
-      const { lotNumber, filename } = req.params;
+      const { lotNumber, fileId } = req.params;
+
+      // Convert the fileId from the request to a string
+      const requestedFileId = fileId.toString();
 
       const lot = await Lot.findOne({ "subdivision.lotNumber": lotNumber })
+
 
       if (!lot) {
 
@@ -86,46 +94,36 @@ exports.retrieveLotImage = async (req, res) => {
 
       const arr = lotNumber - 1; 
 
+    
+      
+      const foundImage = lot.subdivision[arr].image.find((imageObj) => {
+        const imageFileId = imageObj.fileId.toString(); // Convert fileId to string
+        return imageFileId === requestedFileId; // Compare string fileId with the request fileId
+      });
 
-      // const image = lot.subdivision[arr].image[0];
 
-
-      let foundImage = null;
-
-      for (const imageObj of lot.subdivision[arr].image) {
-
-        if (imageObj.filename === filename) {
-          foundImage = imageObj;
-          break; 
-        }
-      }
+      console.log(foundImage)
+  
 
       if (foundImage) {
-        // You found the image, do something with it
-        console.log("Image found:", foundImage);
+        // Retrieve the file by its ID and stream it as a response
+        const fileId = foundImage.fileId;
+        const downloadStream = gridFSBucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+  
+        // Set the response content type based on the file's contentType
+        downloadStream.on('file', (file) => {
+          res.setHeader('Content-Disposition', `attachment; filename="${file.filename}"`);
+          res.setHeader('Content-Type', file.contentType);
+        });
+  
+        // Pipe the file stream to the response
+        downloadStream.pipe(res);
       } else {
         // Image not found in any image object
-        console.log("Image not found");
+        return res.status(404).json({ message: 'Image not found' });
       }
-       const filePath = path.join(__dirname, '..', 'public', 'uploads','images', filename);
-    
-     
-        if (fs.existsSync(filePath)) {
-       
-        res.sendFile(filePath);
-
-        } 
-        else {
-        console.error(`File not found: ${filePath}`);
-        res.status(404).json({ message: 'File not found' });
-        }
-
-      
-  } catch (error) {
-    console.log(error);
-
+    } catch (error) {
+      console.log(error);
       return res.status(500).json({ error: 'Internal server error' });
-      
-  }
-
-}
+    }
+  };
