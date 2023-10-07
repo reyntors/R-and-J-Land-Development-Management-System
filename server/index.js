@@ -36,6 +36,7 @@ app.use("/letter", require("./routes/guestForms.routes"));
 app.use("/birtinrequest", require("./routes/guestForms.routes"));
 app.use("/individualbuyer", require("./routes/guestForms.routes"));
 app.use("/contractdetails", require("./routes/guestForms.routes"));
+app.use("/forms", require("./routes/guestForms.routes"));
 
 
 app.use("/lot", require("./routes/lot.routes"));

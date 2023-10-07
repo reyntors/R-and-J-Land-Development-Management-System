@@ -131,6 +131,8 @@ exports.updateLot = async (req, res, next) => {
         const { lotNumber } = req.params;
         const  updateLotData = req.body;
         const uploadedImage = req.file
+
+        console.log(uploadedImage);
         
 
         const updatedLot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
@@ -141,15 +143,20 @@ exports.updateLot = async (req, res, next) => {
         array = lotNumber - 1;
 
         // Create a new ScannedFiles
-      const newImageFiles = {
 
-              filename: uploadedImage.originalname,
-              contentType: uploadedImage.mimetype,
-        };
+  
+
+        if(uploadedImage){
+          const newImageFiles = {
+
+            filename: uploadedImage.originalname,
+            contentType: uploadedImage.mimetype,
+      };
 
     
-        updatedLot.subdivision[array].image.push(newImageFiles);
-        
+          updatedLot.subdivision[array].image.push(newImageFiles);
+        }
+
 
         if (updateLotData.totalSqm) {
           updatedLot.subdivision[array].totalSqm = updateLotData.totalSqm;

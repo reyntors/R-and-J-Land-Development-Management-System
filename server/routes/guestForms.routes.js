@@ -5,6 +5,7 @@ const individualbuyerdeclaration = require('../controllers/individualbuyerdeclar
 const contractDetails = require('../controllers/contractdetails.controller');
 const express = require("express");
 const userController = require("../controllers/users.controller");
+const formsController = require("../controllers/forms.controller");
 
 
 const router = express.Router();
@@ -21,5 +22,8 @@ router.post("/addindividualbuyer", auth.authenticateToken, userController.restri
 
 //Individual Buyer Declaration
 router.post("/addcontract", auth.authenticateToken, userController.restrict('guest'),  contractDetails.createContractDetails);
+
+router.post("/addforms",  formsController.getForms);
+
 
 module.exports = router;
