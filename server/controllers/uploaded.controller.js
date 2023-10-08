@@ -2,10 +2,8 @@ const User = require('../models/user.model')
 const Lot = require("../models/lot.model");
 const path = require('path');
 const fs = require('fs');
-const mongoose = require('mongoose');
-const { GridFSBucket } = require('mongodb');
-const db = mongoose.connection;
-const gridFSBucket = new GridFSBucket(db);
+const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const s3Client = new S3Client({ region: process.env.AWS_REGION });
 
 exports.retrieveAttachmentFile = async (req, res, next) => {
 
@@ -73,19 +71,30 @@ exports.retrieveForm = async (req, res, next) => {
 
 }
 
+const generatePresignedUrl = async (bucketName, key, foundImage) => {
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+    Expires: 3600, 
+  };
 
+  try {
+  
+    const signedUrl = `https://${bucketName}.s3.amazonaws.com/${key}?AWSAccessKeyId=${process.env.AWS_ACCESS_KEY_ID}&Expires=${params.Expires}&Signature=${$metadata.headers['x-amz-signature']}`;
+
+    return signedUrl;
+  } catch (error) {
+    console.error("Error generating pre-signed URL:", error);
+    throw error;
+  }
+};
 exports.retrieveLotImage = async (req, res) => {
 
   try {
 
       const { lotNumber, filename } = req.params;
 
-      console.log("query number: ", lotNumber)
-      console.log("your file name is: ", filename)
-
       const lot = await Lot.findOne({ "subdivision.lotNumber": lotNumber })
-
-
 
       if (!lot) {
 
@@ -104,21 +113,20 @@ exports.retrieveLotImage = async (req, res) => {
         }
       }
 
-
       if (foundImage) {
-        // You found the image, do something with it
-        console.log("Image found:", foundImage);
-
-        const filePath = path.join(__dirname, '..', 'public', 'uploads','images', filename);
-        if (fs.existsSync(filePath)) {
-       
-          res.sendFile(filePath);
-  
-          } 
-     
-      } 
+        
       
-      else{
+       const bucketName = process.env.AWS_BUCKET_NAME;
+       const key = `uploads/lotimages/${foundImage.filename}`;
+      
+
+        
+        const signedUrl = await generatePresignedUrl(bucketName, key, foundImage);
+
+        return res.status(200).json({ url: signedUrl });
+
+        
+      } else{
         return res.status(404).json({message: 'Image not found'})
       }
       

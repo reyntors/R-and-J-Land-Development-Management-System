@@ -1,8 +1,7 @@
 
 const Lot = require("../models/lot.model");
-const { uploadlotImage } = require('../middlewares/multer');
-const fs = require('fs');
-const path = require('path');
+// const { uploadlotImage } = require('../middlewares/multer');
+const { s3Uploadv3, upload } = require('../services/s3service');
 
 
 exports.createLot = async (req, res, next) => {
@@ -245,9 +244,11 @@ exports.getPublicLotDetails = async (req, res, next) => {
 };
 
 exports.updateLot = async (req, res, next) => {
-
+  
   try {
-    uploadlotImage(req, res, async function (err){
+
+    const uploadSingle =  upload("aws-bucket-nodejs").single('image');
+    uploadSingle(req, res, async function (err){
 
       if (err) {
         console.log(err);
@@ -258,7 +259,7 @@ exports.updateLot = async (req, res, next) => {
         const  updateLotData = req.body;
         const uploadedImage = req.file
 
-        console.log(uploadedImage);
+        console.log("image data:",uploadedImage);
         
 
         const updatedLot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
@@ -266,20 +267,22 @@ exports.updateLot = async (req, res, next) => {
         if (!updatedLot) {
           return res.status(404).json({ message: "Lot not found" });
         }
-        array = lotNumber - 1;
+        const array = lotNumber - 1;
 
-        // Create a new ScannedFiles
+       
 
         if(uploadedImage){
           
-          const newImageFiles = {
+          
+          const s3Response = await s3Uploadv3(uploadedImage);
 
+          console.log('s3response:', s3Response);
+
+          updatedLot.subdivision[array].image.push({
             filename: uploadedImage.originalname,
             contentType: uploadedImage.mimetype,
-      };
 
-    
-          updatedLot.subdivision[array].image.push(newImageFiles);
+          });
         }
 
 

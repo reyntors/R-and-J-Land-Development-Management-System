@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const dbConfig = require('./config/db.config');
 const errors = require('./middlewares/errors');
-const { GridFSBucket } = require('mongodb');
+require("dotenv").config()
 
 
 const app = express();
@@ -28,10 +28,6 @@ mongoose.connect(dbConfig.db, {
     console.error(error);
 });
 
-// Initialize GridFS
-const db = mongoose.connection;
-
-
 app.use(express.json());
 app.use(express.static("public"));
 
@@ -46,26 +42,6 @@ app.use("/forms", require("./routes/guestForms.routes"));
 
 app.use("/lot", require("./routes/lot.routes"));
 app.use("/reservation", require("./routes/reservation.routes"));
-
-
-app.get('/collections', async (req, res) => {
-    try {
-      const collections1 = await mongoose.connection.db.listCollections().toArray();
-      const collectionNames = collections1.map((collection) => collection.name);
-      res.json({ collections: collectionNames });
-
-
-      const db = mongoose.connection;
-        const gridFSBucket = new GridFSBucket(db);
-
-        const collections2 = await db.db.listCollections().toArray();
-
-        console.log(collections2);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
 
 
 app.use(errors.errorHandler);

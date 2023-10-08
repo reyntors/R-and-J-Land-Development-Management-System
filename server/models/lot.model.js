@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const imageSchema = new mongoose.Schema({
-    data: Buffer,
-    filename: String,
-    contentType: String,
+    filename: {
+        type: String
+    },
+    contentType: {
+        type: String
+    },
+    
 });
 const subdivisionSchema = new mongoose.Schema({
     // other fields
