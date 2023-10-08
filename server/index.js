@@ -48,6 +48,26 @@ app.use("/lot", require("./routes/lot.routes"));
 app.use("/reservation", require("./routes/reservation.routes"));
 
 
+app.get('/collections', async (req, res) => {
+    try {
+      const collections1 = await mongoose.connection.db.listCollections().toArray();
+      const collectionNames = collections1.map((collection) => collection.name);
+      res.json({ collections: collectionNames });
+
+
+      const db = mongoose.connection;
+        const gridFSBucket = new GridFSBucket(db);
+
+        const collections2 = await db.db.listCollections().toArray();
+
+        console.log(collections2);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
 app.use(errors.errorHandler);
 
 app.listen(process.env.PORT, function () {

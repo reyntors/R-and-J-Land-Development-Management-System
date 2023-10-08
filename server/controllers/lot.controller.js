@@ -1,12 +1,8 @@
 
 const Lot = require("../models/lot.model");
 const { uploadlotImage } = require('../middlewares/multer');
-const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
-
-// Import GridFSBucket
-const { GridFSBucket } = require('mongodb');
 
 
 exports.createLot = async (req, res, next) => {
@@ -251,7 +247,6 @@ exports.getPublicLotDetails = async (req, res, next) => {
 exports.updateLot = async (req, res, next) => {
 
   try {
-
     uploadlotImage(req, res, async function (err){
 
       if (err) {
@@ -263,6 +258,8 @@ exports.updateLot = async (req, res, next) => {
         const  updateLotData = req.body;
         const uploadedImage = req.file
 
+        console.log(uploadedImage);
+        
 
         const updatedLot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
 
@@ -274,33 +271,17 @@ exports.updateLot = async (req, res, next) => {
         // Create a new ScannedFiles
 
         if(uploadedImage){
+          
+          const newImageFiles = {
 
-          console.log('Uploaded file path:', uploadedImage.path);
+            filename: uploadedImage.originalname,
+            contentType: uploadedImage.mimetype,
+      };
 
-        const gridFSBucket = new GridFSBucket(mongoose.connection.db);
-
-          // Create a GridFS stream for storing the uploaded file
-        const uploadStream = gridFSBucket.openUploadStream(uploadedImage.originalname, {
-          contentType: uploadedImage.mimetype,
-        });
-
-
-        // Pipe the file stream to the GridFS stream
-        fs.createReadStream(uploadedImage.path).pipe(uploadStream);
-
-
-         // Close the GridFS stream to complete the upload
-         uploadStream.end();
-
-
-        // Save information about the file in your lot object
-         updatedLot.subdivision[array].image.push({
-          filename: uploadedImage.originalname,
-          contentType: uploadedImage.mimetype,
-          fileId: uploadStream.id, // Store the GridFS file ID in your lot object
-        });
-        
+    
+          updatedLot.subdivision[array].image.push(newImageFiles);
         }
+
 
         if (updateLotData.totalSqm) {
           updatedLot.subdivision[array].totalSqm = updateLotData.totalSqm;
@@ -314,15 +295,10 @@ exports.updateLot = async (req, res, next) => {
         if (updateLotData.status) {
           updatedLot.subdivision[array].status = updateLotData.status;
         }
-        
-  
+          
 
         // Save the updated lot
         const savedLot = await updatedLot.save();
-
-        // // Clean up the temporary file
-        fs.unlinkSync(uploadedImage.path);
-
 
         return res.status(200).json({
           message: "Lot Information Successfully updated",

@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const { GridFSBucket } = require('mongodb');
-const { isModuleNamespaceObject } = require('util/types');
 const db = mongoose.connection;
 const gridFSBucket = new GridFSBucket(db);
 
@@ -79,12 +78,13 @@ exports.retrieveLotImage = async (req, res) => {
 
   try {
 
-      const { lotNumber, fileId } = req.params;
+      const { lotNumber, filename } = req.params;
 
-      // Convert the fileId from the request to a string
-      const requestedFileId = fileId.toString();
+      console.log("query number: ", lotNumber)
+      console.log("your file name is: ", filename)
 
       const lot = await Lot.findOne({ "subdivision.lotNumber": lotNumber })
+
 
 
       if (!lot) {
@@ -94,36 +94,39 @@ exports.retrieveLotImage = async (req, res) => {
 
       const arr = lotNumber - 1; 
 
-    
-      
-      const foundImage = lot.subdivision[arr].image.find((imageObj) => {
-        const imageFileId = imageObj.fileId.toString(); // Convert fileId to string
-        return imageFileId === requestedFileId; // Compare string fileId with the request fileId
-      });
+      let foundImage = null;
 
+      for (const imageObj of lot.subdivision[arr].image) {
 
-      console.log(foundImage)
-  
+        if (imageObj.filename === filename) {
+          foundImage = imageObj;
+          break; 
+        }
+      }
+
 
       if (foundImage) {
-        // Retrieve the file by its ID and stream it as a response
-        const fileId = foundImage.fileId;
-        const downloadStream = gridFSBucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+        // You found the image, do something with it
+        console.log("Image found:", foundImage);
+
+        const filePath = path.join(__dirname, '..', 'public', 'uploads','images', filename);
+        if (fs.existsSync(filePath)) {
+       
+          res.sendFile(filePath);
   
-        // Set the response content type based on the file's contentType
-        downloadStream.on('file', (file) => {
-          res.setHeader('Content-Disposition', `attachment; filename="${file.filename}"`);
-          res.setHeader('Content-Type', file.contentType);
-        });
-  
-        // Pipe the file stream to the response
-        downloadStream.pipe(res);
-      } else {
-        // Image not found in any image object
-        return res.status(404).json({ message: 'Image not found' });
+          } 
+     
+      } 
+      
+      else{
+        return res.status(404).json({message: 'Image not found'})
       }
-    } catch (error) {
-      console.log(error);
+      
+  } catch (error) {
+    console.log(error);
+
       return res.status(500).json({ error: 'Internal server error' });
-    }
-  };
+      
+  }
+
+}
