@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const imageSchema = new mongoose.Schema({
+    data: Buffer,
     filename: String,
     contentType: String,
-    fileId: String, // Store fileId as a string
 });
 const subdivisionSchema = new mongoose.Schema({
     // other fields
