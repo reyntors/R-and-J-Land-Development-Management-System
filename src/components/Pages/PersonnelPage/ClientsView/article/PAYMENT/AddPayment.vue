@@ -59,9 +59,9 @@ export default {
             // console.log('Blob content:', blob);
             // this.url = URL.createObjectURL(blob)
         },
-        close(){
-            this.$emit('exit-btn')
+        close(){    
             this.$emit('refresh',this.id)
+            this.$emit('exit-btn')
         },
         checkAllowedSubmit(){
             if( this.date !== null &&

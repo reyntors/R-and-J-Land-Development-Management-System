@@ -14,8 +14,10 @@
 
     </article>
     <hr>
-    <section>
-        <button>Delete <font-awesome-icon :icon="['fas', 'trash-can']" /></button>
+    <section class="option">
+        <button @click="delInquiry(obj.id)">Delete <font-awesome-icon :icon="['fas', 'trash-can']" /></button>
+        <button @click="mark(obj.id)" v-if="!obj.read">Mark read <font-awesome-icon :icon="['fas', 'envelope-circle-check']" /></button>
+        <button @click="mark(obj.id)" v-if="obj.read">Mark Unread <font-awesome-icon :icon="['fas', 'envelope-open']" /></button>
     </section>
   </div>
 </template>
@@ -28,6 +30,14 @@ export default {
     methods: {
         exitCard(){
             this.$emit('close-card')
+        },
+        delInquiry(id){
+            this.$store.commit('inquiries/delInquiry',id)
+            this.exitCard()
+        },
+        mark(id){
+            console.log('mark',id)
+            this.$store.commit('inquiries/markInquiry',id)
         }
     },
     computed:{
@@ -65,5 +75,9 @@ export default {
 }
 #exit-icon:active{
     color: #b0bbcf;
+}
+.option{
+    display: flex;
+    justify-content: space-between;
 }
 </style>

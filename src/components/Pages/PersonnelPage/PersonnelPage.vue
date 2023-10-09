@@ -6,6 +6,7 @@
       v-if="isShowProfile"/>
 
     <router-view></router-view>
+    <!-- <progress-loading></progress-loading> -->
 
   </body>
 
@@ -22,7 +23,8 @@ export default {
     }
   },
   mounted(){
-        this.$store.dispatch('client/getLegitList')
+        // this.$store.dispatch('client/getLegitList')
+        // this.$store.dispatch('rawForms/getRawFormsList')
     } 
 }
 </script>

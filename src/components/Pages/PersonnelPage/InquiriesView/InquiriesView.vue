@@ -5,9 +5,10 @@
       </div>
 
       <div class="div2">
-        <table>
-          <tbody v-for="(item,index) in listInquiries" :key="index">
-            <tr @click="showCard(index)">
+        <progress-loading v-if="isLoading" type="spin"></progress-loading>
+        <table v-else>
+          <tbody v-for="item in listInquiries" :key="item.id">
+            <tr @click="showCard(item.id)" :class="{shade: !item.read}">
               <td class="name">{{ item.name }}</td>
               <td class="about">{{ item.subject }}{{ item.message }}</td>
               <td class="date">               
@@ -18,7 +19,7 @@
               </td>
             </tr>
             <inquiries-card
-              v-if="index === focusedIndex"
+              v-if="item.id=== focusedID"
               :obj="item"
               @close-card="closeCard"
             />
@@ -39,28 +40,39 @@
     components: {InquiriesCard},
     data(){
       return{
-        focusedIndex: null,
+        isLoading: true,
+        focusedID: null,
       }
     },
     methods: {
       showCard(index){
-        this.focusedIndex = index
-        console.log(this.focusedIndex)
+        this.focusedID = index
+        console.log(this.focusedID)
       },
       closeCard(){
-        this.focusedIndex = null
+        this.focusedID = null
       },
     },
     computed:{
       listInquiries(){
         return this.$store.getters['inquiries/listInquiriesGetter']
       }
+    },
+
+    async mounted(){
+      this.isLoading = true
+      await new Promise(resolve => setTimeout(resolve,1000))
+      this.isLoading = false
     }
   
   }
   </script>
   
   <style scoped>
+.shade{
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
 .visible{
   display: block;
 }
@@ -111,7 +123,7 @@ tr{
   color: black;
 }
 tr:hover{
-  box-shadow: 0 0 2px 1px black;
+  box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.64);
 }
 tr:hover .trash-icon{
   visibility: visible;

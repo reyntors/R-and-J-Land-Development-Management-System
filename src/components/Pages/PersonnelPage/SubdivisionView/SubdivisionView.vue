@@ -1,7 +1,6 @@
 <template>
     <div class="subdivision-cont">
-      
-      
+      <!-- {{ getSubdivision }} -->
       <div class="div1">
         <h4 @click="showAll">Subdivision</h4>
 
@@ -14,7 +13,7 @@
           <span class="suggestion-tabs" v-if="isSearching">
             <li v-for="item in listSearchSuggestions" :key="item+'a'">
 
-                <button @click="clickSuggested(item.block_Lot_No)" @close-one="showAll"> {{ item.block_Lot_No }}</button>
+                <button @click="clickSuggested(item.lotNumber)" @close-one="showAll"> {{ item.lotNumber }}</button>
 
             </li>          
           </span>
@@ -24,28 +23,36 @@
 
       
       <div class="div2">
-        
-        <ul v-if="showOnlyOne">
-          <subdivision-card v-if="!issearchedResultEmptyComputed" :subdivision="searchResultComputed" @close-one="showAll"/> 
-          <h1 v-else>Nothing found</h1> 
-        </ul>
+        <div class="shade" v-if="updating"/>
+        <progress-loading v-if="isLoading" type="spin"></progress-loading>
+        <div v-else> 
+          <ul v-if="showOnlyOne">
+            <subdivision-card v-if="!issearchedResultEmptyComputed" :subdivision="searchResultComputed" @close-one="showAll" @updating-now="setUpdating" @reload-list="getPropertyList"/> 
+            <h1 v-else>Nothing found</h1> 
+          </ul>
 
-        <ul v-else>
-          <li v-for="item in getSubdivision" :key="item">
-            <subdivision-card :subdivision="item"/>            
-          </li>
-        </ul>
+          <ul v-else>
+            <li v-for="item in getSubdivision" :key="item">
+              <subdivision-card :subdivision="item" @updating-now="setUpdating" @reload-list="getPropertyList"/>            
+            </li>
+          </ul>          
+        </div>
+
 
       </div>
     </div>
   </template>
   
   <script>
+import { toast } from 'vue3-toastify'
 import SubdivisionCard from './SubdivisionCard.vue'
   export default {
-  components: { SubdivisionCard},
+  components: { SubdivisionCard,},
     data(){
       return{
+        updating: false,
+        isLoading: true,
+
         searchValue: '',
         isSearching: false,
         listSearchSuggestions: [],
@@ -55,8 +62,12 @@ import SubdivisionCard from './SubdivisionCard.vue'
       }
     },
     methods:{
-      showAll(){
-        this.showOnlyOne = false
+      showAll(bool){
+        this.showOnlyOne = bool
+      },
+
+      setUpdating(){
+        this.updating = true
       },
 
       searchEnter(event){
@@ -69,11 +80,13 @@ import SubdivisionCard from './SubdivisionCard.vue'
         this.listSearchSuggestions = []
         this.$store.commit('subdivision/searchSuggestions',this.searchValue)
         this.listSearchSuggestions = this.$store.getters['subdivision/subdivisionSearchResultsGetter'] 
+        console.log(this.listSearchSuggestions)
         this.showAll()
       },
       
       searchNow(){
         if(this.searchValue.length>0){
+          console.log(this.searchValue)
           this.$store.commit('subdivision/searchNow',this.searchValue)
           this.showOnlyOne = true;
           console.log('searching now',this.searchValue)
@@ -88,13 +101,31 @@ import SubdivisionCard from './SubdivisionCard.vue'
         this.searchValue = params
         this.suggestedValue = params
         this.isSearching = false
+      },
+
+      async getPropertyList(){
+        this.updating = false
+        console.log('propertylist')
+        this.isLoading = true
+        try{
+          await this.$store.dispatch('subdivision/getPropertyList')
+          this.isLoading = false
+          
+        }catch(error){
+          console.log(error)
+          toast.error(error)
+        }
+        this.isLoading = false
+               
       }
       
     },
 
     computed:{
       getSubdivision(){
+        console.log(this.$store.getters['subdivision/subdivisionGetter']) 
           return this.$store.getters['subdivision/subdivisionGetter']
+          // return this.$store.getters['subdivision/listLotGetter']
       },
       searchResultComputed(){
         return this.$store.getters['subdivision/searchedResultGetter']
@@ -119,6 +150,10 @@ import SubdivisionCard from './SubdivisionCard.vue'
         this.getSearchSuggestions()  
       }
     },
+
+    mounted(){
+      this.getPropertyList()
+    }
   }
   </script>
   
@@ -164,6 +199,12 @@ import SubdivisionCard from './SubdivisionCard.vue'
   background-color: rgba(255, 0, 0, 0.2);
 }
 
+.div2{
+  padding-bottom: 3rem;
+  position: relative;
+  min-height: 100%;
+  /* border: 5px solid black; */
+}
 .suggestion-tabs{
   border: 1px solid black;
   max-height: 500%;
@@ -173,10 +214,13 @@ import SubdivisionCard from './SubdivisionCard.vue'
   width: 100%;
   overflow-y: auto;
   background-color: white;
+  z-index: 2;
 }
 .suggestion-tabs button{
   width: 100%;
-  border: 1px solid black;
+  border: none;
+  border-bottom: 1px solid black;
+  /* border: 1px solid black; */
 }
 li{
   list-style: none;
@@ -202,5 +246,11 @@ ul{
   }
   
 }
-
+.shade{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+}
   </style>

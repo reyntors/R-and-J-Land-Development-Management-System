@@ -1,5 +1,7 @@
 <template>
     <div class="c-container" >
+     
+
       <div v-if="!addFormVisibleComputed">
         <article class="searchPart">
             <h4>Client List</h4>
@@ -8,8 +10,8 @@
             </div>
         </article>
 
-
-        <article class="displayPart">
+        <progress-loading v-if="isLoading" type="spin"></progress-loading>
+        <article class="displayPart" v-if="!isLoading">
           <table>
 
             <tr>
@@ -38,11 +40,14 @@
 
 
       <addnew-client v-if="addFormVisibleComputed" @go-back="toggleShowAddForm"/>
+
+      
     </div>
     
   </template>
   
   <script>
+import { toast } from 'vue3-toastify'
 import AddnewClient from './header/AddnewClient.vue'
 import ClientDetailsNav from './aside/ClientDetailsNav.vue'
 
@@ -59,6 +64,8 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
           addFormVisible: false,
           profileClientVisible: false,
           selectedClient: null,
+
+          isLoading: true
         }
       },
 
@@ -87,6 +94,18 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
           return this.$store.getters['client/clientsGetter']
         }
       },   
+
+      async mounted(){
+        this.isLoading = true
+        try{
+          await this.$store.dispatch('client/getLegitList')
+          this.isLoading = false
+        }catch(error){
+          console.log(error)
+          toast.error(error)
+        }
+        
+      }
   }
   </script>
   
@@ -96,6 +115,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
       width: 100%;
       height: 85vh;      
       padding: 1rem;
+      position: relative;
   }
   .searchPart{
     width:100%;

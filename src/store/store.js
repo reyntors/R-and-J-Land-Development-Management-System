@@ -7,6 +7,7 @@ import report from './personnelStore/report.js'
 import subdivision from './guest_personnelStore/subdivision.js'
 import guest from './guestStore/guestStore.js'
 import inquiries from "./personnelStore/inquiries.js";
+import rawForms from './personnelStore/rawForms.js'
 
 const store = createStore({
         modules:{
@@ -17,6 +18,7 @@ const store = createStore({
             subdivision,
             guest,
             inquiries,
+            rawForms,
         },
         state(){
             return{

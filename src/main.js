@@ -11,17 +11,26 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
-import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, faCaretUp, faArrowLeftLong, faPlus,faMagnifyingGlass,faGear,faTrashCan} from '@fortawesome/free-solid-svg-icons'
+import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, 
+    faCaretUp, faArrowLeftLong, faPlus,faMagnifyingGlass,faGear,faTrashCan,faCaretLeft,faCaretRight,
+    faEnvelopeCircleCheck,faEnvelopeOpen
+    } from '@fortawesome/free-solid-svg-icons'
+
 /* add icons to the library */
-library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,faCaretDown,faCaretUp,faArrowLeftLong,faPlus,faMagnifyingGlass,faGear,faTrashCan)
+library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,
+    faCaretDown,faCaretUp,faArrowLeftLong,faPlus,faMagnifyingGlass,faGear,faTrashCan,
+    faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen
+    )
 
 
 import TheHeader from './components/Reusable/TheHeader.vue'
 import TheFooter from './components/Reusable/TheFooter.vue'
 import FormCard from './components/Reusable/FormCard.vue'
-import ProgressLoading from './components/Reusable/ProgressLoading.vue'
+import ProgressLoading from './components/Reusable/LoadingScreens/ProgressLoading.vue'
 import FormThumbnail from './components/Reusable/FormThumbnail.vue'
 import SubmitFormButton from './components/Reusable/SubmitFormButton.vue'
+import DotLoading from './components/Reusable/LoadingScreens/DotLoading.vue'
+// import LoginLoading from './components/Reusable/LoadingScreens/LoginLoading.vue'
 
 
 const app = createApp(App)
@@ -36,5 +45,7 @@ app.component('form-card',FormCard)
 app.component('progress-loading',ProgressLoading)
 app.component('form-thumbnail', FormThumbnail)
 app.component('submit-form-button',SubmitFormButton)
+app.component('dot-loading',DotLoading)
+// app.component('login-loading',LoginLoading )
 
 app.mount('#app')

@@ -116,7 +116,7 @@ export default{
 
                     const existletterOfIntent = item.letterOfIntent.isSubmitted
 
-                    const existBirTinRequest = item.BirTinRequest.isSubmitted
+                    // const existBirTinRequest = item.BirTinRequest.isSubmitted
 
                     const existindividualDeclaration = item.individualDeclaration.isSubmitted
 
@@ -129,8 +129,7 @@ export default{
                         try{
                             const downloadableLetterOfIntent = await Client.retrieveUploadedForm(item.userId,letterOfIntentFilename)
                             const LetterOfIntentBlob = new Blob([downloadableLetterOfIntent], {type: 'application/pdf'})
-                            letterOfIntentURL = URL.createObjectURL(LetterOfIntentBlob)    
-                            console.log(letterOfIntentURL)                    
+                            letterOfIntentURL = URL.createObjectURL(LetterOfIntentBlob)                        
                         }catch(error){
                             console.log(error)
                         }
@@ -142,15 +141,17 @@ export default{
                     //start CREATE downloadable URL BirTinRequest
                     const BirTinRequestFilename = `${item.userId}_${item.fullname}_BirTinRequest.pdf`  
                     var BirTinRequestURL = '' 
-                    if(existBirTinRequest){
-                        try{
-                            const downloadableBirTinRequest = await Client.retrieveUploadedForm(item.userId,BirTinRequestFilename)
-                            const BirTinRequestBlob = new Blob([downloadableBirTinRequest], {type: 'application/pdf'})
-                            BirTinRequestURL = URL.createObjectURL(BirTinRequestBlob)                        
-                        }catch(error){
-                            console.log(error)
-                        }
-                    }
+
+                    // FIX NEED FOR BIR DONWLOAD FORM
+                    // if(existBirTinRequest){
+                    //     try{
+                    //         const downloadableBirTinRequest = await Client.retrieveUploadedForm(item.userId,BirTinRequestFilename)
+                    //         const BirTinRequestBlob = new Blob([downloadableBirTinRequest], {type: 'application/pdf'})
+                    //         BirTinRequestURL = URL.createObjectURL(BirTinRequestBlob)                        
+                    //     }catch(error){
+                    //         console.log(error)
+                    //     }
+                    // }
                     item.BirTinRequestURL = BirTinRequestURL
                     item.BirTinRequestFilename = BirTinRequestFilename
                     //end CREATE downloadable URL BirTinRequest

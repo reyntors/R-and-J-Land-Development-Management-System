@@ -4,7 +4,7 @@ const BASE_URL = process.env.VUE_APP_KEY;
 
 //start initializer when entering the CLIENT DIMENSION
 export const requestLegitList = async () => {
-    console.log('API requestLegitList executed')
+    // console.log('API requestLegitList executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/client/legit-clients`,{
@@ -21,7 +21,7 @@ export const requestLegitList = async () => {
 
 //start header
 export const requestPendingList = async () => {
-    console.log('API requestPendingList executed')
+    // console.log('API requestPendingList executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users`,{
@@ -35,7 +35,7 @@ export const requestPendingList = async () => {
     }
 }
 export const addToLegitClient = async (id) => {
-    console.log('API addToLegitClient executed')
+    // console.log('API addToLegitClient executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.put(`${BASE_URL}users/update-legitimacy/${id}`,id,{
@@ -52,7 +52,7 @@ export const addToLegitClient = async (id) => {
 
 //start article/payment
 export const getListTransaction = async (id) => {
-    console.log('API addPaymentTransaction executed')
+    // console.log('API addPaymentTransaction executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/alltransaction/${id}`,{
@@ -66,7 +66,7 @@ export const getListTransaction = async (id) => {
     }
 }
 export const addPaymentTransaction = async (payload) => {
-    console.log('API addPaymentTransaction executed')
+    // console.log('API addPaymentTransaction executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.id}`,payload.obj,{
@@ -80,7 +80,7 @@ export const addPaymentTransaction = async (payload) => {
     }
 }
 export const retrieveUploadedAttachment = async (id, filename) => {
-    console.log('API retrieveUploadedAttachment executed')
+    // console.log('API retrieveUploadedAttachment executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/retrieve-upload/${id}/${filename}`,{
@@ -89,10 +89,10 @@ export const retrieveUploadedAttachment = async (id, filename) => {
             },
             responseType: 'blob'
         }) 
-        console.log('HAHAHAHAH')
+        // console.log('HAHAHAHAH')
         return response.data     
     }catch(error){
-        console.log('AGAY')
+        // console.log('AGAY')
         throw (error.response.data.message);
     }
 }
@@ -100,7 +100,7 @@ export const retrieveUploadedAttachment = async (id, filename) => {
 
 //start article/form
 export const retrieveUploadedForm = async (id, filename) => {
-    console.log('API retrieveUploadedForm executed')
+    // console.log('API retrieveUploadedForm executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/retrieveForm/${id}/${filename}`,{
@@ -109,14 +109,14 @@ export const retrieveUploadedForm = async (id, filename) => {
             },
             responseType: 'blob'
         })
-        // console.log(response.data)
+        console.log(response.data)
         return response.data     
     }catch(error){
         throw (error.response.data.message);
     }
 }
 export const uploadScannedFile = async (id, file) => {
-    console.log('API uploadScannedFile executed')
+    // console.log('API uploadScannedFile executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.post(`${BASE_URL}users/add-scanfiles/${id}`,file,{
@@ -130,7 +130,7 @@ export const uploadScannedFile = async (id, file) => {
     }
 }
 export const listScannedFile = async (id) => {
-    console.log('API listScannedFile executed')
+    // console.log('API listScannedFile executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/all-scanfiles/${id}`,{
@@ -138,14 +138,14 @@ export const listScannedFile = async (id) => {
                 'Authorization': `Bearer ${token}`,
             },
         })
-        // console.log(response)
+        console.log(response)
         return response.data.data
     }catch(error){
         throw (error.response.data.message);
     }
 }
 export const retrieveSpecificScannedFile = async (id,filename) => {
-    console.log('API retrieveSpecificScannedFile executed')
+    // console.log('API retrieveSpecificScannedFile executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/retrieve-scanfiles/${id}/${filename}`,{
@@ -156,7 +156,7 @@ export const retrieveSpecificScannedFile = async (id,filename) => {
         })
         return response.data
     }catch(error){
-        console.log(error)
+        // console.log(error)
         throw (error.response.data.message);
     }
 }

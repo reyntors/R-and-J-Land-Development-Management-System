@@ -23,10 +23,10 @@
               <img src="@/assets/form-thumbnails/BIR-TIN-Request.png">              
             </section>
 
-            <section  @click="openForm('contractDetails')" v-if="clientObj.ContractFormURL !== ''">
+            <!-- <section  @click="openForm('contractDetails')" v-if="clientObj.ContractFormURL !== ''">
               <p>Contract Details</p>
               <img src="@/assets/form-thumbnails/contract-details.png">              
-            </section>
+            </section> -->
      
           
         </div>
@@ -34,12 +34,22 @@
 <hr>
       <section class="section2">
         <h6>Upload here</h6>
-        <p v-if="islistUploadedScannedFilesEmpty">NOTHING UPLOADED YET</p>
-        <ul v-else>
-          <li v-for="(file,index) in listUploadedScannedFiles" :key="index">
-              <a :href="file.url" :download="file.filename">{{ file.filename }}</a>
-          </li>
-        </ul>
+
+        <div class="loadingUI" v-if="isLoading">
+         <progress-loading type="dot"></progress-loading>
+        </div>
+        
+        <div v-else>
+          <h6 v-if="islistUploadedScannedFilesEmpty">NOTHING UPLOADED YET</h6>    
+          <ul v-else>
+            <li v-for="(file,index) in listUploadedScannedFiles" :key="index">
+                <a :href="file.url" :download="file.filename">{{ file.filename }}</a>
+            </li>
+          </ul>          
+        </div>
+
+
+
         <form enctype="multipart/form-data" @submit.prevent="submitUpload">
           <label class="uploadCont" for="upload">
             <font-awesome-icon class="icon" icon="fa-solid fa-plus" beat size="2x"/>
@@ -80,6 +90,9 @@ export default {
   props: ['clientObj'],
     data(){
       return{
+
+        isLoading: true,
+
         formVisible: null,
         openForms: false,
 
@@ -141,6 +154,19 @@ export default {
         }else{
           console.log('no uploaded')
         }
+      },
+
+      async getListScannedFiles(){
+        this.isLoading = true
+        try{
+          await this.$store.dispatch('client/getListScannedFile', this.clientObj.userId)
+          await new Promise(resolve => setTimeout(resolve,500))
+          this.isLoading = false
+        }catch(error){
+          console.log(error)
+          toast.error(error)
+        }
+        
       }
     },
 
@@ -167,7 +193,7 @@ export default {
     },
 
     mounted(){
-      this.$store.dispatch('client/getListScannedFile', this.clientObj.userId)
+      this.getListScannedFiles()
     }
  
 }
@@ -226,7 +252,9 @@ p{
   width: 100%;
   border: 1px solid black;
 }
-
+.section2 form{
+  margin-top: .5rem;
+}
 .section2 form label{
   padding: .5rem 1rem;
   border: 1px solid black;
@@ -266,5 +294,10 @@ p{
  border: 1px solid black;
  border-top: none;
  border-bottom: none;
+}
+.loadingUI{
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 </style>

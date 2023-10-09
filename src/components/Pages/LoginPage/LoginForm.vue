@@ -2,7 +2,8 @@
   <div class="background">
   </div>
 
-    <progress-loading v-if="isLoadingComputed" />
+    <!-- <progress-loading v-if="isLoadingComputed" /> -->
+    <login-loading v-if="isLoadingComputed" type="spin"></login-loading>
 
     <!-- login -->
     <div class="cardLogin" v-if="goLoginComputed && !isLoadingComputed">
@@ -110,10 +111,12 @@
 
 
 <script>
+import LoginLoading from '@/components/Reusable/LoadingScreens/LoginLoading.vue';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
 export default {
+  components: { LoginLoading },
   emits : ['close-button'],
   data(){
     return{

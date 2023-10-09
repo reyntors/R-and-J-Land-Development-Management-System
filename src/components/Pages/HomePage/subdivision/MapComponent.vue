@@ -59,17 +59,15 @@
               <button @click="filter('reserved')" :class="{focus:rsrvSelected}">Reserved</button>
           </section>
 
-          <section class="grid">
-              <li v-for="item in allList" :key="item.block_Lot_No">
-                <img :src="item.imageUrl" @click="selected(item)">
-              </li>
-          </section>
+          <subdivision-coverflow :list="listHaveImagesOnly" :group="group"></subdivision-coverflow>
         </div>
     </div> 
 </template>
 
 <script>
+import SubdivisionCoverflow from './SubdivisionCoverflow.vue'
 export default {
+  components: {SubdivisionCoverflow},
   data(){
     return{
       XSubdivisionCont: 0,
@@ -85,16 +83,30 @@ export default {
       searchValue: '',
       notfound: false,
 
-      message: '',
+      group: 'all'
     }
   },
   computed: {
     allList(){
-      return this.$store.getters['subdivision/deepCopySubdivisionListGetter']
+      return this.$store.getters['subdivision/subdivisionGetter']
     },
+    listHaveImagesOnly(){
+      const list = this.allList
+      const newList = []
+      list.forEach( item => {
+        if(item.image.length>0){
+          newList.push(item)
+        }
+      });
+      return newList
+    },
+
+
+
     selectedComputed(){
       return this.selectedItem
     },
+
     // authorizationRoleGuestComputed(){
     //   return this.$store.getters['auth/authorizationRoleGuest']
     // }
@@ -135,7 +147,8 @@ export default {
     filter(params){
       this.filterBtnStyleReset()
       this.applyFilterBtnStyle(params)
-      this.$store.commit('subdivision/filterList',params)
+      // this.$store.commit('subdivision/filterList',params)
+      this.group = params
     },
     //end click filter buttons
 
@@ -179,13 +192,13 @@ export default {
 
   mounted(){
     this.$store.dispatch('subdivision/getPropertyList')
-    const subdivision = document.getElementById('subdivison')
-    const x = subdivision.offsetLeft
-    const y = subdivision.offsetTop
-    this.XSubdivisionCont = x
-    this.YSubdivisionCont = y - 100
+    // const subdivision = document.getElementById('subdivison')
+    // const x = subdivision.offsetLeft
+    // const y = subdivision.offsetTop
+    // this.XSubdivisionCont = x
+    // this.YSubdivisionCont = y - 100
 
-    this.$store.commit('subdivision/initDeepCopySubdivisionList')
+    // this.$store.commit('subdivision/initDeepCopySubdivisionList')
   }
 }
 </script>
@@ -358,9 +371,6 @@ export default {
   resize: none;
   padding: 1rem;
 }
-
-
-
 
 
 @keyframes gradient-animation {

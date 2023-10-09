@@ -1,63 +1,74 @@
 <template>
+
   <div class="subdivision-card-cont" :style="setColor">
+    
+    <form @submit.prevent="update" enctype="multipart/form-data">
     <header>
         <button class="option" @click="toggleOption" v-if="!optionClicked">Option <font-awesome-icon class="icon" icon="fa-solid fa-gear" /></button>
-        <button class="option" v-if="optionClicked" @click="update">Update</button>
+        <button class="option" v-if="optionClicked" type="submit">Update</button>
         <button class="option" @click="toggleOption" v-if="optionClicked">Cancel</button>
     </header>
 
     <section>
         <div class="div1">
-            <img :src="displayedImg">    
+            <subdivision-swiper :list="subdivision.image"></subdivision-swiper>
         </div>
         <div class="div2">
 
-            <span v-if="optionClicked">
-                <input id="uploadImage" type="file" name="myImage" accept="image/*" @change="getUploadedImg"/>                
+            <span v-if="optionClicked" style="display: flex;">
+                <input id="uploadImage" type="file" name="myImage" accept="image/*" @change="getUploadedImg" />                
             </span>
          
             <section>
-                <label :for="subdivision.block_Lot_No">Block and Lot No. </label>:<input :id="subdivision.block_Lot_No" readonly v-model="lotNo">
+                <label :for="subdivision.lotNumber">Block and Lot No. </label>:<input :id="subdivision.lotNumber" readonly v-model="lotNo">
             </section>
             <section>
-                <label :for="subdivision.block_Lot_No+'Total Sq. Meters'">Total Sq. Meters</label>: <input :id="subdivision.block_Lot_No+'Total Sq. Meters'" v-model="totalSq" :readonly="!editable">
+                <label :for="subdivision.lotNumber+'Total Sq. Meters'">Total Sq. Meters</label>: <input :id="subdivision.lotNumber+'Total Sq. Meters'" v-model="totalSq" :readonly="!editable">
             </section>
             <section>
-                <label :for="subdivision.block_Lot_No+'Amount per Sq.'">Amount per Sq.</label>:<input :id="subdivision.block_Lot_No+'Amount per Sq.'" v-model="amountPerSq" :readonly="!editable">
+                <label :for="subdivision.lotNumber+'Amount per Sq.'">Amount per Sq.</label>:<input :id="subdivision.lotNumber+'Amount per Sq.'" v-model="amountPerSq" :readonly="!editable">
             </section>
             <section>
-                <label :for="subdivision.block_Lot_No+'Total Amount Due'">Total Amount Due</label>:<input :id="subdivision.block_Lot_No+'Total Amount Due'" v-model="amountDue" :readonly="!editable">
+                <label :for="subdivision.lotNumber+'Total Amount Due'">Total Amount Due</label>:<input :id="subdivision.lotNumber+'Total Amount Due'" v-model="amountDue" :readonly="!editable">
             </section>
             
         </div>
     </section>
     <div class="selectCont">
-        <select :id="idSelect" v-model="status" readonly>
+        <select :id="idSelect" v-model="status" :disabled="selectDisabled">
                         <option value="sale">SALE</option>
                         <option value="sold">SOLD</option>
                         <option value="reserved">RESERVED</option>
         </select>        
     </div>
+    </form>
 
   </div>
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
+import SubdivisionSwiper from './SubdivisionSwiper.vue'
 export default {
+  components: { SubdivisionSwiper},
     emits: ['close-one'],
     props: ['subdivision'],
     data(){
         return{
-            lotNo: this.subdivision.block_Lot_No,
-            totalSq: this.subdivision.total_Sq_M,
-            amountPerSq: this.subdivision.amount_per_Sq,
-            amountDue: this.subdivision.total_Amount_Due,
+            lotNo: this.subdivision.lotNumber,
+            totalSq: this.subdivision.totalSqm,
+            amountPerSq: this.subdivision.amountperSquare,
+            amountDue: this.subdivision.totalAmountDue,
             status: this.subdivision.status,
-            displayedImg: this.subdivision.imageUrl,
+            displayedImg: this.subdivision.image,
+
+            imageURL : this.subdivision.URL,
 
             optionClicked: false,
             editable: false,
             selectDisabled: true, 
+
+            isloading: true,
         }
     },
     
@@ -66,25 +77,13 @@ export default {
             this.optionClicked = !this.optionClicked
             this.editable = !this.editable
             this.selectDisabled = !this.selectDisabled   
-
-            const id = this.lotNo + 'selectSubdivisionStatus'
-            const select = document.getElementById(id)
-            const bool = this.selectDisabled
-            select.disabled = bool;
-
-            this.cancelSavingUploadedImg()
-        },
-        disableSelect(){     
-            const id = this.lotNo + 'selectSubdivisionStatus'
-            const select = document.getElementById(id)
-            select.disabled = true;         
         },
 
         checkIfDataChanged(){
             if(
-                this.totalSq === this.subdivision.total_Sq_M &&
-                this.amountPerSq === this.subdivision.amount_per_Sq &&
-                this.amountDue === this.subdivision.total_Amount_Due &&
+                this.totalSq === this.subdivision.totalSqm &&
+                this.amountPerSq === this.subdivision.amountperSquare &&
+                this.amountDue === this.subdivision.totalAmountDue &&
                 this.status === this.subdivision.status && 
                 this.displayedImg === this.subdivision.imageUrl){
 
@@ -93,23 +92,53 @@ export default {
                 return true
             }       
         },
+        checkIfNullForm(){
+            if(
 
-        update(){
-            const isUpdated = this.checkIfDataChanged()
-            if(isUpdated){
-                const payload = {
-                    block_Lot_No: this.lotNo,
-                    total_Sq_M: this.totalSq,
-                    amount_per_Sq: this.amountPerSq,
-                    total_Amount_Due: this.amountDue,
-                    status: this.status,
-                    imageUrl: this.displayedImg
-                }
-                this.$store.dispatch('subdivision/update',payload)
-                this.toggleOption()
-                 this.$emit('close-one')              
+                //  not yet image checker   
+                this.totalSq === null ||
+                this.amountPerSq === null ||
+                this.amountDue === null ||
+                this.status === null
+            ){
+                return true
             }else{
-                console.log('nothing changed')
+                return false
+            }
+        },
+
+        async update(){
+            console.log('submit')
+            const isUpdated = this.checkIfDataChanged()
+            const isNull = this.checkIfNullForm()
+            if(isUpdated && !isNull){
+                const form = new FormData()
+                form.append('totalSqm',this.totalSq)
+                form.append('amountperSquare',this.amountPerSq)
+                form.append('totalAmountDue',this.amountDue)
+                form.append('status',this.status)
+                form.append('image',this.displayedImg)
+                try{
+                    this.$emit('updating-now')
+                    const response = await this.$store.dispatch('subdivision/update',{
+                                        lotNo: this.lotNo,
+                                        form: form
+                                    })
+                    this.$emit('reload-list') 
+                    toast.success(response) 
+                }catch(error){
+                    console.log(error)
+                    toast.error(error)
+                }
+                this.toggleOption()
+                this.$emit('close-one')   
+              
+            }else{
+                if(!isUpdated){
+                    toast.warning('No Changes')
+                }else if(isNull){
+                    toast.warning('Please no empty value')
+                }
             }
 
             
@@ -117,16 +146,9 @@ export default {
 
         getUploadedImg(event){
             const uploadedFile = event.target.files[0]
-            if(uploadedFile){
-                const blob = new Blob([uploadedFile])
-                const url = URL.createObjectURL(blob)
-                this.displayedImg =  url
-            }
+            this.displayedImg  = uploadedFile
         },
 
-        cancelSavingUploadedImg(){
-            this.displayedImg = this.subdivision.imageUrl
-        }
     },
 
     computed:{
@@ -144,10 +166,12 @@ export default {
         idSelect(){
             return this.lotNo + 'selectSubdivisionStatus'
         },
+        idCarousel(){
+            return 'carouselSubdivision' + this.lotNo 
+        }
     },
 
     mounted(){
-        this.disableSelect()
     }
 
 
@@ -159,6 +183,8 @@ export default {
     background-color: rgba(0, 0, 0, 0.1);
     padding: .5rem;
     border: 1px solid black;
+    width: 100%;
+    /* position: relative; */
 }
 .subdivision-card-cont header{
     display: flex;
@@ -177,14 +203,45 @@ export default {
     flex-direction: column;
     height: 50vh;
     border: 1px solid black;
-    /* height: 200px; */
-    /* width: calc(100%/3); */
-} 
-
+    position: relative;
+    width: 100%;
+}  
+.carousel-sub{
+    width: 100%;
+    height: 100%;
+}
+.carousel-inner {
+    width: 100%;
+    height: 100%;   
+}
+.carousel-inner img{
+    object-fit: cover;
+    width: 100%;
+}
 .subdivision-card-cont section .div1 img{
     object-fit: cover;
-    height: 100%;
+    width: 100%;
 } 
+.subdivision-card-cont section .div1 .icon{
+    color: white;
+    padding: .2rem .5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.subdivision-card-cont section .div1 .icon:active{
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.subdivision-card-cont section .div1 .icon-left{
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+.subdivision-card-cont section .div1 .icon-right{
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+
 
 .subdivision-card-cont section .div2{
     /* width: calc(100%/3*2); */
@@ -233,4 +290,12 @@ export default {
     justify-content: center;
     padding-top: .5rem;
 }
+#uploadImage{
+    width: 100%; 
+    padding-top: .5rem;
+}
+.btn-bckgrnd{
+    background-color: transparent;
+}
+
 </style>

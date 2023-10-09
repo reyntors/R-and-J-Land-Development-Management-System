@@ -13,7 +13,7 @@
 <script>
 import ModelHouses from './ModelHouses.vue'
 import CarouselComponent from './CarouselComponent.vue'
-import MapComponent from './MapComponent.vue'
+import MapComponent from './subdivision/MapComponent.vue'
 // import MessengerChat from './chatplugin/MessengerChat.vue'
 export default {
     components: {

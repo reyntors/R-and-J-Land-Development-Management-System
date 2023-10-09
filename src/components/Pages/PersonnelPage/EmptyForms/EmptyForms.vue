@@ -1,55 +1,85 @@
 <template>
-    <div class="empty-froms-cont">
+    <div class="empty-forms-cont">
       <div class="div1">
         <h4>Empty Forms</h4>
       </div>
-
       <div class="div2">
-        <section class="grid-item" @click="navLetterIntent">
-            <form-thumbnail title="Letter of Intent" imgThumbTitle="letterOfIntent"/> 
-        </section>
-        <section class="grid-item" @click="navigateContractDetails">
-            <form-thumbnail title="Contract Details" imgThumbTitle="contractDetails"/>
-        </section>
-        <section class="grid-item" @click=" navigateIndividualBuyer">
-            <form-thumbnail title="Individual Buyer Declaration" imgThumbTitle="individualBuyerDeclaration"/>     
-        </section>
-        <section class="grid-item" @click="navigateBIR_TIN">
-            <form-thumbnail title="BIR TIN Request" imgThumbTitle="BIR-TIN-Request"/>
-        </section>
-        <section class="grid-item" @click="navigateBIR_TIN">
-            <form-thumbnail title="Checklist" imgThumbTitle="checklist"/>
-        </section>
-        <section class="grid-item" @click="navigateBIR_TIN">
-            <form-thumbnail title="Approve Payment" imgThumbTitle="approve-payment"/>
-        </section>
-        <section class="grid-item" @click="navigateBIR_TIN">
-            <form-thumbnail title="Call Slip" imgThumbTitle="call-slip"/>
-        </section>
-        <section class="grid-item" @click="navigateBIR_TIN">
-            <form-thumbnail title="Reservation Payment" imgThumbTitle="reservation"/>
-        </section>
-      
-      
-      </div>
 
+        <progress-loading v-if="isLoading" type="spin"></progress-loading>
+        <div class="grid" v-else>
+          <section class="grid-item" @click="show(this.obj.letterOfIntentURL)">
+                <form-thumbnail title="Letter of Intent" imgThumbTitle="letterOfIntent"/> 
+          </section>
+          <section class="grid-item" @click="show(this.obj.contractDetailsURL)">
+                <form-thumbnail title="Contract Details" imgThumbTitle="contractDetails"/>
+          </section>
+          <section class="grid-item" @click="show(this.obj.individualBuyerURL)">
+                <form-thumbnail title="Individual Buyer Declaration" imgThumbTitle="individualBuyerDeclaration"/>    
+          </section>
+          <section class="grid-item" @click="show(this.obj.birTinURL)">
+                <form-thumbnail title="BIR TIN Request" imgThumbTitle="BIR-TIN-Request"/>
+          </section>
+          <section class="grid-item" @click="show(this.obj.checklistURL)">
+              <form-thumbnail title="Checklist" imgThumbTitle="checklist"/>
+          </section>
+          <section class="grid-item" @click="show(this.obj.approvePaymentURL)">
+              <form-thumbnail title="Approve Payment" imgThumbTitle="approve-payment"/>
+          </section>
+          <section class="grid-item" @click="show(this.obj.callSlipURL)">
+              <form-thumbnail title="Call Slip" imgThumbTitle="call-slip"/>
+          </section>
+          <section class="grid-item" @click="show(this.obj.reservationURL)">
+              <form-thumbnail title="Reservation Payment" imgThumbTitle="reservation"/>
+          </section>          
+        </div>
+
+     
+      </div>
 
     </div>
   </template>
   
   <script>
+  import { toast } from 'vue3-toastify'
   export default {
-  
+      data(){
+        return{
+          isLoading: false,
+        }
+      },
+      computed:{
+        obj(){
+          // console.log(this.$store.getters['rawForms/objectsOfDonwloadableGetter'])
+          return this.$store.getters['rawForms/objectsOfDonwloadableGetter']
+        }
+      },
+
+      methods: {
+        show(url){
+          window.open(url)
+        }
+      },
+
+      async mounted(){
+        this.isLoading = true
+        try{
+          await this.$store.dispatch('rawForms/getRawFormsList') 
+          this.isLoading = false
+        }catch(error){
+          console.log(error)
+          toast.error(error)
+        }
+        
+      }
   }
   </script>
   
   <style scoped>
-.empty-froms-cont{
+.empty-forms-cont{
   width: 100%;
-    height: 85vh;
-    padding: 1rem;
+  height: 85vh;
+  padding: 1rem;
 }
-
 .div1{
     width:100%;
     height: 10%;
@@ -67,9 +97,13 @@
     padding: 1rem;
     /* gap: 1rem; */
     position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    
     overflow-y: auto;
+    position: relative;
+}
+.div2 .grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 @media screen and (max-width:933px) {
     .div2{
