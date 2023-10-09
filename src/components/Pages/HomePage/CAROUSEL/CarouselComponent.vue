@@ -53,17 +53,20 @@ export default {
 
 <style scoped>
 #carousel-control{
-    /* height: 85vh; */
-    /* margin: 3rem auto; */
     text-align: center;
-    /* border: 5px solid black; */
     z-index: 0;
 }
 .title{
   text-transform: uppercase;
   font-weight: 900;
   font-size: clamp(2rem, 5vw, 5rem);
-  text-shadow: 0 2px 2px white;
+
+  /* background: #B5F40A; */
+  color: white; 
+  font-weight: bolder;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+  
 } 
 .c-item{
   height: 85vh;

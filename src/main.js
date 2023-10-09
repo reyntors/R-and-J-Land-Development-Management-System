@@ -13,13 +13,15 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, 
     faCaretUp, faArrowLeftLong, faPlus,faMagnifyingGlass,faGear,faTrashCan,faCaretLeft,faCaretRight,
-    faEnvelopeCircleCheck,faEnvelopeOpen
+    faEnvelopeCircleCheck,faEnvelopeOpen, faEnvelope
     } from '@fortawesome/free-solid-svg-icons'
+
+import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library */
 library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,
     faCaretDown,faCaretUp,faArrowLeftLong,faPlus,faMagnifyingGlass,faGear,faTrashCan,
-    faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen
+    faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen,faFacebook, faWhatsapp,faEnvelope
     )
 
 

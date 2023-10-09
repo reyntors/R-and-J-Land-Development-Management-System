@@ -1,16 +1,31 @@
 <template>
     <div id="map" class="containerMap">
-        <h2>Phase 1 Location</h2>
+
+
+        <h2>SUBDIVISION NAME</h2>
+        
+        <div class="description">
+            <section class="section1">
+              <map-overview></map-overview>
+            </section>
+            <section class="section2">
+              <h4 style="text-align: center;">Welcome to Subdivision name</h4>
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa quae commodi ab suscipit magni, eaque reprehenderit quis perferendis quam illum vero nihil blanditiis cum, explicabo repudiandae debitis incidunt. Officiis, est.</p>
+              <br>
+              <ul>
+                <li>Definition 1</li>
+                <li>Definition 2</li>
+                <li>Definition 3</li>
+              </ul>
+            </section>
+        </div>
 
         <div class="locationBody">
           <img src="https://sanjoserealestatelosgatoshomes.com/wp-content/uploads/2019/10/Plat-Map-Camden-at-Union-broad-area-Cambrian-Park-Estates-e1579214890424-700x440.jpg">
         </div>
-
-        <div class="searchCont">
-          <input placeholder="search lot no." type="text" v-model.trim="searchValue" @keydown="enterKey">
-          <font-awesome-icon class="search-icon" icon="fa-solid fa-magnifying-glass" size="2x" @click="searchNow"/>
-        </div>
         
+
+
         <div id="subdivison" class="subdivision">
           <h3 v-if="selectedOne && notfound">This lot does not exist</h3>
           <div class="selected" v-if="selectedOne && !notfound">
@@ -66,8 +81,9 @@
 
 <script>
 import SubdivisionCoverflow from './SubdivisionCoverflow.vue'
+import MapOverview from './MapOverview.vue'
 export default {
-  components: {SubdivisionCoverflow},
+  components: {SubdivisionCoverflow,MapOverview },
   data(){
     return{
       XSubdivisionCont: 0,
@@ -204,19 +220,44 @@ export default {
 </script>
 
   <style scoped>
-  .containerMap{
+.description{
+  height: 60vh;
+  width: 85%;
+  /* border: 1px solid black; */
+  margin: auto;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  column-gap: .5rem;
+  margin-bottom: 1rem;
+}
+.description .section1{
+  position: relative;
+}
+.description .section2{
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+.description .section2 p {
+  line-height: 2rem;
+}
+.description .section2 li{
+  font-size: clamp(.5rem, 1.5vw, 1rem);
+}
+.containerMap{
       width: 100%;
       /* border: 1px dashed black; */
       margin: 2rem auto 1rem;
   }
   .containerMap h2{
     text-align: center;
-    padding: 1rem 0;
     font-weight: 500;
-    font-size: clamp(2rem, 3vw, 4rem);
+    /* font-size: clamp(2rem, 3vw, 4rem); */
   }
   .locationBody{
-    border: 1px solid black;
+    border-top: 1px solid black;
     width: 100%;
     margin: .2rem 0;
     display: flex;
@@ -251,7 +292,7 @@ export default {
   .subdivision{
     width: 100%;
     margin: auto;
-    border: 1px solid black;
+    /* border: 1px solid black; */
   }
 
   .subdivision .buttons{
@@ -263,7 +304,7 @@ export default {
   }
   .subdivision .buttons button{
     padding: .2rem;
-    width: 20%;
+    width: 10%;
     min-width: 80px;
     border-radius: 10px;
   }

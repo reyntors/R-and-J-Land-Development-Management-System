@@ -15,7 +15,7 @@
     <!-- ROW NAV-->
     <!-- show when logged in as GUEST-->
     <nav class="rowNav" v-if="!authorizationPersonnel">
-      <router-link to="/about" >ABOUT</router-link>
+      <a href="#about">ABOUT</a>
       <router-link to="/projects" >PROJECTS</router-link>
       <router-link to="/gallery" >GALLERY</router-link>
       <router-link to="/contact" >CONTACT INFO</router-link>

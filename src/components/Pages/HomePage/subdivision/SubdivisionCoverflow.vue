@@ -13,6 +13,7 @@
       }"
       :pagination="true"
       :modules="modules"
+      :initialSlide="3"
       class="mySwiper"
     >
         <swiper-slide v-for="item in byGroup" :key="item.lotNumber" @click="select(item)">
@@ -93,6 +94,7 @@
 <style scoped>
 .swiper {
   width: 100%;
+  height: 75vh;
   padding-top: 50px;
   padding-bottom: 50px;
   position: relative;
@@ -101,8 +103,8 @@
 .swiper-slide {
   background-position: center;
   background-size: cover;
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 .swiper-slide img {
