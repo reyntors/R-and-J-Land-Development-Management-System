@@ -32,6 +32,7 @@ exports.addScanFiles = async (req, res, next) => {
 
             filename: uploadedFile.originalname,
             contentType: uploadedFile.mimetype,
+            url: uploadedFile.location
       };
   
       

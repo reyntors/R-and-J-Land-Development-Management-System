@@ -19,9 +19,9 @@ const transactionSchema = new Schema({
 });
 
 const scannedFilesSchema = new Schema({
-    data: Buffer,
     filename: String,
-    contentType: String
+    contentType: String,
+    url: String,
 });
 
 

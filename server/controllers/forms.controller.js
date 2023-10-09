@@ -47,6 +47,7 @@ exports.getForms = async (req, res) => {
             const fileData = {
                 filename: formFile.originalname,
                 contentType: formFile.mimetype,  
+                url: formFile.location
               };
 
               myforms.forms.push(fileData);

@@ -12,77 +12,44 @@ const s3 = new S3Client({
 
 
 
-
-// Define storage for uploaded files
-const scannedFilesStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/scannedFiles/'); // Destination folder for file uploads
+const uploadScannedFile = multer({storage: multerS3({
+  s3,
+  bucket: process.env.AWS_BUCKET_NAME,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
   },
-  filename: function (req, file, cb) {
-    const originalname = path.parse(file.originalname).name;
-    console.log(originalname)
-    const extension = path.extname(file.originalname);
-    const uniqueName = originalname + extension;
-    cb(null, uniqueName); // Unique filename for each uploaded file
+  key: function (req, file, cb) {
+    cb(null, `uploads/attachments/${file.originalname}`);
   },
-});
+}),
+}).single('file');
 
-// Define storage for attachments
-const attachmentsStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/attachments/'); // Destination folder for attachments
+
+const uploadAttachment = multer({storage: multerS3({
+  s3,
+  bucket: process.env.AWS_BUCKET_NAME,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
   },
-  filename: function (req, file, cb) {
-    const originalname = path.parse(file.originalname).name;
-    const extension = path.extname(file.originalname);
-    const uniqueName = originalname + extension;
-    cb(null, uniqueName); // Unique filename for each attachment
+  key: function (req, file, cb) {
+    cb(null, `uploads/attachments/${file.originalname}`);
   },
-});
-
-// // Define storage for attachments
-// const lotImagesStorage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, 'public/uploads/images/'); // Destination folder for attachments
-//   },
-//   filename: function (req, file, cb) {
-//     const originalname = path.parse(file.originalname).name;
-//     const extension = path.extname(file.originalname);
-//     const uniqueName = originalname + extension;
-//     cb(null, uniqueName); // Unique filename for each attachment
-//   },
-// });
-
-// const lotImagesStorage = multer.memoryStorage()
+}),
+}).single('file');
 
 
 
-// Define storage for attachments
-const formsStorage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/forms/'); // Destination folder for attachments
+const uploadForms = multer({storage: multerS3({
+  s3,
+  bucket: process.env.AWS_BUCKET_NAME,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
   },
-  filename: function (req, file, cb) {
-    const originalname = path.parse(file.originalname).name;
-    const extension = path.extname(file.originalname);
-    const uniqueName = originalname + extension;
-    cb(null, uniqueName); // Unique filename for each attachment
+  key: function (req, file, cb) {
+    cb(null, `uploads/forms/${file.originalname}`);
   },
-});
-
-
-// const upload = multer({
-//   storage: multerS3({
-//     s3,
-//     bucket: process.env.AWS_BUCKET_NAME,
-//     metadata: function (req, file, cb) {
-//       cb(null, { fieldName: file.fieldname });
-//     },
-//     key: function (req, file, cb) {
-//       cb(null, `uploads/lotImages/${file.originalname}`);
-//     },
-//   }),
-// });
+}),
+}).single('file');
 
 
 
@@ -102,21 +69,10 @@ const uploadlotImage = multer({storage: multerS3({
 
 
 
-
-
-// Create a Multer instance for handling a single file with the field name 'file'
-const uploadScannedFile = multer({ storage: scannedFilesStorage }).single('file');
-
-// Create a Multer instance for handling attachments with the field name 'attachment'
-const uploadAttachment = multer({ storage: attachmentsStorage }).single('file');
-
-// const uploadlotImage = multer({ storage: lotImagesStorage }).single('image');
-
-const uploadForms = multer({ storage: formsStorage }).single('file');
-
 module.exports = {
   uploadScannedFile,
   uploadAttachment,
   uploadlotImage,
-  uploadForms
+  uploadForms,
+ 
 };

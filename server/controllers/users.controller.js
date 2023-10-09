@@ -1,25 +1,59 @@
 const bcryptjs = require('bcryptjs');
 const userService = require("../services/users.services");
 const User = require('../models/user.model');
+const Inquiry = require('../models/inquiries.model');
 
 
-
-exports.register = (req, res, next) => {
+exports.register = async (req, res, next) => {
     const {password} = req.body;
 
     const salt = bcryptjs.genSaltSync(10);
 
     req.body.password = bcryptjs.hashSync(password, salt);
 
-    userService.register(req.body, (error, result) => {
+    userService.register(req.body, async (error, result) => {
         if(error) {
             return next(error);
         }
-        return res.status(200).send({
-            message: `Hello ${req.body.username}! You successfully registered!`,
-            data: result,
-        });
+        
+try {
+    const user = await User.findOne({ username: req.body.username });
+
+    const newInquiry = {
+
+      name: user.fullname,
+      subject: 'A new user registered',
+      context: `${user.fullname}, created a new account.`,
+      email: user.email,
+      fblink: user.fbAccount,
+      phonenumber: user.contactNumber,
+      date: new Date()
+
+      };
+
+      const inquiries = await Inquiry.findOne()
+
+      if (!inquiries) {
+          // If inquiries object doesn't exist, create it
+          const newInquiries = new Inquiry({ inquiries: [newInquiry] });
+          await newInquiries.save();
+      }else{
+
+          inquiries.inquiries.push(newInquiry);
+           //save to inquiries
+          await inquiries.save();
+
+      }
+    
+      return res.status(200).send({
+        message: `Hello ${req.body.username}! You successfully registered!`,
+        data: result,
     });
+  }catch(error) {
+    return next(error);
+  }
+});
+
 };
 
 exports.login = async (req, res, next) => {

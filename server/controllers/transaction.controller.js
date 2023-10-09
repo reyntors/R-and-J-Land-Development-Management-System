@@ -39,6 +39,7 @@ exports.addTransaction = async (req, res, next) => {
         const fileData = {
           filename: attachments.originalname,
           contentType: attachments.mimetype,
+          url: attachments.location,
           
         };
         console.log("File Data:", fileData);

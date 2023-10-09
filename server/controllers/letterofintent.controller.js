@@ -1,6 +1,7 @@
 const LetterOfIntent = require('../models/letterOfIntent.model');
 const User = require('../models/user.model');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
+const Inquiry = require('../models/inquiries.model');
 const fs = require('fs');
 const path = require('path');
 
@@ -41,8 +42,38 @@ exports.createLetterOfIntent = async (req, res, next) => {
          // Update the user's letterOfIntent field with the savedLetterOfIntent
         user.letterOfIntent = savedLetterOfIntent;
 
-        
+          // Create a new ScannedFiles
 
+      const newInquiry = {
+
+        name: user.fullname,
+        subject: 'Submitted of Letter Of Intent',
+        context: `${user.fullname}, Request an letter of intent form.`,
+        email: user.email,
+        fblink: user.fbAccount,
+        phonenumber: user.contactNumber,
+        date: new Date()
+
+        };
+
+        const inquiries = await Inquiry.findOne()
+
+        if (!inquiries) {
+            // If inquiries object doesn't exist, create it
+            const newInquiries = new Inquiry({ inquiries: [newInquiry] });
+            await newInquiries.save();
+        }else{
+
+            inquiries.inquiries.push(newInquiry);
+             //save to inquiries
+            await inquiries.save();
+
+        }
+
+        
+  
+
+        // save to users record
         await user.save();
 
         
