@@ -1,7 +1,7 @@
 
 const Lot = require("../models/lot.model");
-// const { uploadlotImage } = require('../middlewares/multer');
-const { s3Uploadv3, upload } = require('../services/s3service');
+const { uploadlotImage } = require('../middlewares/multer');
+
 
 
 exports.createLot = async (req, res, next) => {
@@ -247,8 +247,8 @@ exports.updateLot = async (req, res, next) => {
   
   try {
 
-    const uploadSingle =  upload("aws-bucket-nodejs").single('image');
-    uploadSingle(req, res, async function (err){
+    
+    uploadlotImage(req, res, async function (err){
 
       if (err) {
         console.log(err);
@@ -259,7 +259,7 @@ exports.updateLot = async (req, res, next) => {
         const  updateLotData = req.body;
         const uploadedImage = req.file
 
-        console.log("image data:",uploadedImage);
+        console.log("image data:", uploadedImage);
         
 
         const updatedLot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
@@ -269,18 +269,12 @@ exports.updateLot = async (req, res, next) => {
         }
         const array = lotNumber - 1;
 
-       
-
         if(uploadedImage){
-          
-          
-          const s3Response = await s3Uploadv3(uploadedImage);
-
-          console.log('s3response:', s3Response);
 
           updatedLot.subdivision[array].image.push({
             filename: uploadedImage.originalname,
             contentType: uploadedImage.mimetype,
+            url: uploadedImage.location
 
           });
         }
@@ -310,6 +304,8 @@ exports.updateLot = async (req, res, next) => {
   });
     
   } catch (error) {
+
+    console.log(error)
     return next(error);
   }
 };

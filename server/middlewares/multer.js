@@ -1,6 +1,17 @@
 const multer = require('multer');
 const path = require('path');
 const multerS3 = require('multer-s3');
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+
+
+const s3 = new S3Client({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+
+
+
 
 // Define storage for uploaded files
 const scannedFilesStorage = multer.diskStorage({
@@ -60,6 +71,39 @@ const formsStorage = multer.diskStorage({
 });
 
 
+// const upload = multer({
+//   storage: multerS3({
+//     s3,
+//     bucket: process.env.AWS_BUCKET_NAME,
+//     metadata: function (req, file, cb) {
+//       cb(null, { fieldName: file.fieldname });
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, `uploads/lotImages/${file.originalname}`);
+//     },
+//   }),
+// });
+
+
+
+
+const uploadlotImage = multer({storage: multerS3({
+  s3,
+  bucket: process.env.AWS_BUCKET_NAME,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
+  },
+  key: function (req, file, cb) {
+    cb(null, `uploads/lotImages/${file.originalname}`);
+  },
+}),
+}).single('image');
+
+
+
+
+
+
 // Create a Multer instance for handling a single file with the field name 'file'
 const uploadScannedFile = multer({ storage: scannedFilesStorage }).single('file');
 
@@ -73,6 +117,6 @@ const uploadForms = multer({ storage: formsStorage }).single('file');
 module.exports = {
   uploadScannedFile,
   uploadAttachment,
-
+  uploadlotImage,
   uploadForms
 };

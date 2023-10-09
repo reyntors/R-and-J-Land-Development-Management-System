@@ -8,6 +8,9 @@ const imageSchema = new mongoose.Schema({
     contentType: {
         type: String
     },
+    url: {
+        type: String,
+    }
     
 });
 const subdivisionSchema = new mongoose.Schema({

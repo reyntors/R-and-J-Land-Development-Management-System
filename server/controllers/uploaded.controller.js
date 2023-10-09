@@ -71,23 +71,7 @@ exports.retrieveForm = async (req, res, next) => {
 
 }
 
-const generatePresignedUrl = async (bucketName, key, foundImage) => {
-  const params = {
-    Bucket: bucketName,
-    Key: key,
-    Expires: 3600, 
-  };
 
-  try {
-  
-    const signedUrl = `https://${bucketName}.s3.amazonaws.com/${key}?AWSAccessKeyId=${process.env.AWS_ACCESS_KEY_ID}&Expires=${params.Expires}&Signature=${$metadata.headers['x-amz-signature']}`;
-
-    return signedUrl;
-  } catch (error) {
-    console.error("Error generating pre-signed URL:", error);
-    throw error;
-  }
-};
 exports.retrieveLotImage = async (req, res) => {
 
   try {
@@ -115,15 +99,8 @@ exports.retrieveLotImage = async (req, res) => {
 
       if (foundImage) {
         
-      
-       const bucketName = process.env.AWS_BUCKET_NAME;
-       const key = `uploads/lotimages/${foundImage.filename}`;
-      
-
-        
-        const signedUrl = await generatePresignedUrl(bucketName, key, foundImage);
-
-        return res.status(200).json({ url: signedUrl });
+        // Send the image URL as part of the response
+      return res.status(200).json({ imageUrl: foundImage.url });
 
         
       } else{
