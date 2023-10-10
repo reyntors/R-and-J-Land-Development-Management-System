@@ -43,19 +43,22 @@ exports.getForms = async (req, res) => {
 
             const myforms = await Forms.findOne()
 
-
             const fileData = {
                 filename: formFile.originalname,
                 contentType: formFile.mimetype,  
                 url: formFile.location
-              };
+              }; 
 
-              myforms.forms.push(fileData);
+  
 
-              const savedForm = await myforms.save();
+                myforms.forms.push(fileData);
 
-              return res.status(200).json({message: 'Form Added successfully!', data: savedForm})
+                const savedForm = await myforms.save();
 
+                return res.status(200).json({message: 'Form Added successfully!', data: savedForm});
+         
+
+             
         });
 
     }catch (error) {

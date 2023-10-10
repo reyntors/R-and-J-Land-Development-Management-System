@@ -19,7 +19,7 @@ const uploadScannedFile = multer({storage: multerS3({
     cb(null, { fieldName: file.fieldname });
   },
   key: function (req, file, cb) {
-    cb(null, `uploads/attachments/${file.originalname}`);
+    cb(null, `uploads/scannedFiles/${file.originalname}`);
   },
 }),
 }).single('file');
