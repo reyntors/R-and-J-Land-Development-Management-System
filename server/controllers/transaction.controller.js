@@ -1,5 +1,6 @@
 const User = require('../models/user.model');
 const { uploadAttachment } = require('../middlewares/multer');
+const Report = require('../models/reports.model')
 
 
 
@@ -53,6 +54,29 @@ exports.addTransaction = async (req, res, next) => {
 
       // Save the updated user record
       await client.save();
+
+
+      const newReportEntry = {
+        date: newTransaction.date,
+        fullname: client.fullname,
+        amount: newTransaction.amount,
+        purpose: newTransaction.purpose
+
+      };
+
+      const reports = await Report.findOne();
+
+      if (!reports){
+
+        const newReports = new Report({ reports: [newReportEntry]  });
+        await newReports.save();
+      }else{
+
+        reports.reports.push(newReportEntry);
+
+        await reports.save();
+
+      }
 
       return res.status(200).json({
         message: `${client.username}, Transaction added successfully.`,

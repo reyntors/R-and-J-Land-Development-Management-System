@@ -124,6 +124,8 @@ exports.getUserDetails = async (req, res, next) => {
         } else {
             const activeUsers = await User.find();
 
+            
+
 
             return res.status(200).json({
                 message: 'All active users details',

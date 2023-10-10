@@ -43,6 +43,7 @@ app.use("/forms", require("./routes/guestForms.routes"));
 app.use("/lot", require("./routes/lot.routes"));
 app.use("/reservation", require("./routes/reservation.routes"));
 app.use("/inquiries", require("./routes/inquiries.routes"));
+app.use("/reports", require("./routes/reports.routes"));
 
 
 app.use(errors.errorHandler);
