@@ -52,7 +52,7 @@ exports.createLetterOfIntent = async (req, res, next) => {
         email: user.email,
         fblink: user.fbAccount,
         phonenumber: user.contactNumber,
-        date: new Date()
+        date: newLetterOfIntent.date
 
         };
 
@@ -70,8 +70,6 @@ exports.createLetterOfIntent = async (req, res, next) => {
 
         }
 
-        
-  
 
         // save to users record
         await user.save();

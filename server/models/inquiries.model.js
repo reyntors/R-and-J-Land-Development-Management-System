@@ -13,7 +13,7 @@ const inquiriesSchema = new Schema({
         email: String,
         fblink: String,
         phonenumber: String,
-        date: Date
+        date: String,
 
     }]
 

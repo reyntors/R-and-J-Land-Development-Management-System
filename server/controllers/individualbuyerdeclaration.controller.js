@@ -48,7 +48,7 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
             email: user.email,
             fblink: user.fbAccount,
             phonenumber: user.contactNumber,
-            date: new Date()
+            date: newIndividualBuyerDeclaration.date
     
             };
     

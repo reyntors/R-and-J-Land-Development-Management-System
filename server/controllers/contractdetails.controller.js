@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
 const fs = require('fs');
 const path = require('path');
-
+const Inquiry = require('../models/inquiries.model');
 
 
 // Create a new letter of intent
@@ -31,6 +31,34 @@ exports.createContractDetails = async (req, res, next) => {
         const savedcreateContractDetails = await newcontractDetailsData.save();
 
         user.ContractDetails = savedcreateContractDetails;
+
+        const newInquiry = {
+
+            name: user.fullname,
+            subject: 'Submitted of Contract Details',
+            context: `${user.fullname}, Requested an Contract Details.`,
+            email: user.email,
+            fblink: user.fbAccount,
+            phonenumber: user.contactNumber,
+            date: new Date()
+    
+            };
+    
+            const inquiries = await Inquiry.findOne()
+    
+            if (!inquiries) {
+                // If inquiries object doesn't exist, create it
+                const newInquiries = new Inquiry({ inquiries: [newInquiry] });
+                await newInquiries.save();
+            }else{
+    
+                inquiries.inquiries.push(newInquiry);
+                 //save to inquiries
+                await inquiries.save();
+    
+            }
+    
+        
 
         await user.save();
 
