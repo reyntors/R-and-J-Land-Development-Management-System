@@ -27,7 +27,7 @@ try {
       email: user.email,
       fblink: user.fbAccount,
       phonenumber: user.contactNumber,
-      date: new Date()
+      date: user.date
 
       };
 
