@@ -46,3 +46,21 @@ exports.updateLegitimacy = async (req, res, next) => {
         return next(error);
     }
 };
+
+
+exports.listPendingClients = async (req, res, next) => {
+    try {
+        
+
+        const legitimateClients = await User.find({ legitimate: false });
+       
+
+        return res.status(200).json({
+            message: 'List of legitimate clients',
+            data: legitimateClients,
+        });
+    } catch (error) {
+       
+        return next(error);
+    }
+};

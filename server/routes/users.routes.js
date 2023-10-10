@@ -34,9 +34,10 @@ router.put("/:id", auth.authenticateToken, userController.restrict('staff'), use
 router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict('staff'), transactiontController.addTransaction);
 router.get("/alltransaction/:id", auth.authenticateToken, userController.restrict('staff'), transactiontController.getTransaction);
 
-//add legit clients
+//add legit clientslistPendingClients
 router.get("/client/legit-clients", auth.authenticateToken, userController.restrict('staff'), legitClientController.listLegitimateClients);
 router.put("/update-legitimacy/:id", auth.authenticateToken, userController.restrict('staff'), legitClientController.updateLegitimacy);
+router.get("/client/pending-clients", auth.authenticateToken, userController.restrict('staff'), legitClientController.listPendingClients);
 
 //Payment Details
 router.post('/addpayment/:id', auth.authenticateToken, userController.restrict('staff'), paymentDetailsController.createUserWithPaymentDetails);
