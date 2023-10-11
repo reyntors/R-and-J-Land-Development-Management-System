@@ -1,34 +1,92 @@
-
 const Report = require('../models/reports.model');
+const ExcelJS = require('exceljs');
+const path = require('path');
+const fs = require('fs');
 
 exports.generateReports = async (req, res, next) => {
     try {
         const { date } = req.params;
 
-        console.log(date);
+        const reports = await Report.findOne({ 'reports.date': date });
 
-        const reports = await Report.findOne({"reports.date": date});
-
-       
-
-        if (!reports){
-
-            res.status(404).json({message: 'No report found for this date'});
-        
-        }else{
-            
-
-            // Filter the reports array to include only reports with the specified date
-            const filteredReports = reports.reports.filter(report => report.date === date);
-
-            return res.status(200).json({ message: 'Reports for the specified date', data: filteredReports });
-
+        if (!reports) {
+            res.status(404).json({ message: 'No report found for this date' });
+            return;
         }
-    
+
+        // Filter the reports array to include only reports with the specified date
+        const filteredReports = reports.reports.filter((report) => report.date === date);
+
+        if (filteredReports.length === 0) {
+            res.status(404).json({ message: 'No reports found for the specified date' });
+            return;
+        }
+
+        // Create an Excel workbook
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Reports');
+
+        // Define worksheet columns
+        worksheet.columns = [
+            { header: 'Date', key: 'date', width: 12 },
+            { header: 'Full Name', key: 'fullname', width: 20 },
+            { header: 'Amount', key: 'amount', width: 15 },
+            { header: 'Purpose', key: 'purpose', width: 25 },
+        ];
+
+        // Add data to the worksheet
+        filteredReports.forEach((report) => {
+            worksheet.addRow(report);
+        });
+
+       // Generate a unique filename for the Excel file
+       const excelFileName = `reports_${date}.xlsx`;
+       const excelFilePath = path.join(__dirname, `../public/excels/`, excelFileName);
+
+          // Save the Excel file to the "public/excels" directory
+        await workbook.xlsx.writeFile(excelFilePath);
+
+        res.status(200).json({ message: 'Daily reports generated successfully!',
+                               filename: excelFileName, 
+                               data: filteredReports,  });
+
+
     } catch (error) {
         return next(error);
     }
 };
+
+// API endpoint to retrieve the Excel file
+exports.downloadExcelFile = (req, res) => {
+    const { filename } = req.params;
+    const filePath = path.join(__dirname, '../public/excels/', filename);
+
+    // Check if the file exists
+    if (!fs.existsSync(filePath)) {
+        res.status(404).json({ message: 'File not found' });
+        return;
+    }
+
+     // Provide the file for download
+     res.download(filePath, filename, (err) => {
+        if (err) {
+            res.status(500).json({ message: 'Error while downloading the file' });
+        } else {
+            // Delete the file after it has been downloaded
+            fs.unlink(filePath, (unlinkError) => {
+                if (unlinkError) {
+                    console.error('Error while deleting the file:', unlinkError);
+                } else {
+                    console.log('File deleted:', filePath);
+                }
+            });
+        }
+    });
+};
+
+
+
+
 
 exports.generateCustomReports = async (req, res, next) => {
     try {
@@ -55,9 +113,36 @@ exports.generateCustomReports = async (req, res, next) => {
                 return accumulator;
             }, []);
 
+
+            // Create an Excel workbook
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Reports');
+
+        // Define worksheet columns
+        worksheet.columns = [
+            { header: 'Date', key: 'date', width: 12 },
+            { header: 'Full Name', key: 'fullname', width: 20 },
+            { header: 'Amount', key: 'amount', width: 15 },
+            { header: 'Purpose', key: 'purpose', width: 25 },
+        ];
+
+        // Add data to the worksheet
+        filteredReports.forEach((report) => {
+            worksheet.addRow(report);
+        });
+
+       // Generate a unique filename for the Excel file
+       const excelFileName = `reports_${startDate}_${endDate}.xlsx`;
+       const excelFilePath = path.join(__dirname, `../public/excels/`, excelFileName);
+
+          // Save the Excel file to the "public/excels" directory
+        await workbook.xlsx.writeFile(excelFilePath);
+
             return res
                 .status(200)
-                .json({ message: 'Reports for the specified date range', data: filteredReports });
+                .json({ message: 'Reports for the specified date range',
+                        filename: excelFileName,
+                        data: filteredReports });
         }
     } catch (error) {
         return next(error);
