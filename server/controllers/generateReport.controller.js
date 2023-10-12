@@ -41,7 +41,7 @@ exports.generateReports = async (req, res, next) => {
 
        // Generate a unique filename for the Excel file
       
-       const excelFilePath = path.join(__dirname, `../public/attachments/reports_${date}.xlsx`);
+       const excelFilePath = path.join(__dirname, `../public/templates/reports_${date}.xlsx`);
 
           // Save the Excel file to the "public/excels" directory
         await workbook.xlsx.writeFile(excelFilePath);
@@ -62,7 +62,7 @@ exports.generateReports = async (req, res, next) => {
 // API endpoint to retrieve the Excel file
 exports.downloadExcelFile = (req, res) => {
     const { filename } = req.params;
-    const filePath = path.join(__dirname, '../public/attachments/', filename);
+    const filePath = path.join(__dirname, '../public/templates/', filename);
 
     // Check if the file exists
     if (!fs.existsSync(filePath)) {
