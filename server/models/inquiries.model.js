@@ -7,6 +7,8 @@ const inquiriesSchema = new Schema({
 
     inquiries:[{
 
+        mark: Boolean, default: false,
+        inquiryId: String,
         name: String,
         subject: String,
         context: String,

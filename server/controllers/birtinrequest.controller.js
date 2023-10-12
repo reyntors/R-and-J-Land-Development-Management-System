@@ -44,7 +44,8 @@ exports.createBirTinRequest = async (req, res, next) => {
         email: user.email,
         fblink: user.fbAccount,
         phonenumber: user.contactNumber,
-        date: new Date()
+        date: newBirTinRequest.date,
+        inquiryId: user.userId
 
         };
 

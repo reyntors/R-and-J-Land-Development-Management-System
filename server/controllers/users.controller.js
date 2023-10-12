@@ -27,7 +27,8 @@ try {
       email: user.email,
       fblink: user.fbAccount,
       phonenumber: user.contactNumber,
-      date: user.date
+      date: user.date,
+      inquiryId: user.userId
 
       };
 
@@ -181,7 +182,6 @@ exports.getUserDetails = async (req, res, next) => {
 
       if (updateData.civilStatus) {
 
-        console.log("I am here");
           user.additionalInfo.civilStatus = updateData.civilStatus;
         }
 

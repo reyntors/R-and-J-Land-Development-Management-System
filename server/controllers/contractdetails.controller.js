@@ -40,7 +40,8 @@ exports.createContractDetails = async (req, res, next) => {
             email: user.email,
             fblink: user.fbAccount,
             phonenumber: user.contactNumber,
-            date: new Date()
+            date: new Date(),
+            inquiryId: user.userId
     
             };
     

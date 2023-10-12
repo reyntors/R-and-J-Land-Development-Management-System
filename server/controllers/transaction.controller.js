@@ -116,9 +116,11 @@ exports.addTransaction = async (req, res, next) => {
       if( client.accountDetails.totalAmountPayable === 0){
 
         client.accountDetails.totalAmountPayable = totalAmountDue - amountPaid;
+
       }else{
 
         client.accountingDetails.totalAmountPayable -= amountPaid
+        
       }
         
     
@@ -126,11 +128,6 @@ exports.addTransaction = async (req, res, next) => {
     }
     
          
-
-  
-
-
-
 
       // Save the updated user record
       await client.save();

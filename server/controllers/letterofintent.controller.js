@@ -52,7 +52,8 @@ exports.createLetterOfIntent = async (req, res, next) => {
         email: user.email,
         fblink: user.fbAccount,
         phonenumber: user.contactNumber,
-        date: newLetterOfIntent.date
+        date: newLetterOfIntent.date,
+        inquiryId: user.userId
 
         };
 
