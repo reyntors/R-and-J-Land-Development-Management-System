@@ -141,12 +141,14 @@ exports.getUserDetails = async (req, res, next) => {
   exports.updateUser = async (req, res, next) => {
     const { id } = req.params;
     const updateData = req.body;
+
+    console.log(updateData);
+
   
     try {
       // Check if the user with the specified ID exists and has the "guest" role
       const user = await User.findOne({ userId: id, roles: 'guest' });
-      console.log(user);
-  
+     
       if (!user) {
         return res.status(404).json({
           message: 'Guest user not found or you do not have permission to update this user.',
@@ -176,6 +178,27 @@ exports.getUserDetails = async (req, res, next) => {
       if (updateData.email) {
         user.email = updateData.email;
       }
+
+      if (updateData.civilStatus) {
+
+        console.log("I am here");
+          user.additionalInfo.civilStatus = updateData.civilStatus;
+        }
+
+      if (updateData.spouseName) {
+          user.additionalInfo.spouseName = updateData.spouseName;
+        }
+
+       if (updateData.occupation) {
+          user.additionalInfo.occupation = updateData.occupation;
+        }
+
+        if (updateData.monthlyGrossIncome) {
+          user.additionalInfo.monthlyGrossIncome = updateData.monthlyGrossIncome;
+        }
+
+        
+     
       
       await user.save();
 
@@ -184,7 +207,7 @@ exports.getUserDetails = async (req, res, next) => {
         data: user,
       });
     } catch (error) {
-      return next(error);
+      return res.status(500).json({message: 'User update failed!'})
     }
   };
 

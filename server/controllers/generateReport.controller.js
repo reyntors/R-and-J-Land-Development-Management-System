@@ -46,8 +46,6 @@ exports.generateReports = async (req, res, next) => {
           // Save the Excel file to the "public/excels" directory
         await workbook.xlsx.writeFile(excelFilePath);
 
-        
-
 
         res.status(200).json({ message: 'Daily reports generated successfully!',
                                filename: `reports_${date}.xlsx`, 

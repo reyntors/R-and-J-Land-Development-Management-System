@@ -846,6 +846,20 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    additionalInfo: {
+        civilStatus: String,
+        spouseName: String,
+        occupation: String,
+        monthlyGrossIncome: Number,
+        buyerSourceOfIncome: String,
+        typeOfEmployment: String,
+        employer: String,
+        employerAddress: String,
+        grossSalary: Number,
+        businessName: String,
+        businessAddress: String,
+        businessMonthlyIncome: Number,
+    },
     profile: {
         type: profileSchema,
         default: {}

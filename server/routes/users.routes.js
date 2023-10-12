@@ -27,7 +27,7 @@ router.post("/create-lot/:id", auth.authenticateToken, userController.restrict('
 //staff
 router.post("/addnewclient", auth.authenticateToken, userController.restrict('staff'), userController.register);
 router.get("/:id?", auth.authenticateToken, userController.restrict('staff'), userController.getUserDetails);
-router.put("/:id", auth.authenticateToken, userController.restrict('staff'), userController.updateUser);
+router.put("/update-user/:id", auth.authenticateToken, userController.restrict('staff'), userController.updateUser);
 
 
 //add transaction
