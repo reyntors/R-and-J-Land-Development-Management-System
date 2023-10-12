@@ -93,15 +93,36 @@ exports.addTransaction = async (req, res, next) => {
       }
 
       
+      
 
       if (newTransaction.purpose === 'monthly-payment') {
-        // Subtract the monthly payment from the total amount due
-        client.accountingDetails.totalAmountDue -= newTransaction.amount;
-        // Add the monthly payment to the total payment made
-        client.accountingDetails.totalPayment += newTransaction.amount;
+
+        const amountPaid = parseFloat(newTransaction.amount);
+        const totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
+        
+       
+        client.accountingDetails.totalAmountDue = totalAmountDue;
+     
+
+      if(client.accountingDetails.totalPayment === 0){
+
+        client.accountingDetails.totalPayment = amountPaid;
+
+      }else{
+
+        client.accountingDetails.totalPayment += amountPaid
+      }
+
+      if( client.accountDetails.totalAmountPayable === 0){
+
+        client.accountDetails.totalAmountPayable = totalAmountDue - amountPaid;
+      }else{
+
+        client.accountingDetails.totalAmountPayable -= amountPaid
+      }
+        
     
-        // Calculate the Total Amount Payable (Total Amount Due + Down Payment)
-        client.accountDetails.totalAmountPayable = client.accountingDetails.totalAmountDue + (client.paymentDetails.downPayment || 0);
+       
     }
     
          
