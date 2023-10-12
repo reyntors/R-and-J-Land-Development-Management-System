@@ -62,7 +62,7 @@ exports.generateReports = async (req, res, next) => {
 // API endpoint to retrieve the Excel file
 exports.downloadExcelFile = (req, res) => {
     const { filename } = req.params;
-    const filePath = path.join(__dirname, '../public/excels/', filename);
+    const filePath = path.join(__dirname, '../public/attachments/', filename);
 
     // Check if the file exists
     if (!fs.existsSync(filePath)) {
