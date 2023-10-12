@@ -136,7 +136,7 @@ exports.generateCustomReports = async (req, res, next) => {
 
        // Generate a unique filename for the Excel file
        const excelFileName = `reports_${startDate}_${endDate}.xlsx`;
-       const excelFilePath = path.join(__dirname, `../public/excels/`, excelFileName);
+       const excelFilePath = path.join(__dirname, `../public/templates/`, excelFileName);
 
           // Save the Excel file to the "public/excels" directory
         await workbook.xlsx.writeFile(excelFilePath);
