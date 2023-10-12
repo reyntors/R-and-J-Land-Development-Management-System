@@ -115,12 +115,12 @@ exports.addTransaction = async (req, res, next) => {
 
       if( client.accountDetails.totalAmountPayable === 0){
 
-        client.accountDetails.totalAmountPayable = totalAmountDue - amountPaid;
+        client.accountingDetails.totalAmountPayable = totalAmountDue - amountPaid;
 
       }else{
 
         client.accountingDetails.totalAmountPayable -= amountPaid
-        
+
       }
         
     
