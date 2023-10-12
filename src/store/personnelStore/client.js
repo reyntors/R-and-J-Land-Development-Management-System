@@ -18,21 +18,37 @@ export default{
 
             objectValuesEmpty: false,
 
+            listGuestSuggestions: [],
 
+            // something: ''
         }
     },
     mutations:{
 
+        // setSomething(state,param){
+        //     state.something = param
+        // },
+
         //start search guest
-        searchClient(state,id){
-            const index = state.clientsPending.findIndex(item => item.userId=== id)
-            if(index>=0){
-                console.log(state.clientsPending[index])
-                state.searchResult = state.clientsPending[index]
+        searchGuest(state,value){
+            if(value !== '' || value !== null){
+                const searchValue = value.toLowerCase()
+                const tempList = state.clientsPending.filter(
+                    item => item.fullname.toLowerCase().startsWith(searchValue)
+                )
+                state.listGuestSuggestions = tempList                
             }else{
-                state.searchResult = null
-                console.log('nothing found!')
+                state.listGuestSuggestions = state.clientsPending
             }
+
+            // const index = state.clientsPending.findIndex(item => item.userId=== id)
+            // if(index>=0){
+            //     console.log(state.clientsPending[index])
+            //     state.searchResult = state.clientsPending[index]
+            // }else{
+            //     state.searchResult = null
+            //     console.log('nothing found!')
+            // }
         },
         //end search guest
 
@@ -60,8 +76,10 @@ export default{
             state.clientsPending = []
             response.data.forEach(item => {
                 state.clientsPending.push(item)
-                console.log(item)
+                // console.log(item)
             })
+            //copy the whole list for suggesiton list
+            state.listGuestSuggestions = state.clientsPending
         },
         //end set local guest list
 
@@ -73,13 +91,13 @@ export default{
 
         //start payment transactions
         setLocalCurrentClientTransaction(state,list){
-            state.listCurrentClientTransactions = list                         
+            state.listCurrentClientTransactions = list.reverse()                        
         },
         //end payment transactions
 
         // start set scanned files
         setLocalCurrentUploadedScannedFiles(state,list){
-            state.listCurrentClientScannedFiles = list
+            state.listCurrentClientScannedFiles = list.reverse()
         },
         // end set scanned files
 
@@ -87,8 +105,16 @@ export default{
         resetTempArrays(state){
             state.listCurrentClientScannedFiles = []
             state.listCurrentClientTransactions = []
-        }
+        },
         // end reset temporary arrays
+
+        // start add transaction
+        updateAccountingDetails(state,payload){
+            const index = state.clientsAdded.findIndex(item => item.userId === payload.id)
+            state.clientsAdded[index].accountingDetails.totalAmountPayable = state.clientsAdded[index].accountingDetails.totalAmountPayable - payload.amountPaid
+            state.clientsAdded[index].accountingDetails.totalPayment =  state.clientsAdded[index].accountingDetails.totalPayment + payload.amountPaid
+        }
+        // end add transaction
         
     },
     actions:{
@@ -106,6 +132,7 @@ export default{
 
         //start getting legit list
         async getLegitList(context){
+            console.log('running getLegitList')
             const tempList = []
             try{
                 const response = await Client.requestLegitList()
@@ -116,7 +143,7 @@ export default{
 
                     const existletterOfIntent = item.letterOfIntent.isSubmitted
 
-                    // const existBirTinRequest = item.BirTinRequest.isSubmitted
+                    const existBirTinRequest = item.BirTinRequest.isSubmitted
 
                     const existindividualDeclaration = item.individualDeclaration.isSubmitted
 
@@ -141,17 +168,16 @@ export default{
                     //start CREATE downloadable URL BirTinRequest
                     const BirTinRequestFilename = `${item.userId}_${item.fullname}_BirTinRequest.pdf`  
                     var BirTinRequestURL = '' 
-
                     // FIX NEED FOR BIR DONWLOAD FORM
-                    // if(existBirTinRequest){
-                    //     try{
-                    //         const downloadableBirTinRequest = await Client.retrieveUploadedForm(item.userId,BirTinRequestFilename)
-                    //         const BirTinRequestBlob = new Blob([downloadableBirTinRequest], {type: 'application/pdf'})
-                    //         BirTinRequestURL = URL.createObjectURL(BirTinRequestBlob)                        
-                    //     }catch(error){
-                    //         console.log(error)
-                    //     }
-                    // }
+                    if(existBirTinRequest){
+                        try{
+                            const downloadableBirTinRequest = await Client.retrieveUploadedForm(item.userId,BirTinRequestFilename)
+                            const BirTinRequestBlob = new Blob([downloadableBirTinRequest], {type: 'application/pdf'})
+                            BirTinRequestURL = URL.createObjectURL(BirTinRequestBlob)                        
+                        }catch(error){
+                            console.log(error)
+                        }
+                    }
                     item.BirTinRequestURL = BirTinRequestURL
                     item.BirTinRequestFilename = BirTinRequestFilename
                     //end CREATE downloadable URL BirTinRequest
@@ -221,29 +247,11 @@ export default{
 
         //start payment transactions
         async getListTransaction(context,id){
-            const tempList = []
             try{
                 const response = await Client.getListTransaction(id)
                 const list = response.data
-                    if(list.length>0){
-                        for(const item of list){     
-                            console.log(item)                      
-                            try{
-                                const file = await Client.retrieveUploadedAttachment(id,item.attachments[0].filename)
-                                console.log(file)
-                                const blob = new Blob([file],{type: 'application/pdf'})
-                                const url = URL.createObjectURL(blob)
-                                const download = item.attachments[0].filename
-                                item.url = url;
-                                item.download = download;
-                                tempList.push(item)                         
-                            }catch(error){
-                                console.log(error)
-                                throw error
-                            }
-                        }
-                    }
-                context.commit('setLocalCurrentClientTransaction',tempList)
+                // console.log(list)
+                context.commit('setLocalCurrentClientTransaction',list)
                 return response
             }catch(error){
                 console.log(error)
@@ -252,12 +260,12 @@ export default{
 
             
         },
-        async addPayment(_,payload){
+        async addPayment(context,payload){
             try{
                 const response = await Client.addPaymentTransaction({
                     id:payload.id,
-                    obj:payload.obj})
-                console.log(response)
+                    obj:payload.obj,})
+                context.commit('updateAccountingDetails',{id:payload.id,amountPaid: payload.amountPaid})
                 return response.message
             }catch(error){
                 console.log(error)
@@ -288,52 +296,41 @@ export default{
             }
         },
         async getListScannedFile(context,id){
-            const newList = []
             try{
                const response = await Client.listScannedFile(id)
                const list = response.scannedFiles
-               
-               if(list.length>0){
-                for(const item of list){
-                    try{
-                        const response = await Client.retrieveSpecificScannedFile(id,item.filename)
-                        const blob = new Blob([response], {type: 'application/pdf'})
-                        const url = URL.createObjectURL(blob)
-                        console.log(url,item.filename)
-                        newList.push({
-                            filename: item.filename,
-                            url: url
-                        })                      
-                    }catch(error){
-                        console.log(error)
-                    }
-                }
-                console.log(newList)
-            }                      
+               context.commit('setLocalCurrentUploadedScannedFiles',list)                   
             }catch(error){
                 console.log(error)
-            }
-            context.commit('setLocalCurrentUploadedScannedFiles',newList)
+            } 
         }
         //end downloadable Form
 
     },
     getters:{
+
+        // somethingGetter(state){
+        //     return state.something
+        // },
+
         searchResultGetter(state){
-            if(state.searchResult){
                return state.searchResult 
-            }else{
-                return null
-            }
         },
 
         clientsGetter(state){
+            console.log(state.clientsAdded)
             return state.clientsAdded
         },
 
+        // start pending clients
+        pendingClients(state){
+            return state.listGuestSuggestions
+        },
+        // end pending clients
+
         /*start transaction payment */
         clientTransactionGetter(state){ 
-            console.log(state.listCurrentClientTransactions )
+            // console.log(state.listCurrentClientTransactions )
             return state.listCurrentClientTransactions 
         },
         /*end transaction payment */

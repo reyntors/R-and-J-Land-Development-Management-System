@@ -1,97 +1,108 @@
 <template>
+<div class="letterOfIntent-Container">
     <the-header />
 
-    <form-card id="letterOfIntent" title="Letter of Intent">
-      <p style="margin-top: 1rem;">Date: <input type="date" v-model.trim="date" :class="{empty:isDateEmpty}"></p> 
-      <br>
-      <p>{{ companyName }}</p>
-      <p>{{ companyAddress }}</p> 
-      <br>
-      <p>Gentlemen:</p>
-      <p>I/We hereby manifest my/our intent to purchase <input v-model.trim="purchase" :class="{empty:isPurchaseEmpty}"> lot(s)/unit(s)</p>
-      <div class="checkboxes" :class="{empty:isProjectEmpty}">
-        <strong>Project:</strong>
-        <input type="radio" value="value1" id="check1" v-model="project"><label for="check1">Northown</label>
-        <input type="radio" value="value2" id="check2" v-model="project"><label for="check2">Northcrest</label>
-        <input type="radio" value="value3" id="check3" v-model="project"><label for="check3">Eden Ridge</label>
-        <input type="radio" value="value4" id="check4" v-model="project"><label for="check4">Narra Park Residence</label>
-      </div>
-      <div class="location">
-        <b>Location:</b>
-        <section>
-          <div><label>PH</label>:<input v-model.trim="locationPH" :class="{empty:islocationPHEmpty}"></div>
-          <div><label>Blk</label>:<input v-model.trim="locationBlk" :class="{empty:islocationBlkEmpty}"></div>
-          <div><label>Lot/Unit</label>:<input v-model.trim="locationLotOrUnit" :class="{empty:islocationLotOrUnitEmpty}"></div>          
+    <div >
+      <form-card id="letterOfIntent" title="Letter of Intent">
+        <p style="margin-top: 1rem;">Date: <input type="date" v-model.trim="date" :class="{empty:isDateEmpty}"></p> 
+        <br>
+        <p>{{ companyName }}</p>
+        <p>{{ companyAddress }}</p> 
+        <br>
+        <p>Gentlemen:</p>
+        <p>I/We hereby manifest my/our intent to purchase <input v-model.trim="purchase" :class="{empty:isPurchaseEmpty}"> lot(s)/unit(s)</p>
+        <div class="checkboxes" :class="{empty:isProjectEmpty}">
+          <strong>Project:</strong>
+          <input type="radio" value="value1" id="check1" v-model="project"><label for="check1">Northown</label>
+          <input type="radio" value="value2" id="check2" v-model="project"><label for="check2">Northcrest</label>
+          <input type="radio" value="value3" id="check3" v-model="project"><label for="check3">Eden Ridge</label>
+          <input type="radio" value="value4" id="check4" v-model="project"><label for="check4">Narra Park Residence</label>
+        </div>
+        <div class="location">
+          <b>Location:</b>
+          <section>
+            <div><label>PH</label>:<input v-model.trim="locationPH" :class="{empty:islocationPHEmpty}"></div>
+            <div><label>Blk</label>:<input v-model.trim="locationBlk" :class="{empty:islocationBlkEmpty}"></div>
+            <div><label>Lot/Unit</label>:<input v-model.trim="locationLotOrUnit" :class="{empty:islocationLotOrUnitEmpty}"></div>          
+          </section>
+
+        </div>
+
+        <section class="reference">
+            For your reference, please see my information below;
+            <div>
+                <label>Name</label>:
+              <input v-model.trim="name" :class="{empty:isnameEmpty}">
+            </div>
+            <div>
+                <label>Address</label>:
+                <input v-model.trim="address" :class="{empty:isaddressEmpty}">
+            </div>
+            <div>
+                <label>Citizenship</label>:
+                <input v-model.trim="citizenship" :class="{empty:iscitizenshipEmpty}">
+            </div>
+            <div>
+                <label>Contact No.</label>:
+                <input v-model.trim="contactNo" :class="{empty:iscontactNoEmpty}">
+            </div>
+            <div>
+                <label>Email Address</label>:
+                <input type="email" v-model.trim="emailAddress" :class="{empty:isemailAddressEmpty}">
+            </div>
         </section>
 
-      </div>
+          <div class="intalicize">
+            <strong>I understand  and agree on the following:</strong>
+            <ul>
+              <li>
+                That this document does not  sifnify official booking of the sale.
+              </li>
+              <li>
+                That the purpose of this document is <strong>only to BLOCK-OFF the lot/unit within SEVEN (7)
+                  WORKING DAYS.</strong>
+              </li>
+              <li>
+                That I must submit all complete requirements and reservation fee not later than <input v-model.trim="reservationTimeSpan" :class="{empty:isreservationTimeSpanEmpty}"> to
+                officially record the above-mentioned lot/unit as a safe, otherwise, ALsons Deve will <strong>
+                  automatically</strong> open the blocked off lot/unit other interested prospect buyers.
+              </li>
+            </ul>
+          </div>
 
-      <section class="reference">
-          For your reference, please see my information below;
-          <div>
-              <label>Name</label>:
-            <input v-model.trim="name" :class="{empty:isnameEmpty}">
+          <div class="client">
+            <p>Sincerley yours,</p>
+            <div>
+              <div class="signature">Name of Client & Signature</div>
+              <div class="date">DATE</div>
+            </div>
           </div>
-          <div>
-              <label>Address</label>:
-              <input v-model.trim="address" :class="{empty:isaddressEmpty}">
+          <div class="receiver">
+            <p>Received by:</p>
+            <div>
+              <div class="signature">Name of Client & Signature</div>
+              <div class="date">DATE</div>
+            </div>
           </div>
-          <div>
-              <label>Citizenship</label>:
-              <input v-model.trim="citizenship" :class="{empty:iscitizenshipEmpty}">
-          </div>
-          <div>
-              <label>Contact No.</label>:
-              <input v-model.trim="contactNo" :class="{empty:iscontactNoEmpty}">
-          </div>
-          <div>
-              <label>Email Address</label>:
-              <input type="email" v-model.trim="emailAddress" :class="{empty:isemailAddressEmpty}">
-          </div>
-      </section>
+          <submit-form-button @click="submit"> Submit</submit-form-button>
 
-        <div class="intalicize">
-          <strong>I understand  and agree on the following:</strong>
-          <ul>
-            <li>
-              That this document does not  sifnify official booking of the sale.
-            </li>
-            <li>
-              That the purpose of this document is <strong>only to BLOCK-OFF the lot/unit within SEVEN (7)
-                WORKING DAYS.</strong>
-            </li>
-            <li>
-              That I must submit all complete requirements and reservation fee not later than <input v-model.trim="reservationTimeSpan" :class="{empty:isreservationTimeSpanEmpty}"> to
-              officially record the above-mentioned lot/unit as a safe, otherwise, ALsons Deve will <strong>
-                automatically</strong> open the blocked off lot/unit other interested prospect buyers.
-            </li>
-          </ul>
-        </div>
-
-        <div class="client">
-          <p>Sincerley yours,</p>
-          <div>
-            <div class="signature">Name of Client & Signature</div>
-            <div class="date">DATE</div>
-          </div>
-        </div>
-        <div class="receiver">
-          <p>Received by:</p>
-          <div>
-            <div class="signature">Name of Client & Signature</div>
-            <div class="date">DATE</div>
-          </div>
-        </div>
-        <submit-form-button @click="submit"> Submit</submit-form-button>
-    </form-card>  
+          <loading-spin v-if="isLoading"></loading-spin> 
+      </form-card>
+     
+       
+    </div>
+    <div class="shade" v-if="isLoading"/> 
+    
     <the-footer/>
+</div>
 </template>
   
 <script>
 import { toast } from 'vue3-toastify';
 import TheFooter from '@/components/Reusable/TheFooter.vue'
+import LoadingSpin from '../LoadingScreen/LoadingSpin.vue';
 export default{
-  components: { TheFooter },
+  components: { TheFooter,LoadingSpin},
   data(){
     return{
       date: '',
@@ -127,6 +138,8 @@ export default{
       //reservation
       reservationTimeSpan: '',
       reservationTimeSpanEmpty:false,
+
+      isLoading: false,
     }
   },
   computed: {
@@ -285,11 +298,11 @@ export default{
 
       if(isGood){
         const payload = this.getAllData()
-
+        this.isLoading = true
         try{
           const response = await this.$store.dispatch('guest/submitLetterOfIntent',payload)
           toast.success(response, {autoClose: 1000,}); 
-          await new Promise(resolve => setTimeout(resolve, 1000)) 
+          await new Promise(resolve => setTimeout(resolve, 2000)) 
           this.$router.replace('/guest-forms')       
         }catch(error){
           toast.error(error, {autoClose:1000})
@@ -339,14 +352,32 @@ export default{
     reservationTimeSpan(){
       this.checkreservationTimeSpan()
     }
+  },
+  mounted(){
+    document.body.classList.add('disable-scroll');
   }
 }
 </script>
   
-  <style scoped>
+<style scoped>
+  .shade{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 5px solid black;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+  }
+  .letterOfIntent-Container{
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+  }
   #letterOfIntent{
-    font-size: clamp(.6rem, 1.2vw, 2rem);
-    /* width: 90%; */
+    font-size: clamp(.6rem, 1.2vw, 2rem); 
+    position: relative; 
   }
   .empty{
     outline: 1px solid red;

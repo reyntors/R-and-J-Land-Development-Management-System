@@ -8,7 +8,6 @@ export default {
     },
     mutations:{
         setLocalObject(state,obj){
-            // console.log(obj)
             state.objectsOfDonwloadable = obj
         }
     },
@@ -18,6 +17,7 @@ export default {
             try{
                 const response = await RAW.requestRawFormsList()
                 const list = response.data.forms
+                console.log(list)
                 const newObject = {}
                 
                 let letterOfIntentFileName = ""

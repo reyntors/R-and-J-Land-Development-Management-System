@@ -24,7 +24,7 @@ export const requestPendingList = async () => {
     // console.log('API requestPendingList executed')
     const token =store.getters['auth/getTokenID']
     try{
-        const response = await axios.get(`${BASE_URL}users`,{
+        const response = await axios.get(`${BASE_URL}users/client/pending-clients`,{
             headers:{
                 'Authorization': `Bearer ${token}`
             }
@@ -109,7 +109,7 @@ export const retrieveUploadedForm = async (id, filename) => {
             },
             responseType: 'blob'
         })
-        console.log(response.data)
+        // console.log(response.data)
         return response.data     
     }catch(error){
         throw (error.response.data.message);

@@ -10,7 +10,7 @@
           <tbody v-for="item in listInquiries" :key="item.id">
             <tr @click="showCard(item.id)" :class="{shade: !item.read}">
               <td class="name">{{ item.name }}</td>
-              <td class="about">{{ item.subject }}{{ item.message }}</td>
+              <td class="about">{{ item.subject }} {{ item.context }}</td>
               <td class="date">               
                 <span class="dateText">
                   {{ item.date }}
@@ -52,6 +52,7 @@
       closeCard(){
         this.focusedID = null
       },
+
     },
     computed:{
       listInquiries(){
@@ -61,7 +62,8 @@
 
     async mounted(){
       this.isLoading = true
-      await new Promise(resolve => setTimeout(resolve,1000))
+      // await new Promise(resolve => setTimeout(resolve,1000))
+      await this.$store.dispatch('inquiries/getInquiriesList')
       this.isLoading = false
     }
   
@@ -70,7 +72,7 @@
   
   <style scoped>
 .shade{
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgb(118, 187, 232,.3);
   font-weight: 600;
 }
 .visible{
@@ -112,6 +114,9 @@ tr{
   border-bottom: 1px solid black;
   cursor: pointer;
   width: 100%;
+}
+td{
+  padding: .5rem;
 }
 .trash-icon{
   visibility: hidden;

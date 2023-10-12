@@ -12,7 +12,7 @@
     
     <map-component></map-component>
     <messenger-chat></messenger-chat>
-
+    
     <the-footer ></the-footer>  
 </template>
 

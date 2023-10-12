@@ -62,6 +62,7 @@
           <input 
           id="upload" 
           type="file"
+          accept=".pdf"
           style="display: none;"
           @change="setUploadedFile">
         </form>

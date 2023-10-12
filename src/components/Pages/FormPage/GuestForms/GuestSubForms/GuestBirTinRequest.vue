@@ -1,100 +1,107 @@
 <template>
+<div class="bir-container">
     <the-header/>
 
     <form-card title="BIR Tin Request">fdsafa
-    <div class="c-container">
-            <input type="date" style="display: block; border: none; border-bottom: 1px solid black;" :class="{empty:isdateEmpty}" v-model.trim="date">
-        <br>    
-            <p>BUREAU OF INTERNAL REVENUE</p>
-            <p>Davao City</p>
-        <br>
-            <p>This is to authorize Mr./Mrs. <input  style="border: none; border-bottom: 1px solid black;" :class="{empty:isauthorizedToEmpty}" v-model.trim="authorizedTo"> to get my Tax Identification Number 
-                Verification Slip (TIN Verification Slip) in my behalf.</p>
-            <p>Please find below the details:</p>
-            
-            <div class="details">
-                <section>
-                    <span>Name</span>:<input :class="{empty:isnameEmpty}" v-model.trim="name"></section>
-                <section>
-                    <span>Address</span>:<input :class="{empty:isaddressEmpty}" v-model.trim="address"></section>
-                <section>
-                    <span>Birthday</span>:<input type="date" :class="{empty:isbirthdayEmpty}" v-model.trim="birthday"></section>
-                <section>
-                    <span>TIN Number</span>:<input :class="{empty:istinNumberEmpty}" v-model.trim="tinNumber"></section>  
-            </div>
-        <br>
-            <p>Thank you.</p>
-        <br>
-            <p>Respectful Yours,</p>
-        <br>
-            <input style="border: none; border-bottom: 1px solid black;" :class="{empty:isrespectfulYoursEmpty}" v-model.trim="respectfulYours">
-    </div>
-    </form-card>
-
-    <form-card title="SPECIAL POWER OF ATTORNEY">
-    <div class="spa-form">
-    <strong>KNOW ALL, MEN BY THESE PRESENTS:</strong>
-        
-        <div class="center">
-            <p>
-                That I,<input :class="{empty:isspaNameEmpty}" v-model.trim="spaName"> single/married, of legal age, <input :class="{empty:isspaAgeEmpty}" v-model.trim="spaAge"> and resident of <input :class="{empty:isspaResidentEmpty}" v-model.trim="spaResident">, do hereby Atty, name consittute and Atty,
-                <input :class="{empty:isspaAttyNameEmpty}" v-model.trim="spaAttyName" >, single/married of legal age, <input :class="{empty:isspaAttyAgeEmpty}" v-model.trim="spaAttyAge"> and a resident of <input :class="{empty:isspaAttyResidentEmpty}" v-model.trim="spaAttyResident">. to be my true and lawful <strong>Attorney-In-Face</strong>,
-                for me and in my name, to do and perfrom any or all of the following act or acts, to wit:
-            </p>
+        <div class="c-container">
+                <input type="date" style="display: block; border: none; border-bottom: 1px solid black;" :class="{empty:isdateEmpty}" v-model.trim="date">
+            <br>    
+                <p>BUREAU OF INTERNAL REVENUE</p>
+                <p>Davao City</p>
             <br>
-            <p> 1.  To secure Tax Identification Number (TIN) Verification Slip from the Bureau of Internal Revenue (BIR).</p>
+                <p>This is to authorize Mr./Mrs. <input  style="border: none; border-bottom: 1px solid black;" :class="{empty:isauthorizedToEmpty}" v-model.trim="authorizedTo"> to get my Tax Identification Number 
+                    Verification Slip (TIN Verification Slip) in my behalf.</p>
+                <p>Please find below the details:</p>
+                
+                <div class="details">
+                    <section>
+                        <span>Name</span>:<input :class="{empty:isnameEmpty}" v-model.trim="name"></section>
+                    <section>
+                        <span>Address</span>:<input :class="{empty:isaddressEmpty}" v-model.trim="address"></section>
+                    <section>
+                        <span>Birthday</span>:<input type="date" :class="{empty:isbirthdayEmpty}" v-model.trim="birthday"></section>
+                    <section>
+                        <span>TIN Number</span>:<input :class="{empty:istinNumberEmpty}" v-model.trim="tinNumber"></section>  
+                </div>
             <br>
-            <p><strong>IN WITNESS OF,</strong> we have hereunto set our hands this <input :class="{empty:iswitnessDayEmpty}" v-model.trim="witnessDay"> day of <input :class="{empty:iswitnessMonthEmpty}" v-model.trim="witnessMonth">, 20 <input :class="{empty:iswitnessYearEmpty}" v-model.trim="witnessYear"> at <input :class="{empty:iswitnessAddressEmpty}" v-model.trim="witnessAddress">, Philippines.</p>
+                <p>Thank you.</p>
             <br>
-            <div class="signature-flex">
-                <section>
-                    <strong style="display: block;">GRANTOR</strong>
-                    <br>
-                    <!-- <input style="display: block;"> -->
-                    <p style="border-top: 1px solid black;">CEI:</p>
-                </section>
-                <section>
-                    <strong style="display: block;">GRANTEE</strong>
-                    <br>
-                    <!-- <input style="display: block;"> -->
-                    <p style="border-top: 1px solid black;">CEI:</p>
-                </section>
-            </div>
+                <p>Respectful Yours,</p>
+            <br>
+                <input style="border: none; border-bottom: 1px solid black;" :class="{empty:isrespectfulYoursEmpty}" v-model.trim="respectfulYours">
         </div>
-    <p>
-        SUBSCRIBED AND SWORN to before me this <input readonly> day of <input readonly> , 20<input readonly> at Davao City, Philippines
-        Affian exhibit to be their Competent Evidence of Identities (CEI) written below their names.
-    </p>
-    <section class="notary">
-            Notary Public
-            <div>
-                <label>Doc. No.</label>
-                <input readonly>;
+        </form-card>
+
+        <form-card title="SPECIAL POWER OF ATTORNEY">
+        <div class="spa-form">
+        <strong>KNOW ALL, MEN BY THESE PRESENTS:</strong>
+            
+            <div class="center">
+                <p>
+                    That I,<input :class="{empty:isspaNameEmpty}" v-model.trim="spaName"> single/married, of legal age, <input :class="{empty:isspaAgeEmpty}" v-model.trim="spaAge"> and resident of <input :class="{empty:isspaResidentEmpty}" v-model.trim="spaResident">, do hereby Atty, name consittute and Atty,
+                    <input :class="{empty:isspaAttyNameEmpty}" v-model.trim="spaAttyName" >, single/married of legal age, <input :class="{empty:isspaAttyAgeEmpty}" v-model.trim="spaAttyAge"> and a resident of <input :class="{empty:isspaAttyResidentEmpty}" v-model.trim="spaAttyResident">. to be my true and lawful <strong>Attorney-In-Face</strong>,
+                    for me and in my name, to do and perfrom any or all of the following act or acts, to wit:
+                </p>
+                <br>
+                <p> 1.  To secure Tax Identification Number (TIN) Verification Slip from the Bureau of Internal Revenue (BIR).</p>
+                <br>
+                <p><strong>IN WITNESS OF,</strong> we have hereunto set our hands this <input :class="{empty:iswitnessDayEmpty}" v-model.trim="witnessDay"> day of <input :class="{empty:iswitnessMonthEmpty}" v-model.trim="witnessMonth">, 20 <input :class="{empty:iswitnessYearEmpty}" v-model.trim="witnessYear"> at <input :class="{empty:iswitnessAddressEmpty}" v-model.trim="witnessAddress">, Philippines.</p>
+                <br>
+                <div class="signature-flex">
+                    <section>
+                        <strong style="display: block;">GRANTOR</strong>
+                        <br>
+                        <!-- <input style="display: block;"> -->
+                        <p style="border-top: 1px solid black;">CEI:</p>
+                    </section>
+                    <section>
+                        <strong style="display: block;">GRANTEE</strong>
+                        <br>
+                        <!-- <input style="display: block;"> -->
+                        <p style="border-top: 1px solid black;">CEI:</p>
+                    </section>
+                </div>
             </div>
-            <div>
-                <label>Page No.</label>
-                <input readonly>;
-            </div>
-            <div>
-                <label>Book No.</label>
-                <input readonly>;
-            </div>
-            <div>
-                <label>Series of</label>
-                <input readonly>;
-            </div>
-        </section>
-    </div>
+        <p>
+            SUBSCRIBED AND SWORN to before me this <input readonly> day of <input readonly> , 20<input readonly> at Davao City, Philippines
+            Affian exhibit to be their Competent Evidence of Identities (CEI) written below their names.
+        </p>
+        <section class="notary">
+                Notary Public
+                <div>
+                    <label>Doc. No.</label>
+                    <input readonly>;
+                </div>
+                <div>
+                    <label>Page No.</label>
+                    <input readonly>;
+                </div>
+                <div>
+                    <label>Book No.</label>
+                    <input readonly>;
+                </div>
+                <div>
+                    <label>Series of</label>
+                    <input readonly>;
+                </div>
+            </section>
+        </div>
     </form-card>
     <submit-form-button @click="submit">Submit</submit-form-button>
+
+    <div class="shade" v-if="isLoading"></div>
+    <loading-spin v-if="isLoading"></loading-spin>>
     <the-footer/>
+</div>
 </template>
 
 <script>
+import LoadingSpin from '../LoadingScreen/LoadingSpin.vue'
 import SubmitFormButton from '@/components/Reusable/SubmitFormButton.vue'
 import { toast } from 'vue3-toastify'
+
 export default {
-  components: { SubmitFormButton },
+  components: { SubmitFormButton, LoadingSpin },
     data(){
         return{
 
@@ -137,6 +144,8 @@ export default {
             witnessYearEmpty: false,
             witnessAddress: '',
             witnessAddressEmpty: false,
+
+            isLoading: false,
 
         }
     },
@@ -335,11 +344,12 @@ export default {
                 this.checkAllEmpty()
                 const isGood = this.checkReadySubmit()
                 if(isGood){
+                    this.isLoading = true
                     const payload = this.getAllData()
                     try{
                         const response = await this.$store.dispatch('guest/submitBirTinRequest',payload)
                         toast.success(response, {autoClose: 1000,}); 
-                        await new Promise(resolve => setTimeout(resolve, 1000)) 
+                        await new Promise(resolve => setTimeout(resolve, 2000)) 
                         this.$router.replace('/guest-forms')       
                     }catch(error){
                         toast.error(error, {autoClose:1000})
@@ -408,6 +418,17 @@ export default {
 
 
 <style scoped>
+.bir-container{
+    position: relative;
+}
+.shade{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
 .empty{
     outline: 1px solid red;
     background-color: rgba(255, 0, 0, 0.222);

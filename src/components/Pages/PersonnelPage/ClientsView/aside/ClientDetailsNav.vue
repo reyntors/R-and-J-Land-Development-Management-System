@@ -24,8 +24,8 @@
     </section>
 
     <section class="section-right">
-           <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" @pass-data="getProfile"/>
-          <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj"/>
+           <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" @pass-data="getProfile" :clientID="clientObj.userId"/>
+          <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj" :clientID="clientObj.userId"/>
          <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
     </section>
   </div>

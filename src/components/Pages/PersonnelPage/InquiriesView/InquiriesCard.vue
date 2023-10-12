@@ -4,18 +4,21 @@
         <font-awesome-icon id="exit-icon" icon="fa-solid fa-x" @click="exitCard"/>
     </div>
     <header>
-        <h4 style="display: inline;">{{ obj.name }}</h4>
-        <span> {{ email }}</span>
+        <h3 style="display: inline; font-weight: 700;">{{ obj.name }}</h3>
+        <p> {{  obj.subject }}</p>
     </header>
     <hr>
     <article>
-        <h6>{{ obj.subject }}</h6>
-        <p>{{ obj.message }}</p>
+        <p>DATE: <span>{{ obj.date }}</span></p>
+        <p>EMAIL:<span>{{ email }}</span></p>
+        <p>PHONE NO.:<span>{{ obj.phonenumber }}</span></p>
+        <p>FACEBOOK LINK.:<span class="link" @click="openLink('https://www.facebook.com/karl.borromeo.35/')">{{ obj.fblink }}</span></p>
+        <br>
+        <p>{{ obj.context }}</p>
 
     </article>
     <hr>
     <section class="option">
-        <button @click="delInquiry(obj.id)">Delete <font-awesome-icon :icon="['fas', 'trash-can']" /></button>
         <button @click="mark(obj.id)" v-if="!obj.read">Mark read <font-awesome-icon :icon="['fas', 'envelope-circle-check']" /></button>
         <button @click="mark(obj.id)" v-if="obj.read">Mark Unread <font-awesome-icon :icon="['fas', 'envelope-open']" /></button>
     </section>
@@ -30,19 +33,24 @@ export default {
     methods: {
         exitCard(){
             this.$emit('close-card')
-        },
-        delInquiry(id){
-            this.$store.commit('inquiries/delInquiry',id)
-            this.exitCard()
-        },
+        },  
         mark(id){
             console.log('mark',id)
-            this.$store.commit('inquiries/markInquiry',id)
+            const isConfirm =  confirm('Are you sure?')
+            if(isConfirm){
+                this.$store.commit('inquiries/markInquiry',id)
+                this.exitCard()
+            }
+            
+        },
+        openLink(link){
+            console.log('fb')
+            window.open(link,)
         }
     },
     computed:{
         email(){
-            return '< '+ this.obj.email + ' >'
+            return this.obj.email
         }
     }
 }
@@ -79,5 +87,31 @@ export default {
 .option{
     display: flex;
     justify-content: space-between;
+}
+span{
+    margin-left: .5rem;
+    font-weight: 600;
+}
+.link{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.link:hover{
+    color: rgba(0, 0, 255, 0.5);  
+}
+.link:active{
+    cursor: progress;
+}
+button{
+    padding: .5rem;
+    background-color: #30a72a8e;
+    border: none;
+}
+button:hover{
+    background-color: #30a72a61;
+}
+button:active{
+    color: rgba(0, 0, 0, 0.322);
 }
 </style>

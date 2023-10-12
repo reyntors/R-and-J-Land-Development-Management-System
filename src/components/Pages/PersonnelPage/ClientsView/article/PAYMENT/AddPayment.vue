@@ -60,7 +60,7 @@ export default {
             // this.url = URL.createObjectURL(blob)
         },
         close(){    
-            this.$emit('refresh',this.id)
+            // this.$emit('refresh',this.id)
             this.$emit('exit-btn')
         },
         checkAllowedSubmit(){
@@ -76,26 +76,19 @@ export default {
         async submit(){
             const isGood = this.checkAllowedSubmit()
             if(isGood){
+                //for server update
                 const obj = new FormData()
                 obj.append('date',this.date)
                 obj.append('amount',this.amount)
                 obj.append('purpose',this.purpose)
                 obj.append('file',this.attachment)
 
+                //for frontend update
+                const amountPaid = this.amount
+
                 console.log(this.attachment)
-
-                try{
-                    const response = await this.$store.dispatch('client/addPayment',{
-                        id:this.id,
-                        obj: obj})
-                    console.log(response)
-                    toast.success(response,1000)
-                    await new Promise(resolve => setTimeout(resolve,1000))
-                    this.close()
-
-                }catch(error){
-                    toast.error(error,1000)
-                }                  
+                this.$emit('upload-transaction',{id:this.id ,obj: obj, amountPaid:amountPaid})
+                this.close()                
             }else{
                 toast.error('not allowed to add empty fields')
             }

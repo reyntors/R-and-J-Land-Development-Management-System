@@ -139,6 +139,7 @@ export default {
 .section3{
   width: 85%;
   margin: auto;
+  padding-bottom: 1rem;
   display: grid;
   grid-template-columns: 50% 50%;
   column-gap: .5rem;

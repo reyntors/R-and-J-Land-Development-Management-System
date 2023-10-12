@@ -36,6 +36,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 0 2rem;
 }
 /* p {
   font-size: clamp(.5rem, 1.5vw, 2rem);

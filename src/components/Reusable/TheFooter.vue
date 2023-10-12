@@ -3,7 +3,7 @@
       <article>
         <section class="section1">
           <img :src="logo">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ea provident aperiam earum sint placeat, amet quae tenetur repudiandae quas!</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus </p>
         </section>
         <section class="section2">
           <ul>
@@ -57,7 +57,7 @@ export default {
 <style scoped>
 .footer{
     width: 100%;
-    /* height: 30vh; */
+    z-index: 2;
     padding-top: 1rem ;
     background: rgb(34,156,134);
     background: linear-gradient(163deg, rgba(34,156,134,1) 35%, rgba(11,109,49,1) 100%);
@@ -92,7 +92,7 @@ article .section2 ul{
   gap: .5rem;
   list-style: none;
   margin: 0;
-  padding-left: .5rem;
+  padding-left: 1rem;
 }
 
 .section3 section{

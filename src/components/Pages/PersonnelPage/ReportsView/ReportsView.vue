@@ -7,68 +7,58 @@
 
     <div class="div2">
       
-      <article @click="toggleDaily">
+      
+      <article class="card">
         <header>
-          Daily Collection Reports
+          <h4>Collection Reports</h4>
         </header>
         <section>  
-          Collection Summary 
+
+          <button @click="openWindow('daily')">
+            DAILY REPORT
+          </button>
+
+          <!-- <button @click="openWindow('monthly')">
+            MOTHLY REPORT
+          </button>  -->
+
+          <button @click="openWindow('custom')">
+            CUSTOM REPORT
+          </button>
+
         </section>
       </article>
 
-      <article @click="toggleMonthly">
-        <header>
-          Custom Collection Reports
-        </header>
-        <section>
-            Collection Summary
-        </section>
-      </article>
-
-      <daily-report v-if="dailyVisibleComputed" @close-dialog="toggleDaily"/>
-      <monthly-report v-if="monthlyVisibleComputed"  @close-dialog="toggleMonthly"/>
+      <daily-report v-if="openReport" @close-window="closeWindow" :type="type"/>
 
     </div>
   </div>
 </template>
 
 <script>
-import DailyReport from './SubComponent/DailyReport.vue'
-import MonthlyReport from './SubComponent/MonthlyReport.vue'
+import DailyReport from './SubComponent/WindowReport.vue'
 export default {
     components: {
         DailyReport,
-        MonthlyReport
     },
     data(){
       return{
         dailyVisible: false,
         monthlyVisible: false,
+
+        openReport : false,
+        type: "",
       }
     },
     methods: {
-      toggleDaily(){
-        this.dailyVisible = !this.dailyVisible
-        if(this.monthlyVisible){
-          this.monthlyVisible = false
-        }
+      closeWindow(){
+        this.openReport = false
       },
-      toggleMonthly(){
-        this.monthlyVisible = !this.monthlyVisible
-        if(this.dailyVisible){
-          this.dailyVisible = false
-        }
+      openWindow(param){
+        this.type = param
+        this.openReport = true
       }
     },
-    computed:{
-      dailyVisibleComputed(){
-        return this.dailyVisible
-      },
-      monthlyVisibleComputed(){
-        return this.monthlyVisible
-      }
-    }
-
 }
 </script>
 
@@ -93,13 +83,53 @@ export default {
     height: 90%;
     background-color: bisque;
     display: flex;
-    /* justify-content: space-evenly; */
+    justify-content: start; 
+    align-items: start;
     padding: 1rem;
     gap: 1rem;
     position: relative;
 }
+.card{
+  outline: 1px solid black;
+}
+.card header{
+  /* border: 1px solid black; */
+  padding: .5rem 2rem;
+}
+.card header h4{
+  margin: 0;
+  padding: 0;
+}
+
+.card section{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: .5rem;
+}
+.card button{
+  padding: .5rem;
+  margin: .5rem;
+  background-color: #31A72A;
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 .div2 article{
-    border-radius: 10px;
+    /* border-radius: 10px; 
     box-shadow: 0 0 3px 1px black;
     text-align: center;
     height: 50%;
@@ -115,8 +145,8 @@ export default {
     font-weight: 700;
     background-color: blue;
     color: white;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    /* border-top-left-radius: 10px; */
+    /* border-top-right-radius: 10px; 
     
 }
 .div2 article section{
@@ -127,8 +157,8 @@ export default {
     border-top: 1px solid black;
     align-items: center;
     justify-content: center;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    /* border-bottom-right-radius: 10px; */
+    /* border-bottom-left-radius: 10px; 
     background: linear-gradient(66deg,#0000ff3c,#31a72a,#ffffff);
     background-size: 180% 180%;
     animation: gradient-animation 3s ease infinite;
@@ -144,5 +174,5 @@ export default {
   100% {
     background-position: 0% 50%;
   }
-}
+}  */
 </style>

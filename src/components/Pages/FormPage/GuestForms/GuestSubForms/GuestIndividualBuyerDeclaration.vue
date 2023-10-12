@@ -1,8 +1,8 @@
 <template>
-
+<div class="buyer-declaration-cont">
     <the-header/>    
 
-    <form-card title="Individual Buyer's Declaration">
+    <form-card class="form"  title="Individual Buyer's Declaration">
         <div class="c-container">
             <input type="date" :class="{empty:isdateEmpty}" style="display: block;" v-model="date">
         <br>
@@ -67,14 +67,21 @@
             <p>Signature above printed name</p>
         </div> 
         <submit-form-button @click="submit"> Submit</submit-form-button>
+
+        <loading-spin v-if="isLoading"></loading-spin>
     </form-card>
 
+    <div class="shade" v-if="isLoading"/>
+
     <the-footer/>
+</div>
 </template>
 
 <script>
+import LoadingSpin from '../LoadingScreen/LoadingSpin.vue'
 import { toast } from 'vue3-toastify'
 export default{
+    components: {LoadingSpin},
     data(){
         return{
             date:'',
@@ -87,7 +94,9 @@ export default{
             businessRegisteredUnder: 'YES',
             businessName: '',
             businessNameEmpty: false,
-            businessUsingMyTIN: 'YES'
+            businessUsingMyTIN: 'YES',
+
+            isLoading: false,
         }
     },
     methods:{
@@ -145,10 +154,11 @@ export default{
             const isGood = this.checkReadySubmit()
             if(isGood){
                 const payload = this.getAllData()
+                this.isLoading = true
                 try{
                     const response = await this.$store.dispatch('guest/submitIndividualBuyerDeclaration',payload)
                     toast.success(response, {autoClose: 1000,}); 
-                    await new Promise(resolve => setTimeout(resolve, 1000)) 
+                    await new Promise(resolve => setTimeout(resolve, 2000)) 
                     this.$router.replace('/guest-forms')       
                 }catch(error){
                     toast.error(error, {autoClose:1000})
@@ -209,6 +219,20 @@ export default{
 </script>
 
 <style scoped>
+.buyer-declaration-cont{
+    position: relative;
+}
+.shade{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.2);
+}
+.form{
+    position: relative;
+}
 .empty{
     outline: 1px solid red;
     background-color: rgba(255, 0, 0, 0.222);

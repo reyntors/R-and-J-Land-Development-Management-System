@@ -90,7 +90,6 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
           return this.profileClientVisible
         },
         clientsComputed(){
-          // console.log(this.$store.getters['client/clientsGetter'])
           return this.$store.getters['client/clientsGetter']
         }
       },   
@@ -98,7 +97,8 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
       async mounted(){
         this.isLoading = true
         try{
-          await this.$store.dispatch('client/getLegitList')
+          await this.$store.dispatch('client/getLegitList')  //for legit list
+          await this.$store.dispatch('client/getPendingList') //for guest pending list
           this.isLoading = false
         }catch(error){
           console.log(error)
@@ -155,7 +155,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
     text-align: center;
   }
   td{
-    padding: 0 .2rem;
+    padding: 0 .5rem;
     border: 1px solid black;
   }
   table tbody:nth-child(even){
