@@ -40,14 +40,14 @@ exports.generateReports = async (req, res, next) => {
         });
 
        // Generate a unique filename for the Excel file
-       const excelFileName = `reports_${date}.xlsx`;
-       const excelFilePath = path.join(__dirname, `../public/excels/`, excelFileName);
+      
+       const excelFilePath = path.join(__dirname, `../public/excels/reports_${date}.xlsx`);
 
           // Save the Excel file to the "public/excels" directory
         await workbook.xlsx.writeFile(excelFilePath);
 
         res.status(200).json({ message: 'Daily reports generated successfully!',
-                               filename: excelFileName, 
+                               filename: `reports_${date}.xlsx`, 
                                data: filteredReports,  });
 
 
