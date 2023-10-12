@@ -1,6 +1,7 @@
 
 const Lot = require("../models/lot.model");
 const { uploadlotImage } = require('../middlewares/multer');
+const User = require('../models/user.model');
 
 
 
@@ -309,3 +310,43 @@ exports.updateLot = async (req, res, next) => {
     return next(error);
   }
 };
+
+
+exports.createLotbyId = async (req, res) => {
+
+  try{
+
+  const lotData = req.body;
+  const { id } = req.params;
+
+  const user = await User.findOne({userId: id})
+
+  console.log(user.accountDetails);
+
+  if(!user){
+    return res.status(404).json({message: 'User not found'});
+  }
+
+
+  const newLotData = {
+
+    lotNumber: lotData.lotNumber,
+    totalSqm: lotData.totalSqm,
+    amountperSquare: lotData.amountperSquare,
+    totalAmountDue: lotData.totalAmountDue,
+
+  };
+
+  user.accountDetails = newLotData;
+
+ 
+  await user.save();
+
+  return res.status(200).json({message: `${user.username}, create a lot successfully!`});
+
+}catch(error){
+
+  throw error
+}
+
+}

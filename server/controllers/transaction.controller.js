@@ -52,6 +52,65 @@ exports.addTransaction = async (req, res, next) => {
       // Push the new transaction into the client's transactions array
       client.transactions.push(newTransaction);
 
+      if(newTransaction.purpose === 'reservation'){
+ 
+
+          client.paymentDetails.reservationPayment = newTransaction.amount
+
+      }
+      if(newTransaction.purpose === 'downpayment'){
+ 
+
+        client.paymentDetails.downPayment = newTransaction.amount;
+
+        const annualInterestRate = 0.02;
+
+        // Calculate the monthly interest rate
+        const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
+
+        console.log('monthly interest:',monthlyInterestRate)
+        // Define the loan term in months
+        const loanTermMonths = 12; // For a 12-month loan term
+
+
+        const totalAmountDue = client.accountDetails.totalAmountDue;
+        
+        const downPayment = client.paymentDetails.downPayment || 0;
+
+        const principal = totalAmountDue - downPayment;
+
+        console.log('principal:', principal )
+        // Calculate the monthly amortization
+        const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
+        const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
+        const monthlyAmortization = (numerator / denominator).toFixed(2)
+
+        console.log('monthlyAmortization:', monthlyAmortization)
+
+        client.paymentDetails.monthlyAmortizationDue = monthlyAmortization
+
+
+      }
+
+      
+
+      if (newTransaction.purpose === 'monthly-payment') {
+        // Subtract the monthly payment from the total amount due
+        client.accountingDetails.totalAmountDue -= newTransaction.amount;
+        // Add the monthly payment to the total payment made
+        client.accountingDetails.totalPayment += newTransaction.amount;
+    
+        // Calculate the Total Amount Payable (Total Amount Due + Down Payment)
+        client.accountDetails.totalAmountPayable = client.accountingDetails.totalAmountDue + (client.paymentDetails.downPayment || 0);
+    }
+    
+         
+
+  
+
+
+
+
       // Save the updated user record
       await client.save();
 

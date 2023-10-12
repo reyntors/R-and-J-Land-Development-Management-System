@@ -4,7 +4,7 @@ const lotController = require("../controllers/lot.controller");
 const auth = require("../middlewares/auth"); // Import the authentication middleware
 const userController = require("../controllers/users.controller");
 const uploadedController = require("../controllers/uploaded.controller")
-const tesController = require("../services/s3service")
+
 
 router.get("/allLot",  lotController.getPublicLotDetails);
 router.get("/:lotNumber", lotController.getPublicLotDetails);
@@ -16,3 +16,4 @@ router.get("/retrieve-lotImage/:lotNumber/:filename", uploadedController.retriev
 // router.put("/updatelot/:lotNumber", auth.authenticateToken, userController.restrict('staff'), tesController.updateLot);
 
 module.exports = router;
+

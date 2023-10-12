@@ -29,22 +29,22 @@ const accountDetailsSchema = new Schema({
     lotNumber: {
         type: String,
         default: null,
-        ref: 'Lot', 
+        
     },
     totalSqm: {
         type: Number,
         default: null,
-        ref: 'Lot', 
+        
     },
     amountperSquare: {
         type: Number,
         default: null,
-        ref: 'Lot', 
+        
     },
     totalAmountDue: {
         type: Number,
         default: null,
-        ref: 'Lot', 
+        
     },
 });
 
@@ -68,17 +68,17 @@ const paymentDetailsSchema = new Schema({
 const accountingDetailsSchema = new Schema({
    totalAmountDue: {
         type: Number,  
-        default: null,
+        default: 0,
        
     },
     totalPayment: {
         type: Number,  
-        default: null,
+        default: 0,
        
     },
    totalAmountPayable:{
         type: Number,
-        default: null,
+        default: 0,
        
     }
 
