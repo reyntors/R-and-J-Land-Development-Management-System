@@ -262,7 +262,9 @@ p{
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  justify-content: center;
+  gap: .5rem;
   align-items: center;
 }
 .section2 form label:hover{

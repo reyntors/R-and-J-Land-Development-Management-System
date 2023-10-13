@@ -11,9 +11,22 @@ export const requestInquiriesList = async () => {
                 'Authorization': `Bearer ${token}`
             }
         }) 
-        // console.log(response.data.data[0].inquiries)
         return response.data      
     }catch(error){
         throw (error.response.data.message);
+    }
+}
+export const markInquiry = async (id) => {
+    // console.log('API requestInquiriesList executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.put(`${BASE_URL}inquiries/update-mark/${id}`, id, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data      
+    }catch(error){
+        throw (error.message);
     }
 }

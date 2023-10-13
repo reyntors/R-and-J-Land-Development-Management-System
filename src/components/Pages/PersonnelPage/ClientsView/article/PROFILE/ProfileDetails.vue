@@ -118,7 +118,6 @@
               </label>
               <input id="buyerName" type="text" v-model="businessMonthlyGross" :readonly="!editableComputed">
           </section>
-          <!-- {{ somethingComputed }} -->
       </form>
       <button style="margin-top: 1rem" @click="saveNow">Save</button>
     </div>

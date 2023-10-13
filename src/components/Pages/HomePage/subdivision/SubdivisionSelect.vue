@@ -25,7 +25,7 @@
         <section class=" input">
             <label>TOTAL AMOUNT:</label><input v-model="totalAmt" readonly>
         </section>
-        <textarea placeholder="leave a message here..." v-model.trim="message"></textarea>
+        <textarea placeholder="leave a message here..." v-model.trim="message" :class="{error:notAllowedSubmit}"></textarea>
         <button @click="inquireNow" :disabled="disableButton">Reserve</button>
     </div>
 
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
 import SelectSwipe from './SelectSwipe.vue'
 export default {
     props: ['item'],
@@ -46,6 +47,7 @@ export default {
             totalAmt: this.item.totalAmountDue,
 
             message: '',
+            notAllowedSubmit: false,
         }
     },
 
@@ -54,16 +56,31 @@ export default {
             this.$emit('close-selected')
         },
 
-        inquireNow(){
+        getAllData(){
+            return {
+                lotNumber: this.item.lotNumber,
+                totalSqm: this.item.totalSqm,
+                amountperSquare: this.item.amountperSquare,
+                totalAmountDue: this.item.totalAmountDue,
+            }
+        },
+
+        async inquireNow(){
             if(this.message.length > 10){
                 const isGuest = this.$store.getters['auth/authorizationRoleGuest']
                 if(isGuest){
                 console.log('submiting the request')
+                    // const payload = this.getAllData()
+                    // try{
+                    //     await this.$store.dispatch('subdivision/reserveSubdivision',payload)
+                    // }catch(error){
+                    //     toast.error(error)
+                    // }
                 }else{
                 this.$store.commit('auth/toggleLoginForm',true)
                 }
             }else{
-                console.log('message too short')
+                toast.warning('message too short')
             }
         }
     },
@@ -81,6 +98,9 @@ export default {
 </script>
 
 <style scoped>
+.error{
+    border: 2px color red;
+}
 .select-cont{
     position: absolute;
     top: 50%;

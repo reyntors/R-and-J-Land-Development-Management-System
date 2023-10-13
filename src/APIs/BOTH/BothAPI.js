@@ -19,8 +19,6 @@ export const getListSubdivision = async () => {
 }
 
 
-
-// personnel end
 export const SubdivisionLotUpdate = async (lotNo,form) => {
     console.log('API SubdivisionLotUpdate executed')
     const token =store.getters['auth/getTokenID']
@@ -40,17 +38,22 @@ export const SubdivisionLotUpdate = async (lotNo,form) => {
     }
 }
 
-export const urlGeneratorSubdivisionImg = async (lotNo,filename) => {
-    console.log('API urlGeneratorSubdivisionImg executed')
-    try {
-        const response = await axios.get(`${BASE_URL}lot/retrieve-lotImage/${lotNo}/${filename}`,{
-            responseType: 'blob'
-        });     
-        // console.log('try')
-        return response.data
-    } catch (error) {
-        // console.log('catch')
-        console.log(error.message)
-        throw (error.message);  
-    }
-}
+
+//start guest only
+// export const reserveSubdivision = async (payload) => {
+//     console.log('API reserveSubdivision executed')
+//     const token = store.getters['auth/getTokenID']
+//     try {
+//         const response = await axios.post(`${BASE_URL}lot/addlot`,payload,{
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             } 
+//         });     
+//         console.log(response)
+//         return response.data
+//     } catch (error) {
+//         console.log(error.message)
+//         throw (error.message);  
+//     }
+// }
+//end guest only

@@ -1,14 +1,20 @@
 <template>
+
   <div class="inquiries-card">
+
     <div style="display: flex; justify-content: end;">
         <font-awesome-icon id="exit-icon" icon="fa-solid fa-x" @click="exitCard"/>
     </div>
+
     <header>
         <h3 style="display: inline; font-weight: 700;">{{ obj.name }}</h3>
         <p> {{  obj.subject }}</p>
     </header>
+
     <hr>
+
     <article>
+        {{ obj._id }}
         <p>DATE: <span>{{ obj.date }}</span></p>
         <p>EMAIL:<span>{{ email }}</span></p>
         <p>PHONE NO.:<span>{{ obj.phonenumber }}</span></p>
@@ -17,29 +23,50 @@
         <p>{{ obj.context }}</p>
 
     </article>
+
     <hr>
+
     <section class="option">
-        <button @click="mark(obj.id)" v-if="!obj.read">Mark read <font-awesome-icon :icon="['fas', 'envelope-circle-check']" /></button>
-        <button @click="mark(obj.id)" v-if="obj.read">Mark Unread <font-awesome-icon :icon="['fas', 'envelope-open']" /></button>
+        <button @click="mark(obj.inquiryId)" v-if="!obj.mark">Mark read <font-awesome-icon :icon="['fas', 'envelope-circle-check']" /></button>
+        <button v-if="obj.mark" disabled>Marked Read <font-awesome-icon :icon="['fas', 'envelope-open']" /></button>
     </section>
+
   </div>
+
+  <div v-if="isLoading" class="shade"/>
+  <progress-loading type="spin" v-if="isLoading"/>
+
 </template>
 
 <script>
-
+import { toast } from 'vue3-toastify'
 export default {
     emits: ['exit'],
     props: ['obj'],
+    data(){
+        return{
+            isLoading: false,
+        }
+    },
     methods: {
         exitCard(){
             this.$emit('close-card')
         },  
-        mark(id){
-            console.log('mark',id)
+        async mark(id){
+            console.log('mark diri',id)
             const isConfirm =  confirm('Are you sure?')
             if(isConfirm){
-                this.$store.commit('inquiries/markInquiry',id)
-                this.exitCard()
+                try{
+                    this.isLoading = true
+                    await this.$store.dispatch('inquiries/markInquiry',id)
+                    console.log('somehthingg')
+                    this.exitCard()  
+                }catch(error){
+                    toast.error(error)
+                    await new Promise(resolve => setTimeout(resolve,500))
+                    this.exitCard() 
+                }
+                
             }
             
         },
@@ -57,6 +84,14 @@ export default {
 </script>
 
 <style scoped>
+.shade{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0,.2);
+}
 .inquiries-card{
     width: 80%;
     height: 85%;

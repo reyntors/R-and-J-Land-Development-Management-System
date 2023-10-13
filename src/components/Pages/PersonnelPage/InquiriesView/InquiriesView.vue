@@ -7,19 +7,18 @@
       <div class="div2">
         <progress-loading v-if="isLoading" type="spin"></progress-loading>
         <table v-else>
-          <tbody v-for="item in listInquiries" :key="item.id">
-            <tr @click="showCard(item.id)" :class="{shade: !item.read}">
+          <tbody v-for="(item,index) in listInquiries" :key="index">
+            <tr @click="showCard(index)" :class="{shade: !item.mark}">
               <td class="name">{{ item.name }}</td>
               <td class="about">{{ item.subject }} {{ item.context }}</td>
               <td class="date">               
                 <span class="dateText">
                   {{ item.date }}
                 </span>
-                <!-- <font-awesome-icon class="trash-icon" icon="fa-solid fa-trash-can"/> -->
               </td>
             </tr>
             <inquiries-card
-              v-if="item.id=== focusedID"
+              v-if="index=== focusedID"
               :obj="item"
               @close-card="closeCard"
             />
@@ -45,8 +44,8 @@
       }
     },
     methods: {
-      showCard(index){
-        this.focusedID = index
+      showCard(id){
+        this.focusedID = id
         console.log(this.focusedID)
       },
       closeCard(){

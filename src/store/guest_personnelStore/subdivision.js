@@ -182,28 +182,7 @@ export default {
 
     mutations:{
         //start - guest
-        initDeepCopySubdivisionList(state){
-            state.deepCopySubdivision = state.subdivision.map(item=>({...item}))
-        },
-        // filterList(state,params){
-        //     console.log(params)
-        //     if(params !== 'all'){
-        //         const filtedArray = state.subdivision.filter(item => {
-        //             return item.status === params
-        //         })
-        //         state.deepCopySubdivision = filtedArray                
-        //     }else{
-        //         state.deepCopySubdivision = state.subdivision.map(item=>({...item}))
-        //     }
-        // },
-        searchNowfromGuest(state,id){
-            const index = state.subdivision.findIndex(item => item.lotNumber === id)
-            if(index>=0){
-                state.guestSearchedResult = state.subdivision[index]
-            }else{
-                state.guestSearchedResult = null
-            }   
-        },
+
         //end - guest
 
         //start - personnel
@@ -246,6 +225,17 @@ export default {
     },
 
     actions:{
+
+        // start guest
+        // async reserveSubdivision(_,payload){
+        //     try{
+        //         await API.reserveSubdivision(payload)
+        //     }catch(error){
+        //         console.log(error)
+        //         throw error
+        //     }
+        // },
+        // end guest
 
         //start - personnel
         async update(_,payload){
