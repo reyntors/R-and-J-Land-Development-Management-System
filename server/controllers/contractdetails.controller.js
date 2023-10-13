@@ -41,8 +41,6 @@ exports.createContractDetails = async (req, res, next) => {
             fblink: user.fbAccount,
             phonenumber: user.contactNumber,
             date: new Date(),
-            inquiryId: user.userId
-    
             };
     
             const inquiries = await Inquiry.findOne()

@@ -28,8 +28,6 @@ try {
       fblink: user.fbAccount,
       phonenumber: user.contactNumber,
       date: user.date,
-      inquiryId: user.userId
-
       };
 
       const inquiries = await Inquiry.findOne()

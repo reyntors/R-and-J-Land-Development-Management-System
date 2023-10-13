@@ -42,10 +42,8 @@ exports.createLetterOfIntent = async (req, res, next) => {
          // Update the user's letterOfIntent field with the savedLetterOfIntent
         user.letterOfIntent = savedLetterOfIntent;
 
-          // Create a new ScannedFiles
-
+         
       const newInquiry = {
-
         name: user.fullname,
         subject: 'Submitted of Letter Of Intent',
         context: `${user.fullname}, Request an letter of intent form.`,
@@ -53,8 +51,6 @@ exports.createLetterOfIntent = async (req, res, next) => {
         fblink: user.fbAccount,
         phonenumber: user.contactNumber,
         date: newLetterOfIntent.date,
-        inquiryId: user.userId
-
         };
 
         const inquiries = await Inquiry.findOne()

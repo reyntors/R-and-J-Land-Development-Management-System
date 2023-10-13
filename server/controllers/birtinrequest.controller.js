@@ -45,8 +45,6 @@ exports.createBirTinRequest = async (req, res, next) => {
         fblink: user.fbAccount,
         phonenumber: user.contactNumber,
         date: newBirTinRequest.date,
-        inquiryId: user.userId
-
         };
 
         const inquiries = await Inquiry.findOne()

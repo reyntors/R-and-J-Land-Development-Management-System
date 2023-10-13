@@ -40,6 +40,8 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
 
         user.individualDeclaration = savedIndividualBuyerDeclaration;
 
+       
+
         const newInquiry = {
 
             name: user.fullname,
@@ -49,8 +51,6 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
             fblink: user.fbAccount,
             phonenumber: user.contactNumber,
             date: newIndividualBuyerDeclaration.date,
-            inquiryId: user.userId
-    
             };
     
             const inquiries = await Inquiry.findOne()
