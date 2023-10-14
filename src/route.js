@@ -1,10 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 import HomePage from './components/Pages/HomePage/HomePage.vue'
-import AboutPage from './components/Pages/AboutPage/AboutPage.vue'
 import ProjectPage from './components/Pages/ProjectPage/ProjectPage.vue'
 import GalleryPage from './components/Pages/GalleryPage/GalleryPage.vue'
-import ContactPage from './components/Pages/ContactPage/ContactPage.vue'
+
 
 //GUEST FORMS NEW PAGE
 import GuestFormPage from './components/Pages/FormPage/GuestForms/GuestFormPage.vue'
@@ -13,15 +12,8 @@ import GuestContractDetails from './components/Pages/FormPage/GuestForms/GuestSu
 import GuestBIRtinRequest from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestBirTinRequest.vue'
 import GuestIndividualBuyerDeclaration from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestIndividualBuyerDeclaration.vue'
 
-//STAFF FORMS NEW PAGE
-
-import StaffFormPage from './components/Pages/FormPage/StaffForms/StaffFormPage.vue'
-import StaffChecklistClosing from './components/Pages/FormPage/StaffForms/StaffSubForms/StaffChecklistClosing.vue'
-import StaffAppprovePayment from './components/Pages/FormPage/StaffForms/StaffSubForms/StaffApprovePayment.vue'
-
 //ADMIN & STAFF PAGE
 import PersonnelHomePage from './components/Pages/PersonnelPage/PersonnelPage.vue'
-import PersonnelDashboard from './components/Pages/PersonnelPage/SubComponents/DashboardView.vue'
 import PersonnelReports from './components/Pages/PersonnelPage/ReportsView/ReportsView.vue'
 import PersonnelInquiries from './components/Pages/PersonnelPage/InquiriesView/InquiriesView.vue'
 import PersonnelSubdivision from './components/Pages/PersonnelPage/SubdivisionView/SubdivisionView.vue'
@@ -36,10 +28,8 @@ const route = createRouter({
         routes: [
             {path: '/', redirect: '/home'},
             {path:'/home', component: HomePage},
-            {path:'/about', component: AboutPage},
             {path:'/projects', component: ProjectPage},
             {path:'/gallery', component: GalleryPage},
-            {path:'/contact', component: ContactPage},
 
             //guest authorized
             {path:'/guest-forms', component: GuestFormPage, meta: {requiresAuthGuest: true}},
@@ -48,15 +38,10 @@ const route = createRouter({
             {path:'/guest-forms/bir-tin-request', component: GuestBIRtinRequest, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/individual-buyer-declaration', component: GuestIndividualBuyerDeclaration, meta: {requiresAuthGuest: true}},
 
-            //staff authorized
-            {path: '/staff-forms', component: StaffFormPage, meta: {requiresAuthStaff: true}},
-            {path: '/staff-forms/checklist', component: StaffChecklistClosing, meta: {requiresAuthStaff: true}},
-            {path: '/staff-forms/approve-payment', component: StaffAppprovePayment, meta: {requiresAuthStaff: true}},
             
             //personnel authorized
             {path: '/personnel', component: PersonnelHomePage, meta:{requiredAuthPersonnel:true},
                 children: [
-                    {path: 'dashboard', component: PersonnelDashboard},
                     {path: 'client', component: PersonnelClient},
                     {path: 'subdivision', component: PersonnelSubdivision},
                     {path: 'inquiries', component: PersonnelInquiries},

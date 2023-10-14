@@ -18,11 +18,7 @@
 </template>
 
 <script>
-import TheFooter from '@/components/Reusable/TheFooter.vue'
-
 export default {
-  components: { TheFooter },
-
   methods: {
     navLetterIntent(){
       this.$router.push('/guest-forms/letter-of-intent')
@@ -43,14 +39,14 @@ export default {
 
 <style scoped>
 .forms{
-  padding: 1rem .5rem 0;
+  padding: 1rem 1rem 0;
   display: grid;
   grid-template-columns: 100%;
-  /* row-gap: 1rem; */
+  gap: 1rem;
 }
 .grid-item{
   margin: auto;
-  /* padding: 1rem; */
+  padding: 1rem;
   border-radius: 5px;
 }
 .grid-item:hover{
@@ -78,7 +74,6 @@ export default {
   grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
   }
   .grid-item{
-  /* border: 1px solid black; */
   width: 100%;
   }
 }

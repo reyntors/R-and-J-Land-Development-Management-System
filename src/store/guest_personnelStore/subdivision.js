@@ -227,14 +227,15 @@ export default {
     actions:{
 
         // start guest
-        // async reserveSubdivision(_,payload){
-        //     try{
-        //         await API.reserveSubdivision(payload)
-        //     }catch(error){
-        //         console.log(error)
-        //         throw error
-        //     }
-        // },
+        async reserveSubdivision(_,payload){
+            try{
+                const response =  await API.reserveSubdivision(payload)
+                return response
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        },
         // end guest
 
         //start - personnel

@@ -51,7 +51,7 @@
 
 
         <form enctype="multipart/form-data" @submit.prevent="submitUpload">
-          <label class="uploadCont" for="upload">
+          <label class="uploadContainer" for="upload">
             <font-awesome-icon class="icon" icon="fa-solid fa-plus" beat size="2x"/>
             <p class="fs-6">Upload File</p>
           </label>
@@ -201,6 +201,10 @@ export default {
 </script>
 
 <style scoped>
+.uploadContainer{
+  display: flex;
+  flex-direction: column;
+}
 p{
   font-size: clamp(.6rem, 1vw, 1.5rem);
 }

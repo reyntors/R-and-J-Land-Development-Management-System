@@ -1,5 +1,5 @@
 <template>
-    <div id="map" class="containerMap">
+    <div id="subdivision" class="containerMap">
 
 
         <h2>SUBDIVISION NAME</h2>
@@ -116,16 +116,11 @@ export default {
       });
       return newList
     },
-
-
-
+    
     selectedComputed(){
       return this.selectedItem
     },
 
-    // authorizationRoleGuestComputed(){
-    //   return this.$store.getters['auth/authorizationRoleGuest']
-    // }
   },
 
   methods: {
@@ -208,22 +203,21 @@ export default {
 
   mounted(){
     this.$store.dispatch('subdivision/getPropertyList')
-    // const subdivision = document.getElementById('subdivison')
-    // const x = subdivision.offsetLeft
-    // const y = subdivision.offsetTop
-    // this.XSubdivisionCont = x
-    // this.YSubdivisionCont = y - 100
-
-    // this.$store.commit('subdivision/initDeepCopySubdivisionList')
   }
 }
 </script>
 
   <style scoped>
+.containerMap{
+      width: 100%;
+      padding-top: 2rem;
+  }
+  .containerMap h2{
+    text-align: center;
+  }
 .description{
   height: 60vh;
   width: 85%;
-  /* border: 1px solid black; */
   margin: auto;
   display: grid;
   grid-template-columns: 50% 50%;
@@ -246,16 +240,6 @@ export default {
 .description .section2 li{
   font-size: clamp(.5rem, 1.5vw, 1rem);
 }
-.containerMap{
-      width: 100%;
-      /* border: 1px dashed black; */
-      margin: 2rem auto 1rem;
-  }
-  .containerMap h2{
-    text-align: center;
-    font-weight: 500;
-    /* font-size: clamp(2rem, 3vw, 4rem); */
-  }
   .locationBody{
     border-top: 1px solid black;
     width: 100%;
@@ -265,6 +249,8 @@ export default {
   }
   .locationBody img{
     width: 100%;
+    height: 85vh;
+    object-position: center;
   }
   .searchCont{
     position: relative;

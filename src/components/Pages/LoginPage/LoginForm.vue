@@ -222,7 +222,7 @@ export default {
           if(response.data.roles=== 'guest'){
             this.$router.replace('/home')
           }else{
-            this.$router.replace('/personnel/dashboard')
+            this.$router.replace('/personnel/client')
           }
           
           

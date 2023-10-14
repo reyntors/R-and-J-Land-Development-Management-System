@@ -99,10 +99,9 @@
   
 <script>
 import { toast } from 'vue3-toastify';
-import TheFooter from '@/components/Reusable/TheFooter.vue'
 import LoadingSpin from '../LoadingScreen/LoadingSpin.vue';
 export default{
-  components: { TheFooter,LoadingSpin},
+  components: {LoadingSpin},
   data(){
     return{
       date: '',

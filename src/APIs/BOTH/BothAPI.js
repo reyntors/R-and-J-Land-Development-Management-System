@@ -40,20 +40,20 @@ export const SubdivisionLotUpdate = async (lotNo,form) => {
 
 
 //start guest only
-// export const reserveSubdivision = async (payload) => {
-//     console.log('API reserveSubdivision executed')
-//     const token = store.getters['auth/getTokenID']
-//     try {
-//         const response = await axios.post(`${BASE_URL}lot/addlot`,payload,{
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             } 
-//         });     
-//         console.log(response)
-//         return response.data
-//     } catch (error) {
-//         console.log(error.message)
-//         throw (error.message);  
-//     }
-// }
+export const reserveSubdivision = async (payload) => {
+    console.log('API reserveSubdivision executed')
+    const token = store.getters['auth/getTokenID']
+    try {
+        const response = await axios.post(`${BASE_URL}users/request-lot`,payload,{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            } 
+        });     
+        console.log(response)
+        return response.data
+    } catch (error) {
+        console.log(error.message)
+        throw (error.message);  
+    }
+}
 //end guest only

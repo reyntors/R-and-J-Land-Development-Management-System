@@ -17,7 +17,7 @@
       class="mySwiper"
     >
         <swiper-slide v-for="item in byGroup" :key="item.lotNumber" @click="select(item)">
-            <!-- {{ group }} -->
+
             <header class="header">
                 <span class="span1">Lot Number: <b>{{ item.lotNumber }}</b></span> 
                 <span class="span2">{{ item.status }}</span> 
@@ -27,7 +27,7 @@
         </swiper-slide>
         <subdivision-select :item="selectedItem" v-if="selected && selectedItem" @close-selected="close"></subdivision-select>
     </swiper>
-    <!-- {{selectedValue}}  -->
+
   </template>
  
   <script>
@@ -62,8 +62,6 @@
         select(param){
             this.selected = true
             this.selectedItem = param
-            
-            // console.log(this.selectedItem )
         },
         close(){
             console.log('fda')
@@ -105,8 +103,11 @@
   background-size: cover;
   width: 400px;
   height: 400px;
+  cursor:  grab;
 }
-
+.swiper-slide:active {
+  cursor: grabbing;
+}
 .swiper-slide img {
   /* object-fit: cover; */
   display: block;
@@ -118,6 +119,7 @@
     background-color: rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
+    padding: .5rem;
 }
 .span1{
   padding-left: 1rem;

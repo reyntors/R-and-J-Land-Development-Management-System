@@ -8,7 +8,7 @@
     </section>
     <div class="labels">
         <section class="icon-cont">
-            <font-awesome-icon icon="fa-solid fa-x" @click="close"/>
+            <font-awesome-icon class="select-subd-close" icon="fa-solid fa-x" @click="close"/>
         </section>
         <section class=" input">
             <label>Lot Number:</label><input v-model="lotNumber" readonly>
@@ -29,6 +29,7 @@
         <button @click="inquireNow" :disabled="disableButton">Reserve</button>
     </div>
 
+    <progress-loading v-if="isLoading" type="spin"/>
   </div>
 </template>
 
@@ -48,6 +49,8 @@ export default {
 
             message: '',
             notAllowedSubmit: false,
+
+            isLoading: false,
         }
     },
 
@@ -62,6 +65,7 @@ export default {
                 totalSqm: this.item.totalSqm,
                 amountperSquare: this.item.amountperSquare,
                 totalAmountDue: this.item.totalAmountDue,
+                message: this.message
             }
         },
 
@@ -70,12 +74,15 @@ export default {
                 const isGuest = this.$store.getters['auth/authorizationRoleGuest']
                 if(isGuest){
                 console.log('submiting the request')
-                    // const payload = this.getAllData()
-                    // try{
-                    //     await this.$store.dispatch('subdivision/reserveSubdivision',payload)
-                    // }catch(error){
-                    //     toast.error(error)
-                    // }
+                    const payload = this.getAllData()
+                    this.isLoading = true
+                    try{
+                        const response = await this.$store.dispatch('subdivision/reserveSubdivision',payload)
+                        this.close()
+                        toast.success(response.message)
+                    }catch(error){
+                        toast.error(error)
+                    }
                 }else{
                 this.$store.commit('auth/toggleLoginForm',true)
                 }
@@ -98,6 +105,14 @@ export default {
 </script>
 
 <style scoped>
+.select-subd-close,
+.select-subd-close:active{
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.3);
+}
+.select-subd-close:hover{
+    color: black;
+}
 .error{
     border: 2px color red;
 }

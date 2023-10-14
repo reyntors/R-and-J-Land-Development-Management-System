@@ -30,18 +30,16 @@ export default {
 
 <style scoped>
 #about{
-    /* padding: 2rem; */
-    margin-top: 2rem;
+    padding: 2rem;
+    /* padding-top: 2rem; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0 2rem;
 }
-/* p {
-  font-size: clamp(.5rem, 1.5vw, 2rem);
-} */
 header{
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -15,13 +15,16 @@
     <!-- ROW NAV-->
     <!-- show when logged in as GUEST-->
     <nav class="rowNav" v-if="!authorizationPersonnel">
-      <a href="#about">ABOUT</a>
+
+      <a class="homeNav"  @click="scrollNavigateHome('about')" :class="{activeHomeNav: activeHomeAbout}">ABOUT</a>
+      <a class="homeNav" @click="scrollNavigateHome('model-house')" :class="{activeHomeNav: activeHomeModelHouse}">MODEL HOUSES</a>
+      <a class="homeNav" @click="scrollNavigateHome('subdivision')" :class="{activeHomeNav: activeHomeSubdivision}">SUBDIVISION</a>
       <router-link to="/projects" >PROJECTS</router-link>
       <router-link to="/gallery" >GALLERY</router-link>
-      <router-link to="/contact" >CONTACT INFO</router-link>
       <router-link to="/guest-forms" v-if="authorizationRoleGuest">FORMS</router-link>
       <button @click="closeOrOpenForm(true)" v-if="!isUserValidComputed">LOG IN</button>
       <button @click="logout" v-if="isUserValidComputed">LOG OUT</button>
+      
     </nav>
 
     <!-- show when log in as personnel -->
@@ -36,13 +39,13 @@
       </div>  
     </div>
 
-
-    <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
-
     <!-- COLLUMN NAV-->
     <!-- show when loggedin as GUEST -->
     <font-awesome-icon v-if="!authorizationPersonnel" icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
     <column-nav v-if="isShowColumnNavComputed && !authorizationPersonnel" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)"></column-nav>      
+
+
+    <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
 
 
   </div>
@@ -51,12 +54,15 @@
 
 <script>
 import LoginForm from '@/components/Pages/LoginPage/LoginForm.vue'
-import ColumnNav from './SubColumnComponent/ColumnNav.vue'
+import ColumnNav from '../SubColumnComponent/ColumnNav.vue'
 import logo from '@/assets/logo.png'
 export default {
+  props: ['homeNav'],
+  emits: ['navigation-scroll'],
   components:{LoginForm, ColumnNav},
   data(){
     return{
+      activeHomeNav: '',
       logo: logo,
       // isLoginBool: false,
       isShowColumnNav: false,
@@ -72,8 +78,15 @@ export default {
     }
   },
   methods: {
+    scrollNavigateHome(sectionID){
+      this.activeHomeNav = sectionID
+      if(this.$route.path === '/home'){
+        this.$emit('navigation-scroll',sectionID)
+      }else{
+        this.$router.push({path:'/', query: {directTo: sectionID}});
+      }
+    },
     closeOrOpenForm(bool){
-        // this.isLoginBool = bool
         this.$store.commit('auth/toggleLoginForm',bool)
     },
     showColumnNav(bool){
@@ -97,7 +110,6 @@ export default {
   computed: {
 
     isLoginBoolComputed(){
-      // return this.isLoginBool
       return this.$store.getters['auth/openLoginFormGetter']
     },
     isShowColumnNavComputed(){
@@ -112,17 +124,20 @@ export default {
     authorizationRoleGuest(){
         return this.$store.getters['auth/authorizationRoleGuest']
     },
-    // authorizationRoleStaff(){
-    //   return this.$store.getters['auth/authorizationRoleStaff']
-    // },
-    // authorizationRoleAdmin(){
-    //   return this.$store.getters['auth/authorizationRoleAdmin']
-    // },
     authorizationPersonnel(){
       return this.$store.getters['auth/authorizationPersonnel']
     },
     authorizationPersonnelTEXT(){
       return this.$store.getters['auth/authorizationPersonnelTEXT']
+    },
+    activeHomeAbout(){
+      return this.homeNav ==='about'?true:false
+    },
+    activeHomeModelHouse(){
+      return this.homeNav ==='model-house'?true:false
+    },
+    activeHomeSubdivision(){
+      return this.homeNav ==='subdivision'?true:false
     }
 
   },
@@ -131,6 +146,13 @@ export default {
 
 
 <style scoped>
+/* .homeNav{
+  padding: 1rem;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: blue;
+} */
 .header{
     position: sticky;
     top: 0;
@@ -167,12 +189,15 @@ export default {
 }
 .rowNav{
   display: flex;
+  gap: .2rem;
 }
 a{
-  padding: 1rem;
+  padding: .5rem;
   text-decoration: none;
   font-size: 1rem;
   font-weight: 700;
+  color: blue;
+  cursor: default;
 }
 .rowNav button{
   margin-left: 1px;
@@ -188,9 +213,9 @@ button:active{
   background-color: #84d9169f;
   color: white;
 }
-a:active{
+/* a:active{
   outline: 1px solid blue;
-}
+} */
 .bars{
   cursor: pointer;
   padding: .5rem;
@@ -248,5 +273,18 @@ a:active{
     /* visibility: hidden; */
     display: none; 
   }
+}
+.router-link-active{
+  outline: 1px solid blue;
+  color: black;
+}
+.activeHomeNav{
+  padding: .5rem;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: black;
+  cursor: default;
+  outline: 1px solid blue;
 }
 </style>

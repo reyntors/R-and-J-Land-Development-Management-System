@@ -95,15 +95,13 @@
     height: 90%;
     background-color: bisque;
     padding: 1rem;
-    /* gap: 1rem; */
-    position: relative;
-    
     overflow-y: auto;
     position: relative;
 }
 .div2 .grid{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
 }
 @media screen and (max-width:933px) {
     .div2{

@@ -1,5 +1,5 @@
 <template>
-  <div class="model-house-cont">
+  <div id="model-house" class="model-house-cont">
       <header>
         <h2>MODEL HOUSES</h2>
       </header>
@@ -44,20 +44,6 @@
         </section>
 
       </article>
-
-
-      <!-- <header>
-        <h2>Model Houses</h2>
-        //provide text description per model balance 50:50
-        <section>
-            <button @click="clickBtn(1)">House Model #1</button>
-            <button @click="clickBtn(2)">House Model #2</button>
-            <button @click="clickBtn(3)">House Model #3</button>
-        </section>
-      </header>
-      <section>
-        <virtual-view :link-view="selectedHouse "></virtual-view>
-      </section> -->
   </div>
   
 

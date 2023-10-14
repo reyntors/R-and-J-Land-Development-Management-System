@@ -1,6 +1,12 @@
 <template>
+  
   <the-header></the-header>
-  GALLERY
+
+    GALLERY
+
+  
+  
+
 </template>
 
 <script>
@@ -9,6 +15,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

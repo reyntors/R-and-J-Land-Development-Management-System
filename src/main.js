@@ -25,8 +25,8 @@ library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,
     )
 
 
-import TheHeader from './components/Reusable/TheHeader.vue'
-import TheFooter from './components/Reusable/TheFooter.vue'
+import TheHeader from './components/Reusable/Header and Footer/TheHeader.vue'
+import TheFooter from './components/Reusable/Header and Footer/TheFooter.vue'
 import FormCard from './components/Reusable/FormCard.vue'
 import ProgressLoading from './components/Reusable/LoadingScreens/ProgressLoading.vue'
 import FormThumbnail from './components/Reusable/FormThumbnail.vue'

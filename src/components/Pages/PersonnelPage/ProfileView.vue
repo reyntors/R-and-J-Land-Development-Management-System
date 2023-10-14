@@ -7,7 +7,7 @@
     </section>
 <br>
     <section class="navigations">
-        <router-link to="/personnel/dashboard">DASHBOARD</router-link>
+        <!-- <router-link to="/personnel/dashboard">DASHBOARD</router-link> -->
         <router-link to="/personnel/client">CLIENTS</router-link>
         <router-link to="/personnel/subdivision">SUBDIVISION</router-link>
         <router-link to="/personnel/inquiries">INQUIRIES</router-link>
@@ -24,7 +24,6 @@
     width: 20vw;
     height: 85vh;
     padding: 1rem;
-    border-right: 1px solid black;
 }
 .imageName{
     display: flex;
