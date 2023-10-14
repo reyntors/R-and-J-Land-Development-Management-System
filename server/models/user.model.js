@@ -46,6 +46,10 @@ const accountDetailsSchema = new Schema({
         default: null,
         
     },
+    message:{
+        type: String,
+        default: 'I request to reserve this lot.'
+    }
 });
 
 

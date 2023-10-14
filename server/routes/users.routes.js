@@ -22,7 +22,7 @@ router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.get("/user-profile", auth.authenticateToken, userController.userProfile);
 router.post("/addletter", auth.authenticateToken, userController.restrict('guest'), letter.createLetterOfIntent);
-router.post("/create-lot/:id", auth.authenticateToken, userController.restrict('guest'), lotController.createLotbyId);
+router.post("/request-lot", auth.authenticateToken, userController.restrict('guest'), lotController.reserveLotbyId);
 
 //staff
 router.post("/addnewclient", auth.authenticateToken, userController.restrict('staff'), userController.register);

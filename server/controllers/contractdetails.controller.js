@@ -5,7 +5,28 @@ const fs = require('fs');
 const path = require('path');
 const Inquiry = require('../models/inquiries.model');
 
-
+async function generateInquiryId() {
+ 
+    const highestInquiry = await Inquiry.findOne().sort('-inquiries.inquiryId');
+  
+    if (!highestInquiry) {
+     
+      const inquiryId = 'INQ100';
+      return inquiryId;
+    }
+  
+    const currentIncrement = highestInquiry.inquiries.length > 0
+      ? parseInt(highestInquiry.inquiries[0].inquiryId.substr(3), 10)
+      : 100; 
+  
+   
+    const nextIncrement = currentIncrement + 1;
+  
+   
+    const inquiryId = `INQ${nextIncrement}`;
+  
+    return inquiryId;
+  }
 // Create a new letter of intent
 exports.createContractDetails = async (req, res, next) => {
     try {
@@ -32,15 +53,26 @@ exports.createContractDetails = async (req, res, next) => {
 
         user.ContractDetails = savedcreateContractDetails;
 
-        const newInquiry = {
+        //generate date
+        const date = new Date()
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
+        const day = String(date.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
 
+
+        // Generate inquiryId
+        const inquiryId = await generateInquiryId();
+
+        const newInquiry = {
+            inquiryId,
             name: user.fullname,
             subject: 'Submitted of Contract Details',
             context: `${user.fullname}, Requested an Contract Details.`,
             email: user.email,
             fblink: user.fbAccount,
             phonenumber: user.contactNumber,
-            date: new Date(),
+            date: formattedDate,
             };
     
             const inquiries = await Inquiry.findOne()

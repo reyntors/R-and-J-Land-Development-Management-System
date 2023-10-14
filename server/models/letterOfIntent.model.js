@@ -2,25 +2,10 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 const uniqueValidator = require("mongoose-unique-validator");
 
-let currentIncrement = 100; // Initialize with 100
-
-function generateId() {
-currentIncrement++; // Increment the number
-
-// Generate the inquiryId by combining a static part and the current increment
-const id = `LETTER${currentIncrement}`;
-
-return id;
-}
 
 
 const letterOfIntentSchema = new Schema({
 
-    id: {
-        type: String,
-        unique: true,
-        default: generateId
-    },
     isSubmitted: {
         type: Boolean,
         default: false
@@ -94,6 +79,5 @@ letterOfIntentSchema.set("toJSON", {
 
 letterOfIntentSchema.set('timestamps', true);
 
-letterOfIntentSchema.plugin(uniqueValidator, {message: "You create an letter of intent once."});
 
 module.exports = mongoose.model('Letter of Intent', letterOfIntentSchema);

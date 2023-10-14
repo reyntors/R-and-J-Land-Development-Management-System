@@ -2,18 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 
-let currentIncrement = 100; // Initialize with 100
-
-function generateInquiryId() {
-currentIncrement++; // Increment the number
-
-// Generate the inquiryId by combining a static part and the current increment
-const inquiryId = `INQ${currentIncrement}`;
-
-return inquiryId;
-}
-
-
 
 const inquiriesSchema = new Schema({
 
@@ -26,7 +14,6 @@ const inquiriesSchema = new Schema({
         inquiryId: {
             type: String,
             unique: true,
-            default: generateInquiryId
         },
         name: String,
         subject: String,

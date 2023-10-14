@@ -3,7 +3,30 @@ const userService = require("../services/users.services");
 const User = require('../models/user.model');
 const Inquiry = require('../models/inquiries.model');
 
+async function generateInquiryId() {
+ 
+  const highestInquiry = await Inquiry.findOne().sort('-inquiries.inquiryId');
 
+  if (!highestInquiry) {
+   
+    const inquiryId = 'INQ100';
+    return inquiryId;
+  }
+
+  const currentIncrement = highestInquiry.inquiries.length > 0
+    ? parseInt(highestInquiry.inquiries[0].inquiryId.substr(3), 10)
+    : 100; 
+
+ 
+  const nextIncrement = currentIncrement + 1;
+
+ 
+  const inquiryId = `INQ${nextIncrement}`;
+
+  return inquiryId;
+}
+
+//register new account
 exports.register = async (req, res, next) => {
     const {password} = req.body;
 
@@ -19,8 +42,11 @@ exports.register = async (req, res, next) => {
 try {
     const user = await User.findOne({ username: req.body.username });
 
-    const newInquiry = {
+        // Generate inquiryId
+    const inquiryId = await generateInquiryId();
 
+    const newInquiry = {
+      inquiryId,
       name: user.fullname,
       subject: 'A new user registered',
       context: `${user.fullname}, created a new account.`,

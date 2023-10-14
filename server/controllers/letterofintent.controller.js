@@ -6,6 +6,28 @@ const fs = require('fs');
 const path = require('path');
 
 
+async function generateInquiryId() {
+ 
+    const highestInquiry = await Inquiry.findOne().sort('-inquiries.inquiryId');
+  
+    if (!highestInquiry) {
+     
+      const inquiryId = 'INQ100';
+      return inquiryId;
+    }
+  
+    const currentIncrement = highestInquiry.inquiries.length > 0
+      ? parseInt(highestInquiry.inquiries[0].inquiryId.substr(3), 10)
+      : 100; 
+  
+   
+    const nextIncrement = currentIncrement + 1;
+  
+   
+    const inquiryId = `INQ${nextIncrement}`;
+  
+    return inquiryId;
+  }
 // Create a new letter of intent
 exports.createLetterOfIntent = async (req, res, next) => {
     try {
@@ -42,8 +64,12 @@ exports.createLetterOfIntent = async (req, res, next) => {
          // Update the user's letterOfIntent field with the savedLetterOfIntent
         user.letterOfIntent = savedLetterOfIntent;
 
-         
+
+         // Generate inquiryId
+     const inquiryId = await generateInquiryId();
+
       const newInquiry = {
+        inquiryId,
         name: user.fullname,
         subject: 'Submitted of Letter Of Intent',
         context: `${user.fullname}, Request an letter of intent form.`,

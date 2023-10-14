@@ -7,6 +7,28 @@ const Inquiry = require('../models/inquiries.model');
 
 
 
+async function generateInquiryId() {
+ 
+    const highestInquiry = await Inquiry.findOne().sort('-inquiries.inquiryId');
+  
+    if (!highestInquiry) {
+     
+      const inquiryId = 'INQ100';
+      return inquiryId;
+    }
+  
+    const currentIncrement = highestInquiry.inquiries.length > 0
+      ? parseInt(highestInquiry.inquiries[0].inquiryId.substr(3), 10)
+      : 100; 
+  
+   
+    const nextIncrement = currentIncrement + 1;
+  
+   
+    const inquiryId = `INQ${nextIncrement}`;
+  
+    return inquiryId;
+  }
 
 // Create a new letter of intent
 exports.createIndividualBuyerDeclaration = async (req, res, next) => {
@@ -40,10 +62,11 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
 
         user.individualDeclaration = savedIndividualBuyerDeclaration;
 
-       
+       // Generate inquiryId
+    const inquiryId = await generateInquiryId();
 
         const newInquiry = {
-
+            inquiryId,
             name: user.fullname,
             subject: 'Submitted of Individual Buyer Declaration',
             context: `${user.fullname}, Requested an Individual Buyer Declaration.`,

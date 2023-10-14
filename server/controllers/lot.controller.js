@@ -2,6 +2,7 @@
 const Lot = require("../models/lot.model");
 const { uploadlotImage } = require('../middlewares/multer');
 const User = require('../models/user.model');
+const Inquiry = require('../models/inquiries.model');
 
 
 
@@ -312,16 +313,39 @@ exports.updateLot = async (req, res, next) => {
 };
 
 
-exports.createLotbyId = async (req, res) => {
+// Helper function to generate inquiryId
+async function generateInquiryId() {
+  // Find the highest existing inquiryId
+  const highestInquiry = await Inquiry.findOne().sort('-inquiries.inquiryId');
+
+  if (!highestInquiry) {
+    // No records exist, initialize with 100
+    const inquiryId = 'INQ100';
+    return inquiryId;
+  }
+
+  const currentIncrement = highestInquiry.inquiries.length > 0
+    ? parseInt(highestInquiry.inquiries[0].inquiryId.substr(3), 10)
+    : 100; // Initialize with 100 if no records exist
+
+  // Increment the number
+  const nextIncrement = currentIncrement + 1;
+
+  // Generate the inquiryId by combining a static part and the current increment
+  const inquiryId = `INQ${nextIncrement}`;
+
+  return inquiryId;
+}
+
+exports.reserveLotbyId = async (req, res) => {
 
   try{
 
   const lotData = req.body;
-  const { id } = req.params;
+  const username = req.user.username
 
-  const user = await User.findOne({userId: id})
+  const user = await User.findOne({ username })
 
-  console.log(user.accountDetails);
 
   if(!user){
     return res.status(404).json({message: 'User not found'});
@@ -334,19 +358,65 @@ exports.createLotbyId = async (req, res) => {
     totalSqm: lotData.totalSqm,
     amountperSquare: lotData.amountperSquare,
     totalAmountDue: lotData.totalAmountDue,
+    message: lotData.message,
 
   };
 
   user.accountDetails = newLotData;
 
  
+
+
+  //generate date
+  const date = new Date()
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
+  const day = String(date.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+
+
+  // Generate inquiryId
+  const inquiryId = await generateInquiryId();
+
+  const newInquiry = {
+    inquiryId,
+    name: user.fullname,
+    subject: 'Request property',
+    context: `${lotData.message}`,
+    email: user.email,
+    fblink: user.fbAccount,
+    phonenumber: user.contactNumber,
+    date: formattedDate
+    
+    };
+
+    const inquiries = await Inquiry.findOne()
+
+    if (!inquiries) {
+        // If inquiries object doesn't exist, create it
+        const newInquiries = new Inquiry({ inquiries: [newInquiry] });
+        await newInquiries.save();
+    }else{
+
+        inquiries.inquiries.push(newInquiry);
+         //save to inquiries
+        await inquiries.save();
+
+    }
+
+ 
   await user.save();
 
-  return res.status(200).json({message: `${user.username}, create a lot successfully!`});
+  return res.status(200).json({
+    message: `${user.username}, request a lot successfully!`,
+    date: newLotData
+  });
 
 }catch(error){
 
-  throw error
+  console.log(error);
+
+  res.status(500).json({message: 'request a lot failed!'})
 }
 
 }

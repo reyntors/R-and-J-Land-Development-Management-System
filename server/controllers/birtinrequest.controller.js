@@ -6,12 +6,35 @@ const path = require('path');
 const Inquiry = require('../models/inquiries.model');
 
 
+async function generateInquiryId() {
+ 
+    const highestInquiry = await Inquiry.findOne().sort('-inquiries.inquiryId');
+  
+    if (!highestInquiry) {
+     
+      const inquiryId = 'INQ100';
+      return inquiryId;
+    }
+  
+    const currentIncrement = highestInquiry.inquiries.length > 0
+      ? parseInt(highestInquiry.inquiries[0].inquiryId.substr(3), 10)
+      : 100; 
+  
+   
+    const nextIncrement = currentIncrement + 1;
+  
+   
+    const inquiryId = `INQ${nextIncrement}`;
+  
+    return inquiryId;
+  }
+
+
 // Create a new letter of intent
 exports.createBirTinRequest = async (req, res, next) => {
     try {
         const birTinRequestData = req.body;
         const username = req.user.username;
-        
         
 
        
@@ -35,9 +58,11 @@ exports.createBirTinRequest = async (req, res, next) => {
 
         user.BirTinRequest = savedBirTinRequest;
 
+                // Generate inquiryId
+        const inquiryId = await generateInquiryId();
         
       const newInquiry = {
-
+        inquiryId,
         name: user.fullname,
         subject: 'Submitted of BIR Tin Request',
         context: `${user.fullname}, Requested an BIR Tin Request.`,

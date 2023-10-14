@@ -9,7 +9,7 @@ const individualBuyerDeclarationSchema = new Schema({
         default: false
     },
     date: {
-        type: Date,
+        type: String,
         required: true,
         
     },
