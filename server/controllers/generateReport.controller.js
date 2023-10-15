@@ -55,7 +55,7 @@ exports.generateReports = async (req, res, next) => {
 
         res.status(200).json({ message: 'Daily reports generated successfully!',
                                filename: `reports_${date}.xlsx`,
-                               totalamount: totalAmount, 
+                               totalAmount: totalAmount, 
                                data: filteredReports,  });
 
 
