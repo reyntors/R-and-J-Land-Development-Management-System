@@ -8,7 +8,7 @@
         <progress-loading v-if="isLoading" type="spin"></progress-loading>
         <table v-else>
           <tbody v-for="(item,index) in listInquiries" :key="index">
-            <tr @click="showCard(index)" :class="{shade: !item.mark}">
+            <tr @click="showCard(item.inquiryId)" :class="{shade: !item.mark}">
               <td class="name">{{ item.name }}</td>
               <td class="about">{{ item.subject }} {{ item.context }}</td>
               <td class="date">               
@@ -18,7 +18,7 @@
               </td>
             </tr>
             <inquiries-card
-              v-if="index=== focusedID"
+              v-if="item.inquiryId === focusedID"
               :obj="item"
               @close-card="closeCard"
             />

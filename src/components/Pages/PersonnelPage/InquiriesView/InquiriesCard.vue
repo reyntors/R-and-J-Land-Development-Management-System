@@ -28,7 +28,7 @@
 
     <section class="option">
         <button @click="mark(obj.inquiryId)" v-if="!obj.mark">Mark read <font-awesome-icon :icon="['fas', 'envelope-circle-check']" /></button>
-        <button v-if="obj.mark" disabled>Marked Read <font-awesome-icon :icon="['fas', 'envelope-open']" /></button>
+        <button v-if="obj.mark" @click="mark(obj.inquiryId)" >Mark Unread <font-awesome-icon :icon="['fas', 'envelope-open']" /></button>
     </section>
 
   </div>
@@ -105,6 +105,7 @@ export default {
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.401);
+    overflow-y: auto;
 }
 .inquiries-card article{
     flex-grow: 1;

@@ -16,7 +16,7 @@ export default{
         },
         markInquiry(state,id){
             const index = state.listInquiries.findIndex(item => item.inquiryId === id)
-            state.listInquiries[index].mark= true
+            state.listInquiries[index].mark= !state.listInquiries[index].mark
         },
     },
 
