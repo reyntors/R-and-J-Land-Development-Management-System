@@ -8,28 +8,26 @@ const Inquiry = require('../models/inquiries.model');
 
 
 async function generateInquiryId() {
- 
-    const highestInquiry = await Inquiry.findOne().sort('-inquiries.inquiryId');
+    const query = {}; // You may need to specify a query to retrieve the right documents.
+    const update = { $inc: { 'inquiries.0.inquiryId': 1 } }; // Increment the first inquiryId.
+    const options = { new: true, upsert: true }; // Create the document if it doesn't exist.
   
-    if (!highestInquiry) {
-     
-      const inquiryId = 'INQ100';
-      return inquiryId;
+    const result = await Inquiry.findOneAndUpdate(query, update, options);
+    const nextIncrement = result.inquiries[0].inquiryId;
+  
+    if (nextIncrement === null || nextIncrement === undefined) {
+      // Handle the case where the field is not defined as a number.
+      // Initialize it to 100 in this example.
+      const initialIncrement = 100;
+      await Inquiry.updateOne({}, { $set: { 'inquiries.0.inquiryId': initialIncrement } });
+      return `INQ${initialIncrement}`;
     }
   
-    const currentIncrement = highestInquiry.inquiries.length > 0
-      ? parseInt(highestInquiry.inquiries[0].inquiryId.substr(3), 10)
-      : 100; 
-  
-   
-    const nextIncrement = currentIncrement + 1;
-  
-   
-    const inquiryId = `INQ${nextIncrement}`;
+    // Generate the inquiryId by combining a static part and the current increment
+    const inquiryId = `${nextIncrement}`;
   
     return inquiryId;
   }
-
 // Create a new letter of intent
 exports.createIndividualBuyerDeclaration = async (req, res, next) => {
     try {

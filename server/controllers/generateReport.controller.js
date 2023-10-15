@@ -22,6 +22,10 @@ exports.generateReports = async (req, res, next) => {
             return;
         }
 
+          // Calculate the total amount
+         const totalAmount = filteredReports.reduce((sum, report) => sum + report.amount, 0);
+
+
         // Create an Excel workbook
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Reports');
@@ -39,8 +43,10 @@ exports.generateReports = async (req, res, next) => {
             worksheet.addRow(report);
         });
 
+         // Add a row for the total amount
+         worksheet.addRow({ date: 'Total:', amount: totalAmount });
+
        // Generate a unique filename for the Excel file
-      
        const excelFilePath = path.join(__dirname, `../public/templates/reports_${date}.xlsx`);
 
           // Save the Excel file to the "public/excels" directory
@@ -48,7 +54,8 @@ exports.generateReports = async (req, res, next) => {
 
 
         res.status(200).json({ message: 'Daily reports generated successfully!',
-                               filename: `reports_${date}.xlsx`, 
+                               filename: `reports_${date}.xlsx`,
+                               totalamount: totalAmount, 
                                data: filteredReports,  });
 
 
@@ -114,6 +121,10 @@ exports.generateCustomReports = async (req, res, next) => {
                 return accumulator;
             }, []);
 
+          // Calculate the total amount
+          const totalAmount = filteredReports.reduce((sum, report) => sum + report.amount, 0);
+
+
 
             // Create an Excel workbook
         const workbook = new ExcelJS.Workbook();
@@ -132,6 +143,9 @@ exports.generateCustomReports = async (req, res, next) => {
             worksheet.addRow(report);
         });
 
+          // Add a row for the total amount
+          worksheet.addRow({ date: 'Total:', amount: totalAmount });
+
        // Generate a unique filename for the Excel file
        const excelFileName = `reports_${startDate}_${endDate}.xlsx`;
        const excelFilePath = path.join(__dirname, `../public/templates/`, excelFileName);
@@ -143,6 +157,7 @@ exports.generateCustomReports = async (req, res, next) => {
                 .status(200)
                 .json({ message: 'Reports for the specified date range',
                         filename: excelFileName,
+                        totalAmount: totalAmount,
                         data: filteredReports });
         }
     } catch (error) {
