@@ -12,7 +12,7 @@ const inquiriesSchema = new Schema({
             default: false,
         },
         inquiryId: {
-            type: String,
+            type: Number,
             unique: true,
         },
         name: String,
