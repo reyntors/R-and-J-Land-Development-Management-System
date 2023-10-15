@@ -24,23 +24,41 @@ exports.updateEnquirybyId = async (req, res ) => {
 
         const inquiryId = req.params.inquiryId;
 
+        
+
         console.log(inquiryId)
 
         const inquiry = await Inquiry.findOne({'inquiries.inquiryId': inquiryId});
 
-        console.log('your inquiry', inquiry);
+        // console.log(inquiry.inquiries[0].inquiryId)
 
-        // Update the 'mark' field to true for the matching inquiry
-        inquiry.inquiries.forEach((individualInquiry) => {
-            if (individualInquiry.inquiryId === inquiryId) {
-            individualInquiry.mark = true;
-            }
-        });
+        array = inquiryId - 1;
+
+     
+    //    console.log( inquiry.inquiries[array].mark)
+        if(inquiry.inquiries[array].mark === false){
+
+            inquiry.inquiries[array].mark = true;
+
+        }else if(inquiry.inquiries[array].mark === true){
+
+            inquiry.inquiries[array].mark = false; 
+        }
+        
+
+        // // Update the 'mark' field to true for the matching inquiry
+        // inquiry.inquiries.forEach((individualInquiry) => {
+        //     console.log("I am here")
+        //     if (individualInquiry.inquiryId === inquiryId) {
+        //         console.log(individualInquiry.inquiryId === inquiryId)
+        //     individualInquiry.mark = true;
+        //     }
+        // });
 
         await inquiry.save();
         
 
-    return res.status(200).json({message: 'update mark successfully!', data: inquiry});
+    return res.status(200).json({message: 'update mark successfully!', data: inquiry.inquiries[array]});
         
     } catch (error) {
 
