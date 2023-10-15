@@ -2,8 +2,9 @@ const LetterOfIntent = require('../models/letterOfIntent.model');
 const User = require('../models/user.model');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
 const Inquiry = require('../models/inquiries.model');
-const fs = require('fs');
-const path = require('path');
+
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+
 
 
 async function generateInquiryId() {
@@ -30,6 +31,8 @@ async function generateInquiryId() {
 // Create a new letter of intent
 exports.createLetterOfIntent = async (req, res, next) => {
     try {
+
+        
         const letterOfIntentData = req.body;
         const username = req.user.username;
         
@@ -100,6 +103,7 @@ exports.createLetterOfIntent = async (req, res, next) => {
 
         return res.status(200).send({
             message: `${username}! Your Letter of Intent successfully created!`,
+            pdfPath: pdfPath,
             data: savedLetterOfIntent});
 
        
@@ -112,6 +116,8 @@ exports.createLetterOfIntent = async (req, res, next) => {
 async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
 
     try {
+
+   
     // Define A4 page dimensions
     const pageWidth = 595.276; 
     const pageHeight = 841.890; 
@@ -192,22 +198,40 @@ async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
 
    const pdfBytes = await pdfDoc.save();
 
-   const pdfPath = path.join(__dirname, `../public/templates/${user.userId}_${user.fullname}_letter_of_intent.pdf`);
+   // AWS S3 configuration
+        const s3 = new S3Client({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            region: process.env.AWS_REGION,
+        });
 
-    // Save the PDF buffer to a file
-    fs.writeFileSync(pdfPath, pdfBytes);
+        const s3Params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: `uploads/templates/${user.userId}_${user.fullname}_letter_of_intent.pdf`, // Define the desired key (path) on S3
+            Body: pdfBytes, 
+        };
 
-    return pdfPath;
+            await s3.send(new PutObjectCommand(s3Params));
+            const pdfPath = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Params.Key}`;
+            
+            
+            return pdfPath;
+        
 
     }catch (error) {
         throw error;
     }
+    
 
 }
 
 
+
+
 exports.getLetterOfIntentDetails = async (req, res, next) => {
     try {
+
+    
         const { id } = req.params;
 
         if (id) {

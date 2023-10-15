@@ -1,9 +1,8 @@
 const IndividualBuyerDeclaration = require('../models/individualbuyerdeclaration.model');
 const User = require('../models/user.model');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
-const fs = require('fs');
-const path = require('path');
 const Inquiry = require('../models/inquiries.model');
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 
 
@@ -93,6 +92,7 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
 
         return res.status(200).send({
             message: `${username}! Your Individual Buyer Declaration successfully created!`,
+            pdfPath: pdfPath,
             data: savedIndividualBuyerDeclaration});
 
        
@@ -187,10 +187,22 @@ async function  generateIndividualDeclarationPDF(pdfDoc, user, individualBuyerDe
 
    const pdfBytes = await pdfDoc.save();
 
-   const pdfPath = path.join(__dirname, `../public/templates/${user.userId}_${user.fullname}_individual_buyer_declaration.pdf`);
+   // AWS S3 configuration
+   const s3 = new S3Client({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+});
 
-    // Save the PDF buffer to a file
-    fs.writeFileSync(pdfPath, pdfBytes);
+const s3Params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: `uploads/templates/${user.userId}_${user.fullname}_individual_buyer_declaration.pdf`, // Define the desired key (path) on S3
+    Body: pdfBytes, 
+};
+
+    await s3.send(new PutObjectCommand(s3Params));
+    const pdfPath = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Params.Key}`;
+    
 
     return pdfPath;
 
@@ -206,7 +218,7 @@ exports.getIndividualBuyerDeclaration = async (req, res, next) => {
 
         if (id) {
            
-            const letterOfIntent = await LetterOfIntent.findById(id);
+            const letterOfIntent = await IndividualBuyerDeclaration.findById(id);
 
             if (!letterOfIntent) {
                 return res.status(404).json({ message: 'Letter of intent not found' });

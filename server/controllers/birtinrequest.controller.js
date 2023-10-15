@@ -1,8 +1,7 @@
 const BirTinRequest = require('../models/birtinrequest.model');
 const User = require('../models/user.model');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
-const fs = require('fs');
-const path = require('path');
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const Inquiry = require('../models/inquiries.model');
 
 
@@ -213,10 +212,22 @@ async function  generateBirTinRequestPDF(pdfDoc, user, birTinRequestData) {
 
    const pdfBytes = await pdfDoc.save();
 
-   const pdfPath = path.join(__dirname, `../public/templates/${user.userId}_${user.fullname}_BirTinRequest.pdf`);
+    // AWS S3 configuration
+        const s3 = new S3Client({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            region: process.env.AWS_REGION,
+        });
 
-    // Save the PDF buffer to a file
-    fs.writeFileSync(pdfPath, pdfBytes);
+        const s3Params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: `uploads/templates/${user.userId}_${user.fullname}_BirTinRequest.pdf`, // Define the desired key (path) on S3
+            Body: pdfBytes, 
+        };
+
+            await s3.send(new PutObjectCommand(s3Params));
+            const pdfPath = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Params.Key}`;
+            
 
     return pdfPath;
 
