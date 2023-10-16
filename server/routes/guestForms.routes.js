@@ -12,26 +12,24 @@ const router = express.Router();
 
 
 //letter ofintent
-router.post("/addletter", auth.authenticateToken, userController.restrict('guest'), letter.createLetterOfIntent);
+router.post("/addletter", auth.authenticateToken, userController.restrict(['guest']), letter.createLetterOfIntent);
 
 //Bir Tin Request
-router.post("/addbirtinrequest", auth.authenticateToken, userController.restrict('guest'), birTinRequest.createBirTinRequest);
+router.post("/addbirtinrequest", auth.authenticateToken, userController.restrict(['guest']), birTinRequest.createBirTinRequest);
 
 //Individual Buyer Declaration
-router.post("/addindividualbuyer", auth.authenticateToken, userController.restrict('guest'), individualbuyerdeclaration.createIndividualBuyerDeclaration);
+router.post("/addindividualbuyer", auth.authenticateToken, userController.restrict(['guest']), individualbuyerdeclaration.createIndividualBuyerDeclaration);
 
 //Individual Buyer Declaration
-router.post("/addcontract", auth.authenticateToken, userController.restrict('guest'),  contractDetails.createContractDetails);
+router.post("/addcontract", auth.authenticateToken, userController.restrict(['guest']),  contractDetails.createContractDetails);
 
 
 //FOR STAFF ONLY
 //add form
 router.post("/addforms",  formsController.getForms);
-router.get('/list-raw-forms', auth.authenticateToken, userController.restrict('staff'), formsController.getAllRawForms);
+router.get('/list-raw-forms', auth.authenticateToken, userController.restrict(['staff','admin']), formsController.getAllRawForms);
 
 
-//FOR ADMIN ONLY
-router.get('/list-raw-forms', auth.authenticateToken, userController.restrict('admin'), formsController.getAllRawForms);
 
 
 module.exports = router;

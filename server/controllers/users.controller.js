@@ -263,14 +263,23 @@ exports.getUserDetails = async (req, res, next) => {
 
 
 
-exports.restrict = (roles) => {
+  exports.restrict = (allowedRoles) => {
     return (req, res, next) => {
-        if(req.user.roles !== roles) {
+      const userRoles = req.user.roles;
 
-            return res.status(404).json({
-                message: 'You dont have permission to perform this action'
-            });
-        }
-        next();
-    }
-}
+      console.log(userRoles);
+  
+      // Check if the user has any of the allowed roles
+      const isAllowed = allowedRoles.some((role) => userRoles.includes(role));
+
+      console.log(isAllowed);
+  
+      if (!isAllowed) {
+        return res.status(404).json({
+          message: 'You do not have permission to perform this action',
+        });
+      }
+  
+      next();
+    };
+  };
