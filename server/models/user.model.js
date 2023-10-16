@@ -115,6 +115,7 @@ const profileSchema = new Schema({
 const letterOfIntentSchema = new Schema({
     url: {
         type: String,
+        default: null,
         ref: 'Letter of Intent'
     },
     isSubmitted: {
@@ -187,6 +188,11 @@ const letterOfIntentSchema = new Schema({
 });
 
 const individualBuyerDeclarationSchema = new Schema({
+    url: {
+        type: String,
+        default: null,
+        ref: 'Individual Buyer Declaration'
+    },
     isSubmitted: {
         type: Boolean,
         default: false,
@@ -232,6 +238,11 @@ const individualBuyerDeclarationSchema = new Schema({
 });
 
 const birTinRequestSchema = new Schema({
+    url: {
+        type: String,
+        default: null,
+        ref: 'BIR Tin Request'
+    },
     isSubmitted: {
         type: Boolean,
         default: false,
@@ -327,6 +338,11 @@ const birTinRequestSchema = new Schema({
 });
 
 const contractDetailsSchema = new Schema({ 
+    url: {
+        type: String,
+        default: null,
+        ref: 'Contract Details'
+    },
     isSubmitted: {
         type: Boolean,
         default: false,

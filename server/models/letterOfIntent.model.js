@@ -7,6 +7,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 const letterOfIntentSchema = new Schema({
     url:{
         type: String,
+        default: null
     },
 
     isSubmitted: {
