@@ -904,7 +904,7 @@ const userSchema = new Schema({
             default: null
         },
         grossSalary: {
-            type: String,
+            type: Number,
             default: null
         },
         businessName: {

@@ -212,16 +212,55 @@ exports.getUserDetails = async (req, res, next) => {
           user.additionalInfo.spouseName = updateData.spouseName;
         }
 
-       if (updateData.occupation) {
+      if (updateData.occupation) {
           user.additionalInfo.occupation = updateData.occupation;
         }
 
-        if (updateData.monthlyGrossIncome) {
+      if (updateData.monthlyGrossIncome) {
           user.additionalInfo.monthlyGrossIncome = updateData.monthlyGrossIncome;
         }
 
+        if (updateData.buyerSourceOfIncome) {
+          
+          user.additionalInfo.buyerSourceOfIncome = updateData.buyerSourceOfIncome;
+        }
+
+        if (updateData.typeOfEmployment) {
+         
+          user.additionalInfo.typeOfEmployment = updateData.typeOfEmployment;
+        }
+
+        if (updateData.employer) {
+         
+          user.additionalInfo.employer = updateData.employer;
+        }
+
+        if (updateData.employerAddress) {
+         
+          user.additionalInfo.employerAddress = updateData.employerAddress;
+        }
+
+        if (updateData.grossSalary) {
         
-     
+          user.additionalInfo.grossSalary = updateData.grossSalary;
+        }
+
+        if (updateData.businessName) {
+          
+          user.additionalInfo.businessName = updateData.businessName;
+        }
+
+        if (updateData.businessAddress) {
+         
+          user.additionalInfo.businessAddress = updateData.businessAddress;
+        }
+
+        if (updateData.businessMonthlyIncome) {
+         
+          user.additionalInfo.businessMonthlyIncome = updateData.businessMonthlyIncome;
+        }
+
+       
       
       await user.save();
 
