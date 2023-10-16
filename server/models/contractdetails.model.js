@@ -3,7 +3,10 @@ const { Schema } = mongoose;
 
 
 
-const contractDetailsSchema = new Schema({ 
+const contractDetailsSchema = new Schema({
+    url:{
+        type: String,
+    }, 
     isSubmitted: {
         type: Boolean,
         default: false

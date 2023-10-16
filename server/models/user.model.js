@@ -113,6 +113,10 @@ const profileSchema = new Schema({
 });
 
 const letterOfIntentSchema = new Schema({
+    url: {
+        type: String,
+        ref: 'Letter of Intent'
+    },
     isSubmitted: {
         type: Boolean,
         default: false,

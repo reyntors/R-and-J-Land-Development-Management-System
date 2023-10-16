@@ -42,7 +42,7 @@ exports.createContractDetails = async (req, res, next) => {
          const newcontractDetailsData = new createContractDetails({
             ...contractDetailsData,
             createdBy: user.userId, 
-            pdfPath: pdfPath,
+            url: pdfPath,
             isSubmitted: true
         });
         

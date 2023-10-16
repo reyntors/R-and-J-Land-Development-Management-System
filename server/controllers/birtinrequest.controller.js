@@ -39,13 +39,14 @@ exports.createBirTinRequest = async (req, res, next) => {
 
           // Create a new PDF document
           const pdfDoc = await PDFDocument.create();
-         await generateBirTinRequestPDF(pdfDoc, user, birTinRequestData);
+         const pdfPath = await generateBirTinRequestPDF(pdfDoc, user, birTinRequestData);
  
  
         
          const newBirTinRequest = new BirTinRequest({
             ...birTinRequestData,
             createdBy: user._id, 
+            url: pdfPath,
             isSubmitted: true
         });
         

@@ -49,7 +49,7 @@ exports.createIndividualBuyerDeclaration = async (req, res, next) => {
          const newIndividualBuyerDeclaration = new IndividualBuyerDeclaration({
             ...individualBuyerDeclarationtData,
             createdBy: user._id, 
-            pdfPath: pdfPath,
+            url: pdfPath,
             isSubmitted: true
         });
         

@@ -4,6 +4,9 @@ const { Schema } = mongoose;
 
 
 const individualBuyerDeclarationSchema = new Schema({
+    url:{
+        type: String,
+    },
     isSubmitted: {
         type: Boolean,
         default: false
