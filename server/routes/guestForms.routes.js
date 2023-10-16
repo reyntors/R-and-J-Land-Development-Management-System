@@ -23,9 +23,15 @@ router.post("/addindividualbuyer", auth.authenticateToken, userController.restri
 //Individual Buyer Declaration
 router.post("/addcontract", auth.authenticateToken, userController.restrict('guest'),  contractDetails.createContractDetails);
 
+
+//FOR STAFF ONLY
 //add form
 router.post("/addforms",  formsController.getForms);
 router.get('/list-raw-forms', auth.authenticateToken, userController.restrict('staff'), formsController.getAllRawForms);
+
+
+//FOR ADMIN ONLY
+router.get('/list-raw-forms', auth.authenticateToken, userController.restrict('admin'), formsController.getAllRawForms);
 
 
 module.exports = router;

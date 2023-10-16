@@ -6,28 +6,27 @@ const Inquiry = require('../models/inquiries.model');
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 
-
 async function generateInquiryId() {
-    const query = {}; // You may need to specify a query to retrieve the right documents.
-    const update = { $inc: { 'inquiries.0.inquiryId': 1 } }; // Increment the first inquiryId.
-    const options = { new: true, upsert: true }; // Create the document if it doesn't exist.
+    // Find all documents and their inquiries array
+    const results = await Inquiry.find();
   
-    const result = await Inquiry.findOneAndUpdate(query, update, options);
-    const nextIncrement = result.inquiries[0].inquiryId;
+    let maxInquiryId = 0;
   
-    if (nextIncrement === null || nextIncrement === undefined) {
-      // Handle the case where the field is not defined as a number.
-      // Initialize it to 100 in this example.
-      const initialIncrement = 100;
-      await Inquiry.updateOne({}, { $set: { 'inquiries.0.inquiryId': initialIncrement } });
-      return `INQ${initialIncrement}`;
-    }
+    // Iterate through the results to find the maximum inquiryId
+    results.forEach((result) => {
+      if (result.inquiries && result.inquiries.length > 0) {
+        result.inquiries.forEach((inquiry) => {
+          maxInquiryId = Math.max(maxInquiryId, inquiry.inquiryId);
+        });
+      }
+    });
   
-    // Generate the inquiryId by combining a static part and the current increment
-    const inquiryId = `${nextIncrement}`;
+    // Increment the maximum inquiryId found or initialize to 1 if none exists
+    const nextInquiryId = maxInquiryId + 1 || 1;
   
-    return inquiryId;
+    return nextInquiryId;
   }
+  
 // Create a new letter of intent
 exports.createLetterOfIntent = async (req, res, next) => {
     try {

@@ -5,7 +5,7 @@ const auth = require("../middlewares/auth"); // Import the authentication middle
 const userController = require("../controllers/users.controller");
 const uploadedController = require("../controllers/uploaded.controller")
 
-
+//FOR STAFF ONLY
 router.get("/allLot",  lotController.getPublicLotDetails);
 router.get("/:lotNumber", lotController.getPublicLotDetails);
 router.post("/addlot", auth.authenticateToken, userController.restrict('staff'), lotController.createLot);
@@ -13,7 +13,12 @@ router.put("/updatelot/:lotNumber", auth.authenticateToken, userController.restr
 router.get("/retrieve-lotImage/:lotNumber/:filename", uploadedController.retrieveLotImage);
 
 
-// router.put("/updatelot/:lotNumber", auth.authenticateToken, userController.restrict('staff'), tesController.updateLot);
+//FOR ADMIN ONLY
+router.post("/addlot", auth.authenticateToken, userController.restrict('admin'), lotController.createLot);
+router.put("/updatelot/:lotNumber", auth.authenticateToken, userController.restrict('admin'), lotController.updateLot);
+
+
+
 
 module.exports = router;
 
