@@ -871,18 +871,54 @@ const userSchema = new Schema({
         default: false,
     },
     additionalInfo: {
-        civilStatus: String,
-        spouseName: String,
-        occupation: String,
-        monthlyGrossIncome: Number,
-        buyerSourceOfIncome: String,
-        typeOfEmployment: String,
-        employer: String,
-        employerAddress: String,
-        grossSalary: Number,
-        businessName: String,
-        businessAddress: String,
-        businessMonthlyIncome: Number,
+        civilStatus: {
+            type: String,
+            default: null
+        },
+        spouseName: {
+            type: String,
+            default: null
+        },
+        occupation: {
+            type: String,
+            default: null
+        },
+        monthlyGrossIncome:{
+            type: Number,
+            default: null
+        },
+        buyerSourceOfIncome: {
+            type: String,
+            default: null
+        },
+        typeOfEmployment: {
+            type: String,
+            default: null
+        },
+        employer: {
+            type: String,
+            default: null
+        },
+        employerAddress: {
+            type: String,
+            default: null
+        },
+        grossSalary: {
+            type: String,
+            default: null
+        },
+        businessName: {
+            type: String,
+            default: null
+        },
+        businessAddress:{
+            type: String,
+            default: null
+        },
+        businessMonthlyIncome:{
+            type: Number,
+            default: null
+        },
     },
     profile: {
         type: profileSchema,
