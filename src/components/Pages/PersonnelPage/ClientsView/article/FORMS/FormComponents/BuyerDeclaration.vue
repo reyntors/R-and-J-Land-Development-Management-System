@@ -68,7 +68,7 @@
         </div> 
 
         <span style="display: flex">
-            <submit-form-button @click="submit" :href="downloadURL" :download="downloadName">Download</submit-form-button>
+            <submit-form-button @click="submit" :href="downloadURL">Download</submit-form-button>
         </span>
 
     </form-card>
@@ -81,7 +81,6 @@ export default{
     components: {SubmitFormButton},
     data(){
         return{
-            editable: false,
             date: this.clientObj.date,
             name: this.clientObj.name,
             BIRtaxID: this.clientObj.BIRtaxID,
@@ -90,9 +89,7 @@ export default{
             businessRegisteredUnder: this.clientObj.businessRegisteredUnder,
             businessUsingMyTIN: this.clientObj.businessUsingMyTIN,
 
-            downloadURL: this.wholeObject.individualDeclarationURL,
-            downloadName: this.wholeObject.individualDeclarationFilename
-
+            downloadURL: this.clientObj.url,
         }
     },
 

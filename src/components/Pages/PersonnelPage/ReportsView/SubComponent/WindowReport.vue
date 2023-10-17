@@ -48,6 +48,15 @@
                         </tr>
                         
                     </tbody>
+                    <tr style="border-top: 1px solid black;" v-if="totalAmountReport">
+                        <td>
+                            <strong>TOTAL: </strong>
+                        </td>
+                        <td colspan="3" style="text-align: center;">
+                           {{ totalAmountReport }}
+                        </td>
+                        
+                    </tr>
                 </table>
             </div>
             <span class="button">
@@ -72,7 +81,6 @@ export default{
             dateTo: null,
 
             isGenerating: false,
-            list: []
         }
     },
     methods: {
@@ -80,8 +88,6 @@ export default{
             this.$emit('close-window')
         },
         async generate(){
-            // const payload = this.dateNow
-            // this.$store.dispatch('report/dailyRequest',payload)
             this.isGenerating = true
             if(this.type === 'daily'){
                 try{
@@ -134,6 +140,14 @@ export default{
             return this.$store.getters['report/URLdailyfilenameReportGetter']
         }else{           
             return this.$store.getters['report/URLcustomfilenameReportGetter']
+        }
+      },
+      totalAmountReport(){
+        if(this.type === 'daily'){
+            console.log( this.$store.getters['report/dailyTotalAmountGetter'])
+            return this.$store.getters['report/dailyTotalAmountGetter']
+        }else{           
+            return this.$store.getters['report/customTotalAmountGetter']
         }
       }
     },

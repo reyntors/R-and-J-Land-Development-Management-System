@@ -48,6 +48,20 @@ export const addToLegitClient = async (id) => {
         throw (error.response.data.message);
     }
 }
+export const removeToLegitClient = async (id) => {
+    // console.log('API removeToLegitClient executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.put(`${BASE_URL}users/update-false-legitimacy/${id}`,id,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        }) 
+        return response.data      
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
 //end header
 
 //start article/payment
@@ -161,3 +175,27 @@ export const retrieveSpecificScannedFile = async (id,filename) => {
     }
 }
 //end article/form
+
+//start profile
+export const updateUserProfile = async (payload) => {
+    // console.log('API updateUserProfil executed')
+    const data = {
+        ...payload.additionalInfo,
+        ...payload.defaultInfo
+    }
+    console.log(data)
+
+    // console.log(payload.data)
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.put(`${BASE_URL}users/update-user/${payload.id}`,data,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        console.log(response)
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+//end profile

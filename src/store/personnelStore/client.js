@@ -58,16 +58,24 @@ export default{
             state.clientsAdded.push(payload)
         },
         updateClient(state,payload){
+            console.log(payload)
             const index = state.clientsAdded.findIndex(item => item.userId=== payload.id)
-            console.log(index)
-            console.log(state.clientsAdded[0].profile)
+            // console.log(state.clientsAdded[0].profile)
             if(index>=0){
-               state.clientsAdded[index].profile = payload
+               state.clientsAdded[index].additionalInfo = payload.additionalInfo
+               state.clientsAdded[index].fullname = payload.defaultInfo.fullname
+               state.clientsAdded[index].homeAddress = payload.defaultInfo.homeAddress
+               state.clientsAdded[index].contactNumber = payload.defaultInfo.contactNumber
             }    
         },
-        deleteClient(state,id){
-            const index = state.clientsAdded.findIndex(item => item.id === id)
-            state.clientsAdded.splice(index,1)
+        removeClient(state,id){
+            console.log(id)
+            const index = state.clientsAdded.findIndex(item => item.userId === id)
+            if(index>=0){
+                state.clientsAdded.splice(index,1) 
+            }
+            
+            console.log(state.clientsAdded)
         },
         //end modify legit client list local
 
@@ -132,96 +140,96 @@ export default{
 
         //start getting legit list
         async getLegitList(context){
-            console.log('running getLegitList')
-            const tempList = []
+            // console.log('running getLegitList')
+            // const tempList = []
             try{
                 const response = await Client.requestLegitList()
-                // console.log(response)
-                context.commit('setLocalLegitList',response)        
-/////////
-                for(const item of response.data) {
+                // console.log(response.data)
+                context.commit('setLocalLegitList',response.data)        
+// /////////
+//                 for(const item of response.data) {
 
-                    const existletterOfIntent = item.letterOfIntent.isSubmitted
+//                     const existletterOfIntent = item.letterOfIntent.isSubmitted
 
-                    const existBirTinRequest = item.BirTinRequest.isSubmitted
+//                     const existBirTinRequest = item.BirTinRequest.isSubmitted
 
-                    const existindividualDeclaration = item.individualDeclaration.isSubmitted
+//                     const existindividualDeclaration = item.individualDeclaration.isSubmitted
 
-                    const existContractForm = item.ContractDetails.isSubmitted
+//                     const existContractForm = item.ContractDetails.isSubmitted
 
-                    // start CREATE donwloadable URL letterofIntent
-                    const letterOfIntentFilename = `${item.userId}_${item.fullname}_letter_of_intent.pdf`  
-                    var letterOfIntentURL = '' 
-                    if(existletterOfIntent){
-                        try{
-                            const downloadableLetterOfIntent = await Client.retrieveUploadedForm(item.userId,letterOfIntentFilename)
-                            const LetterOfIntentBlob = new Blob([downloadableLetterOfIntent], {type: 'application/pdf'})
-                            letterOfIntentURL = URL.createObjectURL(LetterOfIntentBlob)                        
-                        }catch(error){
-                            console.log(error)
-                        }
-                    }
-                    item.letterOfIntentURL = letterOfIntentURL
-                    item.letterOfIntentFilename = letterOfIntentFilename
-                    //end CREATE donwloadable URL letterofIntent
+//                     // start CREATE donwloadable URL letterofIntent
+//                     const letterOfIntentFilename = `${item.userId}_${item.fullname}_letter_of_intent.pdf`  
+//                     var letterOfIntentURL = '' 
+//                     if(existletterOfIntent){
+//                         try{
+//                             const downloadableLetterOfIntent = await Client.retrieveUploadedForm(item.userId,letterOfIntentFilename)
+//                             const LetterOfIntentBlob = new Blob([downloadableLetterOfIntent], {type: 'application/pdf'})
+//                             letterOfIntentURL = URL.createObjectURL(LetterOfIntentBlob)                        
+//                         }catch(error){
+//                             console.log(error)
+//                         }
+//                     }
+//                     item.letterOfIntentURL = letterOfIntentURL
+//                     item.letterOfIntentFilename = letterOfIntentFilename
+//                     //end CREATE donwloadable URL letterofIntent
 
-                    //start CREATE downloadable URL BirTinRequest
-                    const BirTinRequestFilename = `${item.userId}_${item.fullname}_BirTinRequest.pdf`  
-                    var BirTinRequestURL = '' 
-                    // FIX NEED FOR BIR DONWLOAD FORM
-                    if(existBirTinRequest){
-                        try{
-                            const downloadableBirTinRequest = await Client.retrieveUploadedForm(item.userId,BirTinRequestFilename)
-                            const BirTinRequestBlob = new Blob([downloadableBirTinRequest], {type: 'application/pdf'})
-                            BirTinRequestURL = URL.createObjectURL(BirTinRequestBlob)                        
-                        }catch(error){
-                            console.log(error)
-                        }
-                    }
-                    item.BirTinRequestURL = BirTinRequestURL
-                    item.BirTinRequestFilename = BirTinRequestFilename
-                    //end CREATE downloadable URL BirTinRequest
+//                     //start CREATE downloadable URL BirTinRequest
+//                     const BirTinRequestFilename = `${item.userId}_${item.fullname}_BirTinRequest.pdf`  
+//                     var BirTinRequestURL = '' 
+//                     // FIX NEED FOR BIR DONWLOAD FORM
+//                     if(existBirTinRequest){
+//                         try{
+//                             const downloadableBirTinRequest = await Client.retrieveUploadedForm(item.userId,BirTinRequestFilename)
+//                             const BirTinRequestBlob = new Blob([downloadableBirTinRequest], {type: 'application/pdf'})
+//                             BirTinRequestURL = URL.createObjectURL(BirTinRequestBlob)                        
+//                         }catch(error){
+//                             console.log(error)
+//                         }
+//                     }
+//                     item.BirTinRequestURL = BirTinRequestURL
+//                     item.BirTinRequestFilename = BirTinRequestFilename
+//                     //end CREATE downloadable URL BirTinRequest
 
 
-                    //start CREATE donwloadable URL Individual Declaration
-                    const individualDeclarationFilename = `${item.userId}_${item.fullname}_individual_buyer_declaration.pdf`  
-                    var individualDeclarationURL = '' 
-                    if(existindividualDeclaration){
-                        try{
-                            const downloadableindividualDeclaration = await Client.retrieveUploadedForm(item.userId,individualDeclarationFilename)
-                            const individualDeclarationBlob = new Blob([downloadableindividualDeclaration], {type: 'application/pdf'})
-                            individualDeclarationURL = URL.createObjectURL(individualDeclarationBlob)                        
-                        }catch(error){
-                            console.log(error)
-                        }
-                    }
-                    item.individualDeclarationURL = individualDeclarationURL
-                    item.individualDeclarationFilename = individualDeclarationFilename
-                    //end CREATE donwloadable URL Individual Declaration
+//                     //start CREATE donwloadable URL Individual Declaration
+//                     const individualDeclarationFilename = `${item.userId}_${item.fullname}_individual_buyer_declaration.pdf`  
+//                     var individualDeclarationURL = '' 
+//                     if(existindividualDeclaration){
+//                         try{
+//                             const downloadableindividualDeclaration = await Client.retrieveUploadedForm(item.userId,individualDeclarationFilename)
+//                             const individualDeclarationBlob = new Blob([downloadableindividualDeclaration], {type: 'application/pdf'})
+//                             individualDeclarationURL = URL.createObjectURL(individualDeclarationBlob)                        
+//                         }catch(error){
+//                             console.log(error)
+//                         }
+//                     }
+//                     item.individualDeclarationURL = individualDeclarationURL
+//                     item.individualDeclarationFilename = individualDeclarationFilename
+//                     //end CREATE donwloadable URL Individual Declaration
 
-                    //start CREATE donwloadable URL Contract Form
-                    const contractFormFilename = `${item.userId}_${item.fullname}_individual_buyer_declaration.pdf`  
-                    var contractFormURL = '' 
-                    if(existContractForm){
-                        try{
-                            const downloadableContractForm = await Client.retrieveUploadedForm(item.userId,individualDeclarationFilename)
-                            const contractFormDeclarationBlob = new Blob([downloadableContractForm], {type: 'application/pdf'})
-                            contractFormURL = URL.createObjectURL(contractFormDeclarationBlob)                        
-                        }catch(error){
-                            console.log(error)
-                        }
-                    }
-                    item.ContractFormURL = contractFormURL
-                    item.ContractFormFilename = contractFormFilename         
+//                     //start CREATE donwloadable URL Contract Form
+//                     const contractFormFilename = `${item.userId}_${item.fullname}_individual_buyer_declaration.pdf`  
+//                     var contractFormURL = '' 
+//                     if(existContractForm){
+//                         try{
+//                             const downloadableContractForm = await Client.retrieveUploadedForm(item.userId,individualDeclarationFilename)
+//                             const contractFormDeclarationBlob = new Blob([downloadableContractForm], {type: 'application/pdf'})
+//                             contractFormURL = URL.createObjectURL(contractFormDeclarationBlob)                        
+//                         }catch(error){
+//                             console.log(error)
+//                         }
+//                     }
+//                     item.ContractFormURL = contractFormURL
+//                     item.ContractFormFilename = contractFormFilename         
 
-                    tempList.push(item)
-                }
+//                     tempList.push(item)
+//                 }
 //////////                                       
             }catch(error){
                 console.log(error)
             }
 
-            context.commit('setLocalLegitList',tempList)
+            // context.commit('setLocalLegitList',tempList)
         },
         //start getting legit list
 
@@ -235,13 +243,21 @@ export default{
                 console.log(error)
             }
         },
-        updateClient(context,payload){
-            context.commit('updateClient',payload)
-            //
+        async updateClient(context,payload){
+            try{
+                await Client.updateUserProfile(payload)
+                context.commit('updateClient',payload)
+            }catch(error){
+                console.error(error)
+            }
         },
-        deleteClient(context,id){
-            context.commit('deleteClient',id)
-            //
+        async removeClient(context,id){
+            try{
+                await Client.removeToLegitClient(id)
+                context.commit('removeClient',id)
+            }catch(error){
+                console.error(error)
+            }
         },
         //end adding GUEST to LEGIT CLIENT
 
@@ -318,7 +334,7 @@ export default{
         },
 
         clientsGetter(state){
-            console.log(state.clientsAdded)
+            // console.log(state.clientsAdded)
             return state.clientsAdded
         },
 

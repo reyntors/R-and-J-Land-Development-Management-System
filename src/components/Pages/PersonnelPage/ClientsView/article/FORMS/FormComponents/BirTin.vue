@@ -91,7 +91,7 @@
     </div>
 
         <span style="display: flex">
-            <submit-form-button @click="submit" :href="downloadURL" :download="downloadName">Download</submit-form-button>
+            <submit-form-button @click="submit" :href="downloadURL" >Download</submit-form-button>
         </span>
 
     </form-card>
@@ -104,8 +104,6 @@ export default {
     components: {SubmitFormButton},
     data(){
         return{
-            editable: false,
-
             date: this.clientObj.date,
             authorizedTo: this.clientObj.authorizedTo,
             name: this.clientObj.name,
@@ -124,9 +122,7 @@ export default {
             witnessYear: this.clientObj.witnessYear,
             witnessAddress: this.clientObj.witnessAddress,
 
-            downloadURL: this.wholeObject.BirTinRequestURL,
-            downloadName: this.wholeObject.BirTinRequestFilename
-
+            downloadURL: this.clientObj.url,
         }
     },
     methods: {

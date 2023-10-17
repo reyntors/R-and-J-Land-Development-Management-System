@@ -159,7 +159,6 @@ export default {
       }
     },
     mounted(){
-      console.log(this.clientObj)
       this.getListTransaction(this.clientID)
     }
 }

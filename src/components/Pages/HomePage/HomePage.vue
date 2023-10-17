@@ -7,7 +7,7 @@
     <about-comp></about-comp>
     <model-houses></model-houses>
     <subdivision-component></subdivision-component>
-    <messenger-chat></messenger-chat>
+    <!-- <messenger-chat></messenger-chat> -->
 
     <the-footer ></the-footer>  
 </template>
@@ -17,14 +17,14 @@ import AboutComp from './ABOUT/AboutComp.vue'
 import ModelHouses from './MODEL HOUSE/ModelHouses.vue'
 import CarouselComponent from './CAROUSEL/CarouselComponent.vue'
 import SubdivisionComponent from './SUBDIVISION/SubdivisionComponent.vue'
-import MessengerChat from './MESSENGER/MessengerChat.vue'
+// import MessengerChat from './MESSENGER/MessengerChat.vue'
 export default {
     components: {
         CarouselComponent,
         AboutComp, 
         ModelHouses, 
         SubdivisionComponent,
-        MessengerChat
+        // MessengerChat
     },
 
     data(){

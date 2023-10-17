@@ -9,17 +9,22 @@ export default {
             customfilenameReport : '',
             URLdailyfilenameReport : '',
             URLcustomfilenameReport : '',
+            dailyTotalAmount: 0,
+            customTotalAmount: 0,
         }
     },
     mutations:{
-        setDailyReport(state,obj){
-            state.dailyfilenameReport = obj.filename
+        setDailyReport(state,obj){   
+            console.log(obj)     
             state.URLdailyfilenameReport = obj.url
+            state.dailyfilenameReport = obj.filename
+            state.dailyTotalAmount = obj.totalAmount
             state.dailyReport = obj.list
         },
         setCustomReport(state,obj){
             state.URLcustomfilenameReport = obj.url
             state.customfilenameReport = obj.filename
+            state.customTotalAmount = obj.totalAmount
             state.customReport = obj.list
         }
     },
@@ -28,12 +33,14 @@ export default {
               
             try{
                 const response = await API.requestDailyReport(dateNow)
+                console.log(response)
                 const file = await API.requestExcelFileReport(response.filename)
                 const blob = new Blob([file],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
                 const url = URL.createObjectURL(blob)
                 const obj = {
                     url: url,
                     filename : response.filename,
+                    totalAmount: response.totalAmount,
                     list: response.data
                 }
                 context.commit('setDailyReport',obj)
@@ -55,6 +62,7 @@ export default {
                 const obj = {
                     url: url,
                     filename : response.filename,
+                    totalAmount: response.totalAmount,
                     list: response.data
                 }
                 context.commit('setCustomReport',obj)
@@ -89,6 +97,12 @@ export default {
         },
         URLcustomfilenameReportGetter(state){
             return state.URLcustomfilenameReport 
+        },
+        dailyTotalAmountGetter(state){
+            return state.dailyTotalAmount
+        },
+        customTotalAmountGetter(state){
+            return state.customTotalAmount
         }
     }
 }

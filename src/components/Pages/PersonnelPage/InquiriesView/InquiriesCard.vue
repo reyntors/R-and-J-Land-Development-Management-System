@@ -93,19 +93,20 @@ export default {
     background-color: rgba(0, 0, 0,.2);
 }
 .inquiries-card{
-    width: 80%;
-    height: 85%;
+    width: 100%;
+    margin: auto;   
+    /* height: 85%; */
     background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    border: 1px solid black;
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%,-50%); */
+    /* border: 1px solid black; */
     padding: 1rem;
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.401);
-    overflow-y: auto;
+    overflow-y: auto; 
 }
 .inquiries-card article{
     flex-grow: 1;

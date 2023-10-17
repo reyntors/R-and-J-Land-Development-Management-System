@@ -86,7 +86,7 @@
         </div>
 
         <span style="display: flex">
-            <submit-form-button :href="downloadURL" :download="downloadName">Download</submit-form-button>
+            <submit-form-button :href="downloadURL">Download</submit-form-button>fdsfdsaf
         </span>
     </form-card>
 </template>
@@ -98,9 +98,7 @@ export default{
     components: {SubmitFormButton},
     emits:['back-click'],
     data(){
-        return{
-            editable: false,
-            
+        return{          
           date: this.clientObj.date,
           purchase: this.clientObj.purchase,
           project: this.clientObj.project,
@@ -114,8 +112,7 @@ export default{
           emailAddress: this.clientObj.emailAddress,
           reservationTimeSpan: this.clientObj.reservationTimeSpan,
 
-          downloadURL: this.wholeObject.letterOfIntentURL,
-          downloadName: this.wholeObject.letterOfIntentFilename
+          downloadURL: this.clientObj.url,
         }
     },
     methods: {
@@ -133,7 +130,7 @@ export default{
   },
 
   mounted(){
-    // console.log(this.wholeObject)
+    console.log(this.wholeObject)
   }
 }
 </script>

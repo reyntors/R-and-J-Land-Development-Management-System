@@ -9,7 +9,7 @@
         <table v-else>
           <tbody v-for="(item,index) in listInquiries" :key="index">
             <tr @click="showCard(item.inquiryId)" :class="{shade: !item.mark}">
-              <td class="name">{{ item.name }}</td>
+              <td class="name">{{number(index +1)}}{{ item.name }}</td>
               <td class="about">{{ item.subject }} {{ item.context }}</td>
               <td class="date">               
                 <span class="dateText">
@@ -17,11 +17,16 @@
                 </span>
               </td>
             </tr>
-            <inquiries-card
-              v-if="item.inquiryId === focusedID"
-              :obj="item"
-              @close-card="closeCard"
-            />
+            <tr style="position: relative;">
+              <td colspan="3">
+                <inquiries-card
+                  v-if="item.inquiryId === focusedID"
+                  :obj="item"
+                  @close-card="closeCard"
+                />
+              </td>
+            </tr>
+            
  
    
           </tbody>
@@ -51,6 +56,9 @@
       closeCard(){
         this.focusedID = null
       },
+      number(index){
+        return index + '. '
+      }
 
     },
     computed:{
@@ -99,8 +107,6 @@
     display: flex;
     justify-content: start;
     align-items: flex-start;
-    /* padding: 1rem; */
-    gap: 1rem;
     position: relative;
     overflow-y: auto;
     border: 1px solid black;
@@ -113,9 +119,6 @@ tr{
   border-bottom: 1px solid black;
   cursor: pointer;
   width: 100%;
-}
-td{
-  padding: .5rem;
 }
 .trash-icon{
   visibility: hidden;
@@ -133,14 +136,14 @@ tr:hover .trash-icon{
   visibility: visible;
 }
 .name{
-  padding-left: 1rem;
+  padding: .5rem;
   width: 20%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .about{
-  /* border: 1px solid black; */
+  padding: .5rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -148,6 +151,7 @@ tr:hover .trash-icon{
   padding: 0 2rem 0 1rem;
 }
 .date{
+  padding: .5rem;
   width:15%;
   text-align: center;
 }

@@ -18,13 +18,13 @@
 
         <div>
           <!-- <button class="saveBtn" @click="saveNow">Save</button> -->
-          <button class="delBtn" @click="deleteNow(clientObj.profile.id)" v-if="authorizationRoleAdmin">Delete</button>
+          <button class="delBtn" @click="deleteNow(clientObj.userId)" v-if="authorizationRoleAdmin">Delete</button>
         </div>
       
     </section>
 
     <section class="section-right">
-           <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" @pass-data="getProfile" :clientID="clientObj.userId"/>
+           <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" :clientID="clientObj.userId"/>
           <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj" :clientID="clientObj.userId"/>
          <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
     </section>
@@ -35,7 +35,7 @@
 import ClientPayment from '../article/PAYMENT/PaymentDetails.vue';
 import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
 import ClientForms from '../article/FORMS/FormsDetails.vue'
-
+import { toast } from 'vue3-toastify';
 export default {
   props: ['clientObj'],
   components: {
@@ -72,9 +72,17 @@ export default {
     },
 
     //delete
-    deleteNow(id){
-      alert('Deleting now')
-      this.$store.dispatch('client/deleteClient',id)
+    async deleteNow(id){
+      const confirmed = confirm('Are you sure to remove this client?')
+      if(confirmed){
+        try{
+          await this.$store.dispatch('client/removeClient',id)
+          toast.success('removed succesfully')
+        }catch(error){
+          toast.error(error)
+        }
+      }
+      
     }
   },
 

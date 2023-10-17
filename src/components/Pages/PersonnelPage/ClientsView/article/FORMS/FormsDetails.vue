@@ -8,22 +8,22 @@
         <h6>Request Forms</h6>
         
         <div class="flexCont">
-            <section @click="openForm('letterIntent')" v-if="clientObj.letterOfIntentURL !== ''">
+            <section @click="openForm('letterIntent')" v-if="clientObj.letterOfIntent.url !== null && clientObj.letterOfIntent.isSubmitted === true">
               <p>Letter of Intent</p>
               <img src="@/assets/form-thumbnails/Letter-of-intent.png">              
             </section>
 
-            <section @click="openForm('buyerDeclaration')" v-if="clientObj.individualDeclarationURL !== ''">
+            <section @click="openForm('buyerDeclaration')" v-if="clientObj.individualDeclaration.url !== null && clientObj.individualDeclaration.isSubmitted === true">
               <p>Individual Declaration</p>
               <img src="@/assets/form-thumbnails/individual-buyer-declaration.png">              
             </section>
 
-            <section @click="openForm('bir-tin')" v-if="clientObj.BirTinRequestURL !== ''">
+            <section @click="openForm('bir-tin')" v-if="clientObj.BirTinRequest.url !== null && clientObj.BirTinRequest.isSubmitted === true">
               <p>BIR-TIN-Request</p>
               <img src="@/assets/form-thumbnails/BIR-TIN-Request.png">              
             </section>
 
-            <!-- <section  @click="openForm('contractDetails')" v-if="clientObj.ContractFormURL !== ''">
+            <!-- <section  @click="openForm('contractDetails')" v-if="clientObj.ContractForm.url !== null">
               <p>Contract Details</p>
               <img src="@/assets/form-thumbnails/contract-details.png">              
             </section> -->
@@ -195,6 +195,7 @@ export default {
 
     mounted(){
       this.getListScannedFiles()
+      console.log(this.clientObj)
     }
  
 }

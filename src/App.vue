@@ -1,17 +1,28 @@
 <template>
 
   <router-view></router-view>
+  <messenger-chat></messenger-chat>
 
 </template>
 
 <script>
+import MessengerChat from './components/Pages/HomePage/MESSENGER/MessengerChat.vue'
 export default {
+  components: {MessengerChat},
+  computed:{
+    // isPersonnel(){
+    //   const role = this.$store.getters['client/authorizationPersonnelTEXT']
+    //   console.log(role)
+    //   return role
+    // }
+  }
 }
 </script>
 
 <style >
 *{
-  padding: 0;
+  padding: 0
+MessengerChat;
   margin: 0;
   font-family: 'Poppins';
 }

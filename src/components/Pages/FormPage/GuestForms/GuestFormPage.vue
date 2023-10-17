@@ -42,7 +42,7 @@ export default {
   padding: 1rem 1rem 0;
   display: grid;
   grid-template-columns: 100%;
-  gap: 1rem;
+  /* gap: 1rem; */
 }
 .grid-item{
   margin: auto;
