@@ -1,7 +1,7 @@
 <template>
-
+  {{ isNotPersonnel }}
   <router-view></router-view>
-  <messenger-chat></messenger-chat>
+  <messenger-chat v-if="isNotPersonnel"></messenger-chat>
 
 </template>
 
@@ -10,11 +10,14 @@ import MessengerChat from './components/Pages/HomePage/MESSENGER/MessengerChat.v
 export default {
   components: {MessengerChat},
   computed:{
-    // isPersonnel(){
-    //   const role = this.$store.getters['client/authorizationPersonnelTEXT']
-    //   console.log(role)
-    //   return role
-    // }
+    isNotPersonnel(){
+      const role = this.$store.getters['auth/getRoleType']
+      if(role === 'guest' || role === undefined){
+        return true
+      }else{
+        return false
+      }
+    }
   }
 }
 </script>

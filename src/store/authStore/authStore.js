@@ -164,6 +164,7 @@ export default {
 
         getRoleType(state){
             if(state.role && state.tokenID){
+                console.log(state.role)
                 return state.role
             }else{
                 return undefined
