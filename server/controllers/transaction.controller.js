@@ -92,17 +92,17 @@ exports.addTransaction = async (req, res, next) => {
 
       }
 
+      const amountPaid = parseFloat(newTransaction.amount);
+      const totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
       
+     
+      client.accountingDetails.totalAmountDue = totalAmountDue;
+    
       
 
       if (newTransaction.purpose === 'monthly-payment') {
 
-        const amountPaid = parseFloat(newTransaction.amount);
-        const totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
-        
-       
-        client.accountingDetails.totalAmountDue = totalAmountDue;
-     
+      
 
       if(client.accountingDetails.totalPayment === 0){
 
