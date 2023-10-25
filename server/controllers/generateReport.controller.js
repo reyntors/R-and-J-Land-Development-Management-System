@@ -1,4 +1,5 @@
 const Report = require('../models/reports.model');
+const moment = require('moment');
 const ExcelJS = require('exceljs');
 const path = require('path');
 const fs = require('fs');
@@ -165,4 +166,159 @@ exports.generateCustomReports = async (req, res, next) => {
     }
 };
 
+
+exports.generateWeeklyReports = async (req, res, next) => {
+    try {
+        // Get the current date
+        const currentDate = moment();
+
+        // Calculate the start date (most recent Sunday) and end date (following Saturday)
+        const startDate = currentDate.clone().startOf('week');
+        const endDate = currentDate.clone().endOf('week');
+
+        // Format the dates as needed (e.g., to ISO format)
+        const startDateFormatted = startDate.format('YYYY-MM-DD');
+        const endDateFormatted = endDate.format('YYYY-MM-DD');
+        // Find reports within the weekly date range
+        const reports = await Report.find({
+            'reports.date': {
+                $gte: startDateFormatted,
+                $lte: endDateFormatted,
+            },
+        });
+
+        if (!reports || reports.length === 0) {
+            res.status(404).json({ message: 'No reports found for the current week' });
+        } else {
+            // Flatten the reports array and filter by date range
+            const filteredReports = reports.reduce((accumulator, currentValue) => {
+                accumulator.push(
+                    ...currentValue.reports.filter(
+                        (report) =>
+                            moment(report.date).isSameOrAfter(startDate) &&
+                            moment(report.date).isSameOrBefore(endDate)
+                    )
+                );
+                return accumulator;
+            }, []);
+
+            // Calculate the total amount
+            const totalAmount = filteredReports.reduce((sum, report) => sum + report.amount, 0);
+
+            // Create an Excel workbook
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Reports');
+
+            // Define worksheet columns
+            worksheet.columns = [
+                { header: 'Date', key: 'date', width: 12 },
+                { header: 'Full Name', key: 'fullname', width: 20 },
+                { header: 'Amount', key: 'amount', width: 15 },
+                { header: 'Purpose', key: 'purpose', width: 25 },
+            ];
+
+            // Add data to the worksheet
+            filteredReports.forEach((report) => {
+                worksheet.addRow(report);
+            });
+
+            // Add a row for the total amount
+            worksheet.addRow({ date: 'Total:', amount: totalAmount });
+
+            // Generate a unique filename for the Excel file
+            const excelFileName = `reports_${startDateFormatted}_${endDateFormatted}.xlsx`;
+            const excelFilePath = path.join(__dirname, `../public/templates/`, excelFileName);
+
+            // Save the Excel file to the "public/excels" directory
+            await workbook.xlsx.writeFile(excelFilePath);
+
+            return res.status(200).json({
+                message: 'Reports for the current week',
+                filename: excelFileName,
+                totalAmount: totalAmount,
+                data: filteredReports,
+            });
+        }
+    } catch (error) {
+        return next(error);
+    }
+};
+
+
+exports.generateMonthlyReports = async (req, res, next) => {
+    try {
+        // Get the current date
+        const currentDate = moment();
+
+        // Calculate the start date (most recent Sunday) and end date (following Saturday)
+        const startDate = currentDate.clone().startOf('month');
+        const endDate = currentDate.clone().endOf('month');
+
+        // Format the dates as needed (e.g., to ISO format)
+        const startDateFormatted = startDate.format('YYYY-MM-DD');
+        const endDateFormatted = endDate.format('YYYY-MM-DD');
+        // Find reports within the weekly date range
+        const reports = await Report.find({
+            'reports.date': {
+                $gte: startDateFormatted,
+                $lte: endDateFormatted,
+            },
+        });
+
+        if (!reports || reports.length === 0) {
+            res.status(404).json({ message: 'No reports found for the current week' });
+        } else {
+            // Flatten the reports array and filter by date range
+            const filteredReports = reports.reduce((accumulator, currentValue) => {
+                accumulator.push(
+                    ...currentValue.reports.filter(
+                        (report) =>
+                            moment(report.date).isSameOrAfter(startDate) &&
+                            moment(report.date).isSameOrBefore(endDate)
+                    )
+                );
+                return accumulator;
+            }, []);
+
+            // Calculate the total amount
+            const totalAmount = filteredReports.reduce((sum, report) => sum + report.amount, 0);
+
+            // Create an Excel workbook
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('Reports');
+
+            // Define worksheet columns
+            worksheet.columns = [
+                { header: 'Date', key: 'date', width: 12 },
+                { header: 'Full Name', key: 'fullname', width: 20 },
+                { header: 'Amount', key: 'amount', width: 15 },
+                { header: 'Purpose', key: 'purpose', width: 25 },
+            ];
+
+            // Add data to the worksheet
+            filteredReports.forEach((report) => {
+                worksheet.addRow(report);
+            });
+
+            // Add a row for the total amount
+            worksheet.addRow({ date: 'Total:', amount: totalAmount });
+
+            // Generate a unique filename for the Excel file
+            const excelFileName = `reports_${startDateFormatted}_${endDateFormatted}.xlsx`;
+            const excelFilePath = path.join(__dirname, `../public/templates/`, excelFileName);
+
+            // Save the Excel file to the "public/excels" directory
+            await workbook.xlsx.writeFile(excelFilePath);
+
+            return res.status(200).json({
+                message: 'Reports for the current month',
+                filename: excelFileName,
+                totalAmount: totalAmount,
+                data: filteredReports,
+            });
+        }
+    } catch (error) {
+        return next(error);
+    }
+};
 

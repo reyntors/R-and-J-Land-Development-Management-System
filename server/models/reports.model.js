@@ -11,7 +11,20 @@ const reportsSchema = new Schema({
         fullname: String,
         amount: Number,
         purpose: String,
-       
+        address: String,
+        contactNo: String,
+        civilStatus: String,
+        spouseName: String,
+        occupation: String,
+        businessMonthlyIncome: Number,
+        buyerSourceOfIncome: String,
+        typeOfEmployment: String,
+        employer: String,
+        employerAddress: String,
+        grossSalary: String,
+        businessName: String,
+        businessAddress: String,
+        monthlyGrossIncome: Number,
 
     }]
 

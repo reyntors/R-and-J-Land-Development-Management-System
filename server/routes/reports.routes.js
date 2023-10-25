@@ -9,6 +9,8 @@ const reportsController = require("../controllers/generateReport.controller")
 // Getreports API
 router.get('/daily-reports/:date', auth.authenticateToken, userController.restrict(['staff','admin']), reportsController.generateReports);
 router.get('/custom-reports', auth.authenticateToken, userController.restrict(['staff','admin']), reportsController.generateCustomReports);
+router.get('/weekly-reports', auth.authenticateToken, userController.restrict(['staff','admin']), reportsController.generateWeeklyReports);
+router.get('/monthly-reports', auth.authenticateToken, userController.restrict(['staff','admin']), reportsController.generateMonthlyReports);
 
 //APi for download the file
 router.get('/excel-file/:filename', auth.authenticateToken, userController.restrict(['staff','admin']), reportsController.downloadExcelFile);

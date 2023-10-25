@@ -122,9 +122,7 @@ exports.addTransaction = async (req, res, next) => {
         client.accountingDetails.totalAmountPayable -= amountPaid
 
       }
-        
-    
-       
+           
     }
     
          
@@ -137,7 +135,22 @@ exports.addTransaction = async (req, res, next) => {
         date: newTransaction.date,
         fullname: client.fullname,
         amount: newTransaction.amount,
-        purpose: newTransaction.purpose
+        purpose: newTransaction.purpose,
+        address: client.additionalInfo.address,
+        contactNo: client.additionalInfo. contactNo,
+        civilStatus: client.additionalInfo.civilStatus,
+        spouseName: client.additionalInfo. spouseName,
+        occupation: client.additionalInfo.occupation,
+        businessMonthlyIncome: client.additionalInfo.businessMonthlyIncome,
+        buyerSourceOfIncome: client.additionalInfo.buyerSourceOfIncome,
+        typeOfEmployment: client.additionalInfotypeOfEmployment,
+        employer: client.additionalInfo. employer,
+        employerAddress: client.additionalInfo.employerAddress,
+        grossSalary: client.additionalInfo.grossSalary,
+        businessName: client.additionalInfo.businessName,
+        businessAddress: client.additionalInfo.businessAddress,
+        monthlyGrossIncome: client.additionalInfo. monthlyGrossIncome,
+
 
       };
 
