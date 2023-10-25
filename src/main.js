@@ -13,24 +13,25 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, 
     faCaretUp, faArrowLeftLong, faPlus,faMagnifyingGlass,faGear,faTrashCan,faCaretLeft,faCaretRight,
-    faEnvelopeCircleCheck,faEnvelopeOpen, faEnvelope
+    faEnvelopeCircleCheck,faEnvelopeOpen, faEnvelope, faChevronDown,
     } from '@fortawesome/free-solid-svg-icons'
 
-import { faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faWhatsapp, faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library */
 library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,
     faCaretDown,faCaretUp,faArrowLeftLong,faPlus,faMagnifyingGlass,faGear,faTrashCan,
-    faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen,faFacebook, faWhatsapp,faEnvelope
+    faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen,faFacebook, faWhatsapp,faEnvelope,faChevronDown,
+    faFacebookSquare,
     )
 
 
 import TheHeader from './components/Reusable/Header and Footer/TheHeader.vue'
 import TheFooter from './components/Reusable/Header and Footer/TheFooter.vue'
-import FormCard from './components/Reusable/FormCard.vue'
+import FormCard from './components/Reusable/Form SubComponents/FormCard.vue'
 import ProgressLoading from './components/Reusable/LoadingScreens/ProgressLoading.vue'
-import FormThumbnail from './components/Reusable/FormThumbnail.vue'
-import SubmitFormButton from './components/Reusable/SubmitFormButton.vue'
+import FormThumbnail from './components/Reusable/Form SubComponents/FormThumbnail.vue'
+import SubmitFormButton from './components/Reusable/Form SubComponents/SubmitFormButton.vue'
 import DotLoading from './components/Reusable/LoadingScreens/DotLoading.vue'
 // import LoginLoading from './components/Reusable/LoadingScreens/LoginLoading.vue'
 

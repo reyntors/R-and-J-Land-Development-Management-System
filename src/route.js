@@ -1,24 +1,30 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
-import HomePage from './components/Pages/HomePage/HomePage.vue'
-import ProjectPage from './components/Pages/ProjectPage/ProjectPage.vue'
-import GalleryPage from './components/Pages/GalleryPage/GalleryPage.vue'
+import LandingPage from './components/Pages/LANDING PAGE/LandingPage.vue'
+import SellPage from './components/Pages/SELL PAGE/SellView.vue'
+import ProvidePage from './components/Pages/PROVIDE PAGE/ProvidePage.vue'
+import ProjectPage from './components/Pages/PROJECT PAGE/ProjectPage.vue'
+import CareerPage from './components/Pages/CAREER PAGE/CareerPage.vue'
+import CustomerService from './components/Pages/CUSTOMER SERVICE PAGE/CustomerService.vue'
+import InquireNowPage from './components/Pages/INQUIRE_NOW PAGE/InquireNowPage.vue'
+import AccountPage from './components/Pages/ACCOUNT PAGE/AccountPage.vue'
+
 
 
 //GUEST FORMS NEW PAGE
-import GuestFormPage from './components/Pages/FormPage/GuestForms/GuestFormPage.vue'
-import GuestLetterOfIntent from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestLetterIntent.vue'
-import GuestContractDetails from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestContractDetails.vue'
-import GuestBIRtinRequest from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestBirTinRequest.vue'
-import GuestIndividualBuyerDeclaration from './components/Pages/FormPage/GuestForms/GuestSubForms/GuestIndividualBuyerDeclaration.vue'
+import GuestFormPage from './components/Pages/FORM PAGE/GuestFormPage.vue'
+import GuestLetterOfIntent from './components/Forms Used/LetterOfIntent.vue'
+import GuestContractDetails from './components/Pages/FORM PAGE/GuestForms/GuestContractDetails.vue'
+import GuestBIRtinRequest from './components/Pages/FORM PAGE/GuestForms/GuestBirTinRequest.vue'
+import GuestIndividualBuyerDeclaration from './components/Pages/FORM PAGE/GuestForms/GuestIndividualBuyerDeclaration.vue'
 
 //ADMIN & STAFF PAGE
-import PersonnelHomePage from './components/Pages/PersonnelPage/PersonnelPage.vue'
-import PersonnelReports from './components/Pages/PersonnelPage/ReportsView/ReportsView.vue'
-import PersonnelInquiries from './components/Pages/PersonnelPage/InquiriesView/InquiriesView.vue'
-import PersonnelSubdivision from './components/Pages/PersonnelPage/SubdivisionView/SubdivisionView.vue'
-import PersonnelClient from './components/Pages/PersonnelPage/ClientsView/ClientView.vue'
-import PersonnelForm from './components/Pages/PersonnelPage/EmptyForms/EmptyForms.vue'
+import PersonnelHomePage from './components/Pages/PERSONNEL PAGE/PersonnelPage.vue'
+import PersonnelReports from './components/Pages/PERSONNEL PAGE/ReportsView/ReportsView.vue'
+import PersonnelInquiries from './components/Pages/PERSONNEL PAGE/InquiriesView/InquiriesView.vue'
+import PersonnelSubdivision from './components/Pages/PERSONNEL PAGE/SubdivisionView/SubdivisionView.vue'
+import PersonnelClient from './components/Pages/PERSONNEL PAGE/ClientsView/ClientView.vue'
+import PersonnelForm from './components/Pages/PERSONNEL PAGE/EmptyForms/EmptyForms.vue'
 
 import store from './store/store.js'
 
@@ -27,9 +33,14 @@ const route = createRouter({
         history: createWebHistory(),
         routes: [
             {path: '/', redirect: '/home'},
-            {path:'/home', component: HomePage},
+            {path:'/home', component: LandingPage},
+            {path: '/sell', component: SellPage},
+            {path: '/provide', component: ProvidePage},
             {path:'/projects', component: ProjectPage},
-            {path:'/gallery', component: GalleryPage},
+            {path:'/careers', component: CareerPage},
+            {path:'/customer-service', component: CustomerService},
+            {path:'/inquire', component: InquireNowPage},
+            {path:'/account', component: AccountPage},
 
             //guest authorized
             {path:'/guest-forms', component: GuestFormPage, meta: {requiresAuthGuest: true}},
@@ -62,7 +73,9 @@ const route = createRouter({
     route.beforeEach(function(to,_,next){
         
         //get the localStorage in case HARD REFRESH
+        // this.$store.commit('resetHomeId')
         store.commit('auth/getLocalStorage')
+        store.commit('resetHomeId')
 
         //this condition sets the path that required the user to be authenticated before they can access it
         if(to.meta.requiresAuthGuest && !store.getters['auth/authorizationRoleGuest']){       

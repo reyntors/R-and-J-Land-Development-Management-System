@@ -1,12 +1,11 @@
 <template>
-  {{ isNotPersonnel }}
   <router-view></router-view>
   <messenger-chat v-if="isNotPersonnel"></messenger-chat>
 
 </template>
 
 <script>
-import MessengerChat from './components/Pages/HomePage/MESSENGER/MessengerChat.vue'
+import MessengerChat from './components/MESSENGER/MessengerChat.vue'
 export default {
   components: {MessengerChat},
   computed:{
@@ -24,13 +23,13 @@ export default {
 
 <style >
 *{
-  padding: 0
-MessengerChat;
+  padding: 0;
   margin: 0;
   font-family: 'Poppins';
 }
 p {
   font-size: clamp(.5rem, 1.5vw, 2rem);
+  margin: 0;
 }
 h2{
   font-weight: 600;

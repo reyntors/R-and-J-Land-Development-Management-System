@@ -23,7 +23,20 @@ const store = createStore({
         state(){
             return{
                 companyName: 'R&J Land Development Corporation',
-                companyAddress: '329 Bonifacio St. Davao City'
+                companyAddress: '329 Bonifacio St. Davao City',
+
+                //header
+                homeID: '',
+            }
+        },
+
+        mutations:{
+            setHomeID(state,id){
+                // console.log(id)
+                state.homeID = id
+            },
+            resetHomeId(state){
+                state.homeID = ''
             }
         },
 
@@ -33,6 +46,30 @@ const store = createStore({
             },
             companyAddress(state){
                 return state.companyAddress
+            },
+            isAboutActive(state){
+                if(
+                    state.homeID === 'about' ||
+                    state.homeID === 'sustainability' ||
+                    state.homeID === 'corp-officers' ||
+                    state.homeID === 'licenses&permits'
+                ){
+                    return true
+                }else{
+                    return false
+                }
+            },
+            isWeBuildActive(state){
+                if(
+                    state.homeID === 'residential-house' ||
+                    state.homeID === 'commercial-bldg' ||
+                    state.homeID === 'amenities' ||
+                    state.homeID === 'structural-foundation'
+                ){
+                    return true
+                }else{
+                    return false
+                }
             }
         }
        

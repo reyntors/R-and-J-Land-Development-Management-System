@@ -118,6 +118,7 @@ export default{
 
         // start add transaction
         updateAccountingDetails(state,payload){
+            console.log(payload)
             const index = state.clientsAdded.findIndex(item => item.userId === payload.id)
             state.clientsAdded[index].accountingDetails.totalAmountPayable = state.clientsAdded[index].accountingDetails.totalAmountPayable - payload.amountPaid
             state.clientsAdded[index].accountingDetails.totalPayment =  state.clientsAdded[index].accountingDetails.totalPayment + payload.amountPaid
