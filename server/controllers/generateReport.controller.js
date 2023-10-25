@@ -166,7 +166,7 @@ exports.generateCustomReports = async (req, res, next) => {
         });
 
           // Add a row for the total amount
-          worksheet.addRow({ date: 'Total:', amount: totalAmount });
+          worksheet.addRow({ fullname: 'Total:', amount: totalAmount });
 
        // Generate a unique filename for the Excel file
        const excelFileName = `reports_${startDate}_${endDate}.xlsx`;
@@ -255,7 +255,7 @@ exports.generateWeeklyReports = async (req, res, next) => {
             });
 
             // Add a row for the total amount
-            worksheet.addRow({ date: 'Total:', amount: totalAmount });
+            worksheet.addRow({ fullname: 'Total:', amount: totalAmount });
 
             // Generate a unique filename for the Excel file
             const excelFileName = `reports_${startDateFormatted}_${endDateFormatted}.xlsx`;
@@ -344,7 +344,7 @@ exports.generateMonthlyReports = async (req, res, next) => {
             });
 
             // Add a row for the total amount
-            worksheet.addRow({ date: 'Total:', amount: totalAmount });
+            worksheet.addRow({ fullname: 'Total:', amount: totalAmount });
 
             // Generate a unique filename for the Excel file
             const excelFileName = `reports_${startDateFormatted}_${endDateFormatted}.xlsx`;
