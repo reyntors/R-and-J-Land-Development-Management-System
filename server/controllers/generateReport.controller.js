@@ -8,6 +8,13 @@ exports.generateReports = async (req, res, next) => {
     try {
         const { date } = req.params;
 
+        const selectedColumns = req.body.selectedColumns; 
+        
+        // Check if selectedColumns is provided
+        if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
+            return res.status(400).json({ message: 'Invalid or missing selectedColumns' });
+        }
+
         const reports = await Report.findOne({ 'reports.date': date });
 
         if (!reports) {
@@ -23,77 +30,50 @@ exports.generateReports = async (req, res, next) => {
             return;
         }
 
-          // Calculate the total amount
-         const totalAmount = filteredReports.reduce((sum, report) => sum + report.amount, 0);
-
+        // Calculate the total amount
+        const totalAmount = filteredReports.reduce((sum, report) => sum + report.amount, 0);
 
         // Create an Excel workbook
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Reports');
 
-        // Define worksheet columns
-        worksheet.columns = [
-            { header: 'Date', key: 'date', width: 12 },
-            { header: 'Full Name', key: 'fullname', width: 20 },
-            { header: 'Amount', key: 'amount', width: 15 },
-            { header: 'Purpose', key: 'purpose', width: 25 },
-            { header: 'Address', key: 'address', width: 30 },
-            { header: 'Contact No.', key: 'contactNo', width: 25 },
-            { header: 'civilStatus', key: 'civilStatus', width: 25 },
-            { header: 'spouseName', key: 'spouseName', width: 25 },
-            { header: 'occupation', key: 'occupation', width: 25 },
-            { header: 'businessMonthlyIncome', key: 'businessMonthlyIncome', width: 25 },
-            { header: 'buyerSourceOfIncome', key: 'buyerSourceOfIncome', width: 25 },
-            { header: 'typeOfEmployment', key: 'typeOfEmployment', width: 25 },
-            { header: 'employerAddress', key: 'employerAddress', width: 25 },
-            { header: 'grossSalary', key: 'grossSalary', width: 25 },
-            { header: 'businessName', key: 'businessName', width: 25 },
-            { header: 'businessAddress', key: 'businessAddress', width: 25 },
-            { header: 'monthlyGrossIncome', key: 'monthlyGrossIncome', width: 25 },
-        ];
-
-        // // Add data to the worksheet
-        // filteredReports.forEach((report) => {
-        //     worksheet.addRow(report);
-        // });
-
-       // Define an array of selected column keys
-        
-       
-       const selectedColumns = ['fullname', 'amount', 'civilStatus', 'contactNo'];
+        // Define worksheet columns based on selected columns
+        worksheet.columns = selectedColumns.map((columnKey) => ({
+            header: columnKey.charAt(0).toUpperCase() + columnKey.slice(1),
+            key: columnKey,
+            width: 25,
+        }));
 
         // Create a new array containing only the selected columns
         const selectedData = filteredReports.map((report) => {
             const rowData = {};
             selectedColumns.forEach((columnKey) => {
-            rowData[columnKey] = report[columnKey];
-
-           
+                rowData[columnKey] = report[columnKey];
             });
             worksheet.addRow(rowData);
             return rowData;
         });
 
-         // Add a row for the total amount
-         worksheet.addRow({ date: 'Total:', amount: totalAmount });
+        // Add a row for the total amount
+        worksheet.addRow({ fullname: 'Total:', amount: totalAmount });
 
-       // Generate a unique filename for the Excel file
-       const excelFilePath = path.join(__dirname, `../public/templates/reports_${date}.xlsx`);
+        // Generate a unique filename for the Excel file
+        const excelFilePath = path.join(__dirname, `../public/templates/reports_${date}.xlsx`);
 
-          // Save the Excel file to the "public/excels" directory
+        // Save the Excel file to the "public/excels" directory
         await workbook.xlsx.writeFile(excelFilePath);
 
-
-        res.status(200).json({ message: 'Daily reports generated successfully!',
-                               filename: `reports_${date}.xlsx`,
-                               totalAmount: totalAmount, 
-                               data: selectedData,  });
-
-
+        res.status(200).json({
+            message: 'Daily reports generated successfully!',
+            filename: `reports_${date}.xlsx`,
+            totalAmount: totalAmount,
+            data: selectedData,
+        });
     } catch (error) {
         return next(error);
     }
 };
+
 
 // API endpoint to retrieve the Excel file
 exports.downloadExcelFile = (req, res) => {
@@ -130,6 +110,13 @@ exports.downloadExcelFile = (req, res) => {
 exports.generateCustomReports = async (req, res, next) => {
     try {
         const { startDate, endDate } = req.query; 
+
+        const selectedColumns = req.body.selectedColumns; 
+
+        // Check if selectedColumns is provided
+        if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
+           return res.status(400).json({ message: 'Invalid or missing selectedColumns' });
+       }
         
         // Find reports within the custom date range
         const reports = await Report.find({
@@ -161,17 +148,21 @@ exports.generateCustomReports = async (req, res, next) => {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Reports');
 
-        // Define worksheet columns
-        worksheet.columns = [
-            { header: 'Date', key: 'date', width: 12 },
-            { header: 'Full Name', key: 'fullname', width: 20 },
-            { header: 'Amount', key: 'amount', width: 15 },
-            { header: 'Purpose', key: 'purpose', width: 25 },
-        ];
+          // Define worksheet columns based on selected columns
+          worksheet.columns = selectedColumns.map((columnKey) => ({
+            header: columnKey.charAt(0).toUpperCase() + columnKey.slice(1),
+            key: columnKey,
+            width: 25,
+        }));
 
-        // Add data to the worksheet
-        filteredReports.forEach((report) => {
-            worksheet.addRow(report);
+         // Create a new array containing only the selected columns
+         const selectedData = filteredReports.map((report) => {
+            const rowData = {};
+            selectedColumns.forEach((columnKey) => {
+                rowData[columnKey] = report[columnKey];
+            });
+            worksheet.addRow(rowData);
+            return rowData;
         });
 
           // Add a row for the total amount
@@ -189,7 +180,7 @@ exports.generateCustomReports = async (req, res, next) => {
                 .json({ message: 'Reports for the specified date range',
                         filename: excelFileName,
                         totalAmount: totalAmount,
-                        data: filteredReports });
+                        data: selectedData });
         }
     } catch (error) {
         return next(error);
@@ -201,6 +192,13 @@ exports.generateWeeklyReports = async (req, res, next) => {
     try {
         // Get the current date
         const currentDate = moment();
+
+        const selectedColumns = req.body.selectedColumns; 
+
+         // Check if selectedColumns is provided
+         if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
+            return res.status(400).json({ message: 'Invalid or missing selectedColumns' });
+        }
 
         // Calculate the start date (most recent Sunday) and end date (following Saturday)
         const startDate = currentDate.clone().startOf('week');
@@ -239,17 +237,21 @@ exports.generateWeeklyReports = async (req, res, next) => {
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Reports');
 
-            // Define worksheet columns
-            worksheet.columns = [
-                { header: 'Date', key: 'date', width: 12 },
-                { header: 'Full Name', key: 'fullname', width: 20 },
-                { header: 'Amount', key: 'amount', width: 15 },
-                { header: 'Purpose', key: 'purpose', width: 25 },
-            ];
+              // Define worksheet columns based on selected columns
+              worksheet.columns = selectedColumns.map((columnKey) => ({
+                header: columnKey.charAt(0).toUpperCase() + columnKey.slice(1),
+                key: columnKey,
+                width: 25,
+            }));
 
-            // Add data to the worksheet
-            filteredReports.forEach((report) => {
-                worksheet.addRow(report);
+           // Create a new array containing only the selected columns
+            const selectedData = filteredReports.map((report) => {
+                const rowData = {};
+                selectedColumns.forEach((columnKey) => {
+                    rowData[columnKey] = report[columnKey];
+                });
+                worksheet.addRow(rowData);
+                return rowData;
             });
 
             // Add a row for the total amount
@@ -266,7 +268,7 @@ exports.generateWeeklyReports = async (req, res, next) => {
                 message: 'Reports for the current week',
                 filename: excelFileName,
                 totalAmount: totalAmount,
-                data: filteredReports,
+                data: selectedData,
             });
         }
     } catch (error) {
@@ -279,6 +281,13 @@ exports.generateMonthlyReports = async (req, res, next) => {
     try {
         // Get the current date
         const currentDate = moment();
+
+        const selectedColumns = req.body.selectedColumns; 
+
+         // Check if selectedColumns is provided
+         if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
+            return res.status(400).json({ message: 'Invalid or missing selectedColumns' });
+        }
 
         // Calculate the start date (most recent Sunday) and end date (following Saturday)
         const startDate = currentDate.clone().startOf('month');
@@ -317,17 +326,21 @@ exports.generateMonthlyReports = async (req, res, next) => {
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Reports');
 
-            // Define worksheet columns
-            worksheet.columns = [
-                { header: 'Date', key: 'date', width: 12 },
-                { header: 'Full Name', key: 'fullname', width: 20 },
-                { header: 'Amount', key: 'amount', width: 15 },
-                { header: 'Purpose', key: 'purpose', width: 25 },
-            ];
+             // Define worksheet columns based on selected columns
+             worksheet.columns = selectedColumns.map((columnKey) => ({
+                header: columnKey.charAt(0).toUpperCase() + columnKey.slice(1),
+                key: columnKey,
+                width: 25,
+            }));
 
-            // Add data to the worksheet
-            filteredReports.forEach((report) => {
-                worksheet.addRow(report);
+            // Create a new array containing only the selected columns
+            const selectedData = filteredReports.map((report) => {
+                const rowData = {};
+                selectedColumns.forEach((columnKey) => {
+                    rowData[columnKey] = report[columnKey];
+                });
+                worksheet.addRow(rowData);
+                return rowData;
             });
 
             // Add a row for the total amount
@@ -344,7 +357,7 @@ exports.generateMonthlyReports = async (req, res, next) => {
                 message: 'Reports for the current month',
                 filename: excelFileName,
                 totalAmount: totalAmount,
-                data: filteredReports,
+                data: selectedData,
             });
         }
     } catch (error) {
