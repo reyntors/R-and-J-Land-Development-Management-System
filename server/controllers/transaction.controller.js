@@ -79,30 +79,25 @@ exports.addTransaction = async (req, res, next) => {
 
         const principal = totalAmountDue - downPayment;
 
-        console.log('principal:', principal )
+      
         // Calculate the monthly amortization
         const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
         const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
         const monthlyAmortization = (numerator / denominator).toFixed(2)
 
-        console.log('monthlyAmortization:', monthlyAmortization)
-
         client.paymentDetails.monthlyAmortizationDue = monthlyAmortization
 
 
       }
-
-      const amountPaid = parseFloat(newTransaction.amount);
-      const totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
-      
-     
-      client.accountingDetails.totalAmountDue = totalAmountDue;
-    
-      
+ 
 
       if (newTransaction.purpose === 'monthly-payment') {
 
-      
+        const amountPaid = parseFloat(newTransaction.amount);
+        const totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
+        
+       
+        client.accountingDetails.totalAmountDue = totalAmountDue;
 
       if(client.accountingDetails.totalPayment === 0){
 
@@ -130,14 +125,17 @@ exports.addTransaction = async (req, res, next) => {
       // Save the updated user record
       await client.save();
 
+      console.log(client.contactNumber);
 
       const newReportEntry = {
         date: newTransaction.date,
         fullname: client.fullname,
         amount: newTransaction.amount,
         purpose: newTransaction.purpose,
-        address: client.additionalInfo.address,
-        contactNo: client.additionalInfo. contactNo,
+        address: client.homeAddress,
+        contactNo: client.contactNumber,
+        fblink: client.fbAccount,
+        email: client.email,
         civilStatus: client.additionalInfo.civilStatus,
         spouseName: client.additionalInfo. spouseName,
         occupation: client.additionalInfo.occupation,

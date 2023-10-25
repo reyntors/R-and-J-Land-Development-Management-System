@@ -13,6 +13,8 @@ const reportsSchema = new Schema({
         purpose: String,
         address: String,
         contactNo: String,
+        fblink: String,
+        email: String,
         civilStatus: String,
         spouseName: String,
         occupation: String,

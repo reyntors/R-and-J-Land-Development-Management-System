@@ -37,11 +37,41 @@ exports.generateReports = async (req, res, next) => {
             { header: 'Full Name', key: 'fullname', width: 20 },
             { header: 'Amount', key: 'amount', width: 15 },
             { header: 'Purpose', key: 'purpose', width: 25 },
+            { header: 'Address', key: 'address', width: 30 },
+            { header: 'Contact No.', key: 'contactNo', width: 25 },
+            { header: 'civilStatus', key: 'civilStatus', width: 25 },
+            { header: 'spouseName', key: 'spouseName', width: 25 },
+            { header: 'occupation', key: 'occupation', width: 25 },
+            { header: 'businessMonthlyIncome', key: 'businessMonthlyIncome', width: 25 },
+            { header: 'buyerSourceOfIncome', key: 'buyerSourceOfIncome', width: 25 },
+            { header: 'typeOfEmployment', key: 'typeOfEmployment', width: 25 },
+            { header: 'employerAddress', key: 'employerAddress', width: 25 },
+            { header: 'grossSalary', key: 'grossSalary', width: 25 },
+            { header: 'businessName', key: 'businessName', width: 25 },
+            { header: 'businessAddress', key: 'businessAddress', width: 25 },
+            { header: 'monthlyGrossIncome', key: 'monthlyGrossIncome', width: 25 },
         ];
 
-        // Add data to the worksheet
-        filteredReports.forEach((report) => {
-            worksheet.addRow(report);
+        // // Add data to the worksheet
+        // filteredReports.forEach((report) => {
+        //     worksheet.addRow(report);
+        // });
+
+       // Define an array of selected column keys
+        
+       
+       const selectedColumns = ['fullname', 'amount', 'civilStatus', 'contactNo'];
+
+        // Create a new array containing only the selected columns
+        const selectedData = filteredReports.map((report) => {
+            const rowData = {};
+            selectedColumns.forEach((columnKey) => {
+            rowData[columnKey] = report[columnKey];
+
+           
+            });
+            worksheet.addRow(rowData);
+            return rowData;
         });
 
          // Add a row for the total amount
@@ -57,7 +87,7 @@ exports.generateReports = async (req, res, next) => {
         res.status(200).json({ message: 'Daily reports generated successfully!',
                                filename: `reports_${date}.xlsx`,
                                totalAmount: totalAmount, 
-                               data: filteredReports,  });
+                               data: selectedData,  });
 
 
     } catch (error) {
