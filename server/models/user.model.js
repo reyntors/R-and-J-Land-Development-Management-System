@@ -101,11 +101,65 @@ const profileSchema = new Schema({
     },
     email: {
         type: String,
-        default: null,
-        unique: false,
+        default: null,  
         
     },
     address: {
+        type: String,
+        default: null,
+       
+    },
+    civilStatus: {
+        type: String,
+        default: null,
+       
+    },
+    spouseName: {
+        type: String,
+        default: null,
+       
+    },
+    occupation: {
+        type: String,
+        default: null,
+       
+    },
+    monthlyGrossIncome: {
+        type: String,
+        default: null,
+       
+    },
+    buyerSourceOfIncome: {
+        type: String,
+        default: null,
+       
+    },
+    typeOfEmployment: {
+        type: String,
+        default: null,
+       
+    },
+    employer: {
+        type: String,
+        default: null,
+       
+    },
+    grossSalary: {
+        type: String,
+        default: null,
+       
+    },
+    businessName: {
+        type: String,
+        default: null,
+       
+    },
+    businessAddress: {
+        type: String,
+        default: null,
+       
+    },
+    monthlyGrossIncome: {
         type: String,
         default: null,
        
@@ -858,7 +912,7 @@ const userSchema = new Schema({
     },
     roles: {
         type: String,
-        enum: ['guest', 'staff', 'admin'],
+        enum: ['guest', 'staff', 'admin', 'realtor'],
         default: 'guest' 
     },
 
