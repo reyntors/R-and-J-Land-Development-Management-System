@@ -8,6 +8,7 @@ const pdfController = require('../controllers/pdf.controller');
 const letter = require('../controllers/letterofintent.controller');
 const scanfilesController = require('../controllers/scanFiles.controller');
 const uploadedController = require('../controllers/uploaded.controller');
+const contactController = require('../controllers/contactUs.controller');
 
 
 const auth = require("../middlewares/auth");
@@ -17,7 +18,10 @@ const express = require("express");
 const router = express.Router();
 
 
+
+
 //users
+router.post("/contact-us", contactController.createContact);
 router.post("/register", userController.register);
 router.post("/login", userController.login);
 router.get("/user-profile", auth.authenticateToken, userController.userProfile);
@@ -27,7 +31,7 @@ router.post("/request-lot", auth.authenticateToken, userController.restrict(['gu
 //FOR STAFF ONLY
 //staff
 router.post("/addnewclient", auth.authenticateToken, userController.restrict(['staff','admin']), userController.register);
-router.get("/:id?", auth.authenticateToken, userController.restrict(['staff','admin']), userController.getUserDetails);
+router.get("/:id?", auth.authenticateToken, userController.restrict(['guest','staff','admin']), userController.getUserDetails);
 router.put("/update-user/:id", auth.authenticateToken, userController.restrict(['staff','admin']), userController.updateUser);
 
 
