@@ -3,7 +3,6 @@ const { uploadForms } = require('../middlewares/multer');
 const Forms = require('../models/forms.model')
 const fs = require('fs');
 const path = require('path');
-
 exports.getAllFormsById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -11,25 +10,31 @@ exports.getAllFormsById = async (req, res) => {
         const user = await User.findOne({ userId: id });
 
         if (!user) {
-
-            return res.status(404).json({message: 'User not found'});
-
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        const allUserForms = { 
-            letterOfIntent: user.letterOfIntent, 
-            individualDeclaration: user.individualDeclaration,
-            BirTinRequest: user.BirTinRequest
+        // Create an object to store forms with isSubmitted as true
+        const submittedForms = {};
+
+        // Check each form and add it to the submittedForms object if isSubmitted is true
+        if (user.letterOfIntent.isSubmitted) {
+            submittedForms.letterOfIntent = user.letterOfIntent;
+        }
+        if (user.individualDeclaration.isSubmitted) {
+            submittedForms.individualDeclaration = user.individualDeclaration;
+        }
+        if (user.BirTinRequest.isSubmitted) {
+            submittedForms.BirTinRequest = user.BirTinRequest;
         }
 
         return res.status(200).json({
-            message: `All forms request by ${user.username}`, data: allUserForms,
+            message: `All forms requested by ${user.username}`,
+            data: submittedForms,
         });
-    }catch (error) {
+    } catch (error) {
         return res.status(500).json({ error: 'Internal server error' });
     }
 }
-
 exports.getForms = async (req, res) => {
     try {
         uploadForms(req, res, async function (error) {
