@@ -41,6 +41,34 @@ exports.register = async (req, res, next) => {
 try {
     const user = await User.findOne({ username: req.body.username });
 
+  
+
+
+    const  userProfileData = {
+
+      fullname: user.fullname,
+      email: user.email,
+      contactNumber: user.contactNumber,
+      address: user.homeAddress,
+
+    }
+
+    
+    user.profileDetails =  userProfileData;
+
+    
+
+    await user.save();
+
+
+      //generate date
+    const date = new Date()
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
+    const day = String(date.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+
+
         // Generate inquiryId
     const inquiryId = await generateInquiryId();
 
@@ -52,7 +80,7 @@ try {
       email: user.email,
       fblink: user.fbAccount,
       phonenumber: user.contactNumber,
-      date: user.date,
+      date: formattedDate,
       };
 
       const inquiries = await Inquiry.findOne()
@@ -147,8 +175,6 @@ exports.getUserDetails = async (req, res, next) => {
             });
         } else {
             const activeUsers = await User.find();
-
-            
 
 
             return res.status(200).json({

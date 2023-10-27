@@ -88,7 +88,11 @@ const accountingDetailsSchema = new Schema({
 
 });
 
-const profileSchema = new Schema({
+const profileDetailsSchema = new Schema({
+    permissionEdit: {
+        type: Boolean,
+        default: false
+    },
     fullname: {
         type: String,
         default: null,
@@ -974,8 +978,8 @@ const userSchema = new Schema({
             default: null
         },
     },
-    profile: {
-        type: profileSchema,
+    profileDetails: {
+        type: profileDetailsSchema,
         default: {}
     },
      
