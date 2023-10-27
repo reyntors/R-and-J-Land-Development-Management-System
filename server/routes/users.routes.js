@@ -49,7 +49,7 @@ router.post('/addpayment/:id', auth.authenticateToken, userController.restrict([
 router.get('/paymentdetails/:id', auth.authenticateToken, userController.restrict(['staff','admin']), paymentDetailsController.getPaymentDetailsById);
 
 //forms
-router.get('/forms/:id', auth.authenticateToken, userController.restrict(['staff','admin']), formsController.getAllFormsById);
+router.get('/forms/:id', auth.authenticateToken, userController.restrict(['guest','staff','admin']), formsController.getAllFormsById);
 router.get('/retrieve-raw-forms/:filename', auth.authenticateToken, userController.restrict(['staff','admin']), formsController.retrieveForms);
 
 
