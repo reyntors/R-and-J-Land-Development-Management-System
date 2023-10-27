@@ -10,17 +10,7 @@ const s3 = new S3Client({
   region: process.env.AWS_REGION,
 });
 
-const uploadTemplateFile = multer({storage: multerS3({
-  s3,
-  bucket: process.env.AWS_BUCKET_NAME,
-  metadata: function (req, file, cb) {
-    cb(null, { fieldName: file.fieldname });
-  },
-  key: function (req, file, cb) {
-    cb(null, `uploads/templates/${file.originalname}`);
-  },
-}),
-}).single('file');
+
 
 const uploadScannedFile = multer({storage: multerS3({
   s3,
@@ -76,6 +66,19 @@ const uploadlotImage = multer({storage: multerS3({
 }),
 }).single('image');
 
+const uploadValidImage = multer({storage: multerS3({
+  s3,
+  bucket: process.env.AWS_BUCKET_NAME,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
+  },
+  key: function (req, file, cb) {
+    cb(null, `uploads/validImages/${file.originalname}`);
+  },
+}),
+}).single('image');
+
+
 
 
 
@@ -84,6 +87,6 @@ module.exports = {
   uploadAttachment,
   uploadlotImage,
   uploadForms,
-  uploadTemplateFile
+  uploadValidImage
  
 };

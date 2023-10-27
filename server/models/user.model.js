@@ -168,7 +168,11 @@ const profileDetailsSchema = new Schema({
         default: null,
        
     },
-    uploadId: []
+    uploadId: [{
+        filename: String,
+        contentType: String,
+        url: String,
+    }]
 });
 
 const letterOfIntentSchema = new Schema({

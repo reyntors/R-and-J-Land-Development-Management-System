@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const Lot = require("../models/lot.model");
+const {uploadValidImage} = require('../middlewares/multer');
 const path = require('path');
 const fs = require('fs');
 const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
@@ -115,3 +116,57 @@ exports.retrieveLotImage = async (req, res) => {
   }
 
 }
+
+
+
+
+
+exports.addValidImage = async (req, res, next) => {
+
+  try {
+    uploadValidImage(req, res, async function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'File upload failed', error: err });
+      }
+
+    const { id } = req.params;
+    const uploadedFile = req.file;
+
+    console.log(uploadedFile);
+  
+
+    // Find the client by their userId
+    const user = await User.findOne({ userId: id });
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'Client not found or you do not have permission to add a scannedFiles for this client.',
+      });
+    }
+
+    // Create a new ScannedFiles
+    const newImages = {
+
+          filename: uploadedFile.originalname,
+          contentType: uploadedFile.mimetype,
+          url: uploadedFile.location
+    };
+
+    
+    user.profileDetails.uploadId.push(newImages);
+    
+
+    // Save the updated user record
+    await user.save();
+
+    return res.status(200).json({
+      message: 'Image  successfully uploaded.',
+      data: newImages,
+    });
+  }); 
+  } catch (error) {
+    return next(error);
+  }
+
+};

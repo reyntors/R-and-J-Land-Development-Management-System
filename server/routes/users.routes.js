@@ -58,10 +58,14 @@ router.post("/add-scanfiles/:id", auth.authenticateToken, userController.restric
 router.get("/all-scanfiles/:id", auth.authenticateToken, userController.restrict(['staff','admin']), scanfilesController.getAllScanFilesById);
 router.get("/retrieve-scanfiles/:id/:filename", auth.authenticateToken, userController.restrict(['staff','admin']), scanfilesController.retrieveScanFile);
 
+//Valid Id Images
+router.post("/add-valid-image/:id", auth.authenticateToken, userController.restrict(['guest','staff','admin']), uploadedController.addValidImage);
+
 
 //files
 router.get("/retrieve-upload/:id/:filename", auth.authenticateToken, userController.restrict(['staff','admin']), uploadedController.retrieveAttachmentFile )
 router.get("/retrieveForm/:id/:filename", auth.authenticateToken, userController.restrict(['staff','admin']), uploadedController.retrieveForm )
+
 
 
 //FOR ADMIN ONLY
