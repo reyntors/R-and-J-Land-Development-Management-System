@@ -195,7 +195,8 @@ exports.getUserDetails = async (req, res, next) => {
   
     const updatedUserData = req.body;
     const username = req.user.username
-  
+
+    try {
  
       // Check if the user with the specified ID exists and has the "guest" role
       const user = await User.findOne({username});
@@ -213,13 +214,62 @@ exports.getUserDetails = async (req, res, next) => {
 
     });
 
-    try {
       // Save the request to the database
       await userRequest.save();
+
+      //generate date
+      const date = new Date()
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+
+      const userRequestData = userRequest.updatedData;
+
+      let userRequestString = `${user.fullname}, Request to update data: <br><br>`;
+
+      for (const key in userRequestData) {
+        if (userRequestData.hasOwnProperty(key)) {
+          const value = userRequestData[key];
+          userRequestString += `${key}: ${value}\n`;
+        }
+      }
+
+
+           // Generate inquiryId
+     const inquiryId = await generateInquiryId();
+
+     const newInquiry = {
+       inquiryId,
+       name: user.fullname,
+       subject: 'Request to update the data',
+       context: `${userRequestString}`,
+       email: user.email,
+       fblink: user.fbAccount,
+       phonenumber: user.contactNumber,
+       date: formattedDate,
+       };
+
+       const inquiries = await Inquiry.findOne()
+
+       if (!inquiries) {
+           // If inquiries object doesn't exist, create it
+           const newInquiries = new Inquiry({ inquiries: [newInquiry] });
+           await newInquiries.save();
+       }else{
+
+           inquiries.inquiries.push(newInquiry);
+            //save to inquiries
+           await inquiries.save();
+
+       }
+
       sendUpdateResponseEmail( user.fullname, 'reyntors2@gmail.com', 'Update Request Received');
 
       res.status(200).json({message:'Update request submitted and pending approval.'});
   } catch (error) {
+
+      console.log(error)
       res.status(500).send('Error submitting update request.');
   }
 };
@@ -237,24 +287,6 @@ function sendUpdateResponseEmail(fullname, recipientEmail, subject) {
 
    // Define the HTML content for the email
    const htmlContent = `
-   <p>Hello ${fullname},</p>
-   
-   <p>Your update request has been received and is pending approval.</p>
-
-
-   <br>
-   <br>
-   <br>
-
-
-   
-   <p>Best Regards Developer,</p>
-   <p>Thank you.</p>
-
-    <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
- `;
-
- const htmlContent2 = `
    <p>Hello ${fullname},</p>
    
    <p>Your update request has been received and is pending approval.</p>
