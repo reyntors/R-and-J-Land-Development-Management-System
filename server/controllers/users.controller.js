@@ -214,6 +214,8 @@ exports.getUserDetails = async (req, res, next) => {
 
     });
 
+
+    
       // Save the request to the database
       await userRequest.save();
 
@@ -224,17 +226,6 @@ exports.getUserDetails = async (req, res, next) => {
       const day = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
 
-      const userRequestData = userRequest.updatedData;
-
-      let userRequestString = `${user.fullname}, Request to update data: <br><br>`;
-
-      for (const key in userRequestData) {
-        if (userRequestData.hasOwnProperty(key)) {
-          const value = userRequestData[key];
-          userRequestString += `${key}: ${value}\n`;
-        }
-      }
-
 
            // Generate inquiryId
      const inquiryId = await generateInquiryId();
@@ -243,7 +234,7 @@ exports.getUserDetails = async (req, res, next) => {
        inquiryId,
        name: user.fullname,
        subject: 'Request to update the data',
-       context: `${userRequestString}`,
+       context: `${user.fullname}, Request to update data:${userRequest.updatedData}`,
        email: user.email,
        fblink: user.fbAccount,
        phonenumber: user.contactNumber,
@@ -303,6 +294,8 @@ function sendUpdateResponseEmail(fullname, recipientEmail, subject) {
 
     <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
  `;
+
+
 
 
  const mailOptions = {
