@@ -36,7 +36,7 @@ exports.addCallSlip =  async (req, res, next) => {
         firstName: callSlipData.firstName,
         middleName: callSlipData.middleName,
         spouseName: callSlipData.spouseName,
-        telNumber: callSlipData.telNUmber,
+        telNumber: callSlipData.telNumber,
         contactNumber: callSlipData.contactNumber,
         email: callSlipData.email,
         prospects: callSlipData.prospects

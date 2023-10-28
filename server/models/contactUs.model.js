@@ -33,10 +33,10 @@ const contactUsSchema = new Schema ({
         type: String,
         required: true,
     },
-    temp: {
+    temp: [{
         type: String,
         required: true,
-    },
+    }],
     message: {
         type: String,
         

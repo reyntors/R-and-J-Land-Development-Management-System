@@ -5,14 +5,38 @@ const { Schema } = mongoose;
 
 const callSlipSchema = new Schema({
 
-    date: String,
-    lastName: String,
-    firstName: String,
-    middleName: String,
-    soouseName: String,
-    telNumber: Number,
-    contactNumber: Number,
-    email: String,
+    date: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    firstName: {
+        type: String,
+        required: true,
+    },
+    middleName: {
+        type: String,
+        required: true,
+    },
+    spouseName: {
+        type: String,
+        required: true,
+    },
+    telNumber: {
+        type: Number,
+        required: true,
+    },
+    contactNumber: {
+        type: Number,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
     prospects: [],
 
 })
