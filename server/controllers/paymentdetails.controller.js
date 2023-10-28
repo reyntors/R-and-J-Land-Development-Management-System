@@ -51,3 +51,38 @@ exports.getPaymentDetailsById = async (req, res) => {
     }
 }
 
+exports.getAllPaymentDetailsById = async (req, res) => {
+    try {
+        const username = req.user.username;
+
+       
+
+        const user = await User.findOne({ username });
+
+        console.log(user)
+
+        if (!user) {
+
+            return res.status(404).json({message: 'User not found'});
+        }
+        const allMyAccount = {};
+
+            allMyAccount.paymentDetails = user.paymentDetails;
+            allMyAccount.accountDetails = user.accountDetails;
+            allMyAccount.accountingDetails = user.accountingDetails;
+            allMyAccount.transactions = user.transactions;
+
+        
+
+        return res.status(200).json({
+            message: `All accounts of ${user.username}`, 
+            data: allMyAccount,
+        });
+    }catch (error) {
+
+        console.log(error)
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+

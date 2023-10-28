@@ -89,10 +89,6 @@ const accountingDetailsSchema = new Schema({
 });
 
 const profileDetailsSchema = new Schema({
-    permissionEdit: {
-        type: Boolean,
-        default: false
-    },
     fullname: {
         type: String,
         default: null,

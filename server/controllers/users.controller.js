@@ -2,6 +2,9 @@ const bcryptjs = require('bcryptjs');
 const userService = require("../services/users.services");
 const User = require('../models/user.model');
 const Inquiry = require('../models/inquiries.model');
+const nodemailer = require('nodemailer');
+const UserUpdateRequest = require('../models/userUpdateRequest.model');
+
 
 async function generateInquiryId() {
   // Find all documents and their inquiries array
@@ -189,15 +192,13 @@ exports.getUserDetails = async (req, res, next) => {
   };
 
   exports.updateUser = async (req, res, next) => {
-    const { id } = req.params;
-    const updateData = req.body;
-
-    console.log(updateData);
-
   
-    try {
+    const updatedUserData = req.body;
+    const username = req.user.username
+  
+ 
       // Check if the user with the specified ID exists and has the "guest" role
-      const user = await User.findOne({ userId: id, roles: 'guest' });
+      const user = await User.findOne({username});
      
       if (!user) {
         return res.status(404).json({
@@ -205,99 +206,272 @@ exports.getUserDetails = async (req, res, next) => {
         });
       }
 
-      if (updateData.fullname) {
-        user.fullname = updateData.fullname;
-      }
+    const userRequest = new UserUpdateRequest({
+
+      userId: user.userId,
+      updatedData: updatedUserData,
+
+    });
+
+    try {
+      // Save the request to the database
+      await userRequest.save();
+      sendUpdateResponseEmail( user.fullname, 'reyntors2@gmail.com', 'Update Request Received');
+
+      res.status(200).json({message:'Update request submitted and pending approval.'});
+  } catch (error) {
+      res.status(500).send('Error submitting update request.');
+  }
+};
       
-      if (updateData.contactNumber) {
-        user.contactNumber = updateData.contactNumber;
+  
+// Function to send an email response
+function sendUpdateResponseEmail(fullname, recipientEmail, subject) {
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'reyntors2@gmail.com', 
+      pass: 'lkwo goeh mdbh afug', 
+    },
+  });
+
+   // Define the HTML content for the email
+   const htmlContent = `
+   <p>Hello ${fullname},</p>
+   
+   <p>Your update request has been received and is pending approval.</p>
+
+
+   <br>
+   <br>
+   <br>
+
+
+   
+   <p>Best Regards Developer,</p>
+   <p>Thank you.</p>
+
+    <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
+ `;
+
+ const htmlContent2 = `
+   <p>Hello ${fullname},</p>
+   
+   <p>Your update request has been received and is pending approval.</p>
+
+
+   <br>
+   <br>
+   <br>
+
+
+   
+   <p>Best Regards Developer,</p>
+   <p>Thank you.</p>
+
+    <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
+ `;
+
+
+ const mailOptions = {
+   from: 'reyntors2@gmail.com',
+   to: recipientEmail,
+   subject: subject,
+   html: htmlContent, // Use HTML content with an image
+ };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Email sending error:', error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+// Function to send an email response
+function sendUpdateApprovedResponseEmail(fullname, recipientEmail, subject) {
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'reyntors2@gmail.com', 
+      pass: 'lkwo goeh mdbh afug', 
+    },
+  });
+
+   // Define the HTML content for the email
+   const htmlContent = `
+   <p>Hello ${fullname},</p>
+   
+   <p>Your update request has been approved.</p>
+
+
+   <br>
+   <br>
+   <br>
+
+
+   
+   <p>Best Regards Developer,</p>
+   <p>Thank you.</p>
+
+    <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
+ `;
+
+
+ const mailOptions = {
+   from: 'reyntors2@gmail.com',
+   to: recipientEmail,
+   subject: subject,
+   html: htmlContent, // Use HTML content with an image
+ };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Email sending error:', error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+
+
+
+  
+exports.approveUserUpdate = async (req, res, next) => {
+  const { id } = req.params;
+  const { isApproved } = req.body;
+
+  console.log(isApproved);
+  console.log(id);
+
+  try {
+    // Find the user update request with the specified ID
+    const updateRequest = await UserUpdateRequest.findOne({userId: id});
+
+    
+
+    if (!updateRequest) {
+      return res.status(404).json({ message: 'User update request not found.' });
+    }
+
+    // Update the approval status
+    updateRequest.approvalStatus = isApproved ? 'approved' : 'rejected';
+
+    await updateRequest.save();
+
+    if(isApproved === 'approved'){
+
+      const user = await User.findOne({userId: id});
+
+      if(!user){
+        res.status(404).json({message: 'user is not found'})
       }
-      
-      if (updateData.homeAddress) {
-        user.homeAddress = updateData.homeAddress;
-      }
-      
-      if (updateData.fbAccount) {
-        user.fbAccount = updateData.fbAccount;
-      }
-      
-      if (updateData.username) {
-        user.username = updateData.username;
-      }
-      
-      if (updateData.email) {
-        user.email = updateData.email;
-      }
 
-      if (updateData.civilStatus) {
-
-          user.additionalInfo.civilStatus = updateData.civilStatus;
-        }
-
-      if (updateData.spouseName) {
-          user.additionalInfo.spouseName = updateData.spouseName;
-        }
-
-      if (updateData.occupation) {
-          user.additionalInfo.occupation = updateData.occupation;
-        }
-
-      if (updateData.monthlyGrossIncome) {
-          user.additionalInfo.monthlyGrossIncome = updateData.monthlyGrossIncome;
-        }
-
-        if (updateData.buyerSourceOfIncome) {
-          
-          user.additionalInfo.buyerSourceOfIncome = updateData.buyerSourceOfIncome;
-        }
-
-        if (updateData.typeOfEmployment) {
-         
-          user.additionalInfo.typeOfEmployment = updateData.typeOfEmployment;
-        }
-
-        if (updateData.employer) {
-         
-          user.additionalInfo.employer = updateData.employer;
-        }
-
-        if (updateData.employerAddress) {
-         
-          user.additionalInfo.employerAddress = updateData.employerAddress;
-        }
-
-        if (updateData.grossSalary) {
+      if (updateRequest.updatedData.fullname) {
         
-          user.additionalInfo.grossSalary = updateData.grossSalary;
-        }
-
-        if (updateData.businessName) {
-          
-          user.additionalInfo.businessName = updateData.businessName;
-        }
-
-        if (updateData.businessAddress) {
-         
-          user.additionalInfo.businessAddress = updateData.businessAddress;
-        }
-
-        if (updateData.businessMonthlyIncome) {
-         
-          user.additionalInfo.businessMonthlyIncome = updateData.businessMonthlyIncome;
-        }
-
-       
+        user.profileDetails.fullname = updateRequest.updatedData.fullname;
+      }
       
+      if (updateRequest.updatedData.contactNumber) {
+        
+        user.profileDetails.contactNumber = updateRequest.updatedData.contactNumber;
+      }
+      
+      if (updateRequest.homeAddress) {
+        user.profileDetails.homeAddress = updateRequest.updatedData.homeAddress;
+      }
+      
+      if (updateRequest.updatedData.fbAccount) {
+
+        user.profileDetails.fbAccount = updateRequest.updatedData.fbAccount;
+      }
+      
+      if (updateRequest.updatedData.username) {
+        user.username = updateRequest.updatedData.username;
+      }
+      
+      if (updateRequest.updatedData.email) {
+        user.email = updateRequest.updatedData.email;
+      }
+
+      if (updateRequest.updatedData.civilStatus) {
+
+          user.profileDetails.civilStatus = updateRequest.updatedData.civilStatus;
+      }
+
+      if (updateRequest.updatedData.spouseName) {
+        user.profileDetails.spouseName = updateRequest.updatedData.spouseName;
+        }
+
+      if (updateRequest.updatedData.occupation) {
+        user.profileDetails.occupation = updateRequest.updatedData.occupation;
+        }
+
+      if (updateRequest.updatedData.monthlyGrossIncome) {
+        user.profileDetails.monthlyGrossIncome = updateRequest.updatedData.monthlyGrossIncome;
+        }
+
+      if (updateRequest.updatedData.buyerSourceOfIncome) {
+          
+        user.profileDetails.buyerSourceOfIncome = updateRequest.updatedData.buyerSourceOfIncome;
+        }
+
+      if (updateRequest.updatedData.typeOfEmployment) {
+         
+        user.profileDetails.typeOfEmployment = updateRequest.updatedData.typeOfEmployment;
+        }
+
+      if (updateRequest.updatedData.employer) {
+         
+        user.profileDetails.employer = updateRequest.updatedData.employer;
+        }
+
+      if (updateRequest.updatedData.employerAddress) {
+         
+        user.profileDetails.employerAddress = updateRequest.updatedData.employerAddress;
+        }
+
+      if (updateRequest.updatedData.grossSalary) {
+        
+        user.profileDetails.grossSalary = updateRequest.updatedData.grossSalary;
+        }
+
+      if (updateRequest.updatedData.businessName) {
+          
+        user.profileDetails.businessName = updateRequest.updatedData.businessName;
+        }
+
+      if (updateRequest.updatedData.businessAddress) {
+         
+        user.profileDetails.businessAddress = updateRequest.updatedData.businessAddress;
+        }
+
+      if (updateRequest.updatedData.businessMonthlyIncome) {
+         
+        user.profileDetails.businessMonthlyIncome = updateRequest.updatedData.businessMonthlyIncome;
+        }
+
       await user.save();
 
-      return res.status(200).json({
-        message: 'User information updated successfully.',
-        data: user,
-      });
-    } catch (error) {
-      return res.status(500).json({message: 'User update failed!'})
+      await UserUpdateRequest.deleteOne({ userId: id });
+      // const recipientEmail = user.email; // Use the user's email address
+      const subject = isApproved ? 'Update Request Approved' : 'Update Request Rejected';
+      sendUpdateApprovedResponseEmail(user.fullname, 'reyntors2@gmail.com', subject);
+  
     }
-  };
+
+   
+    return res.status(200).json({ message: 'User update request has been ' + (isApproved ? 'approved' : 'rejected') });
+  } catch (error) {
+
+    console.log(error)
+    return res.status(500).json({ message: 'Approval process failed!' });
+  }
+};
+
+
 
   exports.deleteUser = async (req, res, next) => {
     const { id } = req.params; // Use userId instead of id
@@ -323,6 +497,9 @@ exports.getUserDetails = async (req, res, next) => {
       return next(error);
     }
   };
+
+
+  
 
 
 

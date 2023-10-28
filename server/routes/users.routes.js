@@ -28,12 +28,14 @@ router.get("/user-profile", auth.authenticateToken, userController.userProfile);
 router.post("/addletter", auth.authenticateToken, userController.restrict(['guest']), letter.createLetterOfIntent);
 router.post("/request-lot", auth.authenticateToken, userController.restrict(['guest']), lotController.reserveLotbyId);
 router.post("/add-call-slip", callSlipController.addCallSlip);
+router.get("/get-all-accounts", auth.authenticateToken, userController.restrict(['guest']), paymentDetailsController.getAllPaymentDetailsById);
+
 //FOR STAFF ONLY
 //staff
 router.post("/addnewclient", auth.authenticateToken, userController.restrict(['staff','admin']), userController.register);
 router.get("/:id?", auth.authenticateToken, userController.restrict(['guest','staff','admin']), userController.getUserDetails);
-router.put("/update-user/:id", auth.authenticateToken, userController.restrict(['staff','admin']), userController.updateUser);
-
+router.post("/update-user", auth.authenticateToken, userController.restrict(['guest','staff','admin']), userController.updateUser);
+router.put("/approve-pending-update/:id", auth.authenticateToken, userController.restrict(['staff','admin']), userController.approveUserUpdate);
 
 //add transaction
 router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict(['staff','admin']), transactiontController.addTransaction);
