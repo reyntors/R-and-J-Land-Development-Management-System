@@ -1,4 +1,6 @@
 const callSlip = require('../models/callSlip.model');
+const Inquiry = require('../models/inquiries.model');
+
 
 async function generateInquiryId() {
     // Find all documents and their inquiries array
@@ -34,9 +36,10 @@ exports.addCallSlip =  async (req, res, next) => {
         firstName: callSlipData.firstName,
         middleName: callSlipData.middleName,
         spouseName: callSlipData.spouseName,
+        telNumber: callSlipData.telNUmber,
         contactNumber: callSlipData.contactNumber,
         email: callSlipData.email,
-        prospects: []
+        prospects: callSlipData.prospects
 
     });
 
@@ -53,12 +56,12 @@ exports.addCallSlip =  async (req, res, next) => {
 
  const newInquiry = {
     inquiryId,
-    name: contactData.type,
-    subject: 'Created a contact',
-    context: `${contactData.type}, is trying to make a contact.`,
-    email: contactData.email,
-    fblink: contactData.facebookLink,
-    phonenumber: contactData.phone,
+    name: callSlipData.firstName,
+    subject: 'Created a call Slip',
+    context: 'is trying to make a call slip.',
+    email: callSlipData.email,
+    fblink: 'None',
+    phonenumber: callSlipData.contactNumber,
     date: formattedDate,
     };
 
@@ -80,6 +83,9 @@ exports.addCallSlip =  async (req, res, next) => {
 
     await newCallSlip.save();
 
+    res.status(200).json({message: 'Call Slip Successfully sent!',
+                          data: newCallSlip              
+                            });
 
     }catch(error){
         throw error;

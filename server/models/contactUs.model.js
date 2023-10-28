@@ -4,16 +4,43 @@ const { Schema } = mongoose;
 
 const contactUsSchema = new Schema ({
 
-    firstName: String,
-    lastName: String,
-    company: String,
-    jobTitle: String,
-    phone: String,
-    email: String,
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    company: {
+        type: String,
+        required: true,
+    },
+    jobTitle: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: Number,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
     facebookLink: String,
-    type: String,
-    temp: String,
-    message: String
+    type: {
+        type: String,
+        required: true,
+    },
+    temp: {
+        type: String,
+        required: true,
+    },
+    message: {
+        type: String,
+        
+    },
 
 
 })
