@@ -234,7 +234,7 @@ exports.getUserDetails = async (req, res, next) => {
        inquiryId,
        name: user.fullname,
        subject: 'Request to update the data',
-       context: `${user.fullname}, Request to update data:${userRequest.updatedData}`,
+       context: `${user.fullname}, Request to update data:   ${userRequest.updatedData}`,
        email: user.email,
        fblink: user.fbAccount,
        phonenumber: user.contactNumber,
