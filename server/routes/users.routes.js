@@ -9,7 +9,7 @@ const letter = require('../controllers/letterofintent.controller');
 const scanfilesController = require('../controllers/scanFiles.controller');
 const uploadedController = require('../controllers/uploaded.controller');
 const contactController = require('../controllers/contactUs.controller');
-
+const callSlipController = require('../controllers/callSlip.controller');
 
 const auth = require("../middlewares/auth");
 const express = require("express");
@@ -27,7 +27,7 @@ router.post("/login", userController.login);
 router.get("/user-profile", auth.authenticateToken, userController.userProfile);
 router.post("/addletter", auth.authenticateToken, userController.restrict(['guest']), letter.createLetterOfIntent);
 router.post("/request-lot", auth.authenticateToken, userController.restrict(['guest']), lotController.reserveLotbyId);
-
+router.post("/add-call-slip", callSlipController.addCallSlip);
 //FOR STAFF ONLY
 //staff
 router.post("/addnewclient", auth.authenticateToken, userController.restrict(['staff','admin']), userController.register);
