@@ -5,6 +5,7 @@ const Inquiry = require('../models/inquiries.model');
 const nodemailer = require('nodemailer');
 const UserUpdateRequest = require('../models/userUpdateRequest.model');
 const {uploadProfileImage} = require('../middlewares/multer')
+const RecoveryCode = require('../models/userRecoveryCode.model');
 
 
 async function generateInquiryId() {
@@ -256,7 +257,7 @@ exports.getUserDetails = async (req, res, next) => {
 
        }
 
-      sendUpdateResponseEmail( user.fullname, 'reyntors2@gmail.com', 'Update Request Received');
+      sendUpdateResponseEmail( user.fullname, user.email, 'Update Request Received');
 
       res.status(200).json({message:'Update request submitted and pending approval.'});
   } catch (error) {
@@ -484,7 +485,7 @@ exports.approveUserUpdate = async (req, res, next) => {
       await UserUpdateRequest.deleteOne({ userId: id });
       // const recipientEmail = user.email; // Use the user's email address
       const subject = isApproved ? 'Update Request Approved' : 'Update Request Rejected';
-      sendUpdateApprovedResponseEmail(user.fullname, 'reyntors2@gmail.com', subject);
+      sendUpdateApprovedResponseEmail(user.fullname, user.email, subject);
   
     }
 
@@ -602,12 +603,66 @@ exports.approveUserUpdate = async (req, res, next) => {
 
           if(updateData.password){
 
-            const salt = bcryptjs.genSaltSync(10);
+              // Generate a recovery code
+          const recoveryCode = generateRecoveryCode();
 
-            const password = bcryptjs.hashSync(updateData.password, salt);
 
-            user.password = password;
+          //generate date
+        const date = new Date()
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
+        const day = String(date.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
 
+
+
+        const userRequestCode = new RecoveryCode({
+         
+          userId: user.userId,
+          code: recoveryCode,
+          timestamp: formattedDate
+
+        });
+
+        //save into to the database
+          await userRequestCode.save();
+
+
+          // Send the update code via email
+          const subject = 'Password Update';
+
+          sendRecoveryResponseEmail(user.fullname, user.email, subject, recoveryCode);
+
+          
+         res.status(200).json({ message: 'Recovery code sent. Check your email.' });
+
+            try{
+
+              const {recoveryCode} = req.body;
+
+              
+            // Check if the recovery code matches
+            const savedRecoveryCode = await RecoveryCode.findOne({ code: recoveryCode, userId: user.userId });
+
+            if (!savedRecoveryCode || savedRecoveryCode.userId !== user.userId) {
+              
+              return res.status(400).json({ message: 'Invalid recovery code.' });
+            }
+
+
+              const salt = bcryptjs.genSaltSync(10);
+
+              const password = bcryptjs.hashSync(updateData.password, salt);
+
+              user.password = password;
+
+
+            }catch(error){
+
+              throw error
+            }
+
+            
           }
 
           await user.save();
@@ -627,26 +682,219 @@ exports.approveUserUpdate = async (req, res, next) => {
 
   }
 
+  // Generate a random 6-digit recovery code
+function generateRecoveryCode() {
+  return Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit code
+}
+
+
 
   exports.forgotPassword = async(req, res) => {
 
 
-    const emailData = req.body;
+    const emailData = req.body.email;
+   
+
+    try{
+        const user = await User.findOne({email: emailData});
+
+        if(!user){
+
+          return res.status(404).json({message: 'This email is not exist in our system'});
+
+        }else{
+
+          
+
+          // Generate a recovery code
+          const recoveryCode = generateRecoveryCode();
 
 
-    const email = await User.findOne({emailData});
+          //generate date
+        const date = new Date()
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
+        const day = String(date.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
 
-    if(!email){
 
-      return res.status(404).json({message: 'this email is not exists in our system'});
+
+        const userRequestCode = new RecoveryCode({
+         
+          userId: user.userId,
+          code: recoveryCode,
+          timestamp: formattedDate
+
+        });
+
+        //save into to the database
+          await userRequestCode.save();
+
+          // Send the recovery code via email
+          const subject = 'Password Recovery';
+
+          sendRecoveryResponseEmail(user.fullname, user.email, subject, recoveryCode);
+
+          return res.status(200).json({ message: 'Recovery code sent. Check your email.' });
+
+
+      }
+    }catch(error){
+
+      console.log(error)
+
+      return res.status(500).json({message: 'Internal Server Error'});
     }
 
-
-
-
-
-
   }
+
+
+  // Function to send an email response
+function sendRecoveryResponseEmail(fullname, recipientEmail, subject, recoveryCode) {
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'reyntors2@gmail.com', 
+      pass: 'lkwo goeh mdbh afug', 
+    },
+  });
+
+   // Define the HTML content for the email
+   const htmlContent = `
+   <p>Hello ${fullname},</p>
+   
+   <p>Your recovery code is <strong>${recoveryCode}</strong>.</p>
+
+
+   <br>
+   <br>
+   <br>
+
+
+   
+   <p>Best Regards Developer,</p>
+   <p>Thank you.</p>
+
+    <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
+ `;
+
+
+ const mailOptions = {
+   from: 'reyntors2@gmail.com',
+   to: recipientEmail,
+   subject: subject,
+   html: htmlContent, // Use HTML content with an image
+ };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Email sending error:', error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+
+//resetPassword
+
+exports.resetPassword = async(req, res) =>{
+
+  try{
+
+  const { email, recoveryCode, password } = req.body;
+
+  // Find the user by email and verify the recovery code
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found.' });
+  }
+
+  // Check if the recovery code matches
+  const savedRecoveryCode = await RecoveryCode.findOne({ code: recoveryCode, userId: user.userId });
+
+  if (!savedRecoveryCode || savedRecoveryCode.userId !== user.userId) {
+    
+    return res.status(400).json({ message: 'Invalid recovery code.' });
+  }
+  
+  const salt = bcryptjs.genSaltSync(10);
+
+  const newPassword = bcryptjs.hashSync(password, salt);
+
+
+  user.password = newPassword;
+
+  await user.save();
+
+
+  // Delete the used recovery code
+  await savedRecoveryCode.remove();
+
+  // Send the recovery code via email
+  const subject = 'Password Changed Successful ';
+
+  sendRecoverySuccessResponseEmail(user.fullname, user.email, subject);
+
+  return res.status(200).json({ message: 'Password reset successfully.' });
+
+  }catch(error){
+
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+
+
+};
+
+
+  // Function to send an email response
+  function sendRecoverySuccessResponseEmail(fullname, recipientEmail, subject, recoveryCode) {
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: 'reyntors2@gmail.com', 
+        pass: 'lkwo goeh mdbh afug', 
+      },
+    });
+  
+     // Define the HTML content for the email
+     const htmlContent = `
+     <p>Hello ${fullname},</p>
+     
+     <p>Your password  changed successfully!.</p>
+  
+  
+     <br>
+     <br>
+     <br>
+  
+  
+     
+     <p>Best Regards Developer,</p>
+     <p>Thank you.</p>
+  
+      <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
+   `;
+  
+  
+   const mailOptions = {
+     from: 'reyntors2@gmail.com',
+     to: recipientEmail,
+     subject: subject,
+     html: htmlContent, // Use HTML content with an image
+   };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log('Email sending error:', error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+  }
+  
+
 
 
 

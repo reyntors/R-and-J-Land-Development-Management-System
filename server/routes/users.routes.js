@@ -29,7 +29,8 @@ router.post("/add-call-slip", callSlipController.addCallSlip);
 router.get("/get-all-accounts", auth.authenticateToken, userController.restrict(['guest']), paymentDetailsController.getAllPaymentDetailsById);
 router.get("/get-account-settings", auth.authenticateToken, userController.restrict(['guest']), userController.getAccountSettings);
 router.put("/update-user-account", auth.authenticateToken, userController.restrict(['guest']), userController.updateUserAccount);
-
+router.post("/forgot-password", userController.forgotPassword);
+router.put("/reset-password", userController.resetPassword);
 
 //FOR STAFF ONLY
 //staff
