@@ -17,6 +17,8 @@ const recoveryCodeSchema = new Schema({
         type: String,
         default: Date.now(),
       },
+    password: String,
+    username: String,
   
 
 

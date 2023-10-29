@@ -574,6 +574,9 @@ exports.approveUserUpdate = async (req, res, next) => {
           const username = req.user.username;
           const image = req.file;
           const updateData = req.body;
+          const {recoveryCode} = req.body;
+
+          
 
 
           const user = await User.findOne({username});
@@ -595,13 +598,13 @@ exports.approveUserUpdate = async (req, res, next) => {
 
           }
 
-          if(updateData.username){
+          // if(updateData.username){
 
-            user.username = updateData.username;
+          //   user.username = updateData.username;
 
-          }
+          // }
 
-          if(updateData.password){
+          if(updateData.username || updateData.password){
 
               // Generate a recovery code
           const recoveryCode = generateRecoveryCode();
@@ -620,7 +623,9 @@ exports.approveUserUpdate = async (req, res, next) => {
          
           userId: user.userId,
           code: recoveryCode,
-          timestamp: formattedDate
+          timestamp: formattedDate,
+          password: updateData.password,
+          username: updateData.username
 
         });
 
@@ -629,18 +634,20 @@ exports.approveUserUpdate = async (req, res, next) => {
 
 
           // Send the update code via email
-          const subject = 'Password Update';
+          const subject = 'User Update';
 
           sendRecoveryResponseEmail(user.fullname, user.email, subject, recoveryCode);
 
           
-         res.status(200).json({ message: 'Recovery code sent. Check your email.' });
+         return res.status(200).json({ message: 'Update code sent. Check your email.' });
 
-            try{
 
-              const {recoveryCode} = req.body;
+          
+          }
 
-              
+          if(recoveryCode){
+
+                  
             // Check if the recovery code matches
             const savedRecoveryCode = await RecoveryCode.findOne({ code: recoveryCode, userId: user.userId });
 
@@ -652,20 +659,24 @@ exports.approveUserUpdate = async (req, res, next) => {
 
               const salt = bcryptjs.genSaltSync(10);
 
-              const password = bcryptjs.hashSync(updateData.password, salt);
+              const password = bcryptjs.hashSync(savedRecoveryCode.password, salt);
 
-              user.password = password;
+              if(savedRecoveryCode.password){
 
+                   user.password = password;
 
-            }catch(error){
+                  }
+              if(savedRecoveryCode.username){
 
-              throw error
-            }
+                user.username = savedRecoveryCode.username;
 
+              }
             
           }
 
           await user.save();
+
+          await RecoveryCode.deleteOne({ userId: user.userId, code: recoveryCode });
 
           return res.status(200).json({message: `Hello ${user.username}, your account updated successfully`});
 
@@ -674,6 +685,8 @@ exports.approveUserUpdate = async (req, res, next) => {
     });
       
     } catch (error) {
+
+      console.log(error)
 
       throw error;
       
