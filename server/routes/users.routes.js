@@ -18,8 +18,6 @@ const express = require("express");
 const router = express.Router();
 
 
-
-
 //users
 router.post("/contact-us", contactController.createContact);
 router.post("/register", userController.register);
@@ -29,6 +27,9 @@ router.post("/addletter", auth.authenticateToken, userController.restrict(['gues
 router.post("/request-lot", auth.authenticateToken, userController.restrict(['guest']), lotController.reserveLotbyId);
 router.post("/add-call-slip", callSlipController.addCallSlip);
 router.get("/get-all-accounts", auth.authenticateToken, userController.restrict(['guest']), paymentDetailsController.getAllPaymentDetailsById);
+router.get("/get-account-settings", auth.authenticateToken, userController.restrict(['guest']), userController.getAccountSettings);
+router.put("/update-user-account", auth.authenticateToken, userController.restrict(['guest']), userController.updateUserAccount);
+
 
 //FOR STAFF ONLY
 //staff

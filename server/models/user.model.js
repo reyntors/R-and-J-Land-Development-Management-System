@@ -887,6 +887,13 @@ const userSchema = new Schema({
         required: true,
         default: generateUserId,
     },
+
+    profilePicture:{
+        url: {
+            type: String,
+            default: 'https://aws-bucket-nodejs.s3.amazonaws.com/uploads/profile/default+pic.png'
+        }
+    },
     fullname: {
         type: String,
         required: true

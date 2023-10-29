@@ -78,6 +78,19 @@ const uploadValidImage = multer({storage: multerS3({
 }),
 }).single('image');
 
+const uploadProfileImage = multer({storage: multerS3({
+  s3,
+  bucket: process.env.AWS_BUCKET_NAME,
+  metadata: function (req, file, cb) {
+    cb(null, { fieldName: file.fieldname });
+  },
+  key: function (req, file, cb) {
+    cb(null, `uploads/profile/${file.originalname}`);
+  },
+}),
+}).single('image');
+
+
 
 
 
@@ -87,6 +100,7 @@ module.exports = {
   uploadAttachment,
   uploadlotImage,
   uploadForms,
-  uploadValidImage
+  uploadValidImage,
+  uploadProfileImage
  
 };

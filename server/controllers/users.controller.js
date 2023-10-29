@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const Inquiry = require('../models/inquiries.model');
 const nodemailer = require('nodemailer');
 const UserUpdateRequest = require('../models/userUpdateRequest.model');
+const {uploadProfileImage} = require('../middlewares/multer')
 
 
 async function generateInquiryId() {
@@ -524,8 +525,128 @@ exports.approveUserUpdate = async (req, res, next) => {
   };
 
 
-  
+  exports.getAccountSettings = async(req, res, next) =>{
 
+      const username = req.user.username;
+
+      try {
+
+      const user = await User.findOne({username});
+
+      if(!user){
+
+        return res.status(404).json({message: 'User not found!'});
+
+      }
+
+
+      const getAccountSettings = {};
+      
+
+      getAccountSettings.profilePicture = user.profilePicture.url
+      getAccountSettings.userId = user.userId;
+      getAccountSettings.email = user.email;
+      getAccountSettings.username = user.username;
+      getAccountSettings.password = user.password;
+
+      return res.status(200).json({data: getAccountSettings});
+    
+      }catch(error){
+
+        throw error
+      }  
+
+
+  };
+
+
+  exports.updateUserAccount = async(req, res, next) =>{
+ 
+    try {
+
+      uploadProfileImage(req, res, async function (err) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ message: 'File upload failed', error: err });
+        }
+
+          const username = req.user.username;
+          const image = req.file;
+          const updateData = req.body;
+
+
+          const user = await User.findOne({username});
+
+          if(!user){
+
+            return res.status(404).json({message: 'user not found'});
+          }
+
+
+          if (image) {
+
+            const fileData = {
+              url: image.location,
+              
+            };
+ 
+            user.profilePicture.url = fileData.url
+
+          }
+
+          if(updateData.username){
+
+            user.username = updateData.username;
+
+          }
+
+          if(updateData.password){
+
+            const salt = bcryptjs.genSaltSync(10);
+
+            const password = bcryptjs.hashSync(updateData.password, salt);
+
+            user.password = password;
+
+          }
+
+          await user.save();
+
+          return res.status(200).json({message: `Hello ${user.username}, your account updated successfully`});
+
+          
+
+    });
+      
+    } catch (error) {
+
+      throw error;
+      
+    }
+
+
+  }
+
+
+  exports.forgotPassword = async(req, res) => {
+
+
+    const emailData = req.body;
+
+
+    const email = await User.findOne({emailData});
+
+    if(!email){
+
+      return res.status(404).json({message: 'this email is not exists in our system'});
+    }
+
+
+
+
+
+
+  }
 
 
 
