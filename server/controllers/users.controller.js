@@ -657,11 +657,12 @@ exports.approveUserUpdate = async (req, res, next) => {
             }
 
 
+              if(savedRecoveryCode.password){
+                
               const salt = bcryptjs.genSaltSync(10);
 
               const password = bcryptjs.hashSync(savedRecoveryCode.password, salt);
 
-              if(savedRecoveryCode.password){
 
                    user.password = password;
 
