@@ -104,6 +104,10 @@ const profileDetailsSchema = new Schema({
         default: null,  
         
     },
+    birthday:{
+        type: String,
+        default: null
+    },
     address: {
         type: String,
         default: null,
@@ -901,6 +905,10 @@ const userSchema = new Schema({
     contactNumber: {
         type: String,
         required: true
+    },
+    birthday:{
+        type: String,
+        default: null,
     },
     homeAddress: {
         type: String,

@@ -54,6 +54,7 @@ try {
       fullname: user.fullname,
       email: user.email,
       contactNumber: user.contactNumber,
+      birthday: user.birthday,
       address: user.homeAddress,
 
     }
@@ -234,6 +235,7 @@ exports.getUserDetails = async (req, res, next) => {
 
      const newInquiry = {
        inquiryId,
+       userId: user.userId,
        name: user.fullname,
        subject: 'Request to update the data',
        context: `${user.fullname}, Request to update data:   ${userRequest.updatedData}`,
@@ -407,21 +409,19 @@ exports.approveUserUpdate = async (req, res, next) => {
       }
       
       if (updateRequest.homeAddress) {
-        user.profileDetails.homeAddress = updateRequest.updatedData.homeAddress;
+        user.profileDetails.homeAddress = updateRequest.updatedData.address;
       }
+
+      if (updateRequest.birthday) {
+        user.profileDetails.birthday = updateRequest.updatedData.birthday;
+      }
+      
       
       if (updateRequest.updatedData.fbAccount) {
 
         user.profileDetails.fbAccount = updateRequest.updatedData.fbAccount;
       }
       
-      if (updateRequest.updatedData.username) {
-        user.username = updateRequest.updatedData.username;
-      }
-      
-      if (updateRequest.updatedData.email) {
-        user.email = updateRequest.updatedData.email;
-      }
 
       if (updateRequest.updatedData.civilStatus) {
 
@@ -576,8 +576,13 @@ exports.approveUserUpdate = async (req, res, next) => {
           const updateData = req.body;
           const {recoveryCode} = req.body;
 
-          
+          console.log(updateData);
 
+          if(!updateData){
+
+            return res.status(404).json({message: 'The field is empty! please provide the input field'})
+
+          }
 
           const user = await User.findOne({username});
 
@@ -659,9 +664,9 @@ exports.approveUserUpdate = async (req, res, next) => {
 
               if(savedRecoveryCode.password){
                 
-              const salt = bcryptjs.genSaltSync(10);
+                  const salt = bcryptjs.genSaltSync(10);
 
-              const password = bcryptjs.hashSync(savedRecoveryCode.password, salt);
+                  const password = bcryptjs.hashSync(savedRecoveryCode.password, salt);
 
 
                    user.password = password;

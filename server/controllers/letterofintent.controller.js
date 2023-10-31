@@ -52,7 +52,7 @@ exports.createLetterOfIntent = async (req, res, next) => {
 
          const newLetterOfIntent = new LetterOfIntent({
             ...letterOfIntentData,
-            createdBy: user._id, 
+            createdBy: user.userId, 
             url: pdfPath,
             isSubmitted: true
         });

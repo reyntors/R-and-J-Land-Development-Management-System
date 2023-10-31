@@ -378,7 +378,6 @@ const contractDetailsSchema = new Schema({
     otherPurchasedBefore: [String],
     createdBy: {
         type: String, 
-        ref: 'user', 
         required: true,
     },
     

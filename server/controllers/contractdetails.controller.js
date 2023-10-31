@@ -45,12 +45,31 @@ exports.createContractDetails = async (req, res, next) => {
             url: pdfPath,
             isSubmitted: true
         });
-        
-
-       
+    
         const savedcreateContractDetails = await newcontractDetailsData.save();
 
+
         user.ContractDetails = savedcreateContractDetails;
+
+
+        const newProfileDetails = {
+
+            civilStatus: user.ContractDetails.civilStatus,
+            spouseName: user.ContractDetails.spouseFirstname + user.ContractDetails.spouseMiddleName + user.ContractDetails.spouseLastname,
+            occupation: user.ContractDetails.buyerOccupation,
+            monthlyGrossIncome: '',
+            buyerSourceOfIncome: '',
+            typeOfEmployment: '',
+            employer: '',
+            grossSalary: '',
+            businessName: '',
+            businessAddress: '',
+            monthlyGrossIncome: '',
+
+        }
+
+
+
 
         //generate date
         const date = new Date()

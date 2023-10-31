@@ -15,6 +15,7 @@ const userUpdateRequestSchema = new Schema({
     contactNumber: String,
     email: String,
     address: String,
+    birthday: String,
     civilStatus: String,
     spouseName: String,
     occupation: String,
