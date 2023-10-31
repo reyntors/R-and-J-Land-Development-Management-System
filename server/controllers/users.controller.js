@@ -408,11 +408,11 @@ exports.approveUserUpdate = async (req, res, next) => {
         user.profileDetails.contactNumber = updateRequest.updatedData.contactNumber;
       }
       
-      if (updateRequest.homeAddress) {
-        user.profileDetails.homeAddress = updateRequest.updatedData.address;
+      if (updateRequest.updatedData.address) {
+        user.profileDetails.address = updateRequest.updatedData.address;
       }
 
-      if (updateRequest.birthday) {
+      if (updateRequest.updatedData.birthday) {
         user.profileDetails.birthday = updateRequest.updatedData.birthday;
       }
       

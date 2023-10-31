@@ -17,6 +17,7 @@ const inquiriesSchema = new Schema({
             type: Number,
             unique: true,
         },
+        userId: String,
         name: String,
         subject: String,
         context: String,
