@@ -89,6 +89,7 @@ const accountingDetailsSchema = new Schema({
 });
 
 const profileDetailsSchema = new Schema({
+    data:{
     fullname: {
         type: String,
         default: null,
@@ -173,6 +174,7 @@ const profileDetailsSchema = new Schema({
         contentType: String,
         url: String,
     }]
+}
 });
 
 const letterOfIntentSchema = new Schema({
