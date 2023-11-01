@@ -32,14 +32,14 @@
           <router-link to="/careers" >CAREERS</router-link>
           <router-link to="/customer-service" >CUSTOMER SERVICE</router-link>
 
-          <profile-drop v-if="isUserValidComputed && authorizationRoleGuest"></profile-drop>
+          <profile-drop v-if="isUserValidComputed && authorizationRoleGuest" :imgProfile="profilePicComputed"></profile-drop>
 
 
          
           <button @click="closeOrOpenForm(true)" v-if="!isUserValidComputed">LOG IN</button>
 
-
-          
+          <!-- {{ profilePicComputed }} -->
+        <!-- <img :src="profilePicComputed"> -->
 
         
       </nav>
@@ -209,6 +209,9 @@
           return false
         }
       },
+      profilePicComputed(){
+        return this.$store.getters['auth/profilePicGetter']
+      },
       isLoginBoolComputed(){
         return this.$store.getters['auth/openLoginFormGetter']
       },
@@ -279,17 +282,24 @@
     scale: 1.1;
     transition: scale .1s ease-in;
   }
-  .header img{
+  /* .header img{
     width: 15vw;
     min-width: 120px;
-  }
+  } */
   .logo{
     width: 200px;
   }
+  /* .rowNav img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  } */
   .rowNav{
     display: flex;
     gap: .2rem;
     align-items: center;
+    /* border: 1px solid black; */
+
   }
   a{
     padding: .5rem;

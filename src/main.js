@@ -3,6 +3,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 import { createApp } from 'vue'
 // import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css';
 import App from './App.vue'
 import router from './route.js'
 import store from './store/store.js'
@@ -13,7 +14,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, 
     faCaretUp, faArrowLeftLong, faPlus,faMagnifyingGlass,faGear,faTrashCan,faCaretLeft,faCaretRight,
-    faEnvelopeCircleCheck,faEnvelopeOpen, faEnvelope, faChevronDown,
+    faEnvelopeCircleCheck,faEnvelopeOpen, faEnvelope, faChevronDown, faXmark, faArrowUpFromBracket,
+    faEyeSlash,faEye
     } from '@fortawesome/free-solid-svg-icons'
 
 import { faFacebook, faWhatsapp, faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
@@ -22,7 +24,7 @@ import { faFacebook, faWhatsapp, faFacebookSquare } from '@fortawesome/free-bran
 library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,
     faCaretDown,faCaretUp,faArrowLeftLong,faPlus,faMagnifyingGlass,faGear,faTrashCan,
     faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen,faFacebook, faWhatsapp,faEnvelope,faChevronDown,
-    faFacebookSquare,
+    faFacebookSquare,faXmark,faArrowUpFromBracket,faEyeSlash,faEye
     )
 
 

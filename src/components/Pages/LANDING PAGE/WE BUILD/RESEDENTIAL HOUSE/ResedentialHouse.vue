@@ -82,7 +82,6 @@ export default {
 .model-house-cont{
   margin-top: 2rem;
   padding-top: 1rem;
-  background-color:rgba(0, 128, 0, 0.5);
 }
 .model-house-cont h2{
   text-align: center;

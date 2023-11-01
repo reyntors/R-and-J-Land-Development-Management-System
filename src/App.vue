@@ -1,13 +1,13 @@
 <template>
   <router-view></router-view>
-  <messenger-chat v-if="isNotPersonnel"></messenger-chat>
+  <!-- <messenger-chat v-if="isNotPersonnel"></messenger-chat> -->
 
 </template>
 
 <script>
-import MessengerChat from './components/MESSENGER/MessengerChat.vue'
+// import MessengerChat from './components/MESSENGER/MessengerChat.vue'
 export default {
-  components: {MessengerChat},
+  // components: {MessengerChat},
   computed:{
     isNotPersonnel(){
       const role = this.$store.getters['auth/getRoleType']
@@ -17,7 +17,7 @@ export default {
         return false
       }
     }
-  }
+  },
 }
 </script>
 
@@ -36,6 +36,9 @@ h2{
 }
 h4{
   font-size: clamp(1rem, 1.7vw, 2rem);
+}
+.Toastify__toast-container {
+  top: 15vh !important;
 }
 
 </style>

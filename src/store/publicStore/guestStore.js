@@ -1,4 +1,4 @@
-import * as API from '@/APIs/GUEST/GuestAPI.js'
+import * as API from '@/APIs/CLIENT/GuestAPI.js'
 
 export default{
 
@@ -44,5 +44,6 @@ export default{
                 throw error
             }
         },
+
     }
 }

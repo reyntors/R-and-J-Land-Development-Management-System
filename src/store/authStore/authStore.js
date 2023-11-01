@@ -8,6 +8,8 @@ export default {
         return{
             role: null,
             tokenID: null,
+            userId: null,
+            profilePic: null,
 
             openLoginForm: false,
         }
@@ -17,26 +19,35 @@ export default {
             state.openLoginForm = bool
         },
         addStoreState(state,responseData){
-            console.log(responseData)
             state.role = responseData.roles
             state.tokenID = responseData.tokenID
+            state.userId = responseData.userId
+            state.profilePic = responseData.profilePic
         },
         eraseStoreState(state){
             state.role = null;
             state.tokenID = null
+            state.userId = null
+            state.profilePic = null
         },
         addLocalStorage(_,responseData){
             console.log(responseData)
             localStorage.setItem('user',responseData.roles)
             localStorage.setItem('token',responseData.tokenID)
+            localStorage.setItem('userId',responseData.userId)
+            localStorage.setItem('profilePic',responseData.profilePic)
         },
         getLocalStorage(state){
             state.role = localStorage.getItem('user')
             state.tokenID = localStorage.getItem('token')
+            state.userId = localStorage.getItem('userId')
+            state.profilePic = localStorage.getItem('profilePic')
         },
         eraseLocalStorage(){
             localStorage.removeItem('user')
             localStorage.removeItem('token')
+            localStorage.removeItem('userId')
+            localStorage.removeItem('profilePic')
         },
 
     },
@@ -48,10 +59,10 @@ export default {
                const responseData = await Auth.login(credentials);
 
                 const Data = {
-                    
                     tokenID: responseData.data.token,
                     roles: responseData.data.roles,
-                   
+                    userId: responseData.data.userId,
+                    profilePic: responseData.data.profilePicture.url
                 }
 
                 context.commit('addLocalStorage',Data)
@@ -67,22 +78,24 @@ export default {
         },
 
         //SIGNUP REQUEST
-        async signup(context,payload){
+        async signup(context,credentials){
             console.log('signup clicked')
-            console.log(payload)
+            console.log(credentials)
             try{
                 //change this to HTTP REQUEST
-                await new Promise(resolve=> (setTimeout(resolve,1000))) 
+                const responseData = await Auth.signUp(credentials);
 
-                //TOGGLE if we assume ERROR
-                // throw Error('SOMETHING WENT WRONG')
+                const Data = {
+                    
+                    tokenID: responseData.data.token,
+                    roles: responseData.data.roles,
+                    userId: responseData.data.userId
+                }
 
-                // //TOGGLE we assume SUCCESS and the user is GUEST
-                const responseData = {
-                    user : 'guest',
-                    tokenID: 'A2pqD123' }
-                context.commit('addLocalStorage',responseData)
-                context.commit('addStoreState',responseData)
+                context.commit('addLocalStorage',Data)
+                context.commit('addStoreState',Data)
+
+                return responseData;
 
             }catch(error){
                 console.log(error)
@@ -169,6 +182,23 @@ export default {
             }else{
                 return undefined
             }
+        },
+
+        getUserId(state){
+            if(state.userId){
+                return state.userId
+            }else{
+                return null
+            }
+        },
+
+        profilePicGetter(state){
+            if(state.profilePic){
+                return state.profilePic
+            }else{
+                return 'hahahah'
+            }
+            
         }
     }
 

@@ -26,19 +26,19 @@
 
       <hr>
       
-      <form @submit.prevent="">
+      <form @submit.prevent="submitContactUS">
           <section class="grid">
-            <input placeholder="First name">
-            <input placeholder="Last name">
+            <input placeholder="First name" v-model="firstName">
+            <input placeholder="Last name" v-model="lastName">
           
-            <input placeholder="Company">
-            <input placeholder="Job Title">
+            <input placeholder="Company" v-model="company">
+            <input placeholder="Job Title" v-model="jobTitle">
           
-            <input placeholder="Phone">
-            <input placeholder="Email">
+            <input placeholder="Phone" v-model="phone">
+            <input placeholder="Email" v-model="email">
           
-            <input placeholder="Facebook Link (optional)">
-            <select v-model="typeClient">
+            <input placeholder="Facebook Link (optional)" v-model="facebookLink">
+            <select v-model="type">
               <option value="default">I am a...</option>
               <option value="current-client">Current Client</option>
               <option value="potential-client">Potential Client</option>
@@ -47,33 +47,33 @@
             </select>
           </section>
 
-          <section class="checkboxes">
+          <section class="checkboxes" >
               <h6>Interest id:</h6>
               <section>
-                <input type="checkbox" id="val1">
+                <input type="checkbox" id="val1" value="val1" v-model="temp">
                 <label for="val1">Value 1</label>
               </section>
               <section>
-                <input type="checkbox" id="val2">
+                <input type="checkbox" id="val2" value="val2" v-model="temp">
                 <label for="val2">Value 2</label>
               </section>
               <section>
-                <input type="checkbox" id="val3">
+                <input type="checkbox" id="val3" value="val3" v-model="temp">
                 <label for="val3">Value 3</label>
               </section>
               <section>
-                <input type="checkbox" id="val4">
+                <input type="checkbox" id="val4" value="val4" v-model="temp">
                 <label for="val4">Value 4</label>
               </section>
               <section>
-                <input type="checkbox" id="val5">
+                <input type="checkbox" id="val5" value="val5" v-model="temp">
                 <label for="val5">Value 5</label> 
               </section>
           </section>  
 
-          <textarea placeholder="Message"></textarea>
+          <textarea placeholder="Message" v-model="message"></textarea>
 
-          <button class="submit">Send</button>
+          <button class="submit" type="submit">Send</button>
       </form>
       
     </article>
@@ -82,10 +82,22 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify'
 export default {
   data(){
     return{
       typeClient: 'default',
+
+      firstName: "",
+      lastName: "",
+      company: "",
+      jobTitle: "",
+      phone: "",
+      email: "",
+      facebookLink: "",
+      type: "",
+      temp: [],
+      message: "",
     }
   },
   methods:{
@@ -97,6 +109,53 @@ export default {
     },
     openInquire(){
       this.$router.push('/inquire')
+    },
+    checkEmpty(){
+      if(
+        this.firstName !== "" &&
+        this.lastName !== "" &&
+        this.company !== "" &&
+        this.jobTitle !== "" &&
+        this.phone !== "" &&
+        this.email !== "" &&
+        this.type !== "" &&
+        this.temp.length !== 0 &&
+        this.message !== ""
+      ){
+        return true
+      }else{
+        return false
+      }
+    },
+    getData(){
+      return{
+        firstName: this.firstName,
+        lastName: this.lastName,
+        company: this.company,
+        jobTitle: this.jobTitle,
+        phone: this.phone,
+        email: this.email,
+        facebookLink: this.facebookLink,
+        type: this.type,
+        temp: this.temp,
+        message: this.message,
+      }
+    },
+    async submitContactUS(){
+      const isGood = this.checkEmpty()
+      console.log(isGood)
+      if(isGood){
+        const payload = this.getData()
+        try{
+          const response = await this.$store.dispatch('contactUs/submitContactUS',payload)
+          toast.success(response.message,{autoClose: 500})
+        }catch(error){
+          toast.error(error,{autoClose: 2000})
+        }
+      }else{
+        console.log("empty")
+        toast.warning("please check your information", {autoClose: 500})
+      }
     }
   }
 }
@@ -107,10 +166,12 @@ export default {
   padding: .5rem 1rem;
   border: none;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.299);;
-  margin-bottom: .5rem;
+  margin: .5rem 0;
+  margin-right: .5rem;
   background-color: gold;
   display: block;
   border-radius: 5px;
+  display: inline;
 }
 p {
   font-size: clamp(16px, 3vw, 24px);

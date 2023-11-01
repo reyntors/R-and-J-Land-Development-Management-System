@@ -3,11 +3,12 @@
 
     </div>
     <section class="profile" @click="toggleDropDown">
-        <font-awesome-icon class="person" icon="fa-solid fa-circle-user" size="3x" />
+        <!-- <font-awesome-icon class="person" icon="fa-solid fa-circle-user" size="3x" /> -->
+        <img :src="imgProfile">
         <font-awesome-icon class="caret" icon="fa-solid fa-chevron-down" size="sm" /> 
         <ul v-if="listVisible">
+            <li @click="goTo('account')">My Account</li>
             <li @click="goTo('forms')">Forms</li>
-            <li @click="goTo('account')">Account</li>
             <li @click="goTo('logout')">Log out</li>
         </ul>         
     </section>
@@ -16,6 +17,7 @@
 
 <script>
 export default {
+    props: ['imgProfile'],
     data(){
         return{
             listVisible: false,
@@ -41,6 +43,15 @@ export default {
 </script>
 
 <style scoped>
+img{
+    width: 50px;
+    height: 50px;
+    /* height: 100%;
+    width: 100%; */
+    object-fit: cover;
+    border-radius: 100%;
+    outline: 1px solid black;
+}
 li:hover{
     background-color: rgb(219, 219, 219);
     cursor: pointer;
@@ -48,6 +59,7 @@ li:hover{
 li{
     text-align: center;
     padding: .5rem 2rem;
+    white-space: nowrap;
 }
 ul{
     position: absolute;
@@ -65,6 +77,8 @@ ul{
 }
   .profile .caret{
     box-shadow: inset 0 0 1px 1px rgb(72, 62, 8);
+    outline: 1px solid black;
+    /* box-shadow: 0 0 1px 5px white; */
     background-color: rgb(255, 255, 255);
     border-radius: 100%;
     padding: 2px;

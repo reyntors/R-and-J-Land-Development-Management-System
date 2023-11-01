@@ -29,9 +29,9 @@ export default {
         imgLink(){
             if(this.imgThumbTitle === 'letterOfIntent'){
                 return LetterOfIntent
-            }else if(this.imgThumbTitle === 'contractDetails'){
+            }else if(this.imgThumbTitle === 'ContractDetails'){
                 return ContractDetails
-            }else if(this.imgThumbTitle === 'individualBuyerDeclaration'){
+            }else if(this.imgThumbTitle === 'individualDeclaration'){
                 return individual
             }else if(this.imgThumbTitle === 'approvePaymentScheme'){
                 return ApprovedPaymentScheme
@@ -41,8 +41,10 @@ export default {
                 return CallSlip
             }else if(this.imgThumbTitle === 'reservation'){
                 return ReservationPayment
-            }else{
+            }else if(this.imgThumbTitle === 'BirTinRequest'){
                 return BIR_TIN_Request
+            }else{
+                return null
             }
         }
     }

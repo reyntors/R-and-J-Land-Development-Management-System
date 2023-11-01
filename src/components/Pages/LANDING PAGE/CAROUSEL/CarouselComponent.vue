@@ -19,7 +19,7 @@
         <h1 class="title">R & J Land Development Corporation</h1>
         
         <span>
-          <button class="clickme" @click="reserveNow">Reserve Now</button>
+          <button class="clickme fw-bold" @click="reserveNow">Reserve Now</button>
         </span>
         
       </div>
@@ -117,12 +117,25 @@ export default {
   border: none;
   padding: .5rem 1rem;
   border-radius: 5px;
-  background-color: gold;
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 217, 0, 0.797);
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-reflect: below 10px linear-gradient(to bottom, transparent, rgba(0, 0, 0, .6));
+  animation: blink ease-in 1s infinite both alternate;
 }
-.title-cont button:active{
-  background-color: #31A72A;
+.title-cont button:hover{
+  background-color: red;
   color: white;
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2), 0 0 3px 1px rgba(255, 255, 255, 0.2);
+}
+@keyframes blink {
+  0%{
+    /* box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2); */
+    outline: 2px solid white;
+  }
+  100%{
+    outline: 2px solid rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 0 1px 2px rgba(255, 217, 0, 0.515); */
+  }
 }
 .carousel-cont{
   position: relative;

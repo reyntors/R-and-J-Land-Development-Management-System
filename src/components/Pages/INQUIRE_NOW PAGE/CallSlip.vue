@@ -2,29 +2,29 @@
     <form-card title="Call Slip">
       <div class="call-slip">
 <br>
-        <p style="text-align: end;">Date: <input type="date"></p>
+        <p style="text-align: end;">Date: <input type="date" v-model="date"></p>
 <br>
         <div class="prospect-name">
           Prospect's Name:
           <span>
-            <input placeholder="Lastname">
-            <input placeholder="Firstname">
-            <input placeholder="Middle">
+            <input placeholder="Lastname" v-model="lastName">
+            <input placeholder="Firstname" v-model="firstName">
+            <input placeholder="Middle" v-model="middleName">
           </span>
         </div>
 <br>
         <div class="spouse">
           Spouse Name (if married)
           <span>
-            <input placeholder="Spouse fullname">
+            <input placeholder="Spouse fullname" v-model="spouseName">
           </span>
         </div>
 <br>
         <div class="contact">
           Contact Numbers: 
-          <span>Tel No.</span><input>
-          <span>Mobile</span><input>
-          <span>Email Address</span><input>
+          <span>Tel No.</span><input v-model="telNumber">
+          <span>Mobile</span><input v-model="contactNumber">
+          <span>Email Address</span><input v-model="email">
         </div>
 <br>
         <div>
@@ -33,22 +33,22 @@
             <p>Prospects from:</p>
             <div class="checkboxes-cont">
               <section class="checkbox-item">
-                <input type="checkbox" id="check-1"> <label for="check-1">regular prospect</label></section>
+                <input type="checkbox" id="check-1" value="regular rospect" v-model="prospects"> <label for="check-1">regular prospect</label></section>
               <section class="checkbox-item">
-                <input type="checkbox" id="check-2"> <label for="check-2">referral</label></section>
+                <input type="checkbox" id="check-2" value="referral" v-model="prospects"> <label for="check-2">referral</label></section>
               <section class="checkbox-item">
-                <input type="checkbox" id="check-3"> <label for="check-3">open house</label></section>
+                <input type="checkbox" id="check-3" value="open house" v-model="prospects"> <label for="check-3">open house</label></section>
               <section class="checkbox-item">
-                <input type="checkbox" id="check-4"> <label for="check-4">office-in-charge</label></section>
+                <input type="checkbox" id="check-4" value="office-in-charge" v-model="prospects"> <label for="check-4">office-in-charge</label></section>
               <section class="checkbox-item">
-                <input type="checkbox" id="check-5"> <label for="check-5">fb/website</label></section>
+                <input type="checkbox" id="check-5" value="fb/website" v-model="prospects"> <label for="check-5">fb/website</label></section>
               <section class="checkbox-item">
-                <input type="checkbox" id="check-6"> <label for="check-6">mall exhibits</label></section>           
+                <input type="checkbox" id="check-6" value="mall exhibits" v-model="prospects"> <label for="check-6">mall exhibits</label></section>           
             </div>
           </div>
         </div>
-<br>
-        <div class="signature-cont">
+ <br>
+  <!--      <div class="signature-cont">
           
           <div class="grid-item">
             <div>
@@ -94,14 +94,57 @@
             </div> 
           </div>
           
-        </div>
+        </div> -->
 
       </div>
 
-      <submit-form-button>Submit</submit-form-button>
+      <submit-form-button @click="submitCallSlip">Submit</submit-form-button>
     </form-card>
 </template>
   
+<script>
+import { toast } from 'vue3-toastify'
+export default {
+  data(){
+    return{
+      date : "",
+      lastName : "",
+      firstName : "",
+      middleName : "",
+      telNumber : "",
+      spouseName : "",
+      email : "",
+      contactNumber : "",
+      prospects : []
+    }
+  },
+  methods:{
+    getData(){
+      return{
+        date : this.date,
+        lastName : this.lastName,
+        firstName : this.firstName,
+        middleName : this.middleName,
+        telNumber : this.telNumber,
+        spouseName : this.spouseName,
+        email : this.email,
+        contactNumber : this.contactNumber,
+        prospects : this.prospects    
+      }
+    },
+    async submitCallSlip(){
+      const payload = this.getData()
+      try{
+        const response = await this.$store.dispatch('callSlip/submitcallSlip',payload)
+        toast.success(response, {autoClose: 1000})
+      }catch(error){
+        toast.error(error)
+      }
+    }
+  }
+
+}
+</script>
 
 <style scoped>
 p{

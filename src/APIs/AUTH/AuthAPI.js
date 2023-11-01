@@ -12,4 +12,14 @@ export const login = async (credentials) => {
         
     }
 }
+export const signUp = async (credentials) => {
+    console.log('signUp API executed')
+    try {
+        const response = await axios.post(`${BASE_URL}users/register`, credentials);
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        throw (error.response.data.message);    
+    }
+}
 

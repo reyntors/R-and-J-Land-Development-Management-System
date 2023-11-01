@@ -354,7 +354,7 @@ export default{
 
         //start set scannedfiles
         listCurrentClientScannedFilesGetter(state){
-            console.log(state.listCurrentClientScannedFiles)
+            // console.log(state.listCurrentClientScannedFiles)
             return state.listCurrentClientScannedFiles
         }
         //start set scannedfiles

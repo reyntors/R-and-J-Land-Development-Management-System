@@ -1,8 +1,11 @@
 <template>
-  <resedential-house></resedential-house>
-  <commercial-bldg></commercial-bldg>
-  <amenities-view></amenities-view>
-  <structural-foundation></structural-foundation>
+  <div style="background-color:gold;">
+    <resedential-house></resedential-house>
+    <commercial-bldg></commercial-bldg>
+    <amenities-view></amenities-view>
+    <structural-foundation></structural-foundation>    
+  </div>
+
 </template>
 
 <script>

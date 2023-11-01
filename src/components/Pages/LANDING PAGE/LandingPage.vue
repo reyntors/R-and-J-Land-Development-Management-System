@@ -66,7 +66,7 @@ export default {
             const sectionTop = section.getBoundingClientRect().top
             const YLocation = sectionTop + window.scrollY - headerHeight
             this.topCorpOfficers =  YLocation -1
-            console.log(this.topCorpOfficers)         
+            // console.log(this.topCorpOfficers)         
         },
         setTopLicensesPermits(){
             const section = document.getElementById('licenses&permits')
@@ -74,7 +74,7 @@ export default {
             const sectionTop = section.getBoundingClientRect().top             
             const YLocation = sectionTop + window.scrollY - headerHeight
             this.topLicensePermits =  YLocation -1  
-            console.log(this.topLicensePermits)  
+            // console.log(this.topLicensePermits)  
         },
 
         setTopResedential(){
@@ -83,7 +83,7 @@ export default {
             const sectionTop = section.getBoundingClientRect().top              
             const YLocation = sectionTop + window.scrollY - headerHeight
             this.topResedential =  YLocation -1 
-            console.log(this.topResedential)  
+            // console.log(this.topResedential)  
         },
         setTopCommercial(){
             const section = document.getElementById('commercial-bldg')
@@ -110,7 +110,6 @@ export default {
 
         //scroll navigation
         scrollNavigate(id){
-            console.log('hahahaha')
             const section = document.getElementById(id)
             if(section){
                 const headerHeight    = document.querySelector('.header').offsetHeight;

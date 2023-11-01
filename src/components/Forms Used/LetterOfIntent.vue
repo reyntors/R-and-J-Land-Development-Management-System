@@ -1,4 +1,5 @@
 <template>
+  <the-header/>
     <form-card id="letterOfIntent" title="Letter of Intent">
       <p style="margin-top: 1rem;">Date: <input type="date"></p> 
       <br>
@@ -78,6 +79,7 @@
             <div class="date">DATE</div>
           </div>
         </div>
+        <submit-form-button>Send</submit-form-button>
     </form-card>
 </template>
   

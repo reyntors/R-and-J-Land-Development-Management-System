@@ -40,9 +40,10 @@ const route = createRouter({
             {path:'/careers', component: CareerPage},
             {path:'/customer-service', component: CustomerService},
             {path:'/inquire', component: InquireNowPage},
-            {path:'/account', component: AccountPage},
+            // {path:'/account', component: AccountPage},
 
             //guest authorized
+            {path:'/account', component: AccountPage, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms', component: GuestFormPage, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/letter-of-intent', component: GuestLetterOfIntent, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/contract-details', component: GuestContractDetails, meta: {requiresAuthGuest: true}},
@@ -76,6 +77,7 @@ const route = createRouter({
         // this.$store.commit('resetHomeId')
         store.commit('auth/getLocalStorage')
         store.commit('resetHomeId')
+        // store.dispatch('mySettings/getMyAccountSettings')
 
         //this condition sets the path that required the user to be authenticated before they can access it
         if(to.meta.requiresAuthGuest && !store.getters['auth/authorizationRoleGuest']){       
