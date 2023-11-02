@@ -8,7 +8,7 @@ exports.generateReports = async (req, res, next) => {
     try {
         const { date } = req.params;
 
-        const selectedColumns = req.body.selectedColumns; 
+        const selectedColumns = req.query.selectedColumns; 
         
         // Check if selectedColumns is provided
         if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {

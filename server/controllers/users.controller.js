@@ -29,6 +29,26 @@ async function generateInquiryId() {
   return nextInquiryId;
 }
 
+async function generateRequestId() {
+  // Find all documents and their inquiries array
+  const results = await UserUpdateRequest.find();
+
+  let maxRequestId = 0;
+
+  // Loop through the results to find the maximum requestId
+  results.forEach((result) => {
+    if (result.requestId > maxRequestId) {
+      maxRequestId = result.requestId;
+    }
+  });
+
+  // Increment the maximum requestId by 1 to generate a new unique requestId
+  const newRequestId = maxRequestId + 1;
+
+  return newRequestId;
+}
+
+
 
 //register new account
 exports.register = async (req, res, next) => {
@@ -210,8 +230,12 @@ exports.getUserDetails = async (req, res, next) => {
         });
       }
 
+            // Generate RequestId
+    const requestId = await generateRequestId(); 
+
     const userRequest = new UserUpdateRequest({
 
+      requestId,
       userId: user.userId,
       updatedData: updatedUserData,
 
@@ -234,25 +258,23 @@ exports.getUserDetails = async (req, res, next) => {
      const inquiryId = await generateInquiryId();
 
 
-      // Build the context message based on updatedUserData
-      const contextMessage = Object.keys(updatedUserData)
-        .map((key) => `${key}: ${updatedUserData[key]}`)
-        .join('\n');
-
-
-        console.log(contextMessage)
-
      const newInquiry = {
-       inquiryId,
+       inquiryId, 
+       approvalStatus: userRequest.approvalStatus,
        userId: user.userId,
        name: user.fullname,
        subject: 'Request to update the data',
-       context: user.fullname + ', Request to update data:\n\n' + contextMessage,
+       otherContext: {
+        title: `${user.fullname}, Request to update the data:`,
+        ...updatedUserData
+       },
        email: user.email,
        fblink: user.fbAccount,
        phonenumber: user.contactNumber,
        date: formattedDate,
        };
+
+      
 
        const inquiries = await Inquiry.findOne()
 
@@ -307,7 +329,6 @@ function sendUpdateResponseEmail(fullname, recipientEmail, subject) {
 
     <img src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/logo2.png" alt="Your Image" width="220" height="100">
  `;
-
 
 
 
@@ -373,35 +394,44 @@ function sendUpdateApprovedResponseEmail(fullname, recipientEmail, subject) {
   });
 }
 
-
-
-
   
 exports.approveUserUpdate = async (req, res, next) => {
-  const { id } = req.params;
+  const { userId, requestId, inquiryId } = req.params;
   const { isApproved } = req.body;
 
-  console.log(isApproved);
-  console.log(id);
+  const newInquiryId = Number(inquiryId);
+
+  console.log(typeof(newInquiryId));
 
   try {
     // Find the user update request with the specified ID
-    const updateRequest = await UserUpdateRequest.findOne({userId: id});
+    // const updateRequest = await UserUpdateRequest.findOne({userId: id});
+  
+    // Find the user by email and verify the recovery code
+  const user = await User.findOne({ userId });
 
+  if (!user) {
+    return res.status(404).json({ message: 'User not found.' });
+  }
+
+      // Check if the recovery code matches
+  const updateRequest = await UserUpdateRequest.findOne({ userId: user.userId, requestId: requestId });
+
+  console.log(updateRequest);
+  
+  if (!updateRequest || updateRequest.userId !== user.userId) {
+
+    console.log(!updateRequest || updateRequest.userId !== user.userId)
     
+    return res.status(400).json({ message: 'Request update to this user is not found.' });
+  }
 
-    if (!updateRequest) {
-      return res.status(404).json({ message: 'User update request not found.' });
-    }
 
-    // Update the approval status
-    updateRequest.approvalStatus = isApproved ? 'approved' : 'rejected';
-
-    await updateRequest.save();
+   
 
     if(isApproved === 'approved'){
 
-      const user = await User.findOne({userId: id});
+      const user = await User.findOne({userId: userId});
 
       if(!user){
         res.status(404).json({message: 'user is not found'})
@@ -491,8 +521,41 @@ exports.approveUserUpdate = async (req, res, next) => {
 
       await user.save();
 
-      await UserUpdateRequest.deleteOne({ userId: id });
-      // const recipientEmail = user.email; // Use the user's email address
+      const inquiry = await Inquiry.findOne({'inquiries.inquiryId': newInquiryId});
+
+      if (inquiry) {
+
+       
+        const matchingInquiry = inquiry.inquiries.find(item => item.inquiryId === newInquiryId);
+
+
+        if (matchingInquiry) {
+          
+
+         matchingInquiry.approvalStatus = isApproved;
+
+         await inquiry.save()
+
+
+        } else {
+          console.log('Inquiry not found for the specified inquiryId.');
+        }
+ 
+       
+      }else {
+        console.log('No matching inquiries found.');
+      }
+
+
+         // Update the approval status
+      updateRequest.approvalStatus = isApproved ? 'approved' : 'rejected';
+
+    
+      await updateRequest.save();
+
+
+      await UserUpdateRequest.deleteOne({ userId: userId, requestId: requestId });
+
       const subject = isApproved ? 'Update Request Approved' : 'Update Request Rejected';
       sendUpdateApprovedResponseEmail(user.fullname, user.email, subject);
   

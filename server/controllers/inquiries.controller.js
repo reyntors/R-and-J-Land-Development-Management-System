@@ -24,15 +24,14 @@ exports.updateEnquirybyId = async (req, res ) => {
 
         const inquiryId = req.params.inquiryId;
 
-        
+        const newInquiryId = Number(inquiryId)
 
-        console.log(inquiryId)
+        const inquiry = await Inquiry.findOne({'inquiries.inquiryId': newInquiryId});
 
-        const inquiry = await Inquiry.findOne({'inquiries.inquiryId': inquiryId});
+     
 
-        // console.log(inquiry.inquiries[0].inquiryId)
-
-        array = inquiryId - 1;
+       
+ const matchingInquiry = inquiry.inquiries.find(item => item.inquiryId === newInquiryId);
 
      
     //    console.log( inquiry.inquiries[array].mark)
@@ -45,15 +44,6 @@ exports.updateEnquirybyId = async (req, res ) => {
             inquiry.inquiries[array].mark = false; 
         }
         
-
-        // // Update the 'mark' field to true for the matching inquiry
-        // inquiry.inquiries.forEach((individualInquiry) => {
-        //     console.log("I am here")
-        //     if (individualInquiry.inquiryId === inquiryId) {
-        //         console.log(individualInquiry.inquiryId === inquiryId)
-        //     individualInquiry.mark = true;
-        //     }
-        // });
 
         await inquiry.save();
         

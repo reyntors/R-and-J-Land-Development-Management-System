@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const userUpdateRequestSchema = new Schema({
+  requestId:{
+    type: Number,
+    unique: true,
+  },
   userId: {
     type: String, // or ObjectId if the userId references the User model
     required: true,
