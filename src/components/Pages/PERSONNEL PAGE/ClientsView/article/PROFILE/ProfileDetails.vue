@@ -1,124 +1,81 @@
 <template>
     <div class="cost-profileDetails">
       
-      <div class="header">
-          <h3>Profile Details</h3>
-          <button @click="toggleEdit">{{ editBtnText }}</button>
-      </div>
-      <form>
-        <section class="items-form">
-              <label for="buyerID">
-                  Buyer's ID:
-              </label>
-              <input id="buyerID" type="text" v-model="id" readonly >
-          </section>
-
-          <section class="items-form">
-              <label for="buyerName">
-                  Buyer's Name:
-              </label>
-              <input id="buyerName" type="text" v-model="client.fullname" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Address:
-              </label>
-              <input id="buyerName" type="text" v-model="client.homeAddress" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Contact No:
-              </label>
-              <input id="buyerName" type="number" v-model="client.contactNumber" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Civil Status:
-              </label>
-              <!-- {{ client.additionalInfo.civilStatus }} -->
-              <input id="buyerName" type="text" v-model="client.additionalInfo.civilStatus" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Husband/Wife's Name:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.spouseName" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Occupation:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.occupation" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Monthly Gross Income:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.monthlyGrossIncome" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-  <br>
-          <section class="items-form">
-              <label for="buyerName">
-                  Buyer's Source of Income:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.buyerSourceOfIncome" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Type of Employment:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.typeOfEmployment" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Employer:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.employer" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Employer Address:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.employerAddress" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Gross Salary:
-              </label>
-              <input id="buyerName" type="number" v-model="client.additionalInfo.monthlyGrossIncome" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Business Name:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.businessName" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Business Address:
-              </label>
-              <input id="buyerName" type="text" v-model="client.additionalInfo.businessAddress" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-          
-          <section class="items-form">
-              <label for="buyerName">
-                  Monthly Gross Income:
-              </label>
-              <input id="buyerName" type="number" v-model="client.additionalInfo.businessMonthlyIncome" :readonly="!editableComputed" :class="{edit:editableComputed}">
-          </section>
-      </form>
+        <div class="header">
+            <h3>Profile Details</h3>
+            <button @click="toggleEdit">{{ editBtnText }}</button>
+        </div>
+        <form>
+            <section class="items-form">
+                <label>Full Name</label>
+                <input type="text" v-model="client.fullname" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Contact Number</label>
+                <input type="text" v-model="client.contactNumber" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Email Address</label>
+                <input type="text" v-model="client.email" readonly :class="{editable:true}">
+            </section>
+            <section class="items-form">
+                <label>Address</label>
+                <input v-model="client.address" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Civil Status</label>
+                <input type="text" v-model="client.civilStatus" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Spouse Name</label>
+                <input type="text" v-model="client.spouseName" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Occupation</label>
+                <input type="text" v-model="client.occupation" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Monthly Gross Income</label>
+                <input type="text" v-model="client.monthlyGrossIncome" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Source of Income</label>
+                <input type="text" v-model="client.buyerSourceOfIncome" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Type of Employment</label>
+                <input type="text" v-model="client.typeOfEmployment" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Employer</label>
+                <input type="text" v-model="client.employer" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Gross Salary</label>
+                <input type="text" v-model="client.grossSalary" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Business Name</label>
+                <input type="text" v-model="client.businessName" :readonly="!editable" :class="{editable: !editable}">
+            </section>
+            <section class="items-form">
+                <label>Business Address</label>
+                <input type="text" v-model="client.businessAddress" :readonly="!editable" :class="{editable: !editable}">
+            </section>    
+        </form>
+<hr>
+        <div style="margin-top: 1rem;"> 
+            <p class="fw-bold fs-4">Uploaded ID</p>
+            <section class="uploadedID">
+                <p v-if="client.uploadId.length<1">No Valid ID's Uploaded</p>
+                <ul v-for="(image,index) in client.uploadId" :key="index">
+                    <li>
+                    <img :src="image.url">
+                    </li>
+                    
+                </ul>
+            </section>
+        </div>
       <button style="margin-top: 1rem" @click="saveNow">Save</button>
       <div class="shade" v-if="isLoading"/>
       <progress-loading type="spin" v-if="isLoading && isError"/>
@@ -260,16 +217,22 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
             this.$store.commit('client/resetTempArrays')
             const list = this.$store.getters['client/clientsGetter']
             const index = list.findIndex(item => item.userId === this.clientID)
-            const obj = list[index]
-            this.copyAdditionalInfoObj = {...obj.additionalInfo}
-            this.client= {
-                additionalInfo: obj.additionalInfo,
-                contactNumber: obj.contactNumber,
-                fullname: obj.fullname,
-                homeAddress: obj.homeAddress,
+            if(index>=0){
+                const obj = list[index]
+                console.log(obj.profileDetails)
+                this.client = {...obj.profileDetails}
+            }else{
+                this.client = {}
             }
+            
+            // this.client= {
+            //     additionalInfo: obj.additionalInfo,
+            //     contactNumber: obj.contactNumber,
+            //     fullname: obj.fullname,
+            //     homeAddress: obj.homeAddress,
+            // }
             // console.log(this.client)
-            console.log(this.copyAdditionalInfoObj)
+            // console.log(this.copyAdditionalInfoObj)
 
         }
   
@@ -296,15 +259,16 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
   }
   input{
     border: none;
-    /* border-bottom: 1px solid black; */
+    width: 100%;
     font-weight: 600;
     text-transform: uppercase;
     padding-left: 1rem;
     overflow: visible;
+    outline: 1px solid black;
   }
-  input:focus{
+  /* input:focus{
     outline: none;
-  }
+  } */
   .cost-profileDetails{
       position: relative;
       display: flex;
@@ -333,12 +297,34 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
       color: black;
   }
   .items-form{
-      margin-bottom: .2rem;
+      margin-bottom: .5rem;
       padding: 0 .5rem;
       width: 100%;
       display: flex;
+      gap: .5rem;
   }
-  .items-form input{
-      flex-grow: 1;
+  .items-form label{
+      white-space: nowrap;
+      min-width: 180px;
+      /* border: 1px solid black; */
   }
+  .editable{
+    outline: none;
+  }
+  img{
+  padding: .5rem;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+.uploadedID{
+  min-height: 10vh;
+  /* border: 1px solid black; */
+  padding-bottom: 1rem;
+  gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
   </style>

@@ -30,3 +30,19 @@ export const markInquiry = async (id) => {
         throw (error.message);
     }
 }
+export const approveUpdateRequest = async (payload) => {
+    console.log('API approveUpdateRequest executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.put(`${BASE_URL}users/approve-pending-update/${payload.id}`, 
+            {'isApproved':payload.status}, 
+            {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data      
+    }catch(error){
+        throw (error.message);
+    }
+}

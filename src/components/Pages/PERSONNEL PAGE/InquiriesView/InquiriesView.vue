@@ -1,15 +1,15 @@
 <template>
-    <div class="inquiries-cont">
-      <div class="div1">
+    <div class="inquiries-cont" id="inquiries-cont">
+      <div class="div1" id="listInquiryHeader">
         <h4>Inquiries</h4>
       </div>
 
-      <div class="div2">
+      <div class="div2" id="listInquiryContainer">
         <progress-loading v-if="isLoading" type="spin"></progress-loading>
         <table v-else>
-          <tbody v-for="(item,index) in listInquiries" :key="index">
-            <tr @click="showCard(item.inquiryId)" :class="{shade: !item.mark}">
-              <td class="name">{{number(index +1)}}{{ item.name }}</td>
+          <tbody v-for="(item,index) in listInquiries" :key="index" >
+            <tr @click="showCard(item.inquiryId)" :class="[{shade: !item.mark}]">
+              <td class="name">{{ item.name }}</td>
               <td class="about">{{ item.subject }} {{ item.context }}</td>
               <td class="date">               
                 <span class="dateText">
@@ -17,23 +17,25 @@
                 </span>
               </td>
             </tr>
-            <tr style="position: relative;">
-              <td colspan="3">
-                <inquiries-card
-                  v-if="item.inquiryId === focusedID"
+            <tr >
+              <td colspan="3" v-if="item.inquiryId === focusedID" style="padding: 1rem;" :class="classLiMaker(item.mark,index)">
+                <inquiries-card             
                   :obj="item"
                   @close-card="closeCard"
+                  :class-name="classLiMaker(item.mark,index)"
                 />
               </td>
             </tr>
+            
             
  
    
           </tbody>
         </table>
-        
+         
       </div>
 
+     
       
     </div>
   </template>
@@ -49,22 +51,22 @@
       }
     },
     methods: {
-      showCard(id){
-        this.focusedID = id
-        console.log(this.focusedID)
-      },
       closeCard(){
         this.focusedID = null
       },
-      number(index){
-        return index + '. '
-      }
-
+      classLiMaker(mark,index){
+        const className = mark+'_'+index
+        // console.log(className)
+        return className
+      },
+      showCard(id){
+        this.focusedID = id
+      },
     },
     computed:{
       listInquiries(){
         return this.$store.getters['inquiries/listInquiriesGetter']
-      }
+      },
     },
 
     async mounted(){
@@ -72,7 +74,11 @@
       // await new Promise(resolve => setTimeout(resolve,1000))
       await this.$store.dispatch('inquiries/getInquiriesList')
       this.isLoading = false
+      // this.setUpScrollEvent()
     }
+    // beforeUnmount(){
+    //       window.removeEventListener('scroll',this.handleScroll)
+    //   }
   
   }
   </script>
@@ -82,9 +88,7 @@
   background-color: rgb(118, 187, 232,.3);
   font-weight: 600;
 }
-.visible{
-  display: block;
-}
+
 .inquiries-cont{
     width: 100%;
     height: 85vh;
@@ -102,14 +106,14 @@
 }
 .inquiries-cont .div2{
     width:100%;
-    height: 90%;
+    min-height: 85vh;
     background-color: bisque;
     display: flex;
     justify-content: start;
     align-items: flex-start;
     position: relative;
-    overflow-y: auto;
-    border: 1px solid black;
+    /* overflow-y: auto; */
+    /* border: 5px solid black; */
 }
 .inquiries-cont .div2 table{
   width: 100%;

@@ -12,7 +12,7 @@ export default{
     mutations:{
         setInquiriesList(state,list){
             console.log(list)
-            state.listInquiries = list
+            state.listInquiries = list.slice().reverse()
         },
         markInquiry(state,id){
             const index = state.listInquiries.findIndex(item => item.inquiryId === id)
@@ -34,6 +34,16 @@ export default{
                 const response = await API.markInquiry(id)
                 console.log(response)
                 context.commit('markInquiry',id)
+            }catch(error){
+                console.error(error)
+                throw error
+            }
+        },
+        async approveUpdateRequest(_,payload){
+            try{
+                const response = await API.approveUpdateRequest(payload)
+                console.log(response)
+                return response
             }catch(error){
                 console.error(error)
                 throw error

@@ -18,13 +18,17 @@
             DAILY REPORT
           </button>
 
-          <!-- <button @click="openWindow('monthly')">
-            MOTHLY REPORT
-          </button>  -->
+          <button @click="openWindow('weekly')">
+            WEEKLY REPORT
+          </button>
+          <button @click="openWindow('monthly')">
+            MONTHLY REPORT
+          </button>
 
           <button @click="openWindow('custom')">
             CUSTOM REPORT
           </button>
+          
 
         </section>
       </article>
@@ -112,6 +116,11 @@ export default {
   margin: .5rem;
   background-color: #31A72A;
   color: white;
+  border: none;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+.card button:active{
+  box-shadow: none;
 }
 
 
