@@ -28,22 +28,18 @@ exports.updateEnquirybyId = async (req, res ) => {
 
         const inquiry = await Inquiry.findOne({'inquiries.inquiryId': newInquiryId});
 
-     
-
        
- const matchingInquiry = inquiry.inquiries.find(item => item.inquiryId === newInquiryId);
+        const matchingInquiry = inquiry.inquiries.find(item => item.inquiryId === newInquiryId);
 
-     
-    //    console.log( inquiry.inquiries[array].mark)
-        if(inquiry.inquiries[array].mark === false){
+        if(matchingInquiry.mark === false){
 
-            inquiry.inquiries[array].mark = true;
+            matchingInquiry.mark = true;
 
-        }else if(inquiry.inquiries[array].mark === true){
+        }else if(matchingInquiry.mark === true){
 
-            inquiry.inquiries[array].mark = false; 
+            matchingInquiry.mark = false;
         }
-        
+
 
         await inquiry.save();
         
