@@ -111,7 +111,7 @@ exports.generateCustomReports = async (req, res, next) => {
     try {
         const { startDate, endDate } = req.query; 
 
-        const selectedColumns = req.body.selectedColumns; 
+        const selectedColumns = req.query.selectedColumns; 
 
         // Check if selectedColumns is provided
         if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
@@ -193,7 +193,7 @@ exports.generateWeeklyReports = async (req, res, next) => {
         // Get the current date
         const currentDate = moment();
 
-        const selectedColumns = req.body.selectedColumns; 
+        const selectedColumns = req.query.selectedColumns; 
 
          // Check if selectedColumns is provided
          if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
@@ -282,7 +282,7 @@ exports.generateMonthlyReports = async (req, res, next) => {
         // Get the current date
         const currentDate = moment();
 
-        const selectedColumns = req.body.selectedColumns; 
+        const selectedColumns = req.query.selectedColumns; 
 
          // Check if selectedColumns is provided
          if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
