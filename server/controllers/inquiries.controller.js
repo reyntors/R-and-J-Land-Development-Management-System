@@ -33,6 +33,8 @@ exports.updateEnquirybyId = async (req, res ) => {
 
         if(matchingInquiry.mark === false){
 
+          
+
             matchingInquiry.mark = true;
 
         }else if(matchingInquiry.mark === true){
@@ -44,7 +46,7 @@ exports.updateEnquirybyId = async (req, res ) => {
         await inquiry.save();
         
 
-    return res.status(200).json({message: 'update mark successfully!', data: inquiry.inquiries[array]});
+    return res.status(200).json({message: 'update mark successfully!', data: matchingInquiry.mark});
         
     } catch (error) {
 

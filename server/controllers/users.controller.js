@@ -427,7 +427,6 @@ exports.approveUserUpdate = async (req, res, next) => {
   }
 
 
-   
 
     if(isApproved === 'approved'){
 
@@ -984,11 +983,116 @@ exports.resetPassword = async(req, res) =>{
       }
     });
   }
+
+
+  exports.updateUserDetails = async (req, res) => {
+
+    const {id} = req.params;
+
+    const requestUpdateData = req.body;
+
+
+    try {
+
+
+    const user = await User.findOne({userId: id});
+
+
+    if (requestUpdateData.fullname) {
+        
+      user.profileDetails.fullname = requestUpdateData.fullname;
+    }
+    
+    if (requestUpdateData.contactNumber) {
+      
+      user.profileDetails.contactNumber = requestUpdateData.contactNumber;
+    }
+    
+    if (requestUpdateData.address) {
+      user.profileDetails.address = requestUpdateData.address;
+    }
+
+    if (requestUpdateData.birthday) {
+      user.profileDetails.birthday = requestUpdateData.birthday;
+    }
+    
+    
+    if (requestUpdateData.fbAccount) {
+
+      user.profileDetails.fbAccount = requestUpdateData.fbAccount;
+    }
+    
+
+    if (requestUpdateData.civilStatus) {
+
+        user.profileDetails.civilStatus = requestUpdateData.civilStatus;
+    }
+
+    if (requestUpdateData.spouseName) {
+      user.profileDetails.spouseName = requestUpdateData.spouseName;
+      }
+
+    if (requestUpdateData.occupation) {
+      user.profileDetails.occupation = requestUpdateData.occupation;
+      }
+
+    if (requestUpdateData.monthlyGrossIncome) {
+      user.profileDetails.monthlyGrossIncome = requestUpdateData.monthlyGrossIncome;
+      }
+
+    if (requestUpdateData.buyerSourceOfIncome) {
+        
+      user.profileDetails.buyerSourceOfIncome = requestUpdateData.buyerSourceOfIncome;
+      }
+
+    if (requestUpdateData.typeOfEmployment) {
+       
+      user.profileDetails.typeOfEmployment = requestUpdateData.typeOfEmployment;
+      }
+
+    if (requestUpdateData.employer) {
+       
+      user.profileDetails.employer = requestUpdateData.employer;
+      }
+
+    if (requestUpdateData.employerAddress) {
+       
+      user.profileDetails.employerAddress = requestUpdateData.employerAddress;
+      }
+
+    if (requestUpdateData.grossSalary) {
+      
+      user.profileDetails.grossSalary = requestUpdateData.grossSalary;
+      }
+
+    if (requestUpdateData.businessName) {
+        
+      user.profileDetails.businessName = requestUpdateData.businessName;
+      }
+
+    if (requestUpdateData.businessAddress) {
+       
+      user.profileDetails.businessAddress = requestUpdateData.businessAddress;
+      }
+
+    if (requestUpdateData.businessMonthlyIncome) {
+       
+      user.profileDetails.businessMonthlyIncome = requestUpdateData.businessMonthlyIncome;
+      }
+
+    await user.save();
+
+    return res.status(200).json({message: `User ${user.username}, sucessfully updated`})
+
+
+    }catch(error){
+
+      return res.status(500).json({message: 'Failed to update the data'})
+    }
+
+
+  };
   
-
-
-
-
 
   exports.restrict = (allowedRoles) => {
     return (req, res, next) => {
