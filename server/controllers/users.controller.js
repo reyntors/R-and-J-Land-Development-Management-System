@@ -233,12 +233,21 @@ exports.getUserDetails = async (req, res, next) => {
            // Generate inquiryId
      const inquiryId = await generateInquiryId();
 
+
+      // Build the context message based on updatedUserData
+      const contextMessage = Object.keys(updatedUserData)
+        .map((key) => `${key}: ${updatedUserData[key]}`)
+        .join('\n');
+
+
+        console.log(contextMessage)
+
      const newInquiry = {
        inquiryId,
        userId: user.userId,
        name: user.fullname,
        subject: 'Request to update the data',
-       context: `${user.fullname}, Request to update data:   ${userRequest.updatedData}`,
+       context: user.fullname + ', Request to update data:\n\n' + contextMessage,
        email: user.email,
        fblink: user.fbAccount,
        phonenumber: user.contactNumber,
