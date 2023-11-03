@@ -559,6 +559,15 @@ exports.approveUserUpdate = async (req, res, next) => {
       const subject = isApproved ? 'Update Request Approved' : 'Update Request Rejected';
       sendUpdateApprovedResponseEmail(user.fullname, user.email, subject);
   
+    }else{
+
+      const inquiry = await Inquiry.findOne({'inquiries.inquiryId': newInquiryId});
+
+      const matchingInquiry = inquiry.inquiries.find(item => item.inquiryId === newInquiryId);
+
+      matchingInquiry.approvalStatus = isApproved;
+
+      await inquiry.save()
     }
 
    
