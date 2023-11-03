@@ -260,6 +260,7 @@ exports.getUserDetails = async (req, res, next) => {
 
      const newInquiry = {
        inquiryId, 
+       requestId: userRequest.requestId,
        approvalStatus: userRequest.approvalStatus,
        userId: user.userId,
        name: user.fullname,

@@ -17,6 +17,7 @@ const inquiriesSchema = new Schema({
             type: Number,
             unique: true,
         },
+        requestId: Number,
         approvalStatus: String,
         userId: String,
         name: String,
