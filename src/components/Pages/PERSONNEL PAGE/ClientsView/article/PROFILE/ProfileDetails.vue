@@ -165,8 +165,7 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                     try{
                         await this.$store.dispatch('client/updateClient',{
                                 id: this.clientID,
-                                additionalInfo: this.client.additionalInfo,
-                                defaultInfo: defaultInfo
+                                data: this.client
                             })         
                         this.isError = false        
                     }catch(error){

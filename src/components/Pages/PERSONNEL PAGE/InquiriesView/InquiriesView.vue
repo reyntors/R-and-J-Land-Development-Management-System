@@ -8,7 +8,7 @@
         <progress-loading v-if="isLoading" type="spin"></progress-loading>
         <table v-else>
           <tbody v-for="(item,index) in listInquiries" :key="index" >
-            <tr @click="showCard(item.inquiryId)" :class="[{shade: !item.mark}]">
+            <tr @click="showCard(item.inquiryId)" :class="{shade: item.mark || item.approvalStatus ==='approved' || item.approvalStatus ==='rejected'}">
               <td class="name">{{ item.name }}</td>
               <td class="about">{{ item.subject }} {{ item.context }}</td>
               <td class="date">               
@@ -85,8 +85,9 @@
   
   <style scoped>
 .shade{
-  background-color: rgb(118, 187, 232,.3);
-  font-weight: 600;
+  font-weight: 500;
+  background-color: transparent;
+
 }
 
 .inquiries-cont{
@@ -123,6 +124,8 @@ tr{
   border-bottom: 1px solid black;
   cursor: pointer;
   width: 100%;
+  font-weight: 600;
+  background-color: rgb(118, 187, 232,.3);
 }
 .trash-icon{
   visibility: hidden;

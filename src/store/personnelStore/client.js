@@ -62,10 +62,11 @@ export default{
             const index = state.clientsAdded.findIndex(item => item.userId=== payload.id)
             // console.log(state.clientsAdded[0].profile)
             if(index>=0){
-               state.clientsAdded[index].additionalInfo = payload.additionalInfo
-               state.clientsAdded[index].fullname = payload.defaultInfo.fullname
-               state.clientsAdded[index].homeAddress = payload.defaultInfo.homeAddress
-               state.clientsAdded[index].contactNumber = payload.defaultInfo.contactNumber
+                state.clientsAdded[index].profileDetails = payload.data
+            //    state.clientsAdded[index].additionalInfo = payload.additionalInfo
+            //    state.clientsAdded[index].fullname = payload.defaultInfo.fullname
+            //    state.clientsAdded[index].homeAddress = payload.defaultInfo.homeAddress
+            //    state.clientsAdded[index].contactNumber = payload.defaultInfo.contactNumber
             }    
         },
         removeClient(state,id){

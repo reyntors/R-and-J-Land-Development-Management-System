@@ -178,17 +178,12 @@ export const retrieveSpecificScannedFile = async (id,filename) => {
 
 //start profile
 export const updateUserProfile = async (payload) => {
-    // console.log('API updateUserProfil executed')
-    const data = {
-        ...payload.additionalInfo,
-        ...payload.defaultInfo
-    }
-    console.log(data)
+    // console.log('API updateUserProfile executed')
+    console.log(payload.data)
 
-    // console.log(payload.data)
     const token =store.getters['auth/getTokenID']
     try{
-        const response = await axios.put(`${BASE_URL}users/update-user/${payload.id}`,data,{
+        const response = await axios.put(`${BASE_URL}users/update-user/${payload.id}`,payload.data,{
             headers:{
                 'Authorization': `Bearer ${token}`,
             },

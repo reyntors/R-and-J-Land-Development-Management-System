@@ -20,6 +20,11 @@
         <br>
         <p>{{ obj.context }}</p>
 
+        <div v-if="obj.otherContext">
+            <other-context :context="obj.otherContext"></other-context>
+        </div>
+
+
     </article>
 
     <hr>
@@ -28,6 +33,7 @@
         <span v-if="obj.subject === 'Request to update the data' && obj.userId" class="approve-decline">
            <button @click="approveRequest('approved')">Approve</button> 
            <button @click="approveRequest('rejected')">Reject</button> 
+           <button>Reviewed</button>
         </span>
         <span v-else> 
             <button @click="mark(obj.inquiryId)" v-if="!obj.mark">Mark read <font-awesome-icon :icon="['fas', 'envelope-circle-check']" /></button>
@@ -44,9 +50,11 @@
 
 <script>
 import { toast } from 'vue3-toastify'
+import OtherContext from './OtherContext.vue'
 export default {
     emits: ['exit'],
     props: ['obj','class-name'],
+    components: {OtherContext},
     data(){
         return{
             isLoading: false,
@@ -80,7 +88,12 @@ export default {
         },
         async approveRequest(status){
             try{
-                const response = await this.$store.dispatch('inquiries/approveUpdateRequest',{id:this.obj.userId,status:status})
+                const response = await this.$store.dispatch('inquiries/approveUpdateRequest',{
+                    userId:this.obj.userId,
+                    requestId: this.obj.requestId,
+                    inquiryId: this.obj.inquiryId,
+                    status:status
+                })
                 toast.success(response)
             }catch(error){
                 toast.error(error)

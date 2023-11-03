@@ -7,7 +7,7 @@ export const requestDailyReport= async (payload) => {
     const token =store.getters['auth/getTokenID']
     console.log(token)
     try{
-        const response = await axios.get(`${BASE_URL}reports/daily-reports/2023-10-28`,{
+        const response = await axios.get(`${BASE_URL}reports/daily-reports/${payload.dateNow}`,{
             params:{selectedColumns: payload.selectedColumns},
             headers:{
                 'Authorization': `Bearer ${token}`,
@@ -66,7 +66,7 @@ export const requestCustomReport= async (payload) => {
     console.log('API requestCustomReport executed')
     const token =store.getters['auth/getTokenID']
     try{
-        const response = await axios.get(`https://node-mongodb-api-u5qu.onrender.com/reports/daily-reports/2023-10-28`,
+        const response = await axios.get(`https://node-mongodb-api-u5qu.onrender.com/reports/custom-reports`,
         {   params:{
                 startDate: payload.from,
                 endDate: payload.to,

@@ -148,7 +148,7 @@ export default{
             if(this.type === 'daily'){
                 try{
                    const response = await this.$store.dispatch('report/dailyRequest',{
-                    date: this.dateNow,
+                    dateNow: this.dateNow,
                     selectedColumns: this.filters
                    })
                    toast.success(response.message)
@@ -247,9 +247,9 @@ export default{
         if(this.type === 'daily'){
             return this.$store.getters['report/URLdailyfilenameReportGetter']
         }else if(this.type === 'weekly'){
-            return this.$store.getters['report/URLweeklyfilenameReportGette']
+            return this.$store.getters['report/URLweeklyfilenameReportGetter']
         }else if(this.type === 'monthly'){
-            return this.$store.getters['report/URLmonthlyfilenameReportGette']
+            return this.$store.getters['report/URLmonthlyfilenameReportGetter']
         }else{           
             return this.$store.getters['report/URLcustomfilenameReportGetter']
         }
@@ -266,6 +266,11 @@ export default{
         }
       }
     },
+    created(){
+        const dateNow = new Date();
+        const dateString = dateNow.toISOString().split('T')[0];
+        this.dateNow = dateString
+    }
 
 }
 </script>
@@ -388,7 +393,10 @@ tr:hover{
     height: 100%;
     background-color: rgba(0, 0, 0, 0.2);
 }
-/*
+.download{
+    display: flex;
+    gap: .5rem;
+}
 .download span{
     color: blue;
     text-decoration: underline;
@@ -400,5 +408,5 @@ tr:hover{
 .download span:active{
     color: rgba(0, 0, 0, 0.5);
     cursor: progress;
-} */
+}
 </style>

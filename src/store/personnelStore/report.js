@@ -33,6 +33,7 @@ export default {
             state.dailyReport = obj.list
         },
         setWeeklyReport(state,obj){
+            console.log(obj)
             state.URLweeklyfilenameReport = obj.url
             state.weeklyfilenameReport = obj.filename
             state.weeklyTotalAmount = obj.totalAmount
@@ -78,6 +79,7 @@ export default {
         async weeklyReport(context,payload){
             try{
                 const response = await API.requestWeeklyReport(payload)
+                console.log(response)
                 const file = await API.requestExcelFileReport(response.filename)
                 const blob = new Blob([file],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
                 const url = URL.createObjectURL(blob)

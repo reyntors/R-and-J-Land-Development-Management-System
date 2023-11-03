@@ -43,7 +43,7 @@ export default{
             try{
                 const response = await API.approveUpdateRequest(payload)
                 console.log(response)
-                return response
+                return response.message
             }catch(error){
                 console.error(error)
                 throw error

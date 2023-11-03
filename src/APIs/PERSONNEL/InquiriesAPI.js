@@ -31,10 +31,11 @@ export const markInquiry = async (id) => {
     }
 }
 export const approveUpdateRequest = async (payload) => {
+    console.log(payload)
     console.log('API approveUpdateRequest executed')
     const token =store.getters['auth/getTokenID']
     try{
-        const response = await axios.put(`${BASE_URL}users/approve-pending-update/${payload.id}`, 
+        const response = await axios.put(`${BASE_URL}users/approve-pending-update/${payload.userId}/${payload.requestId}/${payload.inquiryId}`, 
             {'isApproved':payload.status}, 
             {
             headers: {
