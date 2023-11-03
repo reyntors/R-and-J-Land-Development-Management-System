@@ -125,7 +125,7 @@ exports.addTransaction = async (req, res, next) => {
       // Save the updated user record
       await client.save();
 
-      console.log(client.contactNumber);
+     
 
       const newReportEntry = {
         date: newTransaction.date,
