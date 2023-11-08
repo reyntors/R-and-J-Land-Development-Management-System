@@ -26,9 +26,9 @@ router.get("/user-profile", auth.authenticateToken, userController.userProfile);
 router.post("/addletter", auth.authenticateToken, userController.restrict(['customer']), letter.createLetterOfIntent);
 router.post("/request-lot", auth.authenticateToken, userController.restrict(['customer']), lotController.reserveLotbyId);
 router.post("/add-call-slip", callSlipController.addCallSlip);
-router.get("/get-all-accounts", auth.authenticateToken, userController.restrict(['customer']), paymentDetailsController.getAllPaymentDetailsById);
-router.get("/get-account-settings", auth.authenticateToken, userController.restrict(['customer']), userController.getAccountSettings);
-router.put("/update-user-account", auth.authenticateToken, userController.restrict(['customer']), userController.updateUserAccount);
+router.get("/get-all-accounts", auth.authenticateToken, userController.restrict(['customer','realtor']), paymentDetailsController.getAllPaymentDetailsById);
+router.get("/get-account-settings", auth.authenticateToken, userController.restrict(['customer','realtor']), userController.getAccountSettings);
+router.put("/update-user-account", auth.authenticateToken, userController.restrict(['customer','realtor']), userController.updateUserAccount);
 router.post("/forgot-password", userController.forgotPassword);
 router.put("/reset-password", userController.resetPassword);
 
