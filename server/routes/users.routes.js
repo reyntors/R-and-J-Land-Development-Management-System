@@ -36,7 +36,7 @@ router.put("/reset-password", userController.resetPassword);
 //staff
 router.post("/addnewclient", auth.authenticateToken, userController.restrict(['staff','management']), userController.register);
 router.get("/:id?", auth.authenticateToken, userController.restrict(['customer','staff','management']), userController.getUserDetails);
-router.post("/update-user", auth.authenticateToken, userController.restrict(['customer','staff','management']), userController.updateUser);
+router.post("/update-user", auth.authenticateToken, userController.restrict(['realtor','customer','staff','management']), userController.updateUser);
 router.put("/update-user/:id", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserDetails);
 router.put("/approve-pending-update/:userId/:requestId/:inquiryId", auth.authenticateToken, userController.restrict(['staff','management']), userController.approveUserUpdate);
 
