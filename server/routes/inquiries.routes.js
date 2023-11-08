@@ -5,8 +5,8 @@ const userController = require("../controllers/users.controller");
 const inquiriesController = require('../controllers/inquiries.controller')
 
 //FOR STAFF ONLY
-router.get('/all-inquiries', auth.authenticateToken, userController.restrict(['staff','admin']), inquiriesController.getAllInquiry)
-router.put('/update-mark/:inquiryId', auth.authenticateToken, userController.restrict(['staff','admin']), inquiriesController.updateEnquirybyId)
+router.get('/all-inquiries', auth.authenticateToken, userController.restrict(['staff','management']), inquiriesController.getAllInquiry)
+router.put('/update-mark/:inquiryId', auth.authenticateToken, userController.restrict(['staff','management']), inquiriesController.updateEnquirybyId)
 
 
 

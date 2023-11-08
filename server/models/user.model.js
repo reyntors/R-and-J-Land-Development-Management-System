@@ -934,8 +934,8 @@ const userSchema = new Schema({
     },
     roles: {
         type: String,
-        enum: ['guest', 'staff', 'admin', 'realtor'],
-        default: 'guest' 
+        enum: ['customer', 'staff', 'management', 'realtor'],
+        default: 'customer' 
     },
 
     date: {
