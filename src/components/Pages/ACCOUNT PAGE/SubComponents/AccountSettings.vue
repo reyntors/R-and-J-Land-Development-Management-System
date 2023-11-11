@@ -207,8 +207,10 @@ export default {
             this.paswordMatchBool = false
          }
       }
+   },
+   mounted(){
+      console.log('created setttings')
    }
-
 }
 </script>
 

@@ -225,7 +225,7 @@ export default {
     }
   },
   created(){
-    console.log(this.profile)
+    // console.log(this.profile)
     this.myProfile = {...this.profile}
   },
   watch:{

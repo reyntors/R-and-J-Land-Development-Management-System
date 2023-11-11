@@ -157,7 +157,7 @@ export default {
                 username: this.signUpUsername,
                 password: this.signUpPasswordRepeat,
                 // organizaton: this.signUploginRole,
-                // roles: this.signUpTypeUser
+                roles: this.signUpTypeUser
                 }
     
                 try{

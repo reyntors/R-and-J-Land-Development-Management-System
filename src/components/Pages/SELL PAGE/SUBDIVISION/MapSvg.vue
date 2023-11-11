@@ -2,11 +2,11 @@
 <div>
   <svg width="1500" height="904" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="subdivision">
-    <rect id="Rectangle 1" x="106.5" y="383.5" width="332" height="208" fill="white" stroke="black" :class="{aw: true}"/>
+    <rect  id="Rectangle 1" x="106.5" y="383.5" width="332" height="208" fill="white" stroke="black" :class="{aw: true}"/>
     <path id="Rectangle 2" d="M106.5 301.5H438.5V344.5H106.5V301.5Z" fill="white" stroke="black"/>
     <path id="Rectangle 3" d="M106.5 630.5H438.5V673.5H106.5V630.5Z" fill="white" stroke="black"/>
-    <rect id="lot1" x="484.5" y="383.5" width="29" height="29" fill="white" stroke="black"/>
-    <rect id="lot2" x="484.5" y="413.5" width="29" height="29" fill="white" stroke="black"/>
+    <rect @click="print('lot1')" id="lot1" x="484.5" y="383.5" width="29" height="29" fill="white" stroke="black"/>
+    <rect @click="print('lot2')" id="lot2" x="484.5" y="413.5" width="29" height="29" fill="white" stroke="black"/>
     <rect id="lot3" x="484.5" y="443.5" width="29" height="29" fill="white" stroke="black"/>
     <rect id="lot4" x="484.5" y="473.5" width="29" height="29" fill="white" stroke="black"/>
     <rect id="lot5" x="484.5" y="503.5" width="29" height="29" fill="white" stroke="black"/>
@@ -273,6 +273,7 @@
     </g>
     </g>
   </svg>  
+
 </div>
 
 
@@ -280,7 +281,11 @@
 
 <script>
 export default {
-
+  methods:{
+    print(text){
+      console.log(text)
+    }
+  }
 }
 </script>
 

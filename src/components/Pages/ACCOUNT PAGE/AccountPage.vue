@@ -6,9 +6,10 @@
       <ul>
         <li class="fw-bold"><p>User Settings</p></li>
         <li class="tab" @click="navigateTo('settings')" :class="{focus:accountSettings}"><p>Settings</p></li>
-        <li class="tab" @click="navigateTo('my-account')" :class="{focus:accountMyAccount}"><p>My Account</p></li>
+        <li class="tab" @click="navigateTo('my-account')" :class="{focus:accountMyAccount}" v-if="!roleRealtorComputed"><p>My Account</p></li>
         <li class="tab" @click="navigateTo('profile')" :class="{focus:accountProfile}"><p>Profile</p></li>
-        <li class="tab" @click="navigateTo('submitted-forms')" :class="{focus:accountSubmittedForms}"><p>Submitted Forms</p></li>
+        <li class="tab" @click="navigateTo('submitted-forms')" :class="{focus:accountSubmittedForms}" v-if="!roleRealtorComputed"><p>Submitted Forms</p></li>
+        <li class="tab" @click="navigateTo('client-list')" :class="{focus:accountClients}" v-if="roleRealtorComputed"><p>Client List</p></li>
       </ul> 
     </section>
 
@@ -17,6 +18,7 @@
         <account-details v-if="focus === 'my-account' && myAccount" :account="myAccount"></account-details>
         <account-profile v-if="focus=== 'profile' && myProfile" :profile="myProfile"></account-profile>
         <account-forms v-if="focus === 'submitted-forms' && submittedForms" :formLists="submittedForms"></account-forms> 
+        <client-list v-if="focus === 'client-list' && clientList"></client-list>
     </section>
   </div>
 
@@ -28,12 +30,14 @@ import AccountProfile from './SubComponents/AccountProfile.vue'
 import AccountForms from './SubComponents/AccountSubmittedForms.vue'
 import AccountDetails from './SubComponents/AccountDetails.vue'
 import AccountSettings from './SubComponents/AccountSettings.vue'
+import ClientList from './SubComponents/ClientList.vue'
 export default {
   components: { 
     AccountProfile,
     AccountForms,
     AccountDetails,
-    AccountSettings
+    AccountSettings,
+    ClientList
   },
   data(){
     return{
@@ -78,10 +82,21 @@ export default {
         return false
       }
     },
+    clientList(){
+      if(this.focus === 'client-list'){
+        return true
+      }else{
+        return false
+      }
+    },
+    roleRealtorComputed(){
+      return this.$store.getters['auth/authorizationRealtor']
+    }
   },
   async beforeCreate(){
 
     const id = this.$store.getters['auth/getUserId']
+    const isRealtor = this.$store.getters['auth/authorizationRealtor']
 
     //init request for getting porfile settings
     await this.$store.dispatch('mySettings/getMyAccountSettings')
@@ -91,13 +106,20 @@ export default {
     await this.$store.dispatch('myProfile/getMyDetails',id) 
     this.myProfile = this.$store.getters['myProfile/myProfileDetailsGetter']
 
-    //init request for getting account details
-    await this.$store.dispatch('myAccount/getMyAccountDetails')
-    this.myAccount = this.$store.getters['myAccount/myAccountDetailsGetter']
+    
+    if(!isRealtor){
+      //init request for getting account details
+      await this.$store.dispatch('myAccount/getMyAccountDetails')
+      this.myAccount = this.$store.getters['myAccount/myAccountDetailsGetter']
 
-    //init request for getting the list of submitted forms
-    await this.$store.dispatch('mySubmittedForms/listSubmittedForms',id)
-    this.submittedForms = this.$store.getters['mySubmittedForms/setSubmittedFormsGetters']
+       //init request for getting the list of submitted forms
+      await this.$store.dispatch('mySubmittedForms/listSubmittedForms',id)
+      this.submittedForms = this.$store.getters['mySubmittedForms/setSubmittedFormsGetters']
+    
+    }else{
+      await this.$store.dispatch('client/getPendingList')
+    }
+
   }
 }
 </script>

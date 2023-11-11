@@ -18,7 +18,7 @@ export default{
             console.log('getMyAccountSettings Store executed')
             try{
                 const response = await API.myAccountSettings()
-                console.log(response)
+                // console.log(response)
                 context.commit('setMyAccountSettings',response.data)
             }catch(error){
                 console.error(error)
@@ -26,7 +26,7 @@ export default{
         },
         async updateMyAccountSettings(_,payload){
             console.log('updateMyAccountSettings Store executed')
-            console.log(payload)
+            // console.log(payload)
             const form = new FormData()
             if(payload.image){
                 form.append('image',payload.image)

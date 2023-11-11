@@ -121,7 +121,7 @@ export default {
         },
         authorizationRoleGuest(state){
             if(state.role && state.tokenID){
-                if(state.role === 'guest'){
+                if(state.role === 'customer' || state.role === 'realtor'){
                     return true
                 }else{
                     return false
@@ -143,7 +143,7 @@ export default {
         },
         authorizationRoleAdmin(state){
             if(state.role && state.tokenID){
-                if(state.role === 'admin'){
+                if(state.role === ''){
                     return true
                 }else{
                     return false
@@ -154,7 +154,7 @@ export default {
         },
         authorizationPersonnel(state){
             if(state.role && state.tokenID){
-                if(state.role !== 'guest'){
+                if(state.role !== 'customer' && state.role !== 'realtor'){
                     return true
                 }else{
                     return false
@@ -172,6 +172,16 @@ export default {
                 }
             }else{
                 return 'SOMETHING UNKNONW'
+            }
+        },
+
+        authorizationRealtor(state){
+            if(state.role && state.tokenID){
+                if(state.role === 'realtor'){
+                    return true
+                }else{
+                    return false
+                }
             }
         },
 

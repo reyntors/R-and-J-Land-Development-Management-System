@@ -21,9 +21,10 @@
               <div class="style-form">
                   <select v-model="roles">
                     <option value="" disabled selected>Please select a role</option>
-                    <option value="guest">Guest</option>
+                    <option value="realtor">Realtor</option>
+                    <option value="customer">Customer</option>
                     <option value="staff">Staff</option>
-                    <option value="admin">Admin</option>
+                    <option value="admin">Management</option>
                   </select>
               </div>
   
@@ -61,7 +62,7 @@ export default {
       //login
       loginUsername: '',
       loginPassword: '',
-      roles: 'guest',
+      roles: 'customer',
     }
   },
   methods:{

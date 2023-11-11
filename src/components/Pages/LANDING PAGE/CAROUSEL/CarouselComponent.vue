@@ -18,8 +18,9 @@
         
         <h1 class="title">R & J Land Development Corporation</h1>
         
-        <span>
+        <span class="redirect-buttons">
           <button class="clickme fw-bold" @click="reserveNow">Reserve Now</button>
+          <button class="clickme fw-bold" @click="inquireNow">Inquire Now</button>
         </span>
         
       </div>
@@ -69,12 +70,21 @@ export default {
   methods: {
     reserveNow(){
       this.$router.push('/sell')
+    },
+    inquireNow(){
+      this.$router.push('/inquire')
     }
   }
 }
 </script>
 
 <style scoped>
+.redirect-buttons{
+  display: flex;
+  gap: .5rem;
+  /* border: 1px solid white; */
+  justify-content: center;
+}
 .title-cont{
   width: 70%;
   position: absolute;
