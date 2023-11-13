@@ -13,10 +13,11 @@ import AccountPage from './components/Pages/ACCOUNT PAGE/AccountPage.vue'
 
 //GUEST FORMS NEW PAGE
 import GuestFormPage from './components/Pages/FORM PAGE/GuestFormPage.vue'
-import GuestLetterOfIntent from './components/Forms Used/LetterOfIntent.vue'
+import GuestLetterOfIntent from './components/Forms Used/LetterOfIntent.vue' //used
 import GuestContractDetails from './components/Pages/FORM PAGE/GuestForms/GuestContractDetails.vue'
 import GuestBIRtinRequest from './components/Pages/FORM PAGE/GuestForms/GuestBirTinRequest.vue'
 import GuestIndividualBuyerDeclaration from './components/Pages/FORM PAGE/GuestForms/GuestIndividualBuyerDeclaration.vue'
+import BuyerInfoSheet from './components/Forms Used/BuyerInfoSheet.vue'
 
 //ADMIN & STAFF PAGE
 import PersonnelHomePage from './components/Pages/PERSONNEL PAGE/PersonnelPage.vue'
@@ -45,7 +46,8 @@ const route = createRouter({
             //guest authorized
             {path:'/account', component: AccountPage, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms', component: GuestFormPage, meta: {requiresAuthGuest: true}},
-            {path:'/guest-forms/letter-of-intent', component: GuestLetterOfIntent, meta: {requiresAuthGuest: true}},
+            {path:'/guest-forms/letter-of-intent', component: GuestLetterOfIntent, meta: {requiresAuthGuest: true}}, //used
+            {path:'/guest-forms/buyer-info-sheet', component: BuyerInfoSheet, meta: {requiresAuthGuest: true}}, //used
             {path:'/guest-forms/contract-details', component: GuestContractDetails, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/bir-tin-request', component: GuestBIRtinRequest, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/individual-buyer-declaration', component: GuestIndividualBuyerDeclaration, meta: {requiresAuthGuest: true}},

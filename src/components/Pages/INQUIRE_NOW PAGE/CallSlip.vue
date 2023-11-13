@@ -1,102 +1,111 @@
 <template>
-    <form-card title="Call Slip">
+    <form-card title="Inquire Now">
       <div class="call-slip">
-<br>
-        <p style="text-align: end;">Date: <input type="date" v-model="date"></p>
-<br>
-        <div class="prospect-name">
-          Prospect's Name:
-          <span>
-            <input placeholder="Lastname" v-model="lastName">
-            <input placeholder="Firstname" v-model="firstName">
-            <input placeholder="Middle" v-model="middleName">
-          </span>
-        </div>
-<br>
-        <div class="spouse">
-          Spouse Name (if married)
-          <span>
-            <input placeholder="Spouse fullname" v-model="spouseName">
-          </span>
-        </div>
-<br>
-        <div class="contact">
-          Contact Numbers: 
-          <span>Tel No.</span><input v-model="telNumber">
-          <span>Mobile</span><input v-model="contactNumber">
-          <span>Email Address</span><input v-model="email">
-        </div>
-<br>
-        <div>
-          <p>Prospect/s interested in:</p>
-          <div>
-            <p>Prospects from:</p>
-            <div class="checkboxes-cont">
-              <section class="checkbox-item">
-                <input type="checkbox" id="check-1" value="regular rospect" v-model="prospects"> <label for="check-1">regular prospect</label></section>
-              <section class="checkbox-item">
-                <input type="checkbox" id="check-2" value="referral" v-model="prospects"> <label for="check-2">referral</label></section>
-              <section class="checkbox-item">
-                <input type="checkbox" id="check-3" value="open house" v-model="prospects"> <label for="check-3">open house</label></section>
-              <section class="checkbox-item">
-                <input type="checkbox" id="check-4" value="office-in-charge" v-model="prospects"> <label for="check-4">office-in-charge</label></section>
-              <section class="checkbox-item">
-                <input type="checkbox" id="check-5" value="fb/website" v-model="prospects"> <label for="check-5">fb/website</label></section>
-              <section class="checkbox-item">
-                <input type="checkbox" id="check-6" value="mall exhibits" v-model="prospects"> <label for="check-6">mall exhibits</label></section>           
-            </div>
-          </div>
-        </div>
- <br>
-  <!--      <div class="signature-cont">
-          
-          <div class="grid-item">
-            <div>
-              <span class="label">Signed By:</span>
-              <span class="underline"></span>
-            </div>
-            <div>
-              <span class="label"></span>
-              <div class="underline-text">Prospect Buyer</div>
-            </div> 
-          </div>
 
-          <div class="grid-item">
-            <div>
-              <span class="label">Submitted By:</span>
-              <span class="underline"></span>
-            </div>
-            <div>
-              <span class="label"></span>
-              <div class="underline-text">Real Estate Broker</div>
-            </div> 
-          </div>
+        <div class="mt-3">
+          <p style="text-align: end;">Date: <strong>{{ dateNow }}</strong> </p>
+        </div>
+        
 
-          <div class="grid-item">
-            <div>
-              <span class="label">Received By:</span>
-              <span class="underline"></span>
+<!-- name -->
+        <div class="mb-3">
+          <label class="form-label">Prosepect's Name:</label>
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="floatingInput" placeholder="filipino" v-model="lastName">
+                <label for="floatingInput"><span>*</span> Last Name:</label>
+              </div>
             </div>
-            <div>
-              <span class="label"></span>
-              <div class="underline-text"><p>Signature/Date/Time</p><p>Sales Staff</p></div>
-            </div> 
-          </div>
-          
-          <div class="grid-item">
-            <div>
-              <span class="label">Noted By:</span>
-              <span class="underline"></span>
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="floatingInput" placeholder="filipino" v-model="firstName">
+                <label for="floatingInput"><span>*</span> First Name:</label>
+              </div>
             </div>
-            <div>
-              <span class="label"></span>
-              <div class="underline-text"><p><strong>JESSSA MAED D. SISI</strong></p><p>Sales Manager</p></div>
-            </div> 
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="floatingInput" placeholder="filipino" v-model="middleName">
+                <label for="floatingInput"><span>*</span> Middle Name:</label>
+              </div>
+            </div>
           </div>
-          
-        </div> -->
+        </div>
+<!-- spouse -->
+        <div class="mb-3">
+          <label for="spouseName" class="form-label">Spouse Name (if married)</label>
+          <input type="text" class="form-control" id="spouseName" placeholder="Juan dela Cruz" v-model="spouseName">
+        </div>
 
-      </div>
+        <div class="mb-3">
+          <label class="form-label">Contact Numbers: </label>
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="floatingInput" placeholder="filipino">
+                <label for="floatingInput"><span>*</span> Messenger Account:</label>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                <input type="text" class="form-control" id="floatingInput" placeholder="filipino" v-model="middleName">
+                <label for="floatingInput"><span>*</span> Mobile No:</label>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                <input type="email" class="form-control" id="floatingInput" placeholder="filipino" v-model="middleName">
+                <label for="floatingInput"><span>*</span> Email Address:</label>
+              </div>
+            </div>
+          </div>
+        </div>
+<!-- prospect interested -->
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Prospect/s interested in </label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+        </div>
+<!-- prospects from-->
+        <div class="">
+          <label class="form-label">Prospects from: </label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="regular prospect" id="regular-prospect" v-model="prospects">
+            <label class="form-check-label" for="regular-prospect">
+              Regular Prospect
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="referral" id="refferal" v-model="prospects">
+            <label class="form-check-label" for="refferal">
+              Referral
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="open house" id="open-house" v-model="prospects">
+            <label class="form-check-label" for="open-house">
+              Open House
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="office in charge" id="office-in-charge" v-model="prospects">
+            <label class="form-check-label" for="office-in-charge">
+              Office-in-Charge
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="fb/website" id="fb-website" v-model="prospects">
+            <label class="form-check-label" for="fb-website">
+              FB/Website
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="mall exhibits" id="mall-exhibits" v-model="prospects">
+            <label class="form-check-label" for="mall-exhibits">
+              Mall Exhibits
+            </label>
+          </div>
+        </div>
+   </div>
 
       <submit-form-button @click="submitCallSlip">Submit</submit-form-button>
     </form-card>
@@ -107,7 +116,7 @@ import { toast } from 'vue3-toastify'
 export default {
   data(){
     return{
-      date : "",
+      dateNow : null,
       lastName : "",
       firstName : "",
       middleName : "",
@@ -121,7 +130,7 @@ export default {
   methods:{
     getData(){
       return{
-        date : this.date,
+        date : this.dateNow ,
         lastName : this.lastName,
         firstName : this.firstName,
         middleName : this.middleName,
@@ -141,6 +150,11 @@ export default {
         toast.error(error)
       }
     }
+  },
+  created(){
+    const dateNow = new Date();
+    const dateString = dateNow.toISOString().split('T')[0];
+    this.dateNow = dateString
   }
 
 }

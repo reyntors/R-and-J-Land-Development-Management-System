@@ -16,10 +16,9 @@ export default {
 .card-container{
     width: 90%;
     height: auto;
-    /* outline: 1px solid black;
-    box-shadow: 0 0 2px 1px black; */
     padding: 1rem;
     margin: 1rem auto;
+    /* border: 1px solid black; */
 }
 .title{
     text-align: center;

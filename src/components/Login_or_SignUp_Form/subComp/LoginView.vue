@@ -24,7 +24,7 @@
                     <option value="realtor">Realtor</option>
                     <option value="customer">Customer</option>
                     <option value="staff">Staff</option>
-                    <option value="admin">Management</option>
+                    <option value="management">Management</option>
                   </select>
               </div>
   

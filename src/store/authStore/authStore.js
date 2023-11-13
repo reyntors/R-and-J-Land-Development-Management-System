@@ -143,7 +143,7 @@ export default {
         },
         authorizationRoleAdmin(state){
             if(state.role && state.tokenID){
-                if(state.role === ''){
+                if(state.role === 'management'){
                     return true
                 }else{
                     return false

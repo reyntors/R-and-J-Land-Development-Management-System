@@ -25,16 +25,15 @@
         <section class=" input">
             <label>TOTAL AMOUNT:</label><input v-model="totalAmt" readonly>
         </section>
-        <textarea placeholder="leave a message here..." v-model.trim="message" :class="{error:notAllowedSubmit}"></textarea>
-        <button @click="inquireNow" :disabled="disableButton">Reserve</button>
+        <section class="button">
+            <button @click="inquireNow" :disabled="disableButton">{{ buttonText }}</button>
+        </section>    
     </div>
 
-    <progress-loading v-if="isLoading" type="spin"/>
   </div>
 </template>
 
 <script>
-import { toast } from 'vue3-toastify'
 import SelectSwipe from './SelectSwipe.vue'
 export default {
     props: ['item'],
@@ -47,10 +46,8 @@ export default {
             status: this.item.status,
             totalAmt: this.item.totalAmountDue,
 
-            message: '',
             notAllowedSubmit: false,
 
-            isLoading: false,
         }
     },
 
@@ -65,31 +62,16 @@ export default {
                 totalSqm: this.item.totalSqm,
                 amountperSquare: this.item.amountperSquare,
                 totalAmountDue: this.item.totalAmountDue,
-                message: this.message
             }
         },
 
         async inquireNow(){
-            if(this.message.length > 10){
-                const isGuest = this.$store.getters['auth/authorizationRoleGuest']
-                if(isGuest){
+            const isGuest = this.$store.getters['auth/authorizationRoleGuest']
+            if(isGuest){
                     this.$router.push('/guest-forms/letter-of-intent')
-                // console.log('submiting the request')
-                //     const payload = this.getAllData()
-                //     this.isLoading = true
-                //     try{
-                //         const response = await this.$store.dispatch('subdivision/reserveSubdivision',payload)
-                //         this.close()
-                //         toast.success(response.message)
-                //     }catch(error){
-                //         toast.error(error)
-                //     }
-                }else{
-                this.$store.commit('auth/toggleLoginForm',true)
-                }
             }else{
-                toast.warning('message too short')
-            }
+                this.$store.commit('auth/toggleLoginForm',true)
+            }  
         }
     },
 
@@ -99,6 +81,13 @@ export default {
                 return true
             }else{
                 return false
+            }
+        },
+        buttonText(){
+            if(this.item.status !== 'sale'){
+                return "Not Available"
+            }else{
+                return "Reserve Now"
             }
         }
     }
@@ -148,7 +137,36 @@ export default {
     align-items: center;
     padding-left: .5rem;
 }
-.labels button{
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button{
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 5px;
+  background-color: rgba(255, 217, 0, 0.797);
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+  animation: blink ease-in 1s infinite both alternate;
+}
+button:hover{
+  background-color: red;
+  color: white;
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2), 0 0 3px 1px rgba(255, 255, 255, 0.2);
+}
+@keyframes blink {
+  0%{
+    /* box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2); */
+    outline: 2px solid white;
+  }
+  100%{
+    outline: 2px solid rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 0 1px 2px rgba(255, 217, 0, 0.515); */
+  }
+}
+/* .labels button{
     width: 100%;
     outline: none;
     border: none;
@@ -158,7 +176,7 @@ export default {
 }
 .labels button:active{
     background-color: #84d9169f;
-}
+} */
 
 label{
     white-space: nowrap;

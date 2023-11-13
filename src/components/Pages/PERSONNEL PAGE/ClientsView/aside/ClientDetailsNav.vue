@@ -14,6 +14,8 @@
 
           <button :class="{flat:clientFormsVisibleComputed}" @click="goto('forms')">Forms</button>
 
+          <button :class="{flat:clientReservationFormVisible}" @click="goto('reservation-form')">Reservation Form</button>
+
         </div>
 
         <div>
@@ -27,6 +29,7 @@
            <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" :clientID="clientObj.userId"/>
           <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj" :clientID="clientObj.userId"/>
          <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
+         <client-reservation v-if="clientReservationFormVisible"></client-reservation>
     </section>
   </div>
 </template>
@@ -35,19 +38,22 @@
 import ClientPayment from '../article/PAYMENT/PaymentDetails.vue';
 import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
 import ClientForms from '../article/FORMS/FormsDetails.vue'
+import ClientReservation from '@/components/Forms Used/ReservationAgreement.vue'
 import { toast } from 'vue3-toastify';
 export default {
   props: ['clientObj'],
   components: {
     ClientProfile,
     ClientForms,
-    ClientPayment
+    ClientPayment,
+    ClientReservation,
   },
   data(){
     return{
       clientProfileVisible: true,
       clientPaymentVisible: false,
       clientFormsVisible: false,
+      clientReservationFormVisible: false,
     }
   },
 
@@ -61,14 +67,17 @@ export default {
         this.clientProfileVisible = true
       }else if(params === 'payment'){
         this.clientPaymentVisible = true
-      }else{
+      }else if(params === 'forms'){
         this.clientFormsVisible = true
+      }else{
+        this.clientReservationFormVisible = true
       }
     },
     reset(){
       this.clientProfileVisible = false
       this.clientPaymentVisible = false
       this.clientFormsVisible = false
+      this.clientReservationFormVisible = false
     },
 
     //delete

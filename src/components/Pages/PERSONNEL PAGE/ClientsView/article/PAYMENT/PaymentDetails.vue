@@ -68,6 +68,7 @@
               <td>AMOUNT RECEIVED</td>
               <td>PURPOSE</td>
               <td>ATTACHMENTS</td>
+              <td v-if="roleAdmin">OPTION</td>
             </tr>
               <tr v-if="isTransactionEmpty">
                 <td colspan="4"><h6 >No history</h6></td>
@@ -79,7 +80,7 @@
                   <td>{{ transaction.amount }}</td>
                   <td>{{ transaction.purpose }}</td>
                   <td><a :href="transaction.attachments[0].url" :download="transaction.attachments[0].filename">{{ transaction.attachments[0].filename }}</a></td>
-                  <!-- <td>{{ transaction.attachments[0].filename }}</td> -->
+                  <td v-if="roleAdmin">Edit/Delete</td>
                 </tr>
               </tbody>            
             <!-- {{ paymentTransaction }} -->
@@ -156,6 +157,9 @@ export default {
           const listClients =  this.$store.getters['client/clientsGetter']
           const index = listClients.findIndex(item => item.userId === this.clientID)
           return listClients[index]
+      },
+      roleAdmin(){
+        return this.$store.getters['auth/authorizationRoleAdmin']
       }
     },
     mounted(){

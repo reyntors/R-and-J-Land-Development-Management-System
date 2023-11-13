@@ -1,69 +1,19 @@
 <template>
-    <form-card title="Reservation Agreement Lot Only">
-    <!-- <div class="address">>
-        <p>THE MANAGEMENT</p>
-        <p>Asloms Development and Investment Corporation</p>
-        <p>328 A. Bonifcacin St. Davao City</p>
+    <form-card id="reservation-agreement"  title="Reservation Agreement Lot Only">
+    <div class="address">
+        <strong>THE MANAGEMENT</strong>
+        <p>{{ companyName }}</p>
+        <p>{{ companyAddress }}</p>
     </div>
 
     <div class="gentlemen">
         <p>GentleMen:</p>
         <p>I <input v-model.trim="name"> hereby reserve for a parcel of land at <input v-model.trim="land_at">, situated
-           at <input v-model.trim="situated_at">, Davao City, Philippines with the following specifation
-           and payment terms</p>
-    </div> -->
+           at <input v-model.trim="situated_at">, Philippines with the following specifation
+           and payment terms:</p>
+    </div>
 
-    <!-- <div class="grid">
-        <section class="grid-item">
-            <header>Phase</header>
-            <input v-model.trim="phase_1">
-            <input v-model.trim="phase_2">
-            <input v-model.trim="phase_3">
-        </section>
-        <section class="grid-item">
-            <header>Block</header>
-            <input v-model.trim="block_1">
-            <input v-model.trim="block_2">
-            <input v-model.trim="block_3">
-        </section>
-        <section class="grid-item">
-            <header>Lot</header>
-            <input v-model.trim="lot_1">
-            <input v-model.trim="lot_2">
-            <input v-model.trim="lot_3">
-        </section>
-        <section class="grid-item">
-            <header>Area</header>
-            <input v-model.trim="area_1">
-            <input v-model.trim="area_2">
-            <input v-model.trim="area_3">
-        </section>
-        <section class="grid-item">
-            <header>Price/sq.m.</header>
-            <input v-model.trim="price_per_sq_1">
-            <input v-model.trim="price_per_sq_2">
-            <input v-model.trim="price_per_sq_3">
-        </section>
-        <section class="grid-item">
-            <header>Contract Price</header>
-            <input v-model.trim="contract_price_1">
-            <input v-model.trim="contract_price_2">
-            <input v-model.trim="contract_price_3">
-        </section>
-        <section class="grid-item">
-            <header>Discount</header>
-            <input v-model.trim="discount_1">
-            <input v-model.trim="discount_2">
-            <input v-model.trim="discount_3">
-        </section>
-        <section class="grid-item">
-            <header>Down Payment</header>
-            <input v-model.trim="downpayment_1">
-            <input v-model.trim="downpayment_2">
-            <input v-model.trim="downpayment_3">
-        </section>
-    </div> -->
-    <div class="table-cont"> 
+    <div class="table-cont mt-3"> 
         <table>
             <tr>
                 <th>Phase</th>
@@ -86,29 +36,57 @@
                     <td><input></td>
                     <td><input></td>
                 </tr>
+                <tr>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                </tr>
+                <tr>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                </tr>
             </tbody>
         </table>        
     </div>
 
+    <div class="mt-2 mb-2"> 
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="cashPayment">
+            <label class="form-check-label" for="cashPayment">
+                Cash Payment
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="installmentPayment" checked>
+            <label class="form-check-label" for="installmentPayment">
+                Installment Payment
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="zeroDownPayment">
+            <label class="form-check-label" for="zeroDownPayment">
+                Zero Down Payment
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="other" checked>
+            <label class="form-check-label" for="other">
+               Other
+            </label>
+        </div>        
+    </div>
 
-    <!-- <div class="checkboxes">
-        <section>
-            <input type="radio" id="opt1" value="cash term" v-model="checkbox">
-            <label for="opt1">CASH TERM</label>
-        </section>
-        <section>
-            <input type="radio" id="opt2" value="installment payment" v-model="checkbox">
-            <label for="opt2">INSTALLMENT PAYMENT</label>
-        </section>
-        <section>
-            <input type="radio" id="opt3" value="deffered downpayment" v-model="checkbox">
-            <label for="opt3">DEFFERED DOWNPAYMENT</label>
-        </section>
-        <section>
-            <input type="radio" :value="other" v-model="checkbox"><input type="text" v-model.trim="other">
-        </section>
-    </div> -->
-<!-- 
     <p>The following sets out the basic terms upon which I/We would be prepared to purchase the
         property above-mentioned. The terms are not comprehensive and I/We expect that additional
         terms will be  incorporated into a formal agreement (Contract to Sell/ Deed of Absolute Sale).
@@ -314,7 +292,7 @@
         </section>
     </div>
 
-    -->
+   
     </form-card>
 </template>
 
@@ -363,29 +341,50 @@ export default{
         show(){
             console.log(this.phase)
         }
-    }
+    },
+    computed: {
+        companyName(){
+        return this.$store.getters.companyName
+        },
+        companyAddress(){
+        return this.$store.getters.companyAddress
+        }
+    },
 }
 
 </script>
 
 <style scoped>
-table{
+#reservation-agreement{
     width: 100%;
-    overflow: auto;
-    min-width: 800px;
 }
 th{
+    text-align: center;
+    white-space: nowrap;
+    padding: 0 .5rem;
+}
+td{
+    border-right: 1px solid black;
+}
+tr{
     border: 1px solid black;
 }
 .table-cont{
     overflow-x: auto;
+    /* min-width: 800px; */
+    border: 1px solid black;
 }
-td{
-    max-width: 100px;
-}
-input{
+
+.table-cont input{
     width: 100%;
+    border: none;
+    text-align: center;
+    padding: 5px .5rem;
 }
+.table-cont input:focus{
+    outline: none;
+}
+
 
 
 
@@ -417,16 +416,20 @@ p{
 .gentlemen input{
     border: none;
     border-bottom: 1px solid black;
+    text-align: center;
+}
+.gentlemen input:focus{
+    outline: none;
 }
 
 /*grid*/
-.grid{
+/* .grid{
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 10% 10% 10% 10% 15% 15% 15% 15%;
     margin-top: 1rem;
-}
-.grid-item{
+} */
+/* .grid-item{
     font-size: clamp(.5rem, 1vw, 1.5rem);
     display: flex;
     flex-direction: column;
@@ -441,9 +444,8 @@ p{
     word-wrap: break-word;
 }
 .grid-item input{
-    /* padding: 0.2rem 1rem; */
     text-align: center;
-}
+} */
 
 /* checkbox */
 .checkboxes{

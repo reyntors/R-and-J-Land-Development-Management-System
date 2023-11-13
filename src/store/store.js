@@ -36,8 +36,8 @@ const store = createStore({
         },
         state(){
             return{
-                companyName: 'R&J Land Development Corporation',
-                companyAddress: '329 Bonifacio St. Davao City',
+                companyName: 'R & J Land Development Corporation',
+                companyAddress: 'Sitio Buenavista, Barangay Matutungan, Sta. Cruz, Davao del Sur',
 
                 //header
                 homeID: '',

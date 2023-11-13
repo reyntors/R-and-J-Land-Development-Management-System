@@ -3,7 +3,7 @@ export default{
 
         state(){
             return {
-                isProfileShown: true,
+                isProfileShown: false,
             }
         },
         mutations:{

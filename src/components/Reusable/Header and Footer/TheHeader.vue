@@ -46,16 +46,20 @@
       <!-- <img :src="profile" style="object-fit:cover; width: 100px; height: 100px;"> -->
 
       <!-- show when log in as personnel -->
-      <div class="navStaffAdmin" v-if="authorizationPersonnel">
+      <!-- <div class="navStaffAdmin" v-if="authorizationPersonnel">
         <font-awesome-icon icon="fa-solid fa-circle-user" size="2x" /> <span></span><p>Welcome {{ authorizationPersonnelTEXT }}</p>
         <font-awesome-icon class="icon" v-if="!isShowStaffAdminColumnComputed" :icon="['fas', 'caret-down']" @click="toggleStaffAdminColumn" />
         <font-awesome-icon class="icon" v-if="isShowStaffAdminColumnComputed" :icon="['fas', 'caret-up']" @click="toggleStaffAdminColumn" />
         <div v-if="isShowStaffAdminColumnComputed">
-          <button>SOMETHING1</button>
-          <button>SOMETHING2</button>
+          <router-link to="/personnel/client">CLIENTS</router-link>
+          <router-link to="/personnel/subdivision">SUBDIVISION</router-link>
+          <router-link to="/personnel/inquiries">INQUIRIES</router-link>
+          <router-link to="/personnel/emptyForms">EMPTY FORMS</router-link>
+          <router-link to="/personnel/reports">REPORTS</router-link>
           <button @click="logout">LOG OUT</button>
         </div>  
-      </div>
+      </div> -->
+      <navigation-personnel v-if="authorizationPersonnel" @logout-now="logout"/>
 
       <!-- COLLUMN NAV-->
       <!-- show when loggedin as GUEST -->
@@ -75,6 +79,8 @@
   import ServicesDrop from './dropdowns/ServicesDrop.vue'
   import ProfileDrop from './dropdowns/ProfileDrop.vue'
 
+  import NavigationPersonnel from './personnel dropdowns/NavigationPersonnel.vue'
+
   import LoginForm from '@/components/Login_or_SignUp_Form/LoginForm.vue'
   import ColumnNav from '../Header Column/ColumnNav.vue'
   import logo from '@/assets/logo.png'
@@ -88,6 +94,7 @@
         AboutDrop,
         ServicesDrop,
         ProfileDrop,
+        NavigationPersonnel,
         // WeBuildDrop,
         // WeSellDrop,
         // WeProvideDrop,
@@ -107,7 +114,7 @@
         tryAuth: this.$store.state.auth.tokenID,
 
         //STAFF&ADMIN
-        isShowStaffAdminColumn: false,
+        // isShowStaffAdminColumn: false,
 
       }
     },
@@ -179,9 +186,9 @@
       toggleProfile(){
         this.$store.commit('personnel/togglePofileShow')
       },
-      toggleStaffAdminColumn(){
-        this.isShowStaffAdminColumn = !this.isShowStaffAdminColumn
-      },
+      // toggleStaffAdminColumn(){
+      //   this.isShowStaffAdminColumn = !this.isShowStaffAdminColumn
+      // },
       logout(){
         this.$store.commit('auth/eraseStoreState')
         this.$store.commit('auth/eraseLocalStorage')
@@ -230,9 +237,9 @@
       authorizationPersonnel(){
         return this.$store.getters['auth/authorizationPersonnel']
       },
-      authorizationPersonnelTEXT(){
-        return this.$store.getters['auth/authorizationPersonnelTEXT']
-      },
+      // authorizationPersonnelTEXT(){
+      //   return this.$store.getters['auth/authorizationPersonnelTEXT']
+      // },
       activeHomeAbout(){
         return this.homeNav ==='about'?true:false
       },
@@ -269,7 +276,7 @@
       align-items: center;
       padding: 0 1rem;
       background-color: white;
-      z-index: 2;
+      z-index: 3;
   }
   .header .logoStaffAdmin{
     display: flex;
@@ -335,7 +342,7 @@
   .bars:hover, .bars:active {
     border: .5px solid black;
   }
-  .navStaffAdmin{
+  /* .navStaffAdmin{
     display: flex;
     align-items: center;
     position: relative;
@@ -360,7 +367,7 @@
   .navStaffAdmin .icon:hover{
     scale: 1.8;
     transition: scale .1s ease-in;
-  }
+  } */
 
 
   @media screen and (max-width: 821px) {

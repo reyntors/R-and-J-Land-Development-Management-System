@@ -28,7 +28,7 @@ export default {
   font-family: 'Poppins';
 }
 p {
-  font-size: clamp(.5rem, 1.2vw, 1.5rem);
+  /* font-size: clamp(.5rem, 1.2vw, 1.5rem); */
   margin: 0;
 }
 h2{

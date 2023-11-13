@@ -13,6 +13,7 @@
         <router-link to="/personnel/inquiries">INQUIRIES</router-link>
         <router-link to="/personnel/emptyForms">EMPTY FORMS</router-link>
         <router-link to="/personnel/reports">REPORTS</router-link>
+        <a>STAFF REQUEST</a>
     </section>
 
   </div>
