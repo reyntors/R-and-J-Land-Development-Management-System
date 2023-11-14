@@ -19,7 +19,7 @@ const letterOfIntentSchema = new Schema({
         required: true,
         
     },
-    purchase: {
+    lotNumber: {
         type: String,
         required: true,
     },
@@ -27,23 +27,7 @@ const letterOfIntentSchema = new Schema({
         type: String,
         required: true,
     },
-    locationPH: {
-        type: String,
-        required: true,
-    },
-    locationBlk: {
-        type: String,
-        required: true,
-    },
-    locationLotOrUnit: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    address: {
+    fullname: {
         type: String,
         required: true,
     },
@@ -59,9 +43,13 @@ const letterOfIntentSchema = new Schema({
         type: String,
         required: true,
     },
-    reservationTimeSpan: {
-        type: String, 
-        required: true,
+    messenger: {
+        type: String,
+      
+    },
+    viber: {
+        type: String,
+       
     },
     createdBy: {
         type: String, 

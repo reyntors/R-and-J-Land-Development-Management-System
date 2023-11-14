@@ -1,9 +1,9 @@
 const LetterOfIntent = require('../models/letterOfIntent.model');
 const User = require('../models/user.model');
-const { PDFDocument, rgb, StandardFonts } = require('pdf-lib'); // Import StandardFonts
+const { PDFDocument} = require('pdf-lib');// Import StandardFonts
 const Inquiry = require('../models/inquiries.model');
-
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const axios = require('axios');
 
 
 async function generateInquiryId() {
@@ -26,6 +26,12 @@ async function generateInquiryId() {
   
     return nextInquiryId;
   }
+
+  const date = new Date()
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
+  const day = String(date.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
   
 // Create a new letter of intent
 exports.createLetterOfIntent = async (req, res, next) => {
@@ -45,13 +51,13 @@ exports.createLetterOfIntent = async (req, res, next) => {
         }
 
 
-         // Create a new PDF document
-         const pdfDoc = await PDFDocument.create();
-         const pdfPath = await generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData);
+       
+         const pdfPath = await generateLetterOfIntentPDF(user, letterOfIntentData);
 
 
          const newLetterOfIntent = new LetterOfIntent({
             ...letterOfIntentData,
+            date: formattedDate,
             createdBy: user.userId, 
             url: pdfPath,
             isSubmitted: true
@@ -77,7 +83,7 @@ exports.createLetterOfIntent = async (req, res, next) => {
         email: user.email,
         fblink: user.fbAccount,
         phonenumber: user.contactNumber,
-        date: newLetterOfIntent.date,
+        date: formattedDate,
         };
 
         const inquiries = await Inquiry.findOne()
@@ -112,92 +118,163 @@ exports.createLetterOfIntent = async (req, res, next) => {
 };
 
 // Function to generate PDF content for Letter of Intent
-async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
+// async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
 
-    try {
+//     try {
 
    
-    // Define A4 page dimensions
-    const pageWidth = 595.276; 
-    const pageHeight = 841.890; 
-    const page = pdfDoc.addPage([pageWidth, pageHeight]); // Specify page dimensions
+//     // Define A4 page dimensions
+//     const pageWidth = 595.276; 
+//     const pageHeight = 841.890; 
+//     const page = pdfDoc.addPage([pageWidth, pageHeight]); // Specify page dimensions
 
     
-   // Create a font - Use StandardFonts.Helvetica
-   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+//    // Create a font - Use StandardFonts.Helvetica
+//    const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+//    const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
    
-   // Define coordinates for text placement
-   let x = 50;
-   let y = 850;
+//    // Define coordinates for text placement
+//    let x = 50;
+//    let y = 850;
 
 
-   let content = '';
-   let projectContent = '';
-
-   projectContent = `
-     Project:
-     [${letterOfIntentData.project === 'Northown' ? 'X' : ' '}] Northown [${letterOfIntentData.project === 'Northcrest' ? 'X' : ' '}] Northcrest  [${letterOfIntentData.project === 'Eden Ridge' ? 'X' : ' '}] Eden Ridge  [${letterOfIntentData.project === 'Narra Park Residence' ? 'X' : ' '}] Narra Park Residence   
-       `;
-
-   // Add content to the PDF page (simulate HTML content)
-    content = `
+//    let content = '';
+  
+//    // Add content to the PDF page (simulate HTML content)
+//     content = `
                            
 
-               ${' '.repeat(55)}Letter of Intent
+//                ${' '.repeat(60)}Letter of Intent
 
-     Date: ${letterOfIntentData.date}
+//      Date: ${letterOfIntentData.date}
 
-     Alsons Development and Investment Corporation
-     329 Bonifacio St, Davao City
+//      <strong>R & J Land Development Corporation</strong>
+//      Sitio Buenavista, Barangay Matutungan, 
+//      Sta. Cruz, Davao del Sur
      
-     Gentlemen:
-     I/We hereby manifest my/our intent to purchase ${letterOfIntentData.purchase} lot(s)/unit(s).
+//      Gentlemen:
+//      I/We hereby manifest my/our intent to purchase/lease: 
 
-     ${projectContent}
+//      Project Name: ${letterOfIntentData.project}
+     
+//      Lot(s) No/Unit No:${letterOfIntentData.purchase} 
 
-     Location:
-     PH: ${letterOfIntentData.locationPH}  Blk: ${letterOfIntentData.locationBlk}  Lot/Unit: ${letterOfIntentData.locationLotOrUnit}
+//      For your reference, please see my information below:
+//         Full Name: ${letterOfIntentData.name}
+//         Citizenship: ${letterOfIntentData.citizenship}
+//         Mobile No.: ${letterOfIntentData.contactNo}
+//         Email Address: ${letterOfIntentData.emailAddress}
+//         Messenger Account: ${letterOfIntentData.messenger}
+//         Viber No: ${letterOfIntentData.viber}
 
-     For your reference, please see my information below;
-     Name: ${letterOfIntentData.name}
-     Address: ${letterOfIntentData.address}
-     Citizenship: ${letterOfIntentData.citizenship}
-     Contact No.: ${letterOfIntentData.contactNo}
-     Email Address: ${letterOfIntentData.emailAddress}
+//      I understand and agree on the following:
 
-     I understand and agree on the following:
-     - That this document does not signify official booking of the sale.
-     - That the purpose of this document is only to BLOCK-OFF the lot/unit within SEVEN (7) WORKING DAYS.
-     - That I must submit all complete requirements and reservation fee not later than ${letterOfIntentData.reservationTimeSpan} to 
-       officially record the above-mentioned lot/unit as safe, otherwise, ALsons Deve will automatically open the 
-       blocked-off lot/unit to other interested prospect buyers.
+//      •  That this document does not signify official booking of the sale.
 
-     Sincerely yours,
-     __________________________                    ___________________
-       Name of Client & Signature                          Date
+//         That the purpose of this document is only to BLOCK-OFF the lot/unit within SEVEN (7) WORKING DAYS.
+     
+//      •  That I must submit all complete requirements and reservation fee <strong> within 5
+//         business days from the date of this letter </strong> to of icially record the above-mentioned
+//         Lot No/Unit No. as a sale/lease, otherwise, R & J Land Development Corporation
+//         <strong> will automatically</strong> open the blocked of Lot No/Unit No. to other interested
+//         prospect buyer(s).
+
+//      Sincerely yours,
+
+//      ___________________________                   
+//      Signature over Printed Name                         
     
-     Received by:
-     __________________________                    ___________________
-           Name & Signature                                Date      
+                          
      
-   `;
+//    `;
 
-   // Split the content into lines and draw them on the page
-   const lines = content.split('\n');
-   lines.forEach((line) => {
-       page.drawText(line, {
-           x,
-           y,
-           size: 9,
-           font,
-           color: rgb(0, 0, 0),
-       });
-       y -= 20; // Adjust the vertical position for the next line
-   });
+   
 
-   const pdfBytes = await pdfDoc.save();
+//    // Split the content into lines and draw them on the page
+//    const lines = content.split('\n');
+//    lines.forEach((line) => {
 
-   // AWS S3 configuration
+//     const font = line.includes('<strong>') ? boldFont : regularFont;
+//     line = line.replace(/<\/?strong>/g, ''); // Remove <strong> tags
+//        page.drawText(line, {
+//            x,
+//            y,
+//            size: 9.5,
+//            font,
+//            color: rgb(0, 0, 0),
+//        });
+//        y -= 20; // Adjust the vertical position for the next line
+//    });
+
+//    const pdfBytes = await pdfDoc.save();
+
+//    // AWS S3 configuration
+//         const s3 = new S3Client({
+//             accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//             region: process.env.AWS_REGION,
+//         });
+
+//         const s3Params = {
+//             Bucket: process.env.AWS_BUCKET_NAME,
+//             Key: `uploads/templates/${user.userId}_${user.fullname}_letter_of_intent.pdf`, // Define the desired key (path) on S3
+//             Body: pdfBytes, 
+//         };
+
+//             await s3.send(new PutObjectCommand(s3Params));
+//             const pdfPath = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Params.Key}`;
+            
+            
+//             return pdfPath;
+        
+
+//     }catch (error) {
+//         throw error;
+//     }
+    
+
+// }
+
+ //generate date
+ 
+ 
+ 
+
+async function  generateLetterOfIntentPDF( user, letterOfIntentData) {
+    try {
+        // Load existing PDF template from URL
+        const pdfUrl = 'https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/Letter_of_Intent.pdf';
+        const response = await axios.get(pdfUrl, { responseType: 'arraybuffer' });
+        const existingPdfBytes = new Uint8Array(response.data);
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+        // Access the first page
+        let fieldNames = pdfDoc.getForm().getFields()
+
+        fieldNames = fieldNames.map((f) => f.getName())
+
+        const form = pdfDoc.getForm()
+
+
+        form.getTextField(fieldNames[0]).setText(formattedDate)
+        form.getTextField(fieldNames[1]).setText(letterOfIntentData.project)
+        form.getTextField(fieldNames[2]).setText(letterOfIntentData.lotNumber)
+        form.getTextField(fieldNames[3]).setText(letterOfIntentData.fullname)
+        form.getTextField(fieldNames[4]).setText(letterOfIntentData.citizenship)
+        form.getTextField(fieldNames[5]).setText(letterOfIntentData.contactNo)
+        form.getTextField(fieldNames[6]).setText(letterOfIntentData.emailAddress)
+        form.getTextField(fieldNames[7]).setText(letterOfIntentData.messenger)
+        form.getTextField(fieldNames[8]).setText(letterOfIntentData.viber)
+
+        pdfDoc
+            .getForm()
+            .getFields()
+            .forEach((field) => field.enableReadOnly());
+
+        // Save the modified PDF to a new file
+        const pdfBytes = await pdfDoc.save();
+
+           // AWS S3 configuration
         const s3 = new S3Client({
             accessKeyId: process.env.AWS_ACCESS_KEY_ID,
             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -206,7 +283,7 @@ async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
 
         const s3Params = {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `uploads/templates/${user.userId}_${user.fullname}_letter_of_intent.pdf`, // Define the desired key (path) on S3
+            Key: `uploads/generatedForms/${user.userId}_${user.fullname}_letter_of_intent.pdf`, // Define the desired key (path) on S3
             Body: pdfBytes, 
         };
 
@@ -217,12 +294,12 @@ async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
             return pdfPath;
         
 
-    }catch (error) {
-        throw error;
+    } catch (error) {
+        console.error('Error:', error);
     }
-    
-
 }
+
+
 
 
 
