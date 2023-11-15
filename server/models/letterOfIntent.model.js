@@ -43,11 +43,11 @@ const letterOfIntentSchema = new Schema({
         type: String,
         required: true,
     },
-    messenger: {
+    messengerAccount: {
         type: String,
       
     },
-    viber: {
+    viberNo: {
         type: String,
        
     },
