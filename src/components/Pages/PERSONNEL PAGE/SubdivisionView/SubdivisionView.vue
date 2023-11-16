@@ -159,32 +159,41 @@ import SubdivisionCard from './SubdivisionCard.vue'
   
   <style scoped>
 .subdivision-cont{
-  width: 100%;
-    height: 85vh;
+    width: 100%;
+    min-height: 85vh;
     padding: 1rem;
+    border-left: 2px solid rgba(0, 0, 0, 0.5);
 }
 .subdivision-cont h4{
   cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 .div1{
     width:100%;
-    height: 10%;
-    background-color: bisque;
+    /* height: 10%; */
+    /* background-color: bisque; */
+    border-bottom: 1px solid black;
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1rem;
+    padding: 1rem;
 }
 .div1 .search-cont{
   position: relative;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   align-items: center;
 }
-.div1 .search-cont .search-input-field{
-  padding-right: 2rem;
-  padding-left: 1rem;
+.div1 .search-cont input{
+  padding: .5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  outline: 1px solid black;
+}
+.div1 .search-cont input:focus{
+  box-shadow: 0 0 1px 3px gold;
 }
 .div1 .search-cont .search-input-icon{
   height: 100%;

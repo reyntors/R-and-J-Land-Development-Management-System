@@ -15,6 +15,7 @@ import callSlip from "./publicStore/callSlip.js";
 import myAccount from './clientStore/clientAccount.js'
 import mySettings from './clientStore/clientSettings.js'
 import forgotPass from './clientStore/forgotPass/forgotPass.js'
+import pendingClients from './personnelStore/pendingClient.js'
 
 const store = createStore({
         modules:{
@@ -32,7 +33,8 @@ const store = createStore({
             mySubmittedForms,
             myAccount,
             mySettings,
-            forgotPass
+            forgotPass,
+            pendingClients
         },
         state(){
             return{

@@ -90,6 +90,9 @@ export default{
             //copy the whole list for suggesiton list
             state.listGuestSuggestions = state.clientsPending
         },
+        refreshListPending(state){
+            state.listGuestSuggestions = []
+        },
         //end set local guest list
 
         //start set local legit client list
@@ -142,96 +145,13 @@ export default{
 
         //start getting legit list
         async getLegitList(context){
-            // console.log('running getLegitList')
-            // const tempList = []
             try{
                 const response = await Client.requestLegitList()
                 // console.log(response.data)
-                context.commit('setLocalLegitList',response.data)        
-// /////////
-//                 for(const item of response.data) {
-
-//                     const existletterOfIntent = item.letterOfIntent.isSubmitted
-
-//                     const existBirTinRequest = item.BirTinRequest.isSubmitted
-
-//                     const existindividualDeclaration = item.individualDeclaration.isSubmitted
-
-//                     const existContractForm = item.ContractDetails.isSubmitted
-
-//                     // start CREATE donwloadable URL letterofIntent
-//                     const letterOfIntentFilename = `${item.userId}_${item.fullname}_letter_of_intent.pdf`  
-//                     var letterOfIntentURL = '' 
-//                     if(existletterOfIntent){
-//                         try{
-//                             const downloadableLetterOfIntent = await Client.retrieveUploadedForm(item.userId,letterOfIntentFilename)
-//                             const LetterOfIntentBlob = new Blob([downloadableLetterOfIntent], {type: 'application/pdf'})
-//                             letterOfIntentURL = URL.createObjectURL(LetterOfIntentBlob)                        
-//                         }catch(error){
-//                             console.log(error)
-//                         }
-//                     }
-//                     item.letterOfIntentURL = letterOfIntentURL
-//                     item.letterOfIntentFilename = letterOfIntentFilename
-//                     //end CREATE donwloadable URL letterofIntent
-
-//                     //start CREATE downloadable URL BirTinRequest
-//                     const BirTinRequestFilename = `${item.userId}_${item.fullname}_BirTinRequest.pdf`  
-//                     var BirTinRequestURL = '' 
-//                     // FIX NEED FOR BIR DONWLOAD FORM
-//                     if(existBirTinRequest){
-//                         try{
-//                             const downloadableBirTinRequest = await Client.retrieveUploadedForm(item.userId,BirTinRequestFilename)
-//                             const BirTinRequestBlob = new Blob([downloadableBirTinRequest], {type: 'application/pdf'})
-//                             BirTinRequestURL = URL.createObjectURL(BirTinRequestBlob)                        
-//                         }catch(error){
-//                             console.log(error)
-//                         }
-//                     }
-//                     item.BirTinRequestURL = BirTinRequestURL
-//                     item.BirTinRequestFilename = BirTinRequestFilename
-//                     //end CREATE downloadable URL BirTinRequest
-
-
-//                     //start CREATE donwloadable URL Individual Declaration
-//                     const individualDeclarationFilename = `${item.userId}_${item.fullname}_individual_buyer_declaration.pdf`  
-//                     var individualDeclarationURL = '' 
-//                     if(existindividualDeclaration){
-//                         try{
-//                             const downloadableindividualDeclaration = await Client.retrieveUploadedForm(item.userId,individualDeclarationFilename)
-//                             const individualDeclarationBlob = new Blob([downloadableindividualDeclaration], {type: 'application/pdf'})
-//                             individualDeclarationURL = URL.createObjectURL(individualDeclarationBlob)                        
-//                         }catch(error){
-//                             console.log(error)
-//                         }
-//                     }
-//                     item.individualDeclarationURL = individualDeclarationURL
-//                     item.individualDeclarationFilename = individualDeclarationFilename
-//                     //end CREATE donwloadable URL Individual Declaration
-
-//                     //start CREATE donwloadable URL Contract Form
-//                     const contractFormFilename = `${item.userId}_${item.fullname}_individual_buyer_declaration.pdf`  
-//                     var contractFormURL = '' 
-//                     if(existContractForm){
-//                         try{
-//                             const downloadableContractForm = await Client.retrieveUploadedForm(item.userId,individualDeclarationFilename)
-//                             const contractFormDeclarationBlob = new Blob([downloadableContractForm], {type: 'application/pdf'})
-//                             contractFormURL = URL.createObjectURL(contractFormDeclarationBlob)                        
-//                         }catch(error){
-//                             console.log(error)
-//                         }
-//                     }
-//                     item.ContractFormURL = contractFormURL
-//                     item.ContractFormFilename = contractFormFilename         
-
-//                     tempList.push(item)
-//                 }
-//////////                                       
+                context.commit('setLocalLegitList',response.data)                                            
             }catch(error){
                 console.log(error)
             }
-
-            // context.commit('setLocalLegitList',tempList)
         },
         //start getting legit list
 

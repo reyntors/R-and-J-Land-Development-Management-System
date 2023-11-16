@@ -100,6 +100,21 @@ export default {
 </script>
 
 <style scoped>
+button{
+  padding: 5px 10px;
+  background-color: #31A72A;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+button:hover{
+  background-color: #30a72a8e;
+  color: black;
+}
+button:active{
+  opacity: 0.5;
+}
 div{
     position: absolute;
     top: 0;

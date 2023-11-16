@@ -63,7 +63,7 @@
 <!-- prospect interested -->
         <div class="mb-3">
           <label for="exampleFormControlTextarea1" class="form-label">Prospect/s interested in </label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" v-model="interestIn"></textarea>
         </div>
 <!-- prospects from-->
         <div class="">
@@ -138,6 +138,7 @@ export default {
         spouseName : this.spouseName,
         email : this.email,
         contactNumber : this.contactNumber,
+        interestIn: this.interestIn,
         prospects : this.prospects    
       }
     },

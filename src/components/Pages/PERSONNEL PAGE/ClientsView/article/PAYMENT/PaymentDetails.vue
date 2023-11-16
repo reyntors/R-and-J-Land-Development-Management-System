@@ -57,32 +57,69 @@
         </section>
       <br>
       <hr>
+        <header>
+          <h5>TRANSACTIONS</h5> 
+          <div> 
+            <button @click="toggleAddPayment" style="margin-right: .5rem;" v-if="editPaymentForm ">
+              SAVE <font-awesome-icon icon="fa-solid fa-plus" />
+            </button>
+            <button @click="toggleAddPayment">ADD <font-awesome-icon icon="fa-solid fa-plus" /></button>
+          </div>
+          
+        </header>
         <section class="transaction-cont">
-          <header>
-            <h5>TRANSACTIONS</h5> 
-            <button @click="toggleAddPayment">ADD TRANSACTION</button>
-          </header>
-          <table>
+         
+          <table> 
+            
             <tr>
-              <td>DATE</td>
-              <td>AMOUNT RECEIVED</td>
-              <td>PURPOSE</td>
-              <td>ATTACHMENTS</td>
-              <td v-if="roleAdmin">OPTION</td>
+              <th>DATE</th>
+              <th>AMOUNT RECEIVED</th>
+              <th>PURPOSE</th>
+              <th>ATTACHMENTS</th>
+              <th v-if="roleAdmin">EDIT</th>
+              <th v-if="roleAdmin">DELETE</th>
+            </tr> 
+            
+            <tr v-if="isTransactionEmpty">
+              <td :colspan="columnSpanNum"><h6 class="noHistory">No history</h6></td>
+              
             </tr>
-              <tr v-if="isTransactionEmpty">
-                <td colspan="4"><h6 >No history</h6></td>
-                
-              </tr>
-              <tbody v-for="(transaction,index) in clientTransactionGetter" :key="index">
-                <tr v-if="!isTransactionEmpty">
-                  <td>{{ transaction.date }}</td>
-                  <td>{{ transaction.amount }}</td>
-                  <td>{{ transaction.purpose }}</td>
-                  <td><a :href="transaction.attachments[0].url" :download="transaction.attachments[0].filename">{{ transaction.attachments[0].filename }}</a></td>
-                  <td v-if="roleAdmin">Edit/Delete</td>
-                </tr>
-              </tbody>            
+            <tbody v-for="(transaction,index) in clientTransactionGetter" :key="index">
+              <tr v-if="!isTransactionEmpty">
+                <td>
+                  <div class="firstElement"> 
+                    <strong class="number">{{  elementNumber(index) }}</strong>
+                    <input v-model="editObj.date" v-if="editPaymentForm && focusElement === index">
+                    <p style="white-space: nowrap;" v-else>{{ transaction.date }}</p>                      
+                  </div>
+
+                </td>
+                <td>
+                  <input v-model="editObj.amount" v-if="editPaymentForm && focusElement === index">
+                  <p style="white-space: nowrap;" v-else>{{ transaction.amount }}</p>
+                </td>
+                <td>
+                  <select v-if="editPaymentForm && focusElement === index" v-model="editObj.purpose">
+                    <option value="downpayment">downpayment</option>
+                    <option value="reservation">reservation</option>
+                    <option value="monthly-payment">monthly-payment</option>
+                  </select>
+                  <p v-else style="white-space: nowrap;">{{ transaction.purpose }}</p>
+                </td>
+                <td>
+                  <input type="file" v-if="editPaymentForm && focusElement === index">
+                  <a v-else :href="transaction.attachments[0].url" :download="transaction.attachments[0].filename">{{ transaction.attachments[0].filename }}</a>
+                </td>
+                <td v-if="roleAdmin">
+                  <font-awesome-icon class="icon" icon="fa-solid fa-file-pen" @click="toggleEditTransaction(transaction,index)" v-if="!editPaymentForm"/>
+                  <button v-else class="cancelEditBtn" @click="cancelEditElement">
+                    Cancel
+                    <font-awesome-icon class="icon" icon="fa-solid fa-xmark"  />
+                  </button>
+                </td>
+                <td v-if="roleAdmin"><font-awesome-icon class="icon" icon="fa-solid fa-minus" /></td>
+              </tr>     
+              </tbody>
             <!-- {{ paymentTransaction }} -->
           </table>
           <!-- <h2 v-if="isLoading">Loading...</h2> -->
@@ -90,7 +127,7 @@
         </section>
       </div>
 
-      <add-payment v-if="addPaymentForm" :id="clientID" @exit-btn="toggleAddPayment" @refresh="getListTransaction" @upload-transaction="uploadTransaction"/>      
+      <add-payment v-if="addPaymentForm" :id="clientID" @exit-btn="toggleAddPayment" @refresh="getListTransaction" @upload-transaction="uploadTransaction"/>   
     </div>
 
   </div>
@@ -99,13 +136,20 @@
 <script>
 import { toast } from 'vue3-toastify'
 import AddPayment from './AddPayment.vue'
+
 export default {
-    components: {AddPayment,},
+    components: {
+      AddPayment,
+    },
     props: ['clientID'],
     data(){
       return{
           addPaymentForm: false,
+          editPaymentForm: false,
           isLoading: true,
+
+          editObj: null,
+          focusElement: null,
       }
     },
     methods:{
@@ -137,6 +181,22 @@ export default {
           console.error(error)
         }   
         
+      },
+
+      toggleEditTransaction(obj,index){
+        this.editPaymentForm = true
+          this.focusElement = index;
+          this.editObj = {...obj}
+      },
+      cancelEditElement(){
+        this.editPaymentForm = false
+        this.focusElement = null
+      },
+      saveEdit(){
+
+      },
+      elementNumber(index){
+        return index + 1 + '.'
       }
     },
 
@@ -160,7 +220,15 @@ export default {
       },
       roleAdmin(){
         return this.$store.getters['auth/authorizationRoleAdmin']
-      }
+      },
+      columnSpanNum(){
+          const isAdmin = this.$store.getters['auth/authorizationRoleAdmin']
+          if(isAdmin){
+            return 6
+          }else{
+            return 4
+          }
+      },
     },
     mounted(){
       this.getListTransaction(this.clientID)
@@ -169,6 +237,68 @@ export default {
 </script>
 
 <style scoped>
+.cancelEditBtn{
+  border: none;
+  background-color: transparent;
+  outline: none;
+  padding: 5px 10px;
+  margin: 0;
+  display: flex;
+  align-items:center;
+  gap: 3px;
+}
+.cancelEditBtn:hover{
+  background-color: rgba(0, 0, 0, 0.1)
+}
+.optionBtns button{
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 2px;
+}
+.optionBtns{
+  display: flex;
+  gap: 5px;
+}
+th{
+  padding: .5rem;
+  /* white-space: nowrap; */
+  border: 1px solid black;
+}
+tbody{
+  table-layout: fixed;
+}
+input,select{
+  /* width: 100%; */
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+input:focus, select:focus{
+  outline: 1px solid black;
+}
+.icon{
+  cursor: pointer;
+  color: blue;
+  /* opacity: .5rem; */
+}
+.icon:hover{
+  scale: 1.1;
+  opacity: 1;
+  transition: scale 0.2ms ease-in;
+  transition: opacity 0.2ms ease-in;
+}
+.icon:active{
+  color: black;
+  opacity: 0.2;
+}
+a{
+  color: black;
+}
+.noHistory{
+  display: flex; 
+  align-items: center; 
+  padding: 1rem; 
+  justify-content: center;
+}
 .var{
   margin-left: .5rem;
   font-weight: 700;
@@ -180,28 +310,51 @@ export default {
 }
 .transaction-cont{
   position: relative;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
-.transaction-cont header{
+header{
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
-.transaction-cont button{
+header button{
   padding: 0 .5rem;
+  background-color: #31A72A;
+  color: white;
+  border: none;
+  border-radius: 3px;
+}
+header button:hover{
   background-color: #30a72a8e;
+  color: black;
+}
+header button:active{
+  opacity: 0.5;
 }
 .transaction-cont table{
   margin-top: .2rem;
   width: 100%;
   text-align: center;
+  /* overflow: auto;*/
+  /* border: 2px dashed black;  */
 }
 .transaction-cont table > tr:nth-child(1){
   border: 1px solid black;
 }
 td{
-  border: 1px solid black;
-  padding: 0 .5em;
+  /* border: 1px solid black; */
+  box-sizing: cover;
+  padding: .5rem;
 }
 .transaction-cont table > tbody:nth-child(even){
   background-color: rgba(0, 0, 0, 0.1)
+}
+.firstElement{
+  display: flex;
+  gap: .5rem;
+  text-align: start;
 }
 </style>

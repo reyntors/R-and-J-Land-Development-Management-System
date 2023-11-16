@@ -167,7 +167,7 @@ export default {
             if(state.role && state.tokenID){
                 if(state.role === 'staff'){
                     return 'staff'
-                }else if(state.role === 'admin'){
+                }else if(state.role === 'management'){
                     return 'admin'
                 }
             }else{

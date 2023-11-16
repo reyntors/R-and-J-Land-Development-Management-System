@@ -84,37 +84,40 @@
   </script>
   
   <style scoped>
+
 .shade{
   font-weight: 500;
   background-color: transparent;
-
 }
 
 .inquiries-cont{
     width: 100%;
-    height: 85vh;
+    min-height: 85vh;
     padding: 1rem;
+    border-left: 2px solid rgba(0, 0, 0, 0.5);
+}
+h4{
+  padding: 0;
+  margin: 0;
 }
 .inquiries-cont .div1{
+    /* border: 1px solid black; */
     width:100%;
-    height: 10%;
-    background-color: bisque;
+    /* height: 10px; */
+    border-bottom: 1px solid black;
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1rem;
+    padding: 1rem;
 }
 .inquiries-cont .div2{
     width:100%;
     min-height: 85vh;
-    background-color: bisque;
     display: flex;
     justify-content: start;
     align-items: flex-start;
     position: relative;
-    /* overflow-y: auto; */
-    /* border: 5px solid black; */
 }
 .inquiries-cont .div2 table{
   width: 100%;
@@ -125,7 +128,7 @@ tr{
   cursor: pointer;
   width: 100%;
   font-weight: 600;
-  background-color: rgb(118, 187, 232,.3);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .trash-icon{
   visibility: hidden;

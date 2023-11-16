@@ -284,6 +284,8 @@
   }
   .barsStaffAdmin{
     cursor: pointer;
+    opacity: 0.5;
+    margin-right: 1rem;
   }
   .barsStaffAdmin:active{
     scale: 1.1;

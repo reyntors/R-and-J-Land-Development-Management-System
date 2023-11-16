@@ -1,13 +1,13 @@
 <template>
-  <div class="c-container">
+  <div class="details-nav">
     <!-- {{ client }} -->
     <section class="section-left">
-        <div>
-          <img src="@/assets/profile.png">
-          <h6>{{clientObj.fullname}}</h6>
+        <div class="imageProfile">
+          <img :src="clientObj.profilePicture.url" class="img-thumbnail">
+          <h5>{{clientObj.fullname}}</h5>
         </div>
         
-        <div>
+        <div class="navigationBtns">
           <button :class="{flat:clientProfileVisibleComputed}" @click="goto('profile')">Buyer's Profile</button> 
           
           <button :class="{flat:clientPaymentVisibleComputed}" @click="goto('payment')">Payment Details</button>
@@ -16,11 +16,6 @@
 
           <button :class="{flat:clientReservationFormVisible}" @click="goto('reservation-form')">Reservation Form</button>
 
-        </div>
-
-        <div>
-          <!-- <button class="saveBtn" @click="saveNow">Save</button> -->
-          <button class="delBtn" @click="deleteNow(clientObj.userId)" v-if="authorizationRoleAdmin">Delete</button>
         </div>
       
     </section>
@@ -39,7 +34,6 @@ import ClientPayment from '../article/PAYMENT/PaymentDetails.vue';
 import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
 import ClientForms from '../article/FORMS/FormsDetails.vue'
 import ClientReservation from '@/components/Forms Used/ReservationAgreement.vue'
-import { toast } from 'vue3-toastify';
 export default {
   props: ['clientObj'],
   components: {
@@ -79,20 +73,6 @@ export default {
       this.clientFormsVisible = false
       this.clientReservationFormVisible = false
     },
-
-    //delete
-    async deleteNow(id){
-      const confirmed = confirm('Are you sure to remove this client?')
-      if(confirmed){
-        try{
-          await this.$store.dispatch('client/removeClient',id)
-          toast.success('removed succesfully')
-        }catch(error){
-          toast.error(error)
-        }
-      }
-      
-    }
   },
 
   
@@ -106,7 +86,6 @@ export default {
     clientFormsVisibleComputed(){
       return this.clientFormsVisible
     },
-
     authorizationRoleAdmin(){
       return this.$store.getters['auth/authorizationRoleAdmin']
     }
@@ -119,8 +98,23 @@ export default {
 </script>
 
 <style scoped>
-button{
-  font-size: clamp(.6rem, 1vw, 1.5rem);
+.imageProfile{
+  margin-top: 1rem;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.imageProfile img{
+  width: 100%;
+  height: 100%;
+  max-height: 200px;
+  max-width: 200px;
+  object-fit: cover;
+}
+
+
+button:hover{
+  background-color: #30a72a8e;
 }
 .flat{
   outline: none;
@@ -129,14 +123,14 @@ button{
   color: white;
   box-shadow: none;
 }
-.c-container{
+.details-nav{
   width: 100%;
-  /* height: 75vh; */
+  height: 80vh;
   padding: .5rem;
   display: flex;
   gap: 1rem;
 }
-.c-container .section-left{
+.details-nav .section-left{
   width: 25%;
   box-shadow: 0 0 3px 1px black;
   border: 1px solid black;
@@ -149,26 +143,24 @@ button{
   text-align: center;
   background-color: white;
 }
-.c-container .section-left div{
+.details-nav .section-left .navigationBtns{
   width: 90%;
   display: flex;
   flex-direction: column;
   gap: .5rem;
   align-items: center;
+  /* border: 1px dashed black; */
+  height: 50%;
+  padding-top: 1rem;
 }
-.c-container .section-left div button{
+.details-nav .section-left .navigationBtns button{
   width: 100%;
   border: none;
-  /* outline: 1px solid black; */
-  box-shadow: 0 0 1px .5px black;
+  box-shadow: 0 1px 1px .5px rgba(0, 0, 0, 0.2);
   padding: .3rem;
-}
-img{
-  width: 100%;
-  border-radius: 100%;
-  border: 1px solid black;
-  margin-top: 1rem;
-}
+  border-radius: 5px;
+} 
+
 .saveBtn:active,
 .delBtn:active{
   background-color: #31A72A; 
@@ -177,7 +169,7 @@ img{
 
 
 
-.c-container .section-right{
+.details-nav .section-right{
   width: 75%;
   height: 100%;
   border: 1px solid black;

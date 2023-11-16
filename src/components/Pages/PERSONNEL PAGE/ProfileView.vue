@@ -2,8 +2,8 @@
   <div class="profileViewContainer">
 
     <section class="imageName">
-        <img src="@/assets/korean.jpg">
-        <h6>Sample Name</h6>
+        <img :src="profile">
+        <h5>{{personnelType}}</h5>
     </section>
 <br>
     <section class="navigations">
@@ -13,31 +13,52 @@
         <router-link to="/personnel/inquiries">INQUIRIES</router-link>
         <router-link to="/personnel/emptyForms">EMPTY FORMS</router-link>
         <router-link to="/personnel/reports">REPORTS</router-link>
-        <a>STAFF REQUEST</a>
+        <router-link to="/personnel/approve" v-if="isUserAdmin">ADDED CLIENTS</router-link>
     </section>
 
   </div>
 </template>
 
+<script>
+export default {
+    computed:{
+        profile(){
+            return this.$store.getters['auth/profilePicGetter']
+        },
+        personnelType(){
+            return  'Welcome, ' + this.$store.getters['auth/getRoleType']
+        },
+        isUserAdmin(){
+            return this.$store.getters['auth/authorizationRoleAdmin']
+        }
+    }
+}
+</script>
 
 <style scoped>
+h5{
+    text-transform: capitalize;
+    text-align: center;
+}
 .profileViewContainer{
-    width: 20vw;
-    height: 85vh;
+    max-width: 20vw;
+    /* height: 85vh; */
     padding: 1rem;
+    z-index: 1;
+    background-color: white;
 }
 .imageName{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 1rem;
+    /* padding-top: 1rem; */
+    gap: .5rem;
 }
 .imageName img{
-    width: 80%;
+    min-width: 150px;
+    width: 75%;
     border-radius: 100%;
-    border: 2px solid black;
-    margin-top: 1rem;
 }
 
 .navigations{
@@ -45,15 +66,23 @@
     flex-direction: column;
 }
 .navigations a{
+    /* color: black; */
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.51);
     padding: .5rem;
     margin-bottom: 2px;
     text-decoration: none;
+    white-space: nowrap;
+    border-radius: 5px;
+    text-transform: uppercase;
 }
 .router-link-active{
   /* outline: 1px solid blue; */
   background-color: purple;
+  transition: background-color 0.2s ease-in;
   color: white;
+}
+a:not(.router-link-active) {
+    color: black;
 }
 </style>

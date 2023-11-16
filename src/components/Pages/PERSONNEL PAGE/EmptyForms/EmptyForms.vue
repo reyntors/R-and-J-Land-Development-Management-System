@@ -79,11 +79,16 @@
   width: 100%;
   height: 85vh;
   padding: 1rem;
+  border-left: 2px solid rgba(0, 0, 0, 0.5);
+}
+h4{
+  padding: 0;
+  margin: 0;
 }
 .div1{
     width:100%;
     height: 10%;
-    background-color: bisque;
+    border-bottom: 1px solid black;
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;

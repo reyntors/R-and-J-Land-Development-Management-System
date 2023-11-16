@@ -4,13 +4,15 @@
         <font-awesome-icon class="icon" v-if="!isShowStaffAdminColumn" :icon="['fas', 'caret-down']" @click="toggleStaffAdminColumn" />
         <font-awesome-icon class="icon" v-if="isShowStaffAdminColumn" :icon="['fas', 'caret-up']" @click="toggleStaffAdminColumn" />
         <div class="dropdown" v-if="isShowStaffAdminColumn">
-            <router-link to="/personnel/client" @click="toggleStaffAdminColumn">CLIENTS</router-link>
+            <!-- <router-link to="/personnel/client" @click="toggleStaffAdminColumn">CLIENTS</router-link>
             <router-link to="/personnel/subdivision" @click="toggleStaffAdminColumn">SUBDIVISION</router-link>
             <router-link to="/personnel/inquiries" @click="toggleStaffAdminColumn">INQUIRIES</router-link>
             <router-link to="/personnel/emptyForms" @click="toggleStaffAdminColumn">EMPTY FORMS</router-link>
             <router-link to="/personnel/reports" @click="toggleStaffAdminColumn">REPORTS</router-link>
-            <button>STAFF REQUEST</button>
-            <button @click="logout">LOG OUT</button>
+            <button>STAFF REQUEST</button> -->
+            <button>Profile</button>
+            <button>Settings</button>
+            <button @click="logout">Log Out</button>
         </div>  
     </div>
 </template>

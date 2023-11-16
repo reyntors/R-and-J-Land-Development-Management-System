@@ -21,14 +21,17 @@
 
 
         <div class="grid">
-            <ul>
-                
-                <div v-if="listPending.length>0">
-                    <li v-for="item in listPending" :key="item.userId" @click="select(item)">
-                        {{ item.fullname }}
-                    </li>                    
+            <ul style="position: relative">
+                <progress-loading type="progress" v-if="isLoading"/>
+                <div v-else> 
+                    <div v-if="listPending.length>0">
+                        <li v-for="item in listPending" :key="item.userId" @click="select(item)">
+                            {{ item.fullname }}
+                        </li>                    
+                    </div>
+                    <li v-else>Nothing Found</li>
                 </div>
-                <li v-else>Nothing Found</li>
+
 
             </ul>   
 
@@ -73,6 +76,7 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify';
 export default{
     emits: ['go-back'],
     data(){
@@ -91,6 +95,8 @@ export default{
             searchResult: null,
 
             searchTrue: false,
+
+            isLoading: false,
         }
     },
     methods: {
@@ -116,8 +122,12 @@ export default{
             this.$store.commit('client/searchGuest',value)
         },
         async addNow(){
-            await this.$store.dispatch('client/addClient',this.userId)
-            this.back();
+            const confirmed = confirm('Are you sure to add this user as an Official Client?')
+            if(confirmed){
+                await this.$store.dispatch('client/addClient',this.userId)
+                this.back();                
+            }
+
         }
     },
     computed:{
@@ -130,6 +140,16 @@ export default{
         isSearchExist(){
             return this.$store.getters['client/searchResultGetter']
         }
+    },
+    async created(){
+        this.$store.commit('client/refreshListPending')
+        this.isLoading = true
+        try{      
+            await this.$store.dispatch('client/getPendingList')
+        }catch(error){
+            toast.error(error)
+        }
+        this.isLoading = false
     },
 
     watch:{
@@ -172,6 +192,7 @@ export default{
     flex-direction: column;
     height: 90%;
     border-top: 1px solid black;
+    position: relative;
 }
 
 .body .searchSection{
