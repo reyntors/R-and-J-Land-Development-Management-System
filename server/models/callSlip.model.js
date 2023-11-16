@@ -37,6 +37,7 @@ const callSlipSchema = new Schema({
         type: String,
         required: true,
     },
+    interestIn: String,
     prospects: [],
 
 })

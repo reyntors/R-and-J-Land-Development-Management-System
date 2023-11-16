@@ -32,6 +32,7 @@ router.put("/update-user-account", auth.authenticateToken, userController.restri
 router.post("/forgot-password", userController.forgotPassword);
 router.put("/reset-password", userController.resetPassword);
 
+
 //FOR STAFF ONLY
 //staff
 router.post("/addnewclient", auth.authenticateToken, userController.restrict(['staff','management']), userController.register);
@@ -46,7 +47,7 @@ router.get("/alltransaction/:id", auth.authenticateToken, userController.restric
 
 //add legit clientslistPendingClients
 router.get("/client/legit-clients", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.listLegitimateClients);
-router.put("/update-legitimacy/:id", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.updateLegitimacy);
+router.post("/update-legitimacy/:id", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.updateRequestLegitimacy);
 router.get("/client/pending-clients", auth.authenticateToken, userController.restrict(['realtor','staff','management']), legitClientController.listPendingClients);
 
 //Payment Details

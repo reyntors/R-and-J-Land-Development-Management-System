@@ -31,6 +31,7 @@ const userUpdateRequestSchema = new Schema({
     businessName: String,
     businessAddress: String,
     businessMonthlyIncome: String,
+    legitimate: Boolean,
     uploadId: [{
       filename: String,
       contentType: String,
