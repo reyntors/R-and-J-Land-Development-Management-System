@@ -32,13 +32,15 @@ const Request = require('../models/requestAddedLegitClient.model');
   
     // Loop through the results to find the maximum requestId
     results.forEach((result) => {
-      if (result.requestLegitId > maxRequestId) {
-        maxRequestId = result.requestLegitId;
-      }
-    });
-  
-    // Increment the maximum requestId by 1 to generate a new unique requestId
-    const newRequestId = maxRequestId + 1;
+        if (result.requests && result.requests.length > 0) {
+          result.requests.forEach((requests) => {
+            maxRequestId = Math.max(maxRequestId, requests.requestLegitId);
+          });
+        }
+      });
+    
+      // Increment the maximum inquiryId found or initialize to 1 if none exists
+      const newRequestId = maxRequestId + 1 || 1;
   
     return newRequestId;
   }
