@@ -65,33 +65,32 @@ exports.listLegitimateClients = async (req, res, next) => {
 };
 
 
-// exports.updateLegitimacy = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
+exports.updateLegitimacy = async (req, res, next) => {
+    try {
+        const { id } = req.params;
 
-//         // Find the user by their userId
-//         const updatedUser = await User.findOneAndUpdate(
-//             { userId: id },
-//             { legitimate: true},
-//             { new: true }
-//         );
+        // Find the user by their userId
+        const updatedUser = await User.findOneAndUpdate(
+            { userId: id },
+            { legitimate: true},
+            { new: true }
+        );
         
-//         if (!updatedUser) {
-//             return res.status(404).json({
-//                 message: 'User not found.',
-//             });
-//         }
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: 'User not found.',
+            });
+        }
 
-        
+        return res.status(200).json({
+            message: 'User legitimacy status updated successfully.',
+            data: updatedUser,
+        });
+    } catch (error) {
+        return next(error);
+    }
+};
 
-//         return res.status(200).json({
-//             message: 'User legitimacy status updated successfully.',
-//             data: updatedUser,
-//         });
-//     } catch (error) {
-//         return next(error);
-//     }
-// };
 
 exports.updateFalseLegitimacy = async (req, res, next) => {
     try {
@@ -220,7 +219,9 @@ try{
 
 exports.approvalLegitClient = async (req, res, next) => {
     const { userId, requestId, requestLegitId } = req.params;
-    const { isApproved } = req.body;
+    const  {isApproved } = req.body;
+
+    console.log(isApproved)
 
     try{
 
@@ -244,6 +245,7 @@ exports.approvalLegitClient = async (req, res, next) => {
     }
 
      if(isApproved === 'approved'){
+
 
         if(updateRequest.updatedData.legitimate){
 
@@ -285,9 +287,13 @@ exports.approvalLegitClient = async (req, res, next) => {
 
         await UserUpdateRequest.deleteOne({ userId: userId, requestId: requestId });
 
+
      
-     
-        }else{
+        }
+
+        else if(isApproved === 'rejected'){
+
+            console.log("I am here")
 
 
              const request = await Request.findOne({"requests.requestLegitId": newrequestLegitId});
@@ -295,13 +301,17 @@ exports.approvalLegitClient = async (req, res, next) => {
              
             matchingRequest.approvalStatus = isApproved
 
+            
+
             await request.save()
+
+            return res.status(200).json({ message: 'User update request has been ' + isApproved });
 
            
         }
 
+        console.log("I am here")
         
-
         return res.status(200).json({ message: 'User update request has been ' + (isApproved ? 'approved' : 'rejected') });
 
 
@@ -325,4 +335,7 @@ exports.getAllRequests = async (req, res) =>{
 
 
 }
+
+
+
 

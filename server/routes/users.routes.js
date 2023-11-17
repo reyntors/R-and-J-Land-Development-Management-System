@@ -40,7 +40,6 @@ router.get("/:id?", auth.authenticateToken, userController.restrict(['realtor','
 router.post("/update-user", auth.authenticateToken, userController.restrict(['realtor','customer','staff','management']), userController.updateUser);
 router.put("/update-user/:id", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserDetails);
 router.put("/approve-pending-update/:userId/:requestId/:inquiryId", auth.authenticateToken, userController.restrict(['staff','management']), userController.approveUserUpdate);
-router.put("/approve-legit-client/:userId/:requestId/:requestLegitId", auth.authenticateToken, userController.restrict(['management']), legitClientController.approvalLegitClient);
 
 // transaction
 router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.addTransaction);
@@ -51,9 +50,10 @@ router.delete("/delete-transaction/:id/:transactionId", auth.authenticateToken, 
 
 //add legit clientslistPendingClients
 router.get("/client/legit-clients", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.listLegitimateClients);
-router.post("/update-legitimacy/:id", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.updateRequestLegitimacy);
+router.post("/update-legitimacy/:id", auth.authenticateToken, userController.restrict(['staff']), legitClientController.updateRequestLegitimacy);
 router.get("/client/pending-clients", auth.authenticateToken, userController.restrict(['realtor','staff','management']), legitClientController.listPendingClients);
-
+router.put("/update-legitimate/:id", auth.authenticateToken, userController.restrict(['management']), legitClientController.updateLegitimacy);
+router.put("/approve-legit-client/:userId/:requestId/:requestLegitId", auth.authenticateToken, userController.restrict(['management']), legitClientController.approvalLegitClient);
 
 
 //Payment Details
