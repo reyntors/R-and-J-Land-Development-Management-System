@@ -395,18 +395,6 @@ function sendUpdateApprovedResponseEmail(fullname, recipientEmail, subject) {
   });
 }
 
-const restrictToManagement = (req, res, next) => {
-  if (req.user.role !== 'management') {
-    return res.status(403).json({ message: 'Access denied' });
-  }
-  next();
-};
-
-const executeForManagement = (req, res, callback) => {
-  restrictToManagement(req, res, () => {
-    callback();
-  });
-};
 
 exports.approveUserUpdate = async (req, res, next) => {
   const { userId, requestId, inquiryId } = req.params;
@@ -531,12 +519,7 @@ exports.approveUserUpdate = async (req, res, next) => {
         user.profileDetails.businessMonthlyIncome = updateRequest.updatedData.businessMonthlyIncome;
         }
 
-        executeForManagement(req, res, () => {
-        if (updateRequest.updatedData.legitimate) {
-          user.legitimate = true;
-        }
-      });
-
+    
 
       await user.save();
 

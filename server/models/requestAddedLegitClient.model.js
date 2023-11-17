@@ -10,6 +10,7 @@ const addClientSchema = new Schema({
         type: Number,
         unique: true,
     },
+    requestId: Number,
 
     userId: {
         type: String, 

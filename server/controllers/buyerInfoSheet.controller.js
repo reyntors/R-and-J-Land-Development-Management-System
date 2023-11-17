@@ -257,7 +257,7 @@ async function  generateBuyerInfoSheetPDF( user, buyerInfoSheetData) {
 
               form.getCheckBox(fieldNames[75]).check() //locally employed
         }
-        else if(buyerInfoSheetData.buyerEmploymentType === 'overseas contract'){
+        else if(buyerInfoSheetData.buyerEmploymentType === 'overseas'){
 
              form.getCheckBox(fieldNames[48]).check() //overseas contract
         }

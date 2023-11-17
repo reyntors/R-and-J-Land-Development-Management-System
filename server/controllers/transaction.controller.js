@@ -3,6 +3,17 @@ const { uploadAttachment } = require('../middlewares/multer');
 const Report = require('../models/reports.model')
 
 
+function generateTransactionId(length = 8) {
+  const numericCharacters = '0123456789';
+  let transactionId = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * numericCharacters.length);
+    transactionId += numericCharacters.charAt(randomIndex);
+  }
+  return transactionId;
+}
+
+
 
 exports.addTransaction = async (req, res, next) => {
   try {
@@ -19,7 +30,7 @@ exports.addTransaction = async (req, res, next) => {
       console.log("I receieved:" , attachments);
 
       // Find the client by their userId
-      const client = await User.findOne({ userId: id, roles: 'guest' });
+      const client = await User.findOne({ userId: id, roles: 'customer' });
 
       if (!client) {
         return res.status(404).json({
@@ -27,8 +38,10 @@ exports.addTransaction = async (req, res, next) => {
         });
       }
 
+      const transactionId =  generateTransactionId();
       // Create a new transaction
       const newTransaction = {
+        transactionId,
         date,
         amount,
         purpose,
@@ -204,10 +217,107 @@ exports.getTransaction = async (req, res, next) => {
       
     }
 
+}
+
+exports.updateTransaction = async (req, res) =>{
+
+  try {
+    uploadAttachment(req, res, async function (err) {
+      if (err) {
+        return res.status(500).json({ message: 'File upload failed', error: err });
+      }
+    const {id, transactionId} = req.params;
+    const updatedData = req.body;
+    const attachments = req.file;
 
 
 
+    const newTransactionId = Number(transactionId)
+
+    
+
+    const user = await User.findOne({userId: id});
+
+    if (!user) {
+
+      return res.status(404).json({message: 'User is not found'});
+
+    }
+
+
+    const transactionIndex = user.transactions.findIndex(transaction => transaction.transactionId === newTransactionId);
+
+    
+
+    if (transactionIndex === -1) {
+      return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+
+    if(updatedData.amount){
+
+      user.transactions[transactionIndex].amount = updatedData.amount;
+    }
+
+    if(updatedData.purpose){
+
+      user.transactions[transactionIndex].purpose = updatedData.purpose;
+    }
+
+    if(attachments){
+
+      user.transactions[transactionIndex].attachments = attachments;
+
+    }
+
+    if(updatedData.date){
+
+      user.transactions[transactionIndex].date = updatedData.date
+    }
+
+
+
+    await user.save();
+
+   return res.status(200).json({message: 'Update successfully!'}); 
+    
+  })
+  } catch (error) {
+    
+    return res.status(500).json({message: 'failed to update!'})
+  }
 
 
 
 }
+
+exports.deleteTransactionbyId = async (req, res) => {
+  try {
+    const { id, transactionId } = req.params;
+    const newTransactionId = Number(transactionId);
+
+    const user = await User.findOne({ userId: id });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User is not found' });
+    }
+
+    const transactionIndex = user.transactions.findIndex(
+      (transaction) => transaction.transactionId === newTransactionId
+    );
+
+    if (transactionIndex === -1) {
+      return res.status(404).json({ message: 'Transaction not found' });
+    }
+
+    // Remove the transaction from the array
+    user.transactions.splice(transactionIndex, 1);
+
+    await user.save();
+
+    return res.status(200).json({ message: 'Delete successful!' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Failed to delete!' });
+  }
+};

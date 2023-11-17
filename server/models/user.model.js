@@ -10,7 +10,13 @@ function generateUserId() {
 }
 
 
+
 const transactionSchema = new Schema({
+    transactionId:{
+        type: Number,
+        
+        
+    },
     date: String,
     amount: Number,
     purpose: String,

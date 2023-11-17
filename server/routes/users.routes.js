@@ -1,6 +1,6 @@
 const userController = require("../controllers/users.controller");
 const lotController = require("../controllers/lot.controller");
-const transactiontController = require("../controllers/transaction.controller");
+const transactionController = require("../controllers/transaction.controller");
 const legitClientController = require("../controllers/legitimateClient.controller");
 const paymentDetailsController = require('../controllers/paymentdetails.controller');
 const formsController = require('../controllers/forms.controller');
@@ -40,10 +40,14 @@ router.get("/:id?", auth.authenticateToken, userController.restrict(['realtor','
 router.post("/update-user", auth.authenticateToken, userController.restrict(['realtor','customer','staff','management']), userController.updateUser);
 router.put("/update-user/:id", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserDetails);
 router.put("/approve-pending-update/:userId/:requestId/:inquiryId", auth.authenticateToken, userController.restrict(['staff','management']), userController.approveUserUpdate);
+router.put("/approve-legit-client/:userId/:requestId/:requestLegitId", auth.authenticateToken, userController.restrict(['management']), legitClientController.approvalLegitClient);
 
-//add transaction
-router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactiontController.addTransaction);
-router.get("/alltransaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactiontController.getTransaction);
+// transaction
+router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.addTransaction);
+router.get("/alltransaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.getTransaction);
+router.put("/update-transaction/:id/:transactionId", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.updateTransaction);
+router.delete("/delete-transaction/:id/:transactionId", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.deleteTransactionbyId);
+
 
 //add legit clientslistPendingClients
 router.get("/client/legit-clients", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.listLegitimateClients);
