@@ -1,6 +1,6 @@
 <template>
   <div></div>
-  <form @submit.prevent="submit" enctype="multipart/form-data" method="POST">
+  <form @submit.prevent="submit">
     <section class="form-controls-icon">
         <font-awesome-icon class="icon" icon="fa-solid fa-x" @click="close"/>
     </section>
@@ -55,9 +55,6 @@ export default {
         setAttachment(event){
             this.attachment = event.target.files[0]
             console.log(this.attachment)
-            // const blob = new Blob([this.attachment],{type: 'application/pdf'})
-            // console.log('Blob content:', blob);
-            // this.url = URL.createObjectURL(blob)
         },
         close(){    
             // this.$emit('refresh',this.id)

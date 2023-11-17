@@ -7,7 +7,7 @@
       
       <!-- show when logged in as personnel -->
       <div class="logoStaffAdmin" v-if="authorizationRoleStaff || authorizationPersonnel">
-        <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="barsStaffAdmin" @click="toggleProfile" />
+        <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="barsStaffAdmin" @click="toggleProfile" v-if="!isPersonnelProfile"/>
         <img class="logo" :src="logo" alt="ERROR">       
       </div>
 
@@ -236,6 +236,9 @@
       },
       authorizationPersonnel(){
         return this.$store.getters['auth/authorizationPersonnel']
+      },
+      isPersonnelProfile(){
+        return this.$store.getters['personnel/isSettingsViewGetter']
       },
       // authorizationPersonnelTEXT(){
       //   return this.$store.getters['auth/authorizationPersonnelTEXT']

@@ -195,7 +195,7 @@ export default {
 
     mounted(){
       this.getListScannedFiles()
-      console.log(this.clientObj)
+      // console.log(this.clientObj)
     }
  
 }

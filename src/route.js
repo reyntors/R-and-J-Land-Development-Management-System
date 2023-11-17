@@ -26,7 +26,7 @@ import PersonnelInquiries from './components/Pages/PERSONNEL PAGE/InquiriesView/
 import PersonnelSubdivision from './components/Pages/PERSONNEL PAGE/SubdivisionView/SubdivisionView.vue'
 import PersonnelClient from './components/Pages/PERSONNEL PAGE/ClientsView/ClientView.vue'
 import PersonnelForm from './components/Pages/PERSONNEL PAGE/EmptyForms/EmptyForms.vue'
-import PersonnelApprove from './components/Pages/PERSONNEL PAGE/ApproveAdd/ApproveAdd.vue'
+import PersonnelApproval from './components/Pages/PERSONNEL PAGE/ApprovalAddingClient/ApprovalAddingClient.vue'
 
 import store from './store/store.js'
 
@@ -62,7 +62,7 @@ const route = createRouter({
                     {path: 'inquiries', component: PersonnelInquiries},
                     {path: 'emptyForms', component: PersonnelForm},
                     {path: 'reports', component: PersonnelReports},
-                    {path: 'approve', component: PersonnelApprove},
+                    {path: 'approval', component: PersonnelApproval},
                 ]
             }
         ],

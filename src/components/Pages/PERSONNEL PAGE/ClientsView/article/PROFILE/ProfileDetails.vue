@@ -93,28 +93,30 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
       props: ['profileDetails','clientID'],
       data(){
           return{
-              editable: false,
-              editOccured: false,
-              id: this.clientID,
+                editable: false,
+                editOccured: false,
+                id: this.clientID,
 
-              client: null,
-              copyAdditionalInfoObj: null,
+                client: null,
+                clientReference: null,
+                copyAdditionalInfoObj: null,
 
-              isLoading: false,
-              isError: false,
+                isLoading: false,
+                isError: false,
 
-                // isbusinessAddressEdited : false,
-                // isbusinessMonthlyIncomeEdited : false,
-                // isbusinessNameEdited : false,
-                // isbuyerSourceOfIncomeEdited : false,
-                // iscivilStatusEdited : false,
-                // isemployerEdited : false,
-                // isemployerAddressEdited : false,
-                // isgrossSalaryEdited : false,
-                // ismonthlyGrossIncomeEdited : false,
-                // isoccupationEdited : false,
-                // isspouseNameEdited : false,
-                // istypeOfEmploymentEdited : false,
+                fullnameChanged: false,
+                contactNumberChanged: false,
+                addressChanged: false,
+                civilStatusChanged: false,
+                spouseNameChanged: false,
+                occupationChanged: false,
+                monthlyGrossIncomeChanged: false,
+                buyerSourceOfIncomeChanged: false,
+                typeOfEmploymentChanged: false,
+                employerChanged: false,
+                grossSalaryChanged: false,
+                businessNameChanged: false,
+                businessAddressChanged: false,
 
           }
       },
@@ -130,51 +132,46 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
             toggleEdit(){
                 this.editable = !this.editable
             },
-            // checkChanges(){
-            //     if(
-            //         this.isbusinessAddressEdited === true &&
-            //         this.isbusinessMonthlyIncomeEdited === true &&
-            //         this.isbusinessNameEdited === true &&
-            //         this.isbuyerSourceOfIncomeEdited === true &&
-            //         this.iscivilStatusEdited === true &&
-            //         this.isemployerEdited === true &&
-            //         this.isemployerAddressEdited === true &&
-            //         this.isgrossSalaryEdited === true &&
-            //         this.ismonthlyGrossIncomeEdited === true &&
-            //         this.isoccupationEdited === true &&
-            //         this.isspouseNameEdited === true &&
-            //         this.istypeOfEmploymentEdited === true
-            //     ){
-            //         return true
-            //     }else{
-            //         return false
-            //     }
-            // },
+            checkChanges(){
+                if(
+                    this.fullnameChanged === true ||
+                    this.contactNumberChanged === true ||
+                    this.addressChanged === true ||
+                    this.civilStatusChanged === true ||
+                    this.spouseNameChanged === true ||
+                    this.occupationChanged === true ||
+                    this.monthlyGrossIncomeChanged === true ||
+                    this.buyerSourceOfIncomeChanged === true ||
+                    this.typeOfEmploymentChanged === true ||
+                    this.employerChanged === true ||
+                    this.grossSalaryChanged === true ||
+                    this.businessNameChanged === true ||
+                    this.businessAddressChanged === true
+                ){
+                    return true
+                }else{
+                    return false
+                }
+            },
             async saveNow(){
-                // const edited = this.checkChanges()
-                // if(!edited){
+                const edited = this.checkChanges()
+                if(edited){
                     this.isLoading = true
                     this.isError = true
-                    const defaultInfo = {
-                        fullname: this.client.fullname,
-                        homeAddress: this.client.homeAddress,
-                        contactNumber: this.client.contactNumber,    
-                    }
-                    console.log(defaultInfo)
-                    console.log(this.client.additionalInfo)
                     try{
-                        await this.$store.dispatch('client/updateClient',{
+                        const response = await this.$store.dispatch('client/updateClient',{
                                 id: this.clientID,
                                 data: this.client
                             })         
-                        this.isError = false        
+                        this.isError = false 
+                        toast.success(response)       
                     }catch(error){
                         toast.error(error)
                     }
                     this.isLoading = false
-                // }else{
-                //     toast.warning('no changes occured')
-                // }
+                }else{
+                    toast.warning('no changes occured')
+                }
 
 
             },
@@ -182,9 +179,6 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
   
         computed:{
 
-            // somethingComputed(){
-            //     return this.$store.getter['client/somethingGetter']
-            // },
 
             editableComputed(){
               return this.editable
@@ -198,19 +192,125 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
             },
         },
   
-        // watch:{
-        //     businessMonthlyIncome(newVal){if(newVal === this.copyAdditionalInfoObj.businessMonthlyIncome){ this.isbusinessMonthlyIncomeEdited = false}else{this.isbusinessMonthlyIncomeEdited = true}},
-        //     businessName(newVal){if(newVal === this.copyAdditionalInfoObj.businessName){ this.isbusinessNameEdited = false}else{this.isbusinessNameEdited = true}},
-        //     buyerSourceOfIncome(newVal){if(newVal === this.copyAdditionalInfoObj.buyerSourceOfIncome){ this.isbuyerSourceOfIncomeEdited = false}else{this.isbuyerSourceOfIncomeEdited = true}},
-        //     civilStatus(newVal){if(newVal === this.copyAdditionalInfoObj.civilStatus){ this.iscivilStatusEdited = false}else{this.iscivilStatusEdited = true}},
-        //     employer(newVal){if(newVal === this.copyAdditionalInfoObj.employer){ this.isemployerEdited = false}else{this.isemployerEdited = true}},
-        //     employerAddress(newVal){if(newVal === this.copyAdditionalInfoObj.employerAddress){ this.isemployerAddressEdited = false}else{this.isemployerAddressEdited = true}},
-        //     grossSalary(newVal){if(newVal === this.copyAdditionalInfoObj.grossSalary){ this.isgrossSalaryEdited = false}else{this.isgrossSalaryEdited = true}},
-        //     monthlyGrossIncome(newVal){if(newVal === this.copyAdditionalInfoObj.monthlyGrossIncome){ this.ismonthlyGrossIncomeEdited = false}else{this.ismonthlyGrossIncomeEdited = true}},
-        //     occupation(newVal){if(newVal === this.copyAdditionalInfoObj.occupation){ this.isoccupationEdited = false}else{this.isoccupationEdited = true}},
-        //     spouseName(newVal){if(newVal === this.copyAdditionalInfoObj.spouseName){ this.isspouseNameEdited = false}else{this.isspouseNameEdited = true}},
-        //     typeOfEmployment(newVal){if(newVal === this.copyAdditionalInfoObj.typeOfEmployment){ this.istypeOfEmploymentEdited = false}else{this.istypeOfEmploymentEdited = true}},        
-        // },
+        watch:{
+            'client.fullname': function(newValue){
+                console.log(this.clientReference.fullname)
+                console.log(newValue)
+                if(this.clientReference.fullname != newValue){
+                    this.fullnameChanged = true
+                }else{
+                    this.fullnameChanged = false
+                }
+            },
+            'client.contactNumber': function(newValue){
+                console.log(this.clientReference.contactNumber)
+                console.log(newValue)
+                if(this.clientReference.contactNumber != newValue){
+                    this.contactNumberChanged = true
+                }else{
+                    this.contactNumberChanged = false
+                }
+            },
+            'client.address': function(newValue){
+                console.log(this.clientReference.address)
+                console.log(newValue)
+                if(this.clientReference.address != newValue){
+                    this.addressChanged = true
+                }else{
+                    this.addressChanged = false
+                }
+            },
+            'client.civilStatus': function(newValue){
+                console.log(this.clientReference.civilStatus)
+                console.log(newValue)
+                if(this.clientReference.civilStatus != newValue){
+                    this.civilStatusChanged = true
+                }else{
+                    this.civilStatusChanged = false
+                }
+            },
+            'client.spouseName': function(newValue){
+                console.log(this.clientReference.spouseName)
+                console.log(newValue)
+                if(this.clientReference.spouseName != newValue){
+                    this.spouseNameChanged = true
+                }else{
+                    this.spouseNameChanged = false
+                }
+            },
+            'client.occupation': function(newValue){
+                console.log(this.clientReference.occupation)
+                console.log(newValue)
+                if(this.clientReference.occupation != newValue){
+                    this.occupationChanged = true
+                }else{
+                    this.occupationChanged = false
+                }
+            },
+            'client.monthlyGrossIncome': function(newValue){
+                console.log(this.clientReference.monthlyGrossIncome)
+                console.log(newValue)
+                if(this.clientReference.monthlyGrossIncome != newValue){
+                    this.monthlyGrossIncomeChanged = true
+                }else{
+                    this.monthlyGrossIncomeChanged = false
+                }
+            },
+            'client.buyerSourceOfIncome': function(newValue){
+                console.log(this.clientReference.buyerSourceOfIncome)
+                console.log(newValue)
+                if(this.clientReference.buyerSourceOfIncome != newValue){
+                    this.buyerSourceOfIncomeChanged = true
+                }else{
+                    this.buyerSourceOfIncomeChanged = false
+                }
+            },
+            'client.typeOfEmployment': function(newValue){
+                console.log(this.clientReference.typeOfEmployment)
+                console.log(newValue)
+                if(this.clientReference.typeOfEmployment != newValue){
+                    this.typeOfEmploymentChanged = true
+                }else{
+                    this.typeOfEmploymentChanged = false
+                }
+            },
+            'client.employer': function(newValue){
+                console.log(this.clientReference.employer)
+                console.log(newValue)
+                if(this.clientReference.employer != newValue){
+                    this.employerChanged = true
+                }else{
+                    this.employerChanged = false
+                }
+            },
+            'client.grossSalary': function(newValue){
+                console.log(this.clientReference.grossSalary)
+                console.log(newValue)
+                if(this.clientReference.grossSalary != newValue){
+                    this.grossSalaryChanged = true
+                }else{
+                    this.grossSalaryChanged = false
+                }
+            },
+            'client.businessName': function(newValue){
+                console.log(this.clientReference.businessName)
+                console.log(newValue)
+                if(this.clientReference.businessName != newValue){
+                    this.businessNameChanged = true
+                }else{
+                    this.businessNameChanged = false
+                }
+            },
+            'client.businessAddress': function(newValue){
+                console.log(this.clientReference.businessAddress)
+                console.log(newValue)
+                if(this.clientReference.businessAddress != newValue){
+                    this.businessNameChanged = true
+                }else{
+                    this.businessNameChanged = false
+                }
+            },
+        },
 
         created(){
             this.$store.commit('client/resetTempArrays')
@@ -218,20 +318,13 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
             const index = list.findIndex(item => item.userId === this.clientID)
             if(index>=0){
                 const obj = list[index]
-                console.log(obj.profileDetails)
+                // console.log(obj.profileDetails)
+                this.clientReference = {...obj.profileDetails}
                 this.client = {...obj.profileDetails}
             }else{
                 this.client = {}
             }
             
-            // this.client= {
-            //     additionalInfo: obj.additionalInfo,
-            //     contactNumber: obj.contactNumber,
-            //     fullname: obj.fullname,
-            //     homeAddress: obj.homeAddress,
-            // }
-            // console.log(this.client)
-            // console.log(this.copyAdditionalInfoObj)
 
         }
   
@@ -260,7 +353,7 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
     border: none;
     width: 100%;
     font-weight: 600;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     padding-left: 1rem;
     overflow: visible;
     outline: 1px solid black;
@@ -288,6 +381,9 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
       padding: 2px .5rem;
       background-color: #31A72A;
       color:white;
+      border: none;
+      box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
   }
  button:hover{
       background-color: #30a72a8e;
@@ -325,5 +421,9 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
   gap: 5px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+}
+input{
+  background-color: transparent;
+  border-radius: 3px;
 }
   </style>

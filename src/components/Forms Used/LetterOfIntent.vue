@@ -119,23 +119,29 @@ export default{
         return false
       }
     },
-    submit(){
+    async submit(){
       const isReady = this.checkReadySubmit()
       if(isReady){
         const payload = {
-          dateNow: this.dateNow,
-          projectName: this.projectName,
-          lotNoUnitNo: this.lotNoUnitNo,
+          date: this.dateNow,
+          project: this.projectName,
+          lotNumber: this.lotNoUnitNo,
           fullname: this.fullname,
           citizenship: this.citizenship,
-          mobileNo: this.mobileNo,
+          contactNo: this.mobileNo,
           emailAddress: this.emailAddress,
           messengerAccount: this.messengerAccount,
           viberNo: this.viberNo,          
         }
+        try{
+          const response = await this.$store.dispatch('form/submitLetterOfIntent',payload)
+          toast.success(response)
+        }catch(error){
+          toast.error(error)
+        }
 
           console.log(payload)
-          this.$router.push("/guest-forms/buyer-info-sheet")
+          // this.$router.push("/guest-forms/buyer-info-sheet")
 
       }else{
         toast.warning('Please check your information and fill out the required fields',{autoClose: false})

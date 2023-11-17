@@ -69,7 +69,8 @@ ul{
     list-style: none;
     margin:0;
     padding:0;
-    border-top: 2px solid black;
+    /* border-top: 2px solid black;   */
+    box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.1);
 }
 .profile:active .person{
     color: rgba(0, 0, 0, 0.3);

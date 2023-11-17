@@ -9,7 +9,7 @@
         <table v-else>
           <tbody v-for="(item,index) in listInquiries" :key="index" >
             <tr @click="showCard(item.inquiryId)" :class="{shade: item.mark || item.approvalStatus ==='approved' || item.approvalStatus ==='rejected'}">
-              <td class="name">{{ item.name }}</td>
+              <td class="name">{{ numberIndex(index)}} {{ item.name }}</td>
               <td class="about">{{ item.subject }} {{ item.context }}</td>
               <td class="date">               
                 <span class="dateText">
@@ -62,11 +62,15 @@
       showCard(id){
         this.focusedID = id
       },
+      numberIndex(index){
+        return index + 1 + '. '
+      }
     },
     computed:{
       listInquiries(){
         return this.$store.getters['inquiries/listInquiriesGetter']
       },
+
     },
 
     async mounted(){
@@ -86,7 +90,7 @@
   <style scoped>
 
 .shade{
-  font-weight: 500;
+  font-weight: 400;
   background-color: transparent;
 }
 
@@ -95,6 +99,7 @@
     min-height: 85vh;
     padding: 1rem;
     border-left: 2px solid rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 h4{
   padding: 0;
@@ -122,6 +127,7 @@ h4{
 .inquiries-cont .div2 table{
   width: 100%;
   table-layout: fixed;
+  background-color: rgba(255, 255, 255, 0.562);
 }
 tr{
   border-bottom: 1px solid black;

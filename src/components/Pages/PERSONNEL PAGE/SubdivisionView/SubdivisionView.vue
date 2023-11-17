@@ -163,6 +163,7 @@ import SubdivisionCard from './SubdivisionCard.vue'
     min-height: 85vh;
     padding: 1rem;
     border-left: 2px solid rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 .subdivision-cont h4{
   cursor: pointer;

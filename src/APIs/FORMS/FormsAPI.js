@@ -13,6 +13,7 @@ export const submitLetterOfIntent = async (credentials) => {
                 Authorization: `Bearer ${token}`
             } 
         },);
+
         
         return response.data
 

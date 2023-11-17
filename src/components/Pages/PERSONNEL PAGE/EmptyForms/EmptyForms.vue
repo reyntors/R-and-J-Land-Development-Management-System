@@ -80,6 +80,7 @@
   height: 85vh;
   padding: 1rem;
   border-left: 2px solid rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 h4{
   padding: 0;
@@ -98,7 +99,7 @@ h4{
 .div2{
     width:100%;
     height: 90%;
-    background-color: bisque;
+    background-color: transparent;
     padding: 1rem;
     overflow-y: auto;
     position: relative;

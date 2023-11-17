@@ -121,11 +121,23 @@ export default{
         search(value){
             this.$store.commit('client/searchGuest',value)
         },
+
         async addNow(){
             const confirmed = confirm('Are you sure to add this user as an Official Client?')
+            const isAdmin = this.$store.getters['auth/authorizationRoleAdmin']
+            console.log(isAdmin)
             if(confirmed){
-                await this.$store.dispatch('client/addClient',this.userId)
-                this.back();                
+                try{
+                    const response = await this.$store.dispatch('client/addClient',{
+                        userId: this.userId,
+                        isAdmin: isAdmin})
+                    toast.success(response)
+                    await new Promise(resolve => setTimeout(resolve,300))
+                    this.back();
+                }catch(error){
+                    toast.error(error)
+                }
+                                
             }
 
         }
@@ -139,7 +151,7 @@ export default{
         },
         isSearchExist(){
             return this.$store.getters['client/searchResultGetter']
-        }
+        },
     },
     async created(){
         this.$store.commit('client/refreshListPending')

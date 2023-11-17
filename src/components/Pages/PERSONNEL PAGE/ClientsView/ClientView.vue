@@ -21,14 +21,14 @@
             </tr>
             <tbody v-for="(client,index) in clientsComputed" :key="index">
               <tr>
-                  <td class="name"> {{ client.fullname }}</td>
+                  <td class="name">{{ numberIndex(index) }} {{ client.fullname }}</td>
                   <td class="email">{{ client.email }}</td>
                   <td class="address">{{ client.homeAddress }}</td>
                   <td class="option"><span @click="showClientProfile(client)">Show/Update</span></td> 
                   <td class="delete" v-if="authorizationRoleAdmin"><span class="delBtn"><font-awesome-icon icon="fa-solid fa-user-xmark" @click="deleteNow(client.userId)"/></span></td>
               </tr>  
               <tr v-if="client === selectedClient">
-                <td :colspan="columnSpanNum">
+                <td :colspan="columnSpanNum" class="details">
                   <client-details-nav :client-obj="client"></client-details-nav>          
                 </td>
               </tr>            
@@ -69,7 +69,10 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
         }
       },
 
-      methods:{
+      methods:{      
+        numberIndex(index){
+          return index + 1 + '. '
+        },
         toggleShowAddForm(){
           this.addFormVisible = !this.addFormVisible
         },
@@ -148,6 +151,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
       padding: 1rem;
       position: relative;
       min-height: 85vh;
+      /* z-index: 100; */
   }
   .searchPart{
     width:100%;
@@ -191,7 +195,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
   table{
     width: 100%;
     width: 100%;
-  table-layout: fixed;
+    table-layout: fixed;
   }
   th{
     /* border: 1px solid black; */
@@ -200,16 +204,17 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
     border-top: 1px solid black;
   }
   td{
-    padding: 0 .5rem;
+    padding: .5rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
   table tbody:nth-child(even){
-    background-color: rgba(255, 217, 0, 0.1);
+    background-color: #30a72aa7;
+;
   }
   table tbody:nth-child(odd){
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.5);
   }
   tr td:nth-child(4){
     text-align: center;
@@ -227,6 +232,9 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
   .option{
     overflow: hidden;
     text-overflow: clip;
+  }
+  .details{
+    padding: 0;
   }
 
   </style>

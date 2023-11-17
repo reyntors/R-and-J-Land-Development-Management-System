@@ -9,11 +9,12 @@
     <section class="navigations">
         <!-- <router-link to="/personnel/dashboard">DASHBOARD</router-link> -->
         <router-link to="/personnel/client">CLIENTS</router-link>
-        <router-link to="/personnel/subdivision">SUBDIVISION</router-link>
         <router-link to="/personnel/inquiries">INQUIRIES</router-link>
+        <router-link to="/personnel/approval" v-if="isUserAdmin">ADDED CLIENTS</router-link>
+        <router-link to="/personnel/subdivision">SUBDIVISION</router-link> 
         <router-link to="/personnel/emptyForms">EMPTY FORMS</router-link>
         <router-link to="/personnel/reports">REPORTS</router-link>
-        <router-link to="/personnel/approve" v-if="isUserAdmin">ADDED CLIENTS</router-link>
+        
     </section>
 
   </div>
@@ -45,7 +46,8 @@ h5{
     /* height: 85vh; */
     padding: 1rem;
     z-index: 1;
-    background-color: white;
+    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 .imageName{
     display: flex;
@@ -75,6 +77,12 @@ h5{
     white-space: nowrap;
     border-radius: 5px;
     text-transform: uppercase;
+    /* background: #fff; */
+    backdrop-filter: blur(5.1px);
+    -webkit-backdrop-filter: blur(5.1px);
+    border: 1px solid rgba(0, 0, 0, 0.51);;
+    /*  */
+    
 }
 .router-link-active{
   /* outline: 1px solid blue; */

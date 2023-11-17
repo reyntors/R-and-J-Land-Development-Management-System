@@ -34,9 +34,9 @@ p {
 h2{
   font-weight: 600;
 }
-h4{
-  /* font-size: clamp(1rem, 1.7vw, 2rem); */
-}
+/* h4{
+  font-size: clamp(1rem, 1.7vw, 2rem);
+} */
 .Toastify__toast-container {
   top: 15vh !important;
 }

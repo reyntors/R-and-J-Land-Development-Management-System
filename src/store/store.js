@@ -5,7 +5,7 @@ import personnel from './personnelStore/personnel.js'
 import client from './personnelStore/client.js'
 import report from './personnelStore/report.js'
 import subdivision from './guest_personnelStore/subdivision.js'
-import guest from './publicStore/guestStore.js'
+import form from './formSubmissionStore/formStore.js'
 import inquiries from "./personnelStore/inquiries.js";
 import rawForms from './personnelStore/rawForms.js'
 import myProfile from './clientStore/clientProfile.js'
@@ -15,7 +15,7 @@ import callSlip from "./publicStore/callSlip.js";
 import myAccount from './clientStore/clientAccount.js'
 import mySettings from './clientStore/clientSettings.js'
 import forgotPass from './clientStore/forgotPass/forgotPass.js'
-import pendingClients from './personnelStore/pendingClient.js'
+import newClients from './personnelStore/admin/newClient.js'
 
 const store = createStore({
         modules:{
@@ -24,7 +24,7 @@ const store = createStore({
             client,
             report,
             subdivision,
-            guest,
+            form,
             inquiries,
             rawForms,
             contactUs,
@@ -34,7 +34,7 @@ const store = createStore({
             myAccount,
             mySettings,
             forgotPass,
-            pendingClients
+            newClients
         },
         state(){
             return{

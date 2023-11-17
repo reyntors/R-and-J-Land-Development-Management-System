@@ -60,7 +60,7 @@
         <header>
           <h5>TRANSACTIONS</h5> 
           <div> 
-            <button @click="toggleAddPayment" style="margin-right: .5rem;" v-if="editPaymentForm ">
+            <button @click="saveEdit" style="margin-right: .5rem;" v-if="editPaymentForm ">
               SAVE <font-awesome-icon icon="fa-solid fa-plus" />
             </button>
             <button @click="toggleAddPayment">ADD <font-awesome-icon icon="fa-solid fa-plus" /></button>
@@ -89,7 +89,7 @@
                 <td>
                   <div class="firstElement"> 
                     <strong class="number">{{  elementNumber(index) }}</strong>
-                    <input v-model="editObj.date" v-if="editPaymentForm && focusElement === index">
+                    <input type="date" v-model="editObj.date" v-if="editPaymentForm && focusElement === index">
                     <p style="white-space: nowrap;" v-else>{{ transaction.date }}</p>                      
                   </div>
 
@@ -107,7 +107,7 @@
                   <p v-else style="white-space: nowrap;">{{ transaction.purpose }}</p>
                 </td>
                 <td>
-                  <input type="file" v-if="editPaymentForm && focusElement === index">
+                  <input type="file" accept=".pdf" @input="setAttachment" v-if="editPaymentForm && focusElement === index">
                   <a v-else :href="transaction.attachments[0].url" :download="transaction.attachments[0].filename">{{ transaction.attachments[0].filename }}</a>
                 </td>
                 <td v-if="roleAdmin">
@@ -117,7 +117,7 @@
                     <font-awesome-icon class="icon" icon="fa-solid fa-xmark"  />
                   </button>
                 </td>
-                <td v-if="roleAdmin"><font-awesome-icon class="icon" icon="fa-solid fa-minus" /></td>
+                <td v-if="roleAdmin"><font-awesome-icon class="icon" icon="fa-solid fa-minus" @click="deleteTransaction(transaction.transactionId)"/></td>
               </tr>     
               </tbody>
             <!-- {{ paymentTransaction }} -->
@@ -150,6 +150,8 @@ export default {
 
           editObj: null,
           focusElement: null,
+          newAttachment: null,
+          transactionId: null,
       }
     },
     methods:{
@@ -178,7 +180,7 @@ export default {
             // console.log(payload)
             this.getListTransaction(this.clientID)
         }catch(error){
-          console.error(error)
+            toast.error(error,{autoClose: false})
         }   
         
       },
@@ -187,12 +189,55 @@ export default {
         this.editPaymentForm = true
           this.focusElement = index;
           this.editObj = {...obj}
+          this.transactionId = obj.transactionId
       },
       cancelEditElement(){
         this.editPaymentForm = false
         this.focusElement = null
       },
-      saveEdit(){
+      setAttachment(event){
+        this.newAttachment = event.target.files[0]
+      },
+      async saveEdit(){
+        console.log('saving edit')
+        const object = {
+          
+          date: this.editObj.date,
+          amount: this.editObj.amount,
+          purpose: this.editObj.purpose,
+          file:this.newAttachment
+        }
+
+        try{
+          this.isLoading = true
+          const response = await this.$store.dispatch('client/updatePayment',{
+              userId: this.clientID,
+              transactionId: this.transactionId,
+              object: object,
+              })
+          console.log(response)
+          toast.success(response)
+          this.cancelEditElement()
+          this.getListTransaction(this.clientID)
+        }catch(error){
+            toast.error(error)
+            toast.error(error,{autoClose: false})
+        }   
+      },
+      async deleteTransaction(transactionId){
+        const confirmed = confirm("are you sure to delete this transaction?")
+        if(confirmed){
+          try{
+            const response = await this.$store.dispatch('client/deleteTransactionPayment',{
+            userId: this.clientID,
+            transactionId: transactionId
+            })       
+            console.log(response)
+            toast.success(response)   
+          }catch(error){
+            toast.error(error)
+          }          
+        }
 
       },
       elementNumber(index){
@@ -237,6 +282,7 @@ export default {
 </script>
 
 <style scoped>
+
 .cancelEditBtn{
   border: none;
   background-color: transparent;

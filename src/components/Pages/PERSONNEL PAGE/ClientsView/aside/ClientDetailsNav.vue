@@ -99,7 +99,7 @@ export default {
 
 <style scoped>
 .imageProfile{
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   height: 50%;
   display: flex;
   flex-direction: column;
@@ -132,7 +132,8 @@ button:hover{
 }
 .details-nav .section-left{
   width: 25%;
-  box-shadow: 0 0 3px 1px black;
+  /* box-shadow: 0 0 3px 1px black; */
+  border-radius: 5px;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -141,7 +142,9 @@ button:hover{
   padding: 1rem;
   gap: 2rem;
   text-align: center;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
+  /* backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px); */
 }
 .details-nav .section-left .navigationBtns{
   width: 90%;
@@ -173,9 +176,11 @@ button:hover{
   width: 75%;
   height: 100%;
   border: 1px solid black;
-  box-shadow: 0 0 3px 1px black;
+  /* box-shadow: 0 0 3px 1px black; */
+  border-radius: 5px;
   padding: 1rem;
-  background-color: white;
+  /* background-color: white; */
+  background-color: rgba(255, 255, 255, 0.8);
   overflow-y: auto;
 }
 </style>

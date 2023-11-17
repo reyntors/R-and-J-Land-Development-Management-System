@@ -8,7 +8,7 @@
     <div class="div2">
       
       
-      <article class="card">
+      <article class="cards">
         <header>
           <h4>Collection Reports</h4>
         </header>
@@ -68,10 +68,11 @@ export default {
 
 <style scoped>
 .report-container{
-  width: 100%;
+    width: 100%;
     height: 85vh;
     padding: 1rem;
     border-left: 2px solid rgba(0, 0, 0, 0.5);
+    position: relative;
 }
 h4{
   margin: 0;
@@ -91,7 +92,7 @@ h4{
 .div2{
     width:100%;
     height: 90%;
-    background-color: bisque;
+    background-color: transparent;
     display: flex;
     justify-content: start; 
     align-items: start;
@@ -99,25 +100,28 @@ h4{
     gap: 1rem;
     position: relative;
 }
-.card{
+.cards{
   outline: 1px solid black;
+    backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 5px;
 }
-.card header{
+.cards header{
   /* border: 1px solid black; */
   padding: .5rem 2rem;
 }
-.card header h4{
+.cards header h4{
   margin: 0;
   padding: 0;
 }
 
-.card section{
+.cards section{
   display: flex;
   flex-direction: column;
   padding: 1rem;
   gap: .5rem;
 }
-.card button{
+.cards button{
   padding: .5rem;
   margin: .5rem;
   background-color: #31A72A;
@@ -125,7 +129,7 @@ h4{
   border: none;
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
-.card button:active{
+.cards button:active{
   box-shadow: none;
 }
 

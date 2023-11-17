@@ -184,6 +184,7 @@ export default {
     padding: .5rem;
     border: 1px solid black;
     width: 100%;
+    border-radius: 5px;
     /* position: relative; */
 }
 .subdivision-card-cont header{

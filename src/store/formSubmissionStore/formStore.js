@@ -1,4 +1,4 @@
-import * as API from '@/APIs/CLIENT/GuestAPI.js'
+import * as API from '@/APIs/FORMS/FormsAPI.js'
 
 export default{
 

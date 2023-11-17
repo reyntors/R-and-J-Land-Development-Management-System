@@ -55,6 +55,7 @@ export default{
         //start modify legit client list local
         addClient(state,payload){
             console.log('added')
+            console.log(payload)
             state.clientsAdded.push(payload)
         },
         updateClient(state,payload){
@@ -104,6 +105,16 @@ export default{
         //start payment transactions
         setLocalCurrentClientTransaction(state,list){
             state.listCurrentClientTransactions = list.reverse()                        
+        },
+        deleteTransactionPayment(state,id){
+            console.log(state.listCurrentClientTransactions,id)
+            const index = state.listCurrentClientTransactions.findIndex(item => item.transactionId = id)
+            if(index>=0){
+                console.log('existed')
+                state.listCurrentClientTransactions.splice(index,1)
+            }else{
+                console.log('not found')
+            }
         },
         //end payment transactions
 
@@ -155,24 +166,34 @@ export default{
         },
         //start getting legit list
 
-        //start adding GUEST to LEGIT CLIENT
-        async addClient(context,id){   
-            try{
-                const payload = await Client.addToLegitClient(id)
-                context.commit('addClient',payload.data)
-                console.log(payload)
-            }catch(error){
-                console.log(error)
-            }
-        },
+
+        // start update profile
         async updateClient(context,payload){
+            console.log('updating profile details')
             try{
-                await Client.updateUserProfile(payload)
+                 const response = await Client.updateUserProfile(payload)
                 context.commit('updateClient',payload)
+                return response.message
             }catch(error){
                 console.error(error)
             }
         },
+        // end update profile
+        //start adding GUEST to LEGIT CLIENT
+        async addClient(context,payload){   
+            try{
+                const response = await Client.addToLegitClient(payload)
+
+                if(payload.isAdmin){
+                    context.commit('addClient',response.data)
+                }
+                
+                return response.message
+            }catch(error){
+                console.log(error)
+            }
+        },
+
         async removeClient(context,id){
             try{
                 await Client.removeToLegitClient(id)
@@ -188,7 +209,7 @@ export default{
             try{
                 const response = await Client.getListTransaction(id)
                 const list = response.data
-                // console.log(list)
+                console.log(list)
                 context.commit('setLocalCurrentClientTransaction',list)
                 return response
             }catch(error){
@@ -207,6 +228,30 @@ export default{
                 return response.message
             }catch(error){
                 console.log(error)
+                throw error
+            }
+        },
+
+        async updatePayment(_,payload){
+            console.log('updating store')
+
+            try{
+                const response = await Client.updatePaymentTransaction(payload)
+                return response.message
+            }catch(error){
+                console.log(error)
+                throw error
+            }
+        },
+        
+        async deleteTransactionPayment(context,payload){
+            try{
+                const response = await Client.deletePaymentTransaction(payload)
+                context.commit('deleteTransactionPayment',payload.transactionId)
+                console.log(response)
+                return response.message
+            }catch(error){
+                console.error(error)
                 throw error
             }
         },

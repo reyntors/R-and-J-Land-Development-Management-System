@@ -10,8 +10,9 @@
             <router-link to="/personnel/emptyForms" @click="toggleStaffAdminColumn">EMPTY FORMS</router-link>
             <router-link to="/personnel/reports" @click="toggleStaffAdminColumn">REPORTS</router-link>
             <button>STAFF REQUEST</button> -->
-            <button>Profile</button>
-            <button>Settings</button>
+            <!-- <button>Profile</button> -->
+            <button @click="gotoSettings">Settings</button>
+            <button @click="gotoDashboard">Dashboard</button>
             <button @click="logout">Log Out</button>
         </div>  
     </div>
@@ -29,6 +30,14 @@ export default {
         toggleStaffAdminColumn(){
             this.isShowStaffAdminColumn = !this.isShowStaffAdminColumn
         },
+        gotoSettings(){
+          this.$store.commit('personnel/switchSettings')
+          this.toggleStaffAdminColumn()
+        },
+        gotoDashboard(){
+          this.$store.commit('personnel/switchDashboard')
+          this.toggleStaffAdminColumn()
+        },
         logout(){
             this.$emit('logout-now')
         }
@@ -45,7 +54,7 @@ export default {
 
 .dropdown{
     background-color: white;
-    box-shadow: 0 1px 1px 1px black;
+    box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.1);
 }
 .navStaffAdmin{
     display: flex;

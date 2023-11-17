@@ -34,16 +34,26 @@ export const requestPendingList = async () => {
         throw (error.response.data.message);
     }
 }
-export const addToLegitClient = async (id) => {
+export const addToLegitClient = async (payload) => {
     // console.log('API addToLegitClient executed')
     const token =store.getters['auth/getTokenID']
     try{
-        const response = await axios.put(`${BASE_URL}users/update-legitimacy/${id}`,id,{
-            headers:{
-                'Authorization': `Bearer ${token}`
-            }
-        }) 
-        return response.data      
+        if(!payload.isAdmin){
+            const response = await axios.post(`${BASE_URL}users/update-legitimacy/${payload.userId}`,{legitimate: true},{
+                headers:{
+                    'Authorization': `Bearer ${token}`
+                }
+            })      
+            return response.data        
+        }else{
+            const response = await axios.put(`${BASE_URL}users/update-legitimate/${payload.userId}`,{legitimate: true},{
+                headers:{
+                    'Authorization': `Bearer ${token}`
+                }
+            })  
+            return response.data 
+        }
+             
     }catch(error){
         throw (error.response.data.message);
     }
@@ -84,6 +94,41 @@ export const addPaymentTransaction = async (payload) => {
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.id}`,payload.obj,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        }) 
+        return response.data      
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+export const updatePaymentTransaction = async (payload) => {
+    // console.log('API pdatePaymentTransaction executed')
+    console.log(payload.object)
+    const obj = new FormData()
+    obj.append('date',payload.object.date)
+    obj.append('amount',payload.object.amount)
+    obj.append('purpose',payload.object.purpose)
+    obj.append('file',payload.object.file)
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.put(`${BASE_URL}users/update-transaction/${payload.userId}/${payload.transactionId}`,obj,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        }) 
+        console.log(response)
+        return response.data      
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+export const deletePaymentTransaction = async (payload) => {
+    // console.log('API deletePaymentTransaction executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.delete(`${BASE_URL}users/delete-transaction/${payload.userId}/${payload.transactionId}`,{
             headers:{
                 'Authorization': `Bearer ${token}`
             }
@@ -188,7 +233,7 @@ export const updateUserProfile = async (payload) => {
                 'Authorization': `Bearer ${token}`,
             },
         })
-        console.log(response)
+        return response.data
     }catch(error){
         throw (error.response.data.message);
     }

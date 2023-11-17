@@ -14,14 +14,14 @@
             </tr>
             <tbody v-for="(item,index) in list" :key="index">
                 <tr>
-                    <td class="context"> {{ numberGenerate(index) }}{{ item.context }}</td>
+                    <td class="context"> {{ numberGenerate(index) }}{{ item.details }}</td>
                     <td class="date">{{ item.date }}</td>
                     <td class="option">
-                        <span class="check-span" @click="approve(item.id)">
+                        <span class="check-span" @click="approval(item.userId,item.requestId,item.requestLegitId,'approved')">
                             Approve
                            <font-awesome-icon icon="fa-solid fa-user-check" class="icon check"/> 
                         </span>
-                        <span @click="reject(item.id)">
+                        <span @click="approval(item.userId,item.requestId,item.requestLegitId,'rejected')">
                             Reject
                             <font-awesome-icon icon="fa-solid fa-user-xmark" class="icon ex"/>
                         </span>
@@ -37,6 +37,7 @@
   </template>
   
   <script>
+  import { toast } from 'vue3-toastify'
 
   export default {
     data(){
@@ -45,17 +46,27 @@
         }
     },
     methods:{
-        approve(id){
-            const confirmed = confirm('are you sure to APPROVE this user?')
-            if(confirmed){
-                this.$store.commit('pendingClients/approve',id)
+        async approval(userId,requestId, requestLegitId,isApproved){
+            console.log(isApproved)
+            var confirmed = null;
+            if(isApproved === 'approved'){
+              confirmed = confirm('are you sure Add this user as legit Client?')
+            }else{
+              confirmed = confirm('are you sure to REJECT this user?')
             }
-            
-        },
-        reject(id){
-            const confirmed = confirm('are you sure to REJECT this user?')
             if(confirmed){
-            this.$store.commit('pendingClients/reject',id)
+              try{
+                const response = await this.$store.dispatch('newClients/approval',{
+                  userId,
+                  requestId,
+                  requestLegitId,
+                  isApproved
+                })
+                toast.success(response)
+              }catch(error){
+                toast.error(error)
+              }
+
             }
         },
         numberGenerate(index){
@@ -64,15 +75,27 @@
     },
     computed:{
         list(){
-            return this.$store.getters['pendingClients/listPendingClients']
+            return this.$store.getters['newClients/listPendingClients']
         }
+    },
+
+    async mounted(){
+      try{
+        await this.$store.dispatch('newClients/getList')
+      }catch(error){
+        console.error(error)
+      }
     }
   }
   </script>
   
   <style scoped>
-  tbody:nth-child(even){
-    background-color: rgba(0, 0, 0, 0.1);
+   table tbody:nth-child(even){
+    background-color: #30a72aa7;;
+;
+  }
+  table tbody:nth-child(odd){
+    background-color: rgba(255, 255, 255, 0.5);
   }
   th{
     text-align: center;
@@ -100,10 +123,11 @@
     width: 100%;
   }
   .addedClient-container{
-    width: 100%;
+      width: 100%;
       height: 85vh;
       padding: 1rem;
       border-left: 2px solid rgba(0, 0, 0, 0.5);
+      position: relative;
   }
   h4{
     margin: 0;
