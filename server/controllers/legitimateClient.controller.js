@@ -258,9 +258,11 @@ exports.approvalLegitClient = async (req, res, next) => {
 
          
 
-         if (matchingRequest) {
+         if (matchingRequest !== -1 ) {
 
              matchingRequest.approvalStatus = isApproved;
+
+             request.requests.splice(matchingRequest, 1);
 
              await request.save()
         
@@ -292,7 +294,11 @@ exports.approvalLegitClient = async (req, res, next) => {
             matchingRequest.approvalStatus = isApproved
 
             await request.save()
+
+           
         }
+
+        
 
         return res.status(200).json({ message: 'User update request has been ' + (isApproved ? 'approved' : 'rejected') });
 
