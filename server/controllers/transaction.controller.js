@@ -266,7 +266,14 @@ exports.updateTransaction = async (req, res) =>{
 
     if(attachments){
 
-      user.transactions[transactionIndex].attachments = attachments;
+      const fileData = {
+        filename: attachments.originalname,
+        contentType: attachments.mimetype,
+        url: attachments.location,
+        
+      };
+
+      user.transactions[transactionIndex].attachments = fileData;
 
     }
 
