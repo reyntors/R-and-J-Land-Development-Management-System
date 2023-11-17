@@ -82,6 +82,30 @@ exports.updateLegitimacy = async (req, res, next) => {
             });
         }
 
+        const request = await Request.findOne({"requests.userId": id});
+
+         if(request){
+
+            const matchingRequest = request.requests.find(item => item.userId === id);
+
+         
+
+         if (matchingRequest !== -1 ) {
+
+            
+
+             request.requests.splice(matchingRequest, 1);
+
+             await request.save()
+        
+         }else{
+            return res.status(404).json({message: 'request not found for the specified requestId'})
+         }
+
+        }else{
+            return res.status(404).json({message: 'No matching  request found '})
+        }
+
         return res.status(200).json({
             message: 'User legitimacy status updated successfully.',
             data: updatedUser,
@@ -198,16 +222,26 @@ try{
       const request = await Request.findOne()
 
        if (!request) {
-           // If inquiries object doesn't exist, create it
+
+        console.log(!request)
+           // If requests object doesn't exist, create it
            const newRequests = new Request({ requests: [newRequest] });
            await newRequests.save();
        }else{
 
-           request.requests.push(newRequest);
-            //save to inquiries
-           await request.save();
+           
+            // Check if the requestLegitId already exists in the requests array
+            const existingRequest = request.requests.find(item => item.userId === newRequest.userId);
+            console.log("i am here",existingRequest)
 
-       }
+            if (!existingRequest) {
+                // If the requestLegitId doesn't exist, push the new request
+                request.requests.push(newRequest);
+                // Save to requests
+                await request.save();
+
+            }
+    }
 
      return res.status(200).json({message: 'Success!, your request has been sent!'})
 
