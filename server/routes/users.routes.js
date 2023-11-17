@@ -27,7 +27,7 @@ router.post("/addletter", auth.authenticateToken, userController.restrict(['cust
 router.post("/request-lot", auth.authenticateToken, userController.restrict(['customer']), lotController.reserveLotbyId);
 router.post("/add-call-slip", callSlipController.addCallSlip);
 router.get("/get-all-accounts", auth.authenticateToken, userController.restrict(['customer','realtor']), paymentDetailsController.getAllPaymentDetailsById);
-router.get("/get-account-settings", auth.authenticateToken, userController.restrict(['customer','realtor']), userController.getAccountSettings);
+router.get("/get-account-settings", auth.authenticateToken, userController.restrict(['customer','realtor','management']), userController.getAccountSettings);
 router.put("/update-user-account", auth.authenticateToken, userController.restrict(['customer','realtor']), userController.updateUserAccount);
 router.post("/forgot-password", userController.forgotPassword);
 router.put("/reset-password", userController.resetPassword);
@@ -53,6 +53,8 @@ router.delete("/delete-transaction/:id/:transactionId", auth.authenticateToken, 
 router.get("/client/legit-clients", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.listLegitimateClients);
 router.post("/update-legitimacy/:id", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.updateRequestLegitimacy);
 router.get("/client/pending-clients", auth.authenticateToken, userController.restrict(['realtor','staff','management']), legitClientController.listPendingClients);
+
+
 
 //Payment Details
 router.post('/addpayment/:id', auth.authenticateToken, userController.restrict(['staff','management']), paymentDetailsController.createUserWithPaymentDetails);
