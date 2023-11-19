@@ -13,9 +13,7 @@ function generateUserId() {
 
 const transactionSchema = new Schema({
     transactionId:{
-        type: Number,
-        
-        
+        type: Number, 
     },
     date: String,
     amount: Number,
@@ -32,30 +30,32 @@ const scannedFilesSchema = new Schema({
 
 
 const accountDetailsSchema = new Schema({
-    lotNumber: {
-        type: String,
-        default: null,
-        
-    },
-    totalSqm: {
-        type: Number,
-        default: null,
-        
-    },
-    amountperSquare: {
-        type: Number,
-        default: null,
-        
-    },
     totalAmountDue: {
         type: Number,
         default: null,
         
     },
-    message:{
-        type: String,
-        default: 'I request to reserve this lot.'
-    }
+    details:[{
+            lotNumber: {
+                type: String,
+                default: null,
+                
+            },
+            blockNumber:{
+                type: String,
+                default: null,
+            },
+            totalSqm: {
+                type: Number,
+                default: null,
+                
+            },
+            amountperSquare: {
+                type: Number,
+                default: null,
+                
+            },
+        }]
 });
 
 

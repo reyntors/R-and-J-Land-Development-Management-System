@@ -40,6 +40,7 @@ router.get("/:id?", auth.authenticateToken, userController.restrict(['realtor','
 router.post("/update-user", auth.authenticateToken, userController.restrict(['realtor','customer','staff','management']), userController.updateUser);
 router.put("/update-user/:id", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserDetails);
 router.put("/approve-pending-update/:userId/:requestId/:inquiryId", auth.authenticateToken, userController.restrict(['staff','management']), userController.approveUserUpdate);
+router.put("/update-user-account-personnel", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserAccountPersonnel);
 
 // transaction
 router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.addTransaction);

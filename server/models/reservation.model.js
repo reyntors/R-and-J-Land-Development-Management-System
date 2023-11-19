@@ -3,53 +3,68 @@ const { Schema } = mongoose;
 
 
 const reservationSchema = new Schema({
-    reservationDate: {
-        type: Date,
+    isSubmitted: {
+        type: Boolean,
+        default: false,
+    },
+    url: String,
+    date: {
+        type: String,
         required: true,
         
     },
-    buyerName: {
+     name: {
         type: String,
-        required: true,
+       
     },
-    lotLocation: {
+     land_at: {
         type: String,
-        required: true,
+       
     },
-    lotDescription: {
+     situated_at: {
         type: String,
-        required: true,
+      
     },
-    phase: {
+     typePayment: {
         type: String,
-        required: true,
+       
     },
-    block: {
-        type: String,
-        required: true,
-    },
-    lotArea: {
-        type: String,
-        required: true,
-    },
-    pricePerSqM: {
-        type: Number,
-        required: true,
-    },
-    contractPrice: {
-        type: Number,
-        required: true,
-    },
-    discount: {
-        type: Number,
-    },
-    downPayment: {
-        type: Number,
-    },
-    paymentTerms: {
-        type: String,
-    },
-    // Add other fields as needed
+     details: [{
+        area:{
+            type: Number,
+            
+        },
+        block:{
+            type: String,
+            
+        },
+        contract_price:{
+            type: Number,
+            
+        },
+        balance:{
+            type: Number,
+           
+        },
+        downpayment:{
+            type: Number,
+            
+        },
+        lot:{
+            type: String,
+            
+        },
+        phase:{
+            type: String,
+            
+        },
+        price_per_sq:{
+            type: Number,
+            
+        },
+    }],
+    createdBy: String,
+   
 });
 
 reservationSchema.set('timestamps', true);

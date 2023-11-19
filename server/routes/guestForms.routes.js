@@ -7,7 +7,7 @@ const express = require("express");
 const userController = require("../controllers/users.controller");
 const formsController = require("../controllers/forms.controller");
 const buyerInfoSheetController = require('../controllers/buyerInfoSheet.controller')
-
+const reservationController = require('../controllers/reservation.controller');
 
 const router = express.Router();
 
@@ -24,6 +24,11 @@ router.post("/addindividualbuyer", auth.authenticateToken, userController.restri
 //Individual Buyer Declaration
 router.post("/addcontract", auth.authenticateToken, userController.restrict(['customer']),  contractDetails.createContractDetails);
 router.post("/create-buyer-info-sheet", auth.authenticateToken, userController.restrict(['customer']),  buyerInfoSheetController.createbuyerInfoSheet);
+
+
+//Reservation Form Agreement
+router.post('/create-reservation/:id',auth.authenticateToken, userController.restrict(['staff','management']), reservationController.createReservation);
+
 
 
 //FOR STAFF ONLY

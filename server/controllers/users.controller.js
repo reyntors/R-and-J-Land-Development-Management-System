@@ -686,11 +686,7 @@ exports.approveUserUpdate = async (req, res, next) => {
 
           }
 
-          // if(updateData.username){
-
-          //   user.username = updateData.username;
-
-          // }
+        
 
           if(updateData.username || updateData.password){
 
@@ -788,6 +784,79 @@ exports.approveUserUpdate = async (req, res, next) => {
 function generateRecoveryCode() {
   return Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit code
 }
+
+//update personnel accounts
+exports.updateUserAccountPersonnel = async(req, res, next) =>{
+ 
+  try {
+
+    uploadProfileImage(req, res, async function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'File upload failed', error: err });
+      }
+
+        const username = req.user.username;
+        const image = req.file;
+        const updateData = req.body;
+
+        console.log(updateData);
+
+        if(!updateData){
+
+          return res.status(404).json({message: 'The field is empty! please provide the input field'})
+
+        }
+
+        const user = await User.findOne({username});
+
+        if(!user){
+
+          return res.status(404).json({message: 'user not found'});
+        }
+
+
+        if (image) {
+
+          const fileData = {
+            url: image.location,
+            
+          };
+
+          user.profilePicture.url = fileData.url
+
+        }
+        
+        if(updateData.password){
+                
+          const salt = bcryptjs.genSaltSync(10);
+
+          const password = bcryptjs.hashSync(updateData.password, salt);
+
+
+           user.password = password;
+
+          }
+        if(updateData.username){
+
+          user.username = updateData.username;
+
+        }
+      });
+
+      return res.status(200).json({ message: 'User update settings successfully!.' });
+
+    }catch(error){
+      console.log(error)
+      throw error
+    }
+  }
+
+
+
+
+
+
 
 
 
