@@ -126,7 +126,7 @@ async function generateReservationPDF(user, reservationData){
       form.getTextField(fieldNames[6]).setText(reservationData.lot)
       form.getTextField(fieldNames[7]).setText(String(reservationData.area))
       form.getTextField(fieldNames[8]).setText(String(reservationData.price_per_sq))
-      form.getTextField(fieldNames[9]).setText(String(reservationData.contact_price))
+      form.getTextField(fieldNames[9]).setText(String(reservationData.contract_price))
       form.getTextField(fieldNames[10]).setText(String(reservationData.downpayment))
       form.getTextField(fieldNames[11]).setText(String(reservationData.balance))
 
