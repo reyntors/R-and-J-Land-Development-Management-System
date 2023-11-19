@@ -81,7 +81,7 @@ exports.createReservation = async (req, res, next) => {
 
 
         customer.accountDetails.totalAmountDue = totalAmountDue
-
+        customer.accountingDetails.totalAmountDue = customer.accountDetails.totalAmountDue
 
         //save to database
         await customer.save()
