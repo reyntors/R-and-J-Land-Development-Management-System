@@ -23,7 +23,7 @@ export const myAccountSettings = async () => {
 }
 
 export const updateMyAccountSettings = async (payload) => {
-    console.log('updateMyAccountSettings API executed')
+    console.log('updateMyAccountSettings CLient/Realtor API executed')
     const token =store.getters['auth/getTokenID']
     try {
         const response = await axios.put(`${BASE_URL}users/update-user-account`,payload,{
@@ -54,6 +54,26 @@ export const submitCodeUpdateSettings = async (payload) => {
 
     } catch (error) {
         console.log(error)
+        throw (error.response.data);
+        
+    }
+}
+
+export const updateMyAccountSettingsPersonnel = async (payload) => {
+    console.log(payload)
+    console.log('updateMyAccountSettings personnel API executed')
+    const token =store.getters['auth/getTokenID']
+    try {
+        const response = await axios.put(`${BASE_URL}update-user-account-personnel`,payload,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        },);
+        console.log(response.data)
+        return response.data
+
+    } catch (error) {
+        // console.log(error)
         throw (error.response.data);
         
     }

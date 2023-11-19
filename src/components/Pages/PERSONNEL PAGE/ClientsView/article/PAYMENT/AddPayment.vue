@@ -15,8 +15,8 @@
     <section class="form-controls">
         <label for="purpose">Purpose</label>
         <select id="purpose" v-model="purpose">
-            <option value="downpayment">Downpayment</option>
             <option value="reservation">Reservation</option>
+            <option value="downpayment">Downpayment</option>
             <option value="monthly-payment">Monthly Payment</option>
         </select>
         
@@ -74,17 +74,24 @@ export default {
             const isGood = this.checkAllowedSubmit()
             if(isGood){
                 //for server update
-                const obj = new FormData()
-                obj.append('date',this.date)
-                obj.append('amount',this.amount)
-                obj.append('purpose',this.purpose)
-                obj.append('file',this.attachment)
+                // const obj = new FormData()
+                // obj.append('date',this.date)
+                // obj.append('amount',this.amount)
+                // obj.append('purpose',this.purpose)
+                // obj.append('file',this.attachment)
+
+                const object = {
+                    date: this.date,
+                    amount: this.amount,
+                    purpose: this.purpose,
+                    file: this.attachment
+                }
 
                 //for frontend update
-                const amountPaid = this.amount
+                // const amountPaid = this.amount
 
                 console.log(this.attachment)
-                this.$emit('upload-transaction',{id:this.id ,obj: obj, amountPaid:amountPaid})
+                this.$emit('upload-transaction',object)
                 this.close()                
             }else{
                 toast.error('not allowed to add empty fields')
@@ -97,6 +104,12 @@ export default {
 </script>
 
 <style scoped>
+input,select{
+    padding: .5rem;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+}
 button{
   padding: 5px 10px;
   background-color: #31A72A;
@@ -127,7 +140,8 @@ form{
     transform: translateX(-50%);
     background-color: white;
     width: 95%;
-
+    max-width: 700px;
+    border-radius: 5px;
     padding: 1rem;
 }
 .form-controls{

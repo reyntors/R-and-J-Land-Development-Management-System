@@ -78,7 +78,7 @@
         </div>
       <button style="margin-top: 1rem" @click="saveNow">Save</button>
       <div class="shade" v-if="isLoading"/>
-      <progress-loading type="spin" v-if="isLoading && isError"/>
+      <progress-loading type="torks" v-if="isLoading && isError"/>
     </div>
     
     
@@ -194,8 +194,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
   
         watch:{
             'client.fullname': function(newValue){
-                console.log(this.clientReference.fullname)
-                console.log(newValue)
+                // console.log(this.clientReference.fullname)
+                // console.log(newValue)
                 if(this.clientReference.fullname != newValue){
                     this.fullnameChanged = true
                 }else{
@@ -203,8 +203,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.contactNumber': function(newValue){
-                console.log(this.clientReference.contactNumber)
-                console.log(newValue)
+                // console.log(this.clientReference.contactNumber)
+                // console.log(newValue)
                 if(this.clientReference.contactNumber != newValue){
                     this.contactNumberChanged = true
                 }else{
@@ -212,8 +212,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.address': function(newValue){
-                console.log(this.clientReference.address)
-                console.log(newValue)
+                // console.log(this.clientReference.address)
+                // console.log(newValue)
                 if(this.clientReference.address != newValue){
                     this.addressChanged = true
                 }else{
@@ -221,8 +221,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.civilStatus': function(newValue){
-                console.log(this.clientReference.civilStatus)
-                console.log(newValue)
+                // console.log(this.clientReference.civilStatus)
+                // console.log(newValue)
                 if(this.clientReference.civilStatus != newValue){
                     this.civilStatusChanged = true
                 }else{
@@ -230,8 +230,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.spouseName': function(newValue){
-                console.log(this.clientReference.spouseName)
-                console.log(newValue)
+                // console.log(this.clientReference.spouseName)
+                // console.log(newValue)
                 if(this.clientReference.spouseName != newValue){
                     this.spouseNameChanged = true
                 }else{
@@ -239,8 +239,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.occupation': function(newValue){
-                console.log(this.clientReference.occupation)
-                console.log(newValue)
+                // console.log(this.clientReference.occupation)
+                // console.log(newValue)
                 if(this.clientReference.occupation != newValue){
                     this.occupationChanged = true
                 }else{
@@ -248,8 +248,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.monthlyGrossIncome': function(newValue){
-                console.log(this.clientReference.monthlyGrossIncome)
-                console.log(newValue)
+                // console.log(this.clientReference.monthlyGrossIncome)
+                // console.log(newValue)
                 if(this.clientReference.monthlyGrossIncome != newValue){
                     this.monthlyGrossIncomeChanged = true
                 }else{
@@ -257,8 +257,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.buyerSourceOfIncome': function(newValue){
-                console.log(this.clientReference.buyerSourceOfIncome)
-                console.log(newValue)
+                // console.log(this.clientReference.buyerSourceOfIncome)
+                // console.log(newValue)
                 if(this.clientReference.buyerSourceOfIncome != newValue){
                     this.buyerSourceOfIncomeChanged = true
                 }else{
@@ -266,8 +266,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.typeOfEmployment': function(newValue){
-                console.log(this.clientReference.typeOfEmployment)
-                console.log(newValue)
+                // console.log(this.clientReference.typeOfEmployment)
+                // console.log(newValue)
                 if(this.clientReference.typeOfEmployment != newValue){
                     this.typeOfEmploymentChanged = true
                 }else{
@@ -275,8 +275,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.employer': function(newValue){
-                console.log(this.clientReference.employer)
-                console.log(newValue)
+                // console.log(this.clientReference.employer)
+                // console.log(newValue)
                 if(this.clientReference.employer != newValue){
                     this.employerChanged = true
                 }else{
@@ -284,8 +284,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.grossSalary': function(newValue){
-                console.log(this.clientReference.grossSalary)
-                console.log(newValue)
+                // console.log(this.clientReference.grossSalary)
+                // console.log(newValue)
                 if(this.clientReference.grossSalary != newValue){
                     this.grossSalaryChanged = true
                 }else{
@@ -293,8 +293,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.businessName': function(newValue){
-                console.log(this.clientReference.businessName)
-                console.log(newValue)
+                // console.log(this.clientReference.businessName)
+                // console.log(newValue)
                 if(this.clientReference.businessName != newValue){
                     this.businessNameChanged = true
                 }else{
@@ -302,8 +302,8 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
                 }
             },
             'client.businessAddress': function(newValue){
-                console.log(this.clientReference.businessAddress)
-                console.log(newValue)
+                // console.log(this.clientReference.businessAddress)
+                // console.log(newValue)
                 if(this.clientReference.businessAddress != newValue){
                     this.businessNameChanged = true
                 }else{

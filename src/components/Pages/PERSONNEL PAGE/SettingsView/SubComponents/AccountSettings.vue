@@ -21,8 +21,8 @@
             <!-- <label>User Account ID (not editable)</label>
             <input class="form-control" v-model="mySettings.userId" readonly>  -->
             <div class="form-floating mb-2">
-              <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mySettings.userId" readonly>
-              <label for="floatingInput">User Account ID (not editable)</label>
+              <input type="text" class="form-control" id="userIdPersonnel" placeholder="" v-model="mySettings.userId" readonly>
+              <label for="userIdPersonnel">User Account ID (not editable)</label>
             </div>
          </section>
         
@@ -30,16 +30,16 @@
             <!-- <label>Email Linked (not editable)</label>
             <input v-model="mySettings.email" readonly> -->
             <div class="form-floating mb-2">
-              <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mySettings.email" readonly>
-              <label for="floatingInput">Email Linked (not editable)</label>
+              <input type="text" class="form-control" id="emailPersonnel" placeholder="" v-model="mySettings.email" readonly>
+              <label for="emailPersonnel">Email Linked (not editable)</label>
             </div>
          </section>
          <section class="form-section">
             <!-- <label>Username</label>
             <input v-model="mySettings.username"> -->
             <div class="form-floating mb-2">
-              <input type="text" class="form-control" id="floatingInput" placeholder="" v-model="mySettings.username">
-              <label for="floatingInput">Username</label>
+              <input type="text" class="form-control" id="usernamePersonnel" placeholder="" v-model="mySettings.username">
+              <label for="usernamePersonnel">Username</label>
             </div>
          </section>
          
@@ -48,8 +48,8 @@
 
                <section style="position: relative">
                   <div class="form-floating mb-2">
-                     <input :type="passwordVisibilityComputed" class="form-control" id="floatingInput" placeholder="" v-model.trim="newPassword">
-                     <label for="floatingInput">New Password</label>
+                     <input :type="passwordVisibilityComputed" class="form-control" id="newPassPersonnel" placeholder="" v-model.trim="newPassword">
+                     <label for="newPassPersonnel">New Password</label>
                   </div>
                   <span class="eye" @click="togglePasswordVisibility">
                      <font-awesome-icon icon="fa-solid fa-eye" v-if="passwordVisibility"/>
@@ -60,8 +60,8 @@
          <section class="form-section">
                <section style="position: relative">
                   <div class="form-floating mb-2">
-                     <input :type="passwordVisibilityComputed" class="form-control" id="floatingInput" placeholder=""  v-model.trim="confirmedPassword">
-                     <label for="floatingInput">Confirm Password</label>
+                     <input :type="passwordVisibilityComputed" class="form-control" id="confirmNewPassPersonnel" placeholder=""  v-model.trim="confirmedPassword">
+                     <label for="confirmNewPassPersonnel">Confirm Password</label>
                   </div>
                   <span class="eye" @click="togglePasswordVisibility">
                      <font-awesome-icon icon="fa-solid fa-eye" v-if="passwordVisibility"/>
@@ -143,7 +143,7 @@ export default {
          if(this.profileChangedBool || this.usernameChangedBool || this.paswordMatchBool && this.newPassword){
             this.isLoading = true
             try{
-               const response = await this.$store.dispatch('mySettings/updateMyAccountSettings',payload)
+               const response = await this.$store.dispatch('personnel/updateMySettings',payload)
                toast.success(response)
                if(this.usernameChangedBool || this.paswordMatchBool && this.newPassword!== ""){
 
@@ -226,7 +226,7 @@ button{
    top: 0;
    right: 0;
    padding: .5rem 1rem;
-   margin: .5rem 1rem;
+   margin: 2rem;
    border-radius: 5px;
    background-color: #31A72A;
    color: white;

@@ -46,7 +46,7 @@
     components: {InquiriesCard},
     data(){
       return{
-        isLoading: true,
+        isLoading: false,
         focusedID: null,
       }
     },
@@ -74,10 +74,10 @@
     },
 
     async mounted(){
-      this.isLoading = true
+      // this.isLoading = true
       // await new Promise(resolve => setTimeout(resolve,1000))
-      await this.$store.dispatch('inquiries/getInquiriesList')
-      this.isLoading = false
+      // await this.$store.dispatch('inquiries/getInquiriesList')
+      // this.isLoading = false
       // this.setUpScrollEvent()
     }
     // beforeUnmount(){

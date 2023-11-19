@@ -24,7 +24,7 @@
            <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" :clientID="clientObj.userId"/>
           <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj" :clientID="clientObj.userId"/>
          <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
-         <client-reservation v-if="clientReservationFormVisible"></client-reservation>
+         <client-reservation v-if="clientReservationFormVisible" :clientID="clientObj.userId"></client-reservation>
     </section>
   </div>
 </template>
@@ -33,7 +33,7 @@
 import ClientPayment from '../article/PAYMENT/PaymentDetails.vue';
 import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
 import ClientForms from '../article/FORMS/FormsDetails.vue'
-import ClientReservation from '@/components/Forms Used/ReservationAgreement.vue'
+import ClientReservation from '../article/RESERVATION/ReservationAgreement.vue'
 export default {
   props: ['clientObj'],
   components: {
@@ -129,12 +129,13 @@ button:hover{
   padding: .5rem;
   display: flex;
   gap: 1rem;
+  position: relative;
 }
 .details-nav .section-left{
   width: 25%;
   /* box-shadow: 0 0 3px 1px black; */
   border-radius: 5px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -173,14 +174,29 @@ button:hover{
 
 
 .details-nav .section-right{
-  width: 75%;
+  width: 100%;
   height: 100%;
-  border: 1px solid black;
-  /* box-shadow: 0 0 3px 1px black; */
   border-radius: 5px;
   padding: 1rem;
-  /* background-color: white; */
+  background-color: white;
   background-color: rgba(255, 255, 255, 0.8);
   overflow-y: auto;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>

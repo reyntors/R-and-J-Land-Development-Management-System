@@ -40,22 +40,13 @@ export default{
             }else{
                 state.listGuestSuggestions = state.clientsPending
             }
-
-            // const index = state.clientsPending.findIndex(item => item.userId=== id)
-            // if(index>=0){
-            //     console.log(state.clientsPending[index])
-            //     state.searchResult = state.clientsPending[index]
-            // }else{
-            //     state.searchResult = null
-            //     console.log('nothing found!')
-            // }
         },
         //end search guest
 
         //start modify legit client list local
         addClient(state,payload){
-            console.log('added')
-            console.log(payload)
+            // console.log('added')
+            // console.log(payload)
             state.clientsAdded.push(payload)
         },
         updateClient(state,payload){
@@ -64,10 +55,6 @@ export default{
             // console.log(state.clientsAdded[0].profile)
             if(index>=0){
                 state.clientsAdded[index].profileDetails = payload.data
-            //    state.clientsAdded[index].additionalInfo = payload.additionalInfo
-            //    state.clientsAdded[index].fullname = payload.defaultInfo.fullname
-            //    state.clientsAdded[index].homeAddress = payload.defaultInfo.homeAddress
-            //    state.clientsAdded[index].contactNumber = payload.defaultInfo.contactNumber
             }    
         },
         removeClient(state,id){
@@ -133,12 +120,90 @@ export default{
 
         // start add transaction
         updateAccountingDetails(state,payload){
-            console.log(payload)
-            const index = state.clientsAdded.findIndex(item => item.userId === payload.id)
-            state.clientsAdded[index].accountingDetails.totalAmountPayable = state.clientsAdded[index].accountingDetails.totalAmountPayable - payload.amountPaid
-            state.clientsAdded[index].accountingDetails.totalPayment =  state.clientsAdded[index].accountingDetails.totalPayment + payload.amountPaid
-        }
+
+            const index = state.clientsAdded.findIndex(item => item.userId === payload.userId)
+            const purpose = payload.object.purpose
+            const amount = payload.object.amount
+
+            // client.paymentDetails.monthlyAmortizationDue = monthlyAmortization
+
+
+            if(purpose === 'downpayment'){
+
+                state.clientsAdded[index].paymentDetails.downPayment = amount;
+
+                const annualInterestRate = 0.02;
+        
+                // Calculate the monthly interest rate
+                const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
+        
+                console.log('monthly interest:',monthlyInterestRate)
+                // Define the loan term in months
+                const loanTermMonths = 12; // For a 12-month loan term
+        
+        
+                const totalAmountDue = state.clientsAdded[index].accountDetails.totalAmountDue;
+                
+                const downPayment = state.clientsAdded[index].paymentDetails.downPayment;
+        
+                const principal = totalAmountDue - downPayment;
+        
+              
+                // Calculate the monthly amortization
+                const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
+                const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
+                const monthlyAmortization = (numerator / denominator).toFixed(2)
+        
+                state.clientsAdded[index].paymentDetails.monthlyAmortizationDue = monthlyAmortization
+
+            }else if(purpose === 'reservation'){
+                state.clientsAdded[index].paymentDetails.reservationPayment = amount
+            }else if(purpose === 'monthly-payment'){
+                const amountPaid = parseFloat(amount);
+                const totalAmountDue = parseFloat(state.clientsAdded[index].accountDetails.totalAmountDue);
+                
+                
+                state.clientsAdded[index].accountingDetails.totalAmountDue = totalAmountDue;
+            
+                if(state.clientsAdded[index].accountingDetails.totalPayment === 0){
+            
+                    state.clientsAdded[index].accountingDetails.totalPayment = amountPaid;
+            
+                }else{
+            
+                    state.clientsAdded[index].accountingDetails.totalPayment += amountPaid
+                }
+            
+                if( state.clientsAdded[index].accountingDetails.totalAmountPayable === 0){
+            
+                    state.clientsAdded[index].accountingDetails.totalAmountPayable = totalAmountDue - amountPaid;
+            
+                }else{
+            
+                    state.clientsAdded[index].accountingDetails.totalAmountPayable -= amountPaid
+            
+                }
+
+            }else{
+                console.error('something wrong of adding a transaction')
+            }
+            // state.clientsAdded[index].accountingDetails.totalAmountPayable = state.clientsAdded[index].accountingDetails.totalAmountPayable - payload.amountPaid
+            // state.clientsAdded[index].accountingDetails.totalPayment =  state.clientsAdded[index].accountingDetails.totalPayment + payload.amountPaid
+        },
         // end add transaction
+
+        //start reservation form
+        automateUpdateAmountDue(state,payload){
+            console.log(payload)
+            const index = state.clientsAdded.findIndex(item => item.userId === payload.userId)
+            if(index>=0){
+                state.clientsAdded[index].accountingDetails.totalAmountDue = payload.amount
+            }else{
+                console.error('somethings wrong updating the amount due')
+            }
+            
+        }
+        //end reservation form
         
     },
     actions:{
@@ -183,7 +248,7 @@ export default{
         async addClient(context,payload){   
             try{
                 const response = await Client.addToLegitClient(payload)
-
+                console.log('isAdmin:',payload.isAdmin)
                 if(payload.isAdmin){
                     context.commit('addClient',response.data)
                 }
@@ -219,12 +284,14 @@ export default{
 
             
         },
+
         async addPayment(context,payload){
+            console.log(payload.object)
             try{
                 const response = await Client.addPaymentTransaction({
-                    id:payload.id,
-                    obj:payload.obj,})
-                context.commit('updateAccountingDetails',{id:payload.id,amountPaid: payload.amountPaid})
+                    userId:payload.userId,
+                    object:payload.object,})
+                context.commit('updateAccountingDetails',payload)
                 return response.message
             }catch(error){
                 console.log(error)
@@ -286,8 +353,22 @@ export default{
             }catch(error){
                 console.log(error)
             } 
-        }
+        },
         //end downloadable Form
+
+        //start reservation form
+        async submitReservationForm(context,payload){
+            // console.log(payload)
+            // try{
+                // const response = await Client.submitReservationFormAPI(payload)
+                // console.log(response) 
+                context.commit('automateUpdateAmountDue',{userId: payload.userId,amount: 50000})     
+                // return response          
+            // }catch(error){
+            //     console.log(error)
+            // } 
+        }
+        //end reservation form
 
     },
     getters:{

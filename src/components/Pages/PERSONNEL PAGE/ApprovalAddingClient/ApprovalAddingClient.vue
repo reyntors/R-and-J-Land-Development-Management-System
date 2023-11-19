@@ -12,6 +12,7 @@
                 <th>Date</th>
                 <!-- <th>f</th> -->
             </tr>
+            
             <tbody v-for="(item,index) in list" :key="index">
                 <tr>
                     <td class="context"> {{ numberGenerate(index) }}{{ item.details }}</td>
@@ -30,6 +31,7 @@
                 </tr>
               
             </tbody>
+
         </table>
   
       </div>
@@ -79,20 +81,26 @@
         }
     },
 
-    async mounted(){
-      try{
-        await this.$store.dispatch('newClients/getList')
-      }catch(error){
-        console.error(error)
-      }
-    }
+    // async mounted(){
+    //   try{
+    //     await this.$store.dispatch('newClients/getList')
+    //   }catch(error){
+    //     console.error(error)
+    //   }
+    // }
   }
   </script>
   
   <style scoped>
+  .noData{
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
    table tbody:nth-child(even){
     background-color: #30a72aa7;;
-;
+
   }
   table tbody:nth-child(odd){
     background-color: rgba(255, 255, 255, 0.5);

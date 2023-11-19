@@ -1,37 +1,37 @@
 <template>
   <the-header/>
 
+    <div style="position: relative;">
+        <settings-view v-if="isSettings"/>
 
-    <settings-view v-if="isSettings"/>
+        <div class="personnel-cont" v-else>
+    
+          <profile-view
+            v-if="isShowProfile"/>
 
-    <div class="personnel-cont" v-else>
-
-      
-      <profile-view
-        v-if="isShowProfile"/>
-
-      <router-view></router-view>
-      <!-- <progress-loading></progress-loading> -->
-
-
-
-  </div>
-
+          <router-view></router-view>
+          
+        </div>
   
 
-
-
+      <blur-loading v-if="isLoading" />      
+    </div>
 
 </template>
 
 <script>
 import ProfileView from './ProfileView.vue'
 import SettingsView from './SettingsView/SettingsView.vue'
-
+import { toast } from 'vue3-toastify'
 export default {
   components: {
     ProfileView,
     SettingsView
+  },
+  data(){
+    return {
+      isLoading: true,
+    }
   },
   computed: {
     isShowProfile(){
@@ -41,10 +41,34 @@ export default {
       return this.$store.getters['personnel/isSettingsViewGetter']
     }
   },
-  mounted(){
-        // this.$store.dispatch('client/getLegitList')
-        // this.$store.dispatch('rawForms/getRawFormsList')
-    } 
+  async created(){
+    console.log('created')
+    this.isLoading = true
+    try{
+      
+      //get the list of legit clients
+      await this.$store.dispatch('client/getLegitList')
+
+      // this.$store.dispatch('client/getLegitList')
+      // await this.$store.dispatch('rawForms/getRawFormsList')
+
+      //get the inquiries list
+      await this.$store.dispatch('inquiries/getInquiriesList')
+
+      // //get the list of need approval clients
+      // await this.$store.dispatch('newClients/getList')
+
+      // //get the subidivsion lists
+      // await this.$store.dispatch('subdivision/getPropertyList')
+
+    }catch(error){
+      console.error(error)
+      toast.error(error)
+    }
+
+    await new Promise(resolve => setTimeout(resolve,200))
+    this.isLoading = false
+  } 
 }
 </script>
 

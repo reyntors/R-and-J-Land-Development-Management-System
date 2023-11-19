@@ -46,8 +46,7 @@ h5{
     /* height: 85vh; */
     padding: 1rem;
     z-index: 1;
-    background-color: transparent;
-    background-color: rgba(255, 255, 255, 0.3);
+
 }
 .imageName{
     display: flex;

@@ -35,6 +35,7 @@ import ProgressLoading from './components/Reusable/LoadingScreens/ProgressLoadin
 import FormThumbnail from './components/Reusable/Form SubComponents/FormThumbnail.vue'
 import SubmitFormButton from './components/Reusable/Form SubComponents/SubmitFormButton.vue'
 import DotLoading from './components/Reusable/LoadingScreens/DotLoading.vue'
+import BlurLoading from './components/Reusable/LoadingScreens/BlurLoading.vue'
 // import LoginLoading from './components/Reusable/LoadingScreens/LoginLoading.vue'
 
 
@@ -51,6 +52,7 @@ app.component('progress-loading',ProgressLoading)
 app.component('form-thumbnail', FormThumbnail)
 app.component('submit-form-button',SubmitFormButton)
 app.component('dot-loading',DotLoading)
+app.component('blur-loading',BlurLoading)
 // app.component('login-loading',LoginLoading )
 
 app.mount('#app')

@@ -11,7 +11,7 @@ export default{
 
     mutations:{
         setInquiriesList(state,list){
-            console.log(list)
+            // console.log(list)
             state.listInquiries = list.slice().reverse()
         },
         markInquiry(state,id){

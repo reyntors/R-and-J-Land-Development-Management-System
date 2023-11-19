@@ -51,6 +51,7 @@ export const addToLegitClient = async (payload) => {
                     'Authorization': `Bearer ${token}`
                 }
             })  
+            console.log(response)
             return response.data 
         }
              
@@ -91,9 +92,14 @@ export const getListTransaction = async (id) => {
 }
 export const addPaymentTransaction = async (payload) => {
     // console.log('API addPaymentTransaction executed')
+    const obj = new FormData()
+    obj.append('date',payload.object.date)
+    obj.append('amount',payload.object.amount)
+    obj.append('purpose',payload.object.purpose)
+    obj.append('file',payload.object.file)
     const token =store.getters['auth/getTokenID']
     try{
-        const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.id}`,payload.obj,{
+        const response = await axios.post(`${BASE_URL}users/add-transaction/${payload.userId}`,obj,{
             headers:{
                 'Authorization': `Bearer ${token}`
             }
@@ -239,3 +245,21 @@ export const updateUserProfile = async (payload) => {
     }
 }
 //end profile
+//start reservation form
+export const submitReservationFormAPI = async (payload) => {
+    // console.log('API submitReservationFormAPI executed')
+    console.log(payload)
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.post(`${BASE_URL}forms/create-reservation/${payload.userId}`,payload.body,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        return response.data
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+//end reservation form
+

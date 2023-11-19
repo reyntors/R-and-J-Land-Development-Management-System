@@ -94,6 +94,9 @@ export default {
   border: 1px solid black;
   height: 85vh;
   /* background-color: transparent; */
+  background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.3);
+  z-index: 2;
 }
 .c-contPersonnelSettings{
   display: grid;

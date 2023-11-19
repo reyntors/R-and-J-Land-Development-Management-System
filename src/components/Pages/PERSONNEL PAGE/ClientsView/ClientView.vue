@@ -65,7 +65,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
           profileClientVisible: false,
           selectedClient: null,
 
-          isLoading: true
+          isLoading: false,
         }
       },
 
@@ -120,15 +120,17 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
       },   
 
       async mounted(){
-        this.isLoading = true
-        try{
-          await this.$store.dispatch('client/getLegitList')  //for legit list
-          // await this.$store.dispatch('client/getPendingList') //for guest pending list
-          this.isLoading = false
-        }catch(error){
-          console.log(error)
-          toast.error(error)
-        }
+        // this.isLoading = true
+        // try{
+        //   await this.$store.dispatch('client/getLegitList')  //for legit list
+        //   // await this.$store.dispatch('client/getPendingList') //for guest pending list
+
+        //   // await this.$store.dispatch('rawForms/getRawFormsList')  //for raw forms
+        //   this.isLoading = false
+        // }catch(error){
+        //   console.log(error)
+        //   toast.error(error)
+        // }
         
       }
   }

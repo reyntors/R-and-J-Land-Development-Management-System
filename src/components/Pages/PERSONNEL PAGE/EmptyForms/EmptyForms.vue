@@ -40,7 +40,7 @@
   </template>
   
   <script>
-  import { toast } from 'vue3-toastify'
+  // import { toast } from 'vue3-toastify'
   export default {
       data(){
         return{
@@ -60,17 +60,17 @@
         }
       },
 
-      async mounted(){
-        this.isLoading = true
-        try{
-          await this.$store.dispatch('rawForms/getRawFormsList') 
-          this.isLoading = false
-        }catch(error){
-          console.log(error)
-          toast.error(error)
-        }
+      // async mounted(){
+      //   this.isLoading = true
+      //   try{
+      //     await this.$store.dispatch('rawForms/getRawFormsList') 
+      //     this.isLoading = false
+      //   }catch(error){
+      //     console.log(error)
+      //     toast.error(error)
+      //   }
         
-      }
+      // }
   }
   </script>
   

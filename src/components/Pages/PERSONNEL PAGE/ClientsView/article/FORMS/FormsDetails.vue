@@ -5,7 +5,7 @@
     </header>
     <div class="folderCont" v-if="!openFormsComputed">
       <section class="section1">
-        <h6>Request Forms</h6>
+        <h5>Submitted Forms</h5>
         
         <div class="flexCont">
             <section @click="openForm('letterIntent')" v-if="clientObj.letterOfIntent.url !== null && clientObj.letterOfIntent.isSubmitted === true">
@@ -33,7 +33,7 @@
       </section>
 <hr>
       <section class="section2">
-        <h6>Upload here</h6>
+        <h5>Uploaded Scanned Files</h5>
 
         <div class="loadingUI" v-if="isLoading">
          <progress-loading type="dot"></progress-loading>
@@ -210,7 +210,7 @@ p{
   font-size: clamp(.6rem, 1vw, 1.5rem);
 }
 .form-container{
-  overflow-y: auto;
+  /* overflow-y: auto; */
   padding: .5rem;
   height: 100%;
   display: flex;

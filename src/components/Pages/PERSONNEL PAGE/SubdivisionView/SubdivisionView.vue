@@ -51,7 +51,7 @@ import SubdivisionCard from './SubdivisionCard.vue'
     data(){
       return{
         updating: false,
-        isLoading: true,
+        isLoading: false,
 
         searchValue: '',
         isSearching: false,
@@ -151,9 +151,9 @@ import SubdivisionCard from './SubdivisionCard.vue'
       }
     },
 
-    mounted(){
-      this.getPropertyList()
-    }
+    // mounted(){
+    //   this.getPropertyList()
+    // }
   }
   </script>
   

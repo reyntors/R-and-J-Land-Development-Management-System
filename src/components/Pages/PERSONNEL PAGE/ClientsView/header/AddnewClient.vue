@@ -39,22 +39,28 @@
                 <section class="default-info-signup" >
                     <div>
                         <section class="form-style">
-                            <label for="userIDSearch">ID</label>:<input type="text" id="userIDSearch" readonly v-model="userId"> 
+                            <label for="userIDSearch">ID</label>:<p>{{ userId }}</p>
+                            <!-- <input type="text" id="userIDSearch" readonly v-model="userId">  -->
                         </section>                
                         <section class="form-style">
-                            <label for="usernameSearch">Username</label>:<input type="text" id="usernameSearch" readonly v-model="username"> 
+                            <label for="usernameSearch">Username</label>:<p>{{ username }}</p>
+                            <!-- <input type="text" id="usernameSearch" readonly v-model="username">  -->
                         </section>
                         <section class="form-style">
-                            <label for="fullnameSearch">Fullname</label>:<input type="text" id="fullnameSearch" readonly v-model="fullname"> 
+                            <label for="fullnameSearch">Fullname</label>:<p>{{ fullname }}</p>
+                            <!-- <input type="text" id="fullnameSearch" readonly v-model="fullname">  -->
                         </section>
                         <section class="form-style">
-                            <label for="addressSearch">Home Address</label>:<input type="text" id="addressaddressSearch" readonly v-model="homeAddress">
+                            <label for="addressSearch">Home Address</label>:<p>{{ homeAddress }}</p>
+                            <!-- <input type="text" id="addressaddressSearch" readonly v-model="homeAddress"> -->
                         </section>
                         <section class="form-style">
-                            <label for="emailSearch">Email</label>:<input type="text" id="emailSearch" readonly v-model="email">
+                            <label for="emailSearch">Email</label>:<p>{{ email }}</p>
+                            <!-- <input type="text" id="emailSearch" readonly v-model="email"> -->
                         </section>
                         <section class="form-style">
-                            <label for="fbSearch">Facebook Account</label>:<input type="text" id="fbSearch" readonly v-model="fbAccount">
+                            <label for="fbSearch">Facebook Account</label>:<p>{{ fbAccount }}</p>
+                            <!-- <input type="text" id="fbSearch" readonly v-model="fbAccount"> -->
                         </section> 
                         <section class="button">
                             <button @click="addNow" :disabled="userId===''">Add <font-awesome-icon icon="fa-solid fa-plus" /></button>        
@@ -132,7 +138,7 @@ export default{
                         userId: this.userId,
                         isAdmin: isAdmin})
                     toast.success(response)
-                    await new Promise(resolve => setTimeout(resolve,300))
+                    await new Promise(resolve => setTimeout(resolve,200))
                     this.back();
                 }catch(error){
                     toast.error(error)
@@ -179,7 +185,9 @@ export default{
     /* border: 1px dashed black; */
     display: flex;
     flex-direction: column;
-    background-color: bisque;
+    /* background-color: bisque; */
+      /* backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px); */
 }
 .back-icon{
     cursor: pointer;
@@ -289,41 +297,65 @@ export default{
 } 
 
 
-.display-results input{
+.display-results p{
     border: none;
-    font-weight: 600;
-    text-transform: uppercase;
+    font-weight: 500;
+    /* text-transform: uppercase; */
     background-color: transparent;
     cursor: default;
+    color: white;
+    text-shadow: 0 1px 3px black;
+    white-space: normal;
+    word-wrap: break-word;
 }
-.display-results input:focus{
+/* .display-results input:focus{
     outline: none;
-}
+} */
 .body .display-nofound{
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.body .display-results label{
+    white-space: nowrap;
+    font-weight: 600;
+    color: black;
+    /* text-shadow: 0 1px 3px black; */
+}
+
+
 .body .display-results{
-    padding-left: 1rem;
+    padding: 1rem;
+    margin-left: 1rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    /* background-color: white; */
+    backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid white;
+  border-radius: 5px;
+  overflow: auto;
 }
 .body .display-results .default-info-signup div{
     display: flex;
     flex-direction: column;
     gap: .5rem .5rem;
 } 
-.default-info-signup section{
+/* .default-info-signup section{
     display: flex;
     gap: .5rem;
-}
+} */
+.form-style{
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 5px;
+    border-radius: 3px;
+}   
 .button{
     width: 50%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 .button button{
     width: 100%;
@@ -332,8 +364,13 @@ export default{
     background-color: #31A72A;
     color: white;
     cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.button button:hover{
+    background-color: #30a72a8e;
 }
 .button button:active{
-    background-color: #30a72a8e;
+    color: black
 }
 </style>

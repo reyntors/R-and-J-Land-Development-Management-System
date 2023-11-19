@@ -1,7 +1,7 @@
 <template>
   
   <div class="container-payment" >
-    <progress-loading v-if="isLoading" type="spin"></progress-loading>
+    <progress-loading v-if="isLoading" type="torks"></progress-loading>
     <div v-else>
       <header>
         <h3>Payment Details</h3>  
@@ -9,24 +9,57 @@
       <div>
         <section>
           <h6>Account Details</h6> 
-            <section>
-              <span>Block and Lot No.:</span>
-              <span class="var">{{ client.accountDetails.lotNumber }}</span>
-            </section>
-            <section>
-              <span>Total Sq. Mtrs:</span>
-              <span class="var">{{ client.accountDetails.totalSqm }}</span>
-            </section>
-            <section>
-              <span>Amount per Square:</span>
-              <span class="var">{{ client.accountDetails.amountperSquare }}</span>
-            </section>  
-            <section>
-              <span>TOTAL AMOUNT DUE:</span>
-              <span class="var">{{ client.accountDetails.totalAmountDue }}</span>
-            </section>  
+          <ul>
+              <!-- <section>
+                <span>Lot Number:</span>
+                <span>{{ tempListAccountDetails.totalAmountDue }}</span>
+              </section> -->
+              
+              <div v-if="client.accountDetails.details.length>0"> 
+                <div v-for="(item,index) in client.accountDetails.details" :key="index">
+                  <section>
+                    <span>Lot Number:</span>
+                    <span class="var">{{ item.lotNumber }}</span>
+                  </section>
+                  <section>
+                    <span>Block Number:</span>
+                    <span class="var">{{ item.blockNumber }}</span>
+                  </section>
+                  <section>
+                    <span>Total Squared Meters:</span>
+                    <span class="var">{{ item.totalSqm }}</span>
+                  </section>
+                  <section class="mb-2">
+                    <span>Amount/Square:</span>
+                    <span class="var">{{ item.amountperSquare }}</span>
+                  </section>
+                </div>                
+              </div>
+              <div v-else>
+                <section>
+                    <span>Lot Number:</span>
+                  
+                  </section>
+                  <section>
+                    <span>Block Number:</span>
+            
+                  </section>
+                  <section>
+                    <span>Total Squared Meters:</span>
+           
+                  </section>
+                  <section class="mb-2">
+                    <span>Amount/Square:</span>
+               
+                  </section>
+              </div>
 
-      <br>
+
+          </ul>
+ 
+
+
+      <hr>
           <h6>Payment Details</h6>
             <section>
               <span>Reservaton Payment:</span>
@@ -40,7 +73,7 @@
               <span>Monthly Amortization Due:</span>
               <span class="var">{{ client.paymentDetails.monthlyAmortizationDue }}</span>
             </section> 
-      <br>
+      <hr>
           <h6>Accounting Details</h6> 
             <section>
               <span>TOTAL AMOUNT DUE:</span>
@@ -55,7 +88,7 @@
               <span class="var">{{ client.accountingDetails.totalAmountPayable }}</span>
             </section> 
         </section>
-      <br>
+      <!-- <br> -->
       <hr>
         <header>
           <h5>TRANSACTIONS</h5> 
@@ -63,7 +96,7 @@
             <button @click="saveEdit" style="margin-right: .5rem;" v-if="editPaymentForm ">
               SAVE <font-awesome-icon icon="fa-solid fa-plus" />
             </button>
-            <button @click="toggleAddPayment">ADD <font-awesome-icon icon="fa-solid fa-plus" /></button>
+            <button @click="toggleAddPayment" style="padding: .5rem 1rem">ADD <font-awesome-icon icon="fa-solid fa-plus" /></button>
           </div>
           
         </header>
@@ -152,6 +185,30 @@ export default {
           focusElement: null,
           newAttachment: null,
           transactionId: null,
+
+          tempListAccountDetails: {
+            totalAmountDue: 230000,
+            details: [
+              {
+                lotNumber: 12,
+                blockNumber: 1,
+                totalSqm: 1000,
+                amountperSquare: 200
+              },
+              {
+                lotNumber: 10,
+                blockNumber: 1,
+                totalSqm: 200,
+                amountperSquare: 100
+              },
+              {
+                lotNumber: 12,
+                blockNumber: 1,
+                totalSqm: 100,
+                amountperSquare: 100
+              },
+            ]
+          }
       }
     },
     methods:{
@@ -170,17 +227,17 @@ export default {
         this.isLoading = false
       },
 
-      async uploadTransaction(payload){
+      async uploadTransaction(object){
         this.isLoading = true
         try{
             await this.$store.dispatch('client/addPayment',{
-                id:payload.id,
-                obj: payload.obj,
-                amountPaid: payload.amountPaid})
-            // console.log(payload)
+                userId: this.clientID,
+                object: object,
+                })
             this.getListTransaction(this.clientID)
         }catch(error){
             toast.error(error,{autoClose: false})
+            this.isLoading = false
         }   
         
       },
@@ -261,6 +318,7 @@ export default {
       client(){
           const listClients =  this.$store.getters['client/clientsGetter']
           const index = listClients.findIndex(item => item.userId === this.clientID)
+          console.log(listClients[index])
           return listClients[index]
       },
       roleAdmin(){

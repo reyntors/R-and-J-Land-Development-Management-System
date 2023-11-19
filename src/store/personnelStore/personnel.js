@@ -1,3 +1,4 @@
+import * as Setttings from '@/APIs/BOTH/SettingsAPI.js' 
 export default{
         namespaced: true,
 
@@ -16,6 +17,16 @@ export default{
             },
             switchDashboard(state){
                 state.isSettingsView = false;
+            }
+        },
+
+        actions:{
+            async updateMySettings(_,payload){
+                try{
+                    await Setttings.updateMyAccountSettingsPersonnel(payload)
+                }catch(error){
+                    console.error(error)
+                }
             }
         },
 

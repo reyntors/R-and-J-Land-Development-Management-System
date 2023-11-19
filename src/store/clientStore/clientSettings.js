@@ -1,4 +1,4 @@
-import * as API from '@/APIs/CLIENT/SettingsAPI.js'
+import * as API from '@/APIs/BOTH/SettingsAPI.js'
 
 export default{
     namespaced: true,

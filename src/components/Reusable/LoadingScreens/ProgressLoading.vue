@@ -2,15 +2,18 @@
   <div id="loadingSpinner">
     <div class="custom-loader-spin" v-if="type === 'spin'"></div>
     <div class="custom-loader-progress" v-if="type === 'progress'"></div>
-    <!-- <div class="custom-loader-dot" v-if="type === 'dot'"></div> -->
+    <div class="custom-loader-dot" v-if="type === 'dot'"></div> 
+    <div class="torks-loader" v-if="type === 'torks'"></div>
   </div>
-  <div class="custom-loader-dot" v-if="type === 'dot'"></div>
   
 </template>
 
 <script>
 export default {
-  props: ['type']
+  props: ['type'],
+  // mounted(){
+  //   console.log(this.type)
+  // }
 }
 </script>
 
@@ -25,9 +28,10 @@ export default {
   justify-content: center;
   align-items: center;
 }
+/* spin loading */
 .custom-loader-spin {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   background: 
     radial-gradient(farthest-side,#766DF4 94%,#0000) top/16px 16px no-repeat,
@@ -39,7 +43,7 @@ export default {
   100%{transform: rotate(1turn)}
 }
 
-/* progress bar */
+/* progress bar loading */
 .custom-loader-progress {
    height:4px;
    width:130px;
@@ -60,7 +64,6 @@ export default {
 
 /* dot loading */
 .custom-loader-dot {
-  /* position: absolute; */
   width: 69px;
   height: 12px;
   --c:radial-gradient(farthest-side,#766DF4 90%,#0000);
@@ -88,5 +91,32 @@ export default {
 @keyframes d10-2 {
   0%,49.99% {transform: scale( 1)}
   50%,100%  {transform: scale(-1)}
+}
+
+
+/* torks loading */
+.torks-loader {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  animation: s4 2s infinite;
+}
+.torks-loader::before,
+.torks-loader::after {    
+  content:"";
+  grid-area: 1/1;
+  border:8px solid;
+  border-radius: 50%;
+  border-color:#278E2D #278E2D #0000 #0000;
+  mix-blend-mode: darken;
+  animation: s4 0.5s infinite linear;
+}
+.torks-loader::after {
+  border-color:#0000 #0000 #9DEDA8 #9DEDA8;
+  animation-direction: reverse;
+}
+
+@keyframes s4{ 
+  100%{transform: rotate(1turn)}
 }
 </style>
