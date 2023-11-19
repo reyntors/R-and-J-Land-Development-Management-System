@@ -88,7 +88,8 @@ exports.createReservation = async (req, res, next) => {
 
         return res.status(200).json({ message: 'Reservation created successfully', 
         pdfPath: pdfPath,
-        data: savedReservation
+        data: savedReservation,
+        totalAmountDue: totalAmountDue,
       });
     } catch (error) {
         return next(error);
