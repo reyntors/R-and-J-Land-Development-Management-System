@@ -69,7 +69,14 @@ exports.createReservation = async (req, res, next) => {
 
     // Calculate the totalAmountDue for the new reservation
     let totalAmountDueForNewReservation = customer.accountDetails.totalAmountDue || 0;
-    totalAmountDueForNewReservation += newReserveData1.totalSqm_1 * newReserveData1.amountperSquare_1;
+
+    // Calculate the totalAmountDue for the second reservation if it exists
+    if (reservationData.lot_1 && reservationData.block_1 && reservationData.area_1 && reservationData.price_per_sq_1) {
+      
+    
+      totalAmountDueForNewReservation += newReserveData1.totalSqm_1 * newReserveData1.amountperSquare_1;
+
+    }
 
     if(reservationData.phase_2 && 
       reservationData.block_2 && 
@@ -96,7 +103,11 @@ exports.createReservation = async (req, res, next) => {
 
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_2 && reservationData.block_2 && reservationData.area_2 && reservationData.price_per_sq_2) {
+      
+      console.log( totalAmountDueForNewReservation + newReserveData2.totalSqm_2 * newReserveData2.amountperSquare_2)
+
       totalAmountDueForNewReservation += newReserveData2.totalSqm_2 * newReserveData2.amountperSquare_2;
+      console.log(typeof(totalAmountDueForNewReservation))
     }
   }
 
@@ -129,6 +140,7 @@ exports.createReservation = async (req, res, next) => {
     }
   }
 
+    
     customer.accountDetails.totalAmountDue = totalAmountDueForNewReservation;
 
     // Save to the database
@@ -141,6 +153,7 @@ exports.createReservation = async (req, res, next) => {
       totalAmountDue: totalAmountDueForNewReservation,
     });
   } catch (error) {
+    console.log(error)
     return next(error);
   }
 };
