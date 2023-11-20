@@ -35,27 +35,69 @@ const accountDetailsSchema = new Schema({
         default: null,
         
     },
-    details:[{
-            lotNumber: {
+    details1:[{
+            lotNumber_1: {
                 type: String,
                 default: null,
                 
             },
-            blockNumber:{
+            blockNumber_1:{
                 type: String,
                 default: null,
             },
-            totalSqm: {
+            totalSqm_1: {
                 type: Number,
                 default: null,
                 
             },
-            amountperSquare: {
+            amountperSquare_1: {
                 type: Number,
                 default: null,
                 
             },
-        }]
+        }],
+    details2:[{
+            lotNumber_2: {
+                type: String,
+                
+                
+            },
+            blockNumber_2:{
+                type: String,
+               
+            },
+            totalSqm_2: {
+                type: Number,
+                
+                
+            },
+            amountperSquare_2: {
+                type: Number,
+               
+                
+            },
+        }],
+    details3:[{
+            lotNumber_3: {
+                type: String,
+                
+                
+            },
+            blockNumber_3:{
+                type: String,
+               
+            },
+            totalSqm_3: {
+                type: Number,
+              
+                
+            },
+            amountperSquare_3: {
+                type: Number,
+                
+                
+            },
+        }],
 });
 
 

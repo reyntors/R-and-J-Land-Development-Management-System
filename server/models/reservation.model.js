@@ -29,36 +29,104 @@ const reservationSchema = new Schema({
         type: String,
        
     },
-     details: [{
-        area:{
+     details1: [{
+        area_1:{
             type: Number,
             
         },
-        block:{
+        block_1:{
             type: String,
             
         },
-        contract_price:{
+        contract_price_1:{
             type: Number,
             
         },
-        balance:{
+        balance_1:{
             type: Number,
            
         },
-        downpayment:{
+        downpayment_1:{
             type: Number,
             
         },
-        lot:{
+        lot_1:{
             type: String,
             
         },
-        phase:{
+        phase_1:{
             type: String,
             
         },
-        price_per_sq:{
+        price_per_sq_1:{
+            type: Number,
+            
+        },
+    }],
+    details2: [{
+        area_2:{
+            type: Number,
+            
+        },
+        block_2:{
+            type: String,
+            
+        },
+        contract_price_2:{
+            type: Number,
+            
+        },
+        balance_2:{
+            type: Number,
+           
+        },
+        downpayment_2:{
+            type: Number,
+            
+        },
+        lot_2:{
+            type: String,
+            
+        },
+        phase_2:{
+            type: String,
+            
+        },
+        price_per_sq_2:{
+            type: Number,
+            
+        },
+    }],
+    details3: [{
+        area_3:{
+            type: Number,
+            
+        },
+        block_3:{
+            type: String,
+            
+        },
+        contract_price_3:{
+            type: Number,
+            
+        },
+        balance_3:{
+            type: Number,
+           
+        },
+        downpayment_3:{
+            type: Number,
+            
+        },
+        lot_3:{
+            type: String,
+            
+        },
+        phase_3:{
+            type: String,
+            
+        },
+        price_per_sq_3:{
             type: Number,
             
         },

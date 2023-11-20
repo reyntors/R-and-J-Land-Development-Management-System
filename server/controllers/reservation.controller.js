@@ -18,84 +18,132 @@ const day = String(date.getDate()).padStart(2, '0');
 const formattedDate = `${year}-${month}-${day}`;
 
 exports.createReservation = async (req, res, next) => {
-    try {
-        const reservationData = req.body;
-        const username = req.user.username;
-        const {id} = req.params;
+  try {
+    const reservationData = req.body;
+    const username = req.user.username;
+    const { id } = req.params;
 
-       
+    const user = await User.findOne({ username });
 
-        const user = await User.findOne({username});
-
-        if(!user){
-
-          return res.status(404).json({message: ' User not found!'});
-        }
-
-        const customer = await User.findOne({userId: id});
-
-        if(!customer){
-
-          return res.status(404).json({message: ' User not found!'});
-        }
-
-        const pdfPath = await generateReservationPDF(user, reservationData);
-
-        //Create a new reservation instance
-        const newReservation = new Reservation({
-          ...reservationData,
-          date: formattedDate,
-          url: pdfPath,
-          isSubmitted: true,
-          createdBy: user.username,
-          details:{
-            ...reservationData
-          }
-        });
-
-        //Save the reservation to the database using async/await
-        const savedReservation = await newReservation.save();
-
-        const newReserveData = {
-
-          lotNumber: reservationData.lot,
-          blockNumber: reservationData.block,
-          totalSqm: reservationData.area,
-          amountperSquare: reservationData.price_per_sq, 
-        };
-
-
-        // Check if user.accountDetails.details is an array
-        if (!Array.isArray(user.accountDetails.details)) {
-          user.accountDetails.details = [];
-      }
-
-        customer.accountDetails.details.push(newReserveData);
-
-        // const totalAmountDue = reservationData.area * reservationData.price_per_sq
-
-        // Calculate the totalAmountDue for the new reservation
-          const totalAmountDueForNewReservation =
-          customer.accountDetails.totalAmountDue || 0;
-        const totalAmountDue = totalAmountDueForNewReservation + newReserveData.totalSqm * newReserveData.amountperSquare;
-
-
-        customer.accountDetails.totalAmountDue = totalAmountDue
-        customer.accountingDetails.totalAmountDue = customer.accountDetails.totalAmountDue
-
-        //save to database
-        await customer.save()
-
-        return res.status(200).json({ message: 'Reservation created successfully', 
-        pdfPath: pdfPath,
-        data: savedReservation,
-        totalAmountDue: totalAmountDue,
-      });
-    } catch (error) {
-        return next(error);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found!' });
     }
-};
 
+    const customer = await User.findOne({ userId: id });
+
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found!' });
+    }
+
+    const pdfPath = await generateReservationPDF(user, reservationData);
+
+    // Create a new reservation instance
+    const newReservation = new Reservation({
+      ...reservationData,
+      date: formattedDate,
+      url: pdfPath,
+      isSubmitted: true,
+      createdBy: user.username,
+      details1: { ...reservationData },
+      details2: { ...reservationData },
+      details3: { ...reservationData },
+    });
+
+    // Save the reservation to the database using async/await
+    const savedReservation = await newReservation.save();
+
+    const newReserveData1 = {
+      lotNumber_1: reservationData.lot_1,
+      blockNumber_1: reservationData.block_1,
+      totalSqm_1: reservationData.area_1,
+      amountperSquare_1: reservationData.price_per_sq_1,
+    };
+
+    // Check if user.accountDetails.details1 is an array
+    if (!Array.isArray(customer.accountDetails.details1)) {
+      customer.accountDetails.details1 = [];
+    }
+
+    customer.accountDetails.details1.push(newReserveData1);
+
+
+    // Calculate the totalAmountDue for the new reservation
+    let totalAmountDueForNewReservation = customer.accountDetails.totalAmountDue || 0;
+    totalAmountDueForNewReservation += newReserveData1.totalSqm_1 * newReserveData1.amountperSquare_1;
+
+    if(reservationData.phase_2 && 
+      reservationData.block_2 && 
+      reservationData.lot_2 && 
+      reservationData.area_2 && 
+      reservationData.price_per_sq_2 && 
+      reservationData.downpayment_2 && 
+      reservationData.balance_2 && 
+      reservationData.contract_price_2){
+
+    const newReserveData2 = {
+      lotNumber_2: reservationData.lot_2,
+      blockNumber_2: reservationData.block_2,
+      totalSqm_2: reservationData.area_2,
+      amountperSquare_2: reservationData.price_per_sq_2,
+    };
+
+    // Check if user.accountDetails.details2 is an array
+    if (!Array.isArray(customer.accountDetails.details2)) {
+      customer.accountDetails.details2 = [];
+    }
+
+    customer.accountDetails.details2.push(newReserveData2);
+
+    // Calculate the totalAmountDue for the second reservation if it exists
+    if (reservationData.lot_2 && reservationData.block_2 && reservationData.area_2 && reservationData.price_per_sq_2) {
+      totalAmountDueForNewReservation += newReserveData2.totalSqm_2 * newReserveData2.amountperSquare_2;
+    }
+  }
+
+  if(reservationData.phase_3 && 
+    reservationData.block_3 && 
+    reservationData.lot_3 && 
+    reservationData.area_3 && 
+    reservationData.price_per_sq_3 && 
+    reservationData.downpayment_3 && 
+    reservationData.balance_3 && 
+    reservationData.contract_price_3){
+
+    const newReserveData3 = {
+      lotNumber_3: reservationData.lot_3,
+      blockNumber_3: reservationData.block_3,
+      totalSqm_3: reservationData.area_3,
+      amountperSquare_3: reservationData.price_per_sq_3,
+    };
+
+    // Check if user.accountDetails.details3 is an array
+    if (!Array.isArray(customer.accountDetails.details3)) {
+      customer.accountDetails.details3 = [];
+    }
+
+    customer.accountDetails.details3.push(newReserveData3);
+
+    // Calculate the totalAmountDue for the third reservation if it exists
+    if (reservationData.lot_3 && reservationData.block_3 && reservationData.area_3 && reservationData.price_per_sq_3) {
+      totalAmountDueForNewReservation += newReserveData3.totalSqm_3 * newReserveData3.amountperSquare_3;
+    }
+  }
+
+    customer.accountDetails.totalAmountDue = totalAmountDueForNewReservation;
+
+    // Save to the database
+    await customer.save();
+
+    return res.status(200).json({
+      message: 'Reservation created successfully',
+      pdfPath: pdfPath,
+      data: savedReservation,
+      totalAmountDue: totalAmountDueForNewReservation,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 async function generateReservationPDF(user, reservationData){
 
@@ -111,8 +159,8 @@ async function generateReservationPDF(user, reservationData){
       let fieldNames = pdfDoc.getForm().getFields()
       
       fieldNames = fieldNames.map((f) => f.getName())
-
      
+
       const form = pdfDoc.getForm()
 
       form.getTextField(fieldNames[0]).setText(formattedDate)
@@ -121,33 +169,79 @@ async function generateReservationPDF(user, reservationData){
       form.getTextField(fieldNames[2]).setText(reservationData.land_at)
       form.getTextField(fieldNames[3]).setText(reservationData.situated_at)
 
+      if(reservationData.phase_1 && 
+        reservationData.block_1 && 
+        reservationData.lot_1 && 
+        reservationData.area_1 && 
+        reservationData.price_per_sq_1 && 
+        reservationData.downpayment_1 && 
+        reservationData.balance_1 && 
+        reservationData.contract_price_1){
 
-      form.getTextField(fieldNames[4]).setText(reservationData.phase)
-      form.getTextField(fieldNames[5]).setText(reservationData.block)
-      form.getTextField(fieldNames[6]).setText(reservationData.lot)
-      form.getTextField(fieldNames[7]).setText(String(reservationData.area))
-      form.getTextField(fieldNames[8]).setText(String(reservationData.price_per_sq))
-      form.getTextField(fieldNames[9]).setText(String(reservationData.contract_price))
-      form.getTextField(fieldNames[10]).setText(String(reservationData.downpayment))
-      form.getTextField(fieldNames[11]).setText(String(reservationData.balance))
-
+      form.getTextField(fieldNames[4]).setText(reservationData.phase_1)
+      form.getTextField(fieldNames[5]).setText(reservationData.block_1)
+      form.getTextField(fieldNames[6]).setText(reservationData.lot_1)
+      form.getTextField(fieldNames[7]).setText(String(reservationData.area_1))
+      form.getTextField(fieldNames[8]).setText(String(reservationData.price_per_sq_1))
+      form.getTextField(fieldNames[9]).setText(String(reservationData.contract_price_1))
+      form.getTextField(fieldNames[10]).setText(String(reservationData.downpayment_1))
+      form.getTextField(fieldNames[31]).setText(String(reservationData.balance_1))
+        }
+ 
       if(reservationData.typePayment === 'cash payment'){
 
-      form.getCheckBox(fieldNames[12]).check()
+         form.getCheckBox(fieldNames[11]).check()
       }
       if(reservationData.typePayment === 'zero down-payment'){
         
-        form.getCheckBox(fieldNames[13]).check()
+        form.getCheckBox(fieldNames[12]).check()
         }
       if(reservationData.typePayment === 'installment payment'){
         
-        form.getCheckBox(fieldNames[14]).check()
+        form.getCheckBox(fieldNames[13]).check()
         }
       if(reservationData.typePayment === 'others'){
         
-        form.getCheckBox(fieldNames[15]).check()
+        form.getCheckBox(fieldNames[14]).check()
        }
 
+       if(reservationData.phase_2 && 
+        reservationData.block_2 && 
+        reservationData.lot_2 && 
+        reservationData.area_2 && 
+        reservationData.price_per_sq_2 && 
+        reservationData.downpayment_2 && 
+        reservationData.balance_2 && 
+        reservationData.contract_price_2){
+
+       form.getTextField(fieldNames[15]).setText(reservationData.block_2)
+       form.getTextField(fieldNames[16]).setText(reservationData.lot_2)
+       form.getTextField(fieldNames[17]).setText(String(reservationData.area_2))
+       form.getTextField(fieldNames[18]).setText(String(reservationData.price_per_sq_2))
+       form.getTextField(fieldNames[19]).setText(String(reservationData.contract_price_2))
+       form.getTextField(fieldNames[20]).setText(String(reservationData.downpayment_2))
+       form.getTextField(fieldNames[21]).setText(String(reservationData.balance_2))
+       form.getTextField(fieldNames[22]).setText(reservationData.phase_2)
+        }
+
+       if(reservationData.phase_3 && 
+        reservationData.block_3 && 
+        reservationData.lot_3 && 
+        reservationData.area_3 && 
+        reservationData.price_per_sq_3 && 
+        reservationData.downpayment_3 && 
+        reservationData.balance_3 && 
+        reservationData.contract_price_3){
+
+       form.getTextField(fieldNames[23]).setText(reservationData.block_3)
+       form.getTextField(fieldNames[24]).setText(reservationData.phase_3)
+       form.getTextField(fieldNames[25]).setText(reservationData.lot_3)
+       form.getTextField(fieldNames[26]).setText(String(reservationData.area_3))
+       form.getTextField(fieldNames[27]).setText(String(reservationData.price_per_sq_3))
+       form.getTextField(fieldNames[28]).setText(String(reservationData.contract_price_3))
+       form.getTextField(fieldNames[29]).setText(String(reservationData.downpayment_3))
+       form.getTextField(fieldNames[30]).setText(String(reservationData.balance_3))
+      }
 
       pdfDoc
             .getForm()
