@@ -35,7 +35,7 @@ const accountDetailsSchema = new Schema({
         default: null,
         
     },
-    details1:[{
+    details1:{
             lotNumber_1: {
                 type: String,
                 default: null,
@@ -55,8 +55,8 @@ const accountDetailsSchema = new Schema({
                 default: null,
                 
             },
-        }],
-    details2:[{
+        },
+    details2:{
             lotNumber_2: {
                 type: String,
                 
@@ -76,8 +76,8 @@ const accountDetailsSchema = new Schema({
                
                 
             },
-        }],
-    details3:[{
+        },
+    details3:{
             lotNumber_3: {
                 type: String,
                 
@@ -97,7 +97,7 @@ const accountDetailsSchema = new Schema({
                 
                 
             },
-        }],
+        },
 });
 
 

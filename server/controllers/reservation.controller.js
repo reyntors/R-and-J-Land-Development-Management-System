@@ -59,12 +59,9 @@ exports.createReservation = async (req, res, next) => {
       amountperSquare_1: reservationData.price_per_sq_1,
     };
 
-    // Check if user.accountDetails.details1 is an array
-    if (!Array.isArray(customer.accountDetails.details1)) {
-      customer.accountDetails.details1 = [];
-    }
+    
 
-    customer.accountDetails.details1.push(newReserveData1);
+    customer.accountDetails.details1 = newReserveData1;
 
 
     // Calculate the totalAmountDue for the new reservation
@@ -73,7 +70,6 @@ exports.createReservation = async (req, res, next) => {
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_1 && reservationData.block_1 && reservationData.area_1 && reservationData.price_per_sq_1) {
       
-    
       totalAmountDueForNewReservation += newReserveData1.totalSqm_1 * newReserveData1.amountperSquare_1;
 
     }
@@ -94,12 +90,9 @@ exports.createReservation = async (req, res, next) => {
       amountperSquare_2: reservationData.price_per_sq_2,
     };
 
-    // Check if user.accountDetails.details2 is an array
-    if (!Array.isArray(customer.accountDetails.details2)) {
-      customer.accountDetails.details2 = [];
-    }
+   
 
-    customer.accountDetails.details2.push(newReserveData2);
+    customer.accountDetails.details2 = newReserveData2;
 
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_2 && reservationData.block_2 && reservationData.area_2 && reservationData.price_per_sq_2) {
@@ -127,12 +120,9 @@ exports.createReservation = async (req, res, next) => {
       amountperSquare_3: reservationData.price_per_sq_3,
     };
 
-    // Check if user.accountDetails.details3 is an array
-    if (!Array.isArray(customer.accountDetails.details3)) {
-      customer.accountDetails.details3 = [];
-    }
+    
 
-    customer.accountDetails.details3.push(newReserveData3);
+    customer.accountDetails.details3 = newReserveData3;
 
     // Calculate the totalAmountDue for the third reservation if it exists
     if (reservationData.lot_3 && reservationData.block_3 && reservationData.area_3 && reservationData.price_per_sq_3) {

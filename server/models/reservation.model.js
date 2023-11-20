@@ -29,7 +29,7 @@ const reservationSchema = new Schema({
         type: String,
        
     },
-     details1: [{
+     details1: {
         area_1:{
             type: Number,
             
@@ -62,8 +62,8 @@ const reservationSchema = new Schema({
             type: Number,
             
         },
-    }],
-    details2: [{
+    },
+    details2: {
         area_2:{
             type: Number,
             
@@ -96,8 +96,8 @@ const reservationSchema = new Schema({
             type: Number,
             
         },
-    }],
-    details3: [{
+    },
+    details3: {
         area_3:{
             type: Number,
             
@@ -130,7 +130,7 @@ const reservationSchema = new Schema({
             type: Number,
             
         },
-    }],
+    },
     createdBy: String,
    
 });
