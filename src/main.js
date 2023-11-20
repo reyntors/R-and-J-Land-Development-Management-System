@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, faCaretDown, 
     faCaretUp, faArrowLeftLong, faPlus,faMagnifyingGlass,faGear,faTrashCan,faCaretLeft,faCaretRight,
     faEnvelopeCircleCheck,faEnvelopeOpen, faEnvelope, faChevronDown, faXmark, faArrowUpFromBracket,
-    faEyeSlash,faEye,faFilter,faUserXmark,faMinus,faFilePen,faUserCheck
+    faEyeSlash,faEye,faFilter,faUserXmark,faMinus,faFilePen,faUserCheck,faCircleXmark
     } from '@fortawesome/free-solid-svg-icons'
 
 import { faFacebook, faWhatsapp, faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
@@ -24,7 +24,8 @@ import { faFacebook, faWhatsapp, faFacebookSquare } from '@fortawesome/free-bran
 library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,
     faCaretDown,faCaretUp,faArrowLeftLong,faPlus,faMagnifyingGlass,faGear,faTrashCan,
     faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen,faFacebook, faWhatsapp,faEnvelope,faChevronDown,
-    faFacebookSquare,faXmark,faArrowUpFromBracket,faEyeSlash,faEye,faFilter,faUserXmark,faMinus,faFilePen,faUserCheck
+    faFacebookSquare,faXmark,faArrowUpFromBracket,faEyeSlash,faEye,faFilter,faUserXmark,faMinus,faFilePen,faUserCheck,
+    faCircleXmark,
     )
 
 

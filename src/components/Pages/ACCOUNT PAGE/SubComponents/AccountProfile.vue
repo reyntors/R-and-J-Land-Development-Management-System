@@ -382,6 +382,7 @@ img{
 .form{
   width: 100%;
   position: relative;
+  /* background-color: white;; */
   /* display: grid;
   grid-template-columns: 1fr 1fr; */
 }

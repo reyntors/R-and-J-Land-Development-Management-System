@@ -130,9 +130,11 @@ export default {
   color: white;
 }
 .section2{
-  background-color: rgba(255, 217, 0, 0.5);
+  /* background-color: rgba(255, 217, 0, 0.5); */
   padding-top: 2rem;
   min-height: 85vh;
+  position: relative;
+  width: 75%;
 }
 .tab:hover{
   background-color: rgba(0, 0, 0, 0.2);
@@ -150,13 +152,38 @@ export default {
   list-style: none;
 }
 .section1{
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
   display: flex;
   justify-content: end;
   padding: 1rem;
+  position:relative;
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 25%;
+  min-width: 250px;
+  /* z-index: 1; */
 }
 .c-cont{
   display: grid;
   grid-template-columns: 20% 80%;
+}
+.c-cont {
+  display: flex;
+  position: relative; /* Change to relative so ::before is positioned relative to this element */
+}
+
+.c-cont::before {
+  content: ''; /* Add content property to make the pseudo-element generate */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url(https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3ViZGl2aXNpb258ZW58MHx8MHx8fDA%3D);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.1); /* Adjust the background color and alpha as needed */
+  background-blend-mode:lighten;
+  filter: blur(2px);
+  content: ''; /* Add content property to make the pseudo-element generate */
 }
 </style>

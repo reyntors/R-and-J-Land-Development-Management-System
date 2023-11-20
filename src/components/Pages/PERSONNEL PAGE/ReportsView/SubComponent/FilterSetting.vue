@@ -162,6 +162,25 @@ ul{
     justify-content: start;
     align-items: start;
     overflow-x: auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 header{
     display: flex;
@@ -178,9 +197,11 @@ div{
     width: 25%;
     min-width: 260px;
     background-color: white;
-    border-right: 1px solid black;
+    /* border-right: 1px solid black; */
     padding: .5rem;
     display: flex;
     flex-direction: column;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 </style>

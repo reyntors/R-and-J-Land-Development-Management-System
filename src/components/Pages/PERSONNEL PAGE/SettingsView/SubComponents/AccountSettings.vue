@@ -130,38 +130,101 @@ export default {
       },
       async updateProfile(){
          const payload = {}
+
+         //add to the object if the user update profile
          if(this.profileChangedBool){
             payload.image = this.newImage
+            // this.requestNow(payload)
          }
+
+         //add to the object if the user changed the username
          if(this.usernameChangedBool){
             payload.username = this.mySettings.username
+            // this.requestNow(payload)
          }
-         if(this.paswordMatchBool && this.newPassword){
-            payload.password = this.confirmedPassword
-         }
-         
-         if(this.profileChangedBool || this.usernameChangedBool || this.paswordMatchBool && this.newPassword){
-            this.isLoading = true
-            try{
-               const response = await this.$store.dispatch('personnel/updateMySettings',payload)
-               toast.success(response)
-               if(this.usernameChangedBool || this.paswordMatchBool && this.newPassword!== ""){
 
-                  this.resendCodeObj = payload
-                  this.submitCodeBool = true
-               }
-            }catch(error){
-               console.log(error)            
-            }        
-            this.isLoading = false        
-         }else if(this.newPassword && !this.paswordMatchBool){
-            toast.warning("your password doesn't match")
+         //add the new password to the object, and it will add if the password is matched
+         if(this.newPassword){
+            if(this.paswordMatchBool){
+               payload.password = this.confirmedPassword
+            }
          }
+
+         // console.log(payload)
+         // check if the object is empty, check if there is no changes on the inputs
+         if(Object.keys(payload).length>0){
+            this.isLoading = true
+
+            if(this.newPassword){
+               if(this.paswordMatchBool){
+                  // console.log(payload)
+                  try{
+                  const response = await this.$store.dispatch('personnel/updateMySettings',payload)
+                  if(payload.image){
+                     this.$store.commit('auth/updateProfilePictureLocal',payload.image)
+                  }
+                  toast.success(response)
+
+                  }catch(error){
+                     console.log(error)            
+                  }                   
+               }else{
+                  toast.warning("your password doesn't match")
+               }
+            }else{
+               // console.log(payload)
+               try{
+                  const response = await this.$store.dispatch('personnel/updateMySettings',payload)
+                  if(payload.image){
+                     this.$store.commit('auth/updateProfilePictureLocal',payload.image)
+                  }
+                  toast.success(response)
+               }catch(error){
+                  console.log(error)            
+               }                       
+            }
+
+            this.isLoading = false   
+         }     
          else{
             toast.warning('no changes occured')
          }
 
       },
+      // async updateProfile(){
+      //    const payload = {}
+      //    if(this.profileChangedBool){
+      //       payload.image = this.newImage
+      //    }
+      //    if(this.usernameChangedBool){
+      //       payload.username = this.mySettings.username
+      //    }
+      //    if(this.paswordMatchBool && this.newPassword){
+      //       payload.password = this.confirmedPassword
+      //    }
+         
+      //    if(this.profileChangedBool || this.usernameChangedBool || this.paswordMatchBool && this.newPassword){
+      //       this.isLoading = true
+      //       try{
+      //          const response = await this.$store.dispatch('personnel/updateMySettings',payload)
+      //          toast.success(response)
+      //          if(this.usernameChangedBool || this.paswordMatchBool && this.newPassword!== ""){
+
+      //             this.resendCodeObj = payload
+      //             this.submitCodeBool = true
+      //          }
+      //       }catch(error){
+      //          console.log(error)            
+      //       }        
+      //       this.isLoading = false        
+      //    }else if(this.newPassword && !this.paswordMatchBool){
+      //       toast.warning("your password doesn't match")
+      //    }
+      //    else{
+      //       toast.warning('no changes occured')
+      //    }
+
+      // },
    },
    computed:{
       passwordVisibilityComputed(){
@@ -282,10 +345,27 @@ article{
    border: 1px solid black;
    padding: 1rem;
    overflow: auto;
-   height: 100%;;
+   height: 95%;
    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid white;
     border-radius: 5px;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>

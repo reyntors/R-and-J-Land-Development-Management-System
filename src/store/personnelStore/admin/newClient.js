@@ -5,13 +5,13 @@ export default{
 
     state(){
         return{
-            pendingClients: null
+            pendingClients: []
         }
     },
 
     mutations:{
         setList(state,list){
-            console.log(list)
+            // console.log(list)
             state.pendingClients = list
         },
         remove(state,requestId){
@@ -48,6 +48,13 @@ export default{
     getters:{
         listPendingClients(state){
             return state.pendingClients
+        },
+        islistEmpty(state){
+            if(state.pendingClients.length>0){
+                return false
+            }else{
+                return true
+            }
         }
     }
 

@@ -50,6 +50,13 @@ export default {
             localStorage.removeItem('profilePic')
         },
 
+        updateProfilePictureLocal(state,file){
+            const blob = new Blob([file],{ type: file.type })
+            const url = URL.createObjectURL(blob)
+            localStorage.setItem('profilePic',url)
+            state.profilePic = url
+        }
+
     },
     actions:{
         //LOGIN REQUEST

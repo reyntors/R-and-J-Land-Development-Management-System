@@ -4,7 +4,6 @@
       <div class="div1">
         <h4>Added Clients</h4>
       </div>
-  
       <div class="div2">
         <table>
             <tr>
@@ -33,6 +32,10 @@
             </tbody>
 
         </table>
+
+        <div class="emptyList" v-if="isEmptyList">
+            Empty List
+        </div>
   
       </div>
     </div>
@@ -78,6 +81,9 @@
     computed:{
         list(){
             return this.$store.getters['newClients/listPendingClients']
+        },
+        isEmptyList(){
+            return this.$store.getters['newClients/islistEmpty']
         }
     },
 
@@ -92,11 +98,14 @@
   </script>
   
   <style scoped>
-  .noData{
+  .emptyList{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;;
   }
    table tbody:nth-child(even){
     background-color: #30a72aa7;;

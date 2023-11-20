@@ -350,6 +350,7 @@ export default{
     },
     methods: {
         async submit(){
+            // console.log('submitting')
             var details1 = null
             var details2 = null
             var details3 = null
@@ -360,19 +361,19 @@ export default{
                 this.price_per_sq_1 !== '' &&
                 this.contract_price_1 !== '' &&
                 this.downpayment_1 !== '' &&
-                this.balance_1 !== ''
-            ){
-                details1 = {
-                    phase_1: this.phase_1,
-                    block_1: this.block_1,
-                    lot_1: this.lot_1,
-                    area_1: this.area_1,
-                    price_per_sq_1: this.price_per_sq_1,
-                    contract_price_1: this.contract_price_1,
-                    downpayment_1: this.downpayment_1, 
-                    balance_1: this.balance_1,                   
-                }
+                this.balance_1 !== ''){
+                    details1 = {
+                        phase_1: this.phase_1,
+                        block_1: this.block_1,
+                        lot_1: this.lot_1,
+                        area_1: parseInt(this.area_1),
+                        price_per_sq_1: parseInt(this.price_per_sq_1),
+                        contract_price_1: parseInt(this.contract_price_1),
+                        downpayment_1: parseInt(this.downpayment_1), 
+                        balance_1: parseInt(this.balance_1),                   
+                    }
             }
+
             if(this.phase_2!== '' &&
                 this.block_2 !== '' &&
                 this.lot_2 !== '' &&
@@ -380,18 +381,17 @@ export default{
                 this.price_per_sq_2 !== '' &&
                 this.contract_price_2 !== '' &&
                 this.downpayment_2 !== '' &&
-                this.balance_2 !== ''
-            ){
-                details2 = {
-                    phase_2: this.phase_2,
-                    block_2: this.block_2,
-                    lot_2: this.lot_2,
-                    area_2: this.area_2,
-                    price_per_sq_2: this.price_per_sq_2,
-                    contract_price_2: this.contract_price_2,
-                    downpayment_2: this.downpayment_2, 
-                    balance_2: this.balance_2,                   
-                }
+                this.balance_2 !== ''){
+                    details2 = {
+                        phase_2: this.phase_2,
+                        block_2: this.block_2,
+                        lot_2: this.lot_2,
+                        area_2: parseInt(this.area_2),
+                        price_per_sq_2: parseInt(this.price_per_sq_2),
+                        contract_price_2: parseInt(this.contract_price_2),
+                        downpayment_2: parseInt(this.downpayment_2), 
+                        balance_2: parseInt(this.balance_2),                   
+                    }
             }
             if(this.phase_3!== '' &&
                 this.block_3 !== '' &&
@@ -400,48 +400,56 @@ export default{
                 this.price_per_sq_3 !== '' &&
                 this.contract_price_3 !== '' &&
                 this.downpayment_3 !== '' &&
-                this.balance_3 !== ''
-            ){
-                details3 = {
-                    phase_3: this.phase_3,
-                    block_3: this.block_3,
-                    lot_3: this.lot_3,
-                    area_3: this.area_3,
-                    price_per_sq_3: this.price_per_sq_3,
-                    contract_price_3: this.contract_price_3,
-                    downpayment_3: this.downpayment_3, 
-                    balance_3: this.balance_3,                   
-                }
+                this.balance_3 !== ''){
+                    details3 = {
+                        phase_3: this.phase_3,
+                        block_3: this.block_3,
+                        lot_3: this.lot_3,
+                        area_3: parseInt(this.area_3),
+                        price_per_sq_3: parseInt(this.price_per_sq_3),
+                        contract_price_3: parseInt(this.contract_price_3),
+                        downpayment_3: parseInt(this.downpayment_3), 
+                        balance_3: parseInt(this.balance_3),                   
+                    }
             }
             
-            const details = []
+            var details = {}
+            const object = {}
             if(details1){
-                details.push(details1)
+                details = {...details, ...details1}
             }
             if(details2){
-                details.push(details2)
+                details = {...details, ...details2}
             }
             if(details3){
-                details.push(details3)
+                details = {...details, ...details3}
             }
 
             console.log(details)
-            // this.isLoading = true
+            console.log(object)
             
-            if(this.name !== '' && this.land_at !== '' && this.typePayment !== '' && details.length>0){
-                const body = {
-                    name: this.name,
-                    land_at: this.land_at,
-                    typePayment: this.typePayment,
-                    details: details
+            if( this.name !== '' && //ensure there is value
+                this.land_at !== '' && //ensure there is value
+                this.typePayment !== '' &&  //ensure there is value
+                Object.keys(details).length>7){ //get the list of the keys of details object and measure if it is more than 7
+                this.isLoading = true
+                const body = { 
+                        ...details,
+                        name: this.name,
+                        land_at: this.land_at,
+                        typePayment: this.typePayment,
+                        situated_at: this.situated_at,
+                    
                 }    
                 console.log(body)     
                 try{
                     const response = await this.$store.dispatch('client/submitReservationForm',{
                         userId: this.clientID,
-                        body
+                        body,
                     })
-                    // window.open(response.pdfPath);
+
+                    // download the FORM
+                    window.open(response.pdfPath);
                     toast.success(response.message)   
                 }catch(error){
                     console.error(error)
@@ -452,10 +460,9 @@ export default{
                 toast.warning('Please check the informations',{autoClose: false})
             }
 
-            
-
         }
     },
+    
     computed: {
         companyName(){
         return this.$store.getters.companyName

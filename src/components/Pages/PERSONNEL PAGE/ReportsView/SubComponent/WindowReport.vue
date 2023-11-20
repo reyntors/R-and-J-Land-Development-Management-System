@@ -287,6 +287,7 @@ export default{
     width: 100%;
     height: 100%;
     padding: 5px;
+
 }
 .reportWindow{
     /* flex-grow: 1; */
@@ -296,7 +297,8 @@ export default{
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    /* margin: 1rem 0; */
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px; 
 }
 
 .reportWindow header{
@@ -391,7 +393,8 @@ tr:hover{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 .download{
     display: flex;

@@ -17,7 +17,7 @@ export default {
             try{
                 const response = await RAW.requestRawFormsList()
                 const list = response.data.forms
-                console.log(list)
+                // console.log(list)
                 const newObject = {}
                 
                 let letterOfIntentFileName = ""

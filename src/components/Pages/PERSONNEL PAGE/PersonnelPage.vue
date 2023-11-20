@@ -50,16 +50,19 @@ export default {
       await this.$store.dispatch('client/getLegitList')
 
       // this.$store.dispatch('client/getLegitList')
-      // await this.$store.dispatch('rawForms/getRawFormsList')
+      await this.$store.dispatch('rawForms/getRawFormsList')
 
       //get the inquiries list
       await this.$store.dispatch('inquiries/getInquiriesList')
 
-      // //get the list of need approval clients
-      // await this.$store.dispatch('newClients/getList')
+      //get the list of need approval clients
+      await this.$store.dispatch('newClients/getList')
 
       // //get the subidivsion lists
-      // await this.$store.dispatch('subdivision/getPropertyList')
+      await this.$store.dispatch('subdivision/getPropertyList')
+
+      //request for settings info
+      await this.$store.dispatch('personnel/getMyAccountSettings')
 
     }catch(error){
       console.error(error)
@@ -73,17 +76,6 @@ export default {
 </script>
 
 <style scoped>
-.img-background{
-  background-image: url(https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3ViZGl2aXNpb258ZW58MHx8MHx8fDA%3D);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: 30a72a8e;
-  background-blend-mode: lighten;
-  background-position: center;
-  filter: blur(3px);
-
-}
-
 .personnel-cont {
   display: flex;
   position: relative; /* Change to relative so ::before is positioned relative to this element */

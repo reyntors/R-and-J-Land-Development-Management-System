@@ -23,6 +23,7 @@ export const myAccountSettings = async () => {
 }
 
 export const updateMyAccountSettings = async (payload) => {
+    console.log(payload)
     console.log('updateMyAccountSettings CLient/Realtor API executed')
     const token =store.getters['auth/getTokenID']
     try {
@@ -60,11 +61,11 @@ export const submitCodeUpdateSettings = async (payload) => {
 }
 
 export const updateMyAccountSettingsPersonnel = async (payload) => {
-    console.log(payload)
+    // console.log(payload)
     console.log('updateMyAccountSettings personnel API executed')
     const token =store.getters['auth/getTokenID']
     try {
-        const response = await axios.put(`${BASE_URL}update-user-account-personnel`,payload,{
+        const response = await axios.put(`${BASE_URL}users/update-user-account-personnel`,payload,{
             headers: {
                 Authorization: `Bearer ${token}`
             }

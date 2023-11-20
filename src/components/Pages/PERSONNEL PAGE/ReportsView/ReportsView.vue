@@ -91,7 +91,7 @@ h4{
 }
 .div2{
     width:100%;
-    height: 90%;
+    height: 88%;
     background-color: transparent;
     display: flex;
     justify-content: start; 

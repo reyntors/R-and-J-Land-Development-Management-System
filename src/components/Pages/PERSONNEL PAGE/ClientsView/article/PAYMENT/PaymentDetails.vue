@@ -9,51 +9,79 @@
       <div>
         <section>
           <h6>Account Details</h6> 
+          
+          <div v-if="!isDetailsPresent"> 
+            <section>
+              <span>Lot Number:</span>
+            </section>
+            <section>
+              <span>Block Number:</span>
+            </section>
+            <section>
+              <span>Total Squared Meters:</span>
+            </section>
+            <section class="mb-2">
+              <span>Amount/Square:</span>
+            </section>
+          </div>
           <ul>
-              <!-- <section>
+            <div v-if="client.accountDetails.details1" class="accountDetailsElement">
+              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin"/>
+              <section>
                 <span>Lot Number:</span>
-                <span>{{ tempListAccountDetails.totalAmountDue }}</span>
-              </section> -->
-              
-              <div v-if="client.accountDetails.details.length>0"> 
-                <div v-for="(item,index) in client.accountDetails.details" :key="index">
-                  <section>
-                    <span>Lot Number:</span>
-                    <span class="var">{{ item.lotNumber }}</span>
-                  </section>
-                  <section>
-                    <span>Block Number:</span>
-                    <span class="var">{{ item.blockNumber }}</span>
-                  </section>
-                  <section>
-                    <span>Total Squared Meters:</span>
-                    <span class="var">{{ item.totalSqm }}</span>
-                  </section>
-                  <section class="mb-2">
-                    <span>Amount/Square:</span>
-                    <span class="var">{{ item.amountperSquare }}</span>
-                  </section>
-                </div>                
-              </div>
-              <div v-else>
-                <section>
-                    <span>Lot Number:</span>
-                  
-                  </section>
-                  <section>
-                    <span>Block Number:</span>
-            
-                  </section>
-                  <section>
-                    <span>Total Squared Meters:</span>
-           
-                  </section>
-                  <section class="mb-2">
-                    <span>Amount/Square:</span>
-               
-                  </section>
-              </div>
-
+                <span class="var">{{ client.accountDetails.details1.lotNumber_1 }}</span>
+              </section>
+              <section>
+                <span>Block Number:</span>
+                <span class="var">{{ client.accountDetails.details1.blockNumber_1 }}</span>
+              </section>
+              <section>
+                <span>Total Squared Meters:</span>
+                <span class="var">{{ client.accountDetails.details1.totalSqm_1 }}</span>
+              </section>
+              <section class="mb-2">
+                <span>Amount/Square:</span>
+                <span class="var">{{ client.accountDetails.details1.amountperSquare_1 }}</span>
+              </section>
+            </div> 
+            <div v-if="client.accountDetails.details2" class="accountDetailsElement">
+              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin"/>
+              <section>
+                <span>Lot Number:</span>
+                <span class="var">{{ client.accountDetails.details2.lotNumber_2 }}</span>
+              </section>
+              <section>
+                <span>Block Number:</span>
+                <span class="var">{{ client.accountDetails.details2.blockNumber_2 }}</span>
+              </section>
+              <section>
+                <span>Total Squared Meters:</span>
+                <span class="var">{{ client.accountDetails.details2.totalSqm_2 }}</span>
+              </section>
+              <section class="mb-2">
+                <span>Amount/Square:</span>
+                <span class="var">{{ client.accountDetails.details2.amountperSquare_2 }}</span>
+              </section>
+            </div> 
+            <div v-if="client.accountDetails.details3" class="accountDetailsElement">
+              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin"/>
+              <section>
+                <span>Lot Number:</span>
+                <span class="var">{{ client.accountDetails.details3.lotNumber_3 }}</span>
+              </section>
+              <section>
+                <span>Block Number:</span>
+                <span class="var">{{ client.accountDetails.details3.blockNumber_3 }}</span>
+              </section>
+              <section>
+                <span>Total Squared Meters:</span>
+                <span class="var">{{ client.accountDetails.details3.totalSqm_3 }}</span>
+              </section>
+              <section class="mb-2">
+                <span>Amount/Square:</span>
+                <span class="var">{{ client.accountDetails.details3.amountperSquare_3 }}</span>
+              </section>
+            </div> 
 
           </ul>
  
@@ -332,6 +360,15 @@ export default {
             return 4
           }
       },
+
+      // check if there is details exists
+      isDetailsPresent(){
+        if(this.client.accountDetails.details1 || this.client.accountDetails.details2 || this.client.accountDetails.details3 ){
+            return true
+        }else{
+            return false
+        }
+      }
     },
     mounted(){
       this.getListTransaction(this.clientID)
@@ -340,7 +377,26 @@ export default {
 </script>
 
 <style scoped>
-
+.icon-delete-account-details:hover{
+  color: black;
+}
+.icon-delete-account-details{
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.accountDetailsElement{
+  box-shadow: -1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  min-width: 300px;
+  max-width: 450px;
+  padding-left: .5rem;
+  border-radius: 3px;
+  position: relative;
+}
 .cancelEditBtn{
   border: none;
   background-color: transparent;

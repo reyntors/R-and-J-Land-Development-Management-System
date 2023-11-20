@@ -193,15 +193,15 @@ export default{
         // end add transaction
 
         //start reservation form
-        automateUpdateAmountDue(state,payload){
+        updateAccountDetails(state,payload){
             console.log(payload)
             const index = state.clientsAdded.findIndex(item => item.userId === payload.userId)
             if(index>=0){
-                state.clientsAdded[index].accountingDetails.totalAmountDue = payload.amount
+                // state.clientsAdded[index].accountDetails = {}
+                state.clientsAdded[index].accountDetails = {...payload.object,totalAmountDue: payload.totalAmountDue}
             }else{
                 console.error('somethings wrong updating the amount due')
             }
-            
         }
         //end reservation form
         
@@ -358,15 +358,34 @@ export default{
 
         //start reservation form
         async submitReservationForm(context,payload){
-            // console.log(payload)
-            // try{
-                // const response = await Client.submitReservationFormAPI(payload)
-                // console.log(response) 
-                context.commit('automateUpdateAmountDue',{userId: payload.userId,amount: 50000})     
-                // return response          
-            // }catch(error){
-            //     console.log(error)
-            // } 
+            console.log(payload)
+            try{
+                const response = await Client.submitReservationFormAPI(payload)
+                console.log(response) 
+                
+                const object = {}
+                if(response.data.details1){
+                    // console.log(response.data.details1)
+                    object.details1 = {...response.data.details1}
+                }
+                if(response.data.details2){
+                    // console.log(response.data.details2)
+                    object.details2 = {...response.data.details2}
+                }
+                if(response.data.details3){
+                    // console.log(response.data.details3)
+                    object.details3 = {...response.data.details3}
+                }
+
+                context.commit('updateAccountDetails',{
+                    userId: payload.userId,
+                    object,
+                    totalAmountDue: response.totalAmountDue
+                }) 
+                return response          
+            }catch(error){
+                console.log(error)
+            } 
         }
         //end reservation form
 

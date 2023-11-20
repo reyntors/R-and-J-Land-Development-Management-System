@@ -124,7 +124,7 @@ export default {
         async fromPushtoScrollNavigate(){
             const sectionID = this.$route.query.to;
             const section = document.getElementById(sectionID);
-            console.log(section);
+            // console.log(section);
             if (section) {
                 const headerHeight = document.querySelector('.header').offsetHeight;
                 const sectionTop = section.getBoundingClientRect().top;

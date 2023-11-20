@@ -2,7 +2,7 @@
   <div class="profileViewContainer">
 
     <section class="imageName">
-        <img :src="profile">
+        <img :src="profile" alt="Cannot display the image">
         <h5>{{personnelType}}</h5>
     </section>
 <br>
@@ -46,7 +46,7 @@ h5{
     /* height: 85vh; */
     padding: 1rem;
     z-index: 1;
-
+    background-color: rgba(255, 255, 255, 0.3);
 }
 .imageName{
     display: flex;

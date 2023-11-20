@@ -19,7 +19,7 @@ div{
     left: 0;
     min-height: 100%;
     width: 100%;
-    z-index: 1;
+    z-index: 10;
     background: rgba(255, 255, 255, 0);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(7.3px);

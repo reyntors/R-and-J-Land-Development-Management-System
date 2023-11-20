@@ -26,7 +26,6 @@ export default{
         },
         async updateMyAccountSettings(_,payload){
             console.log('updateMyAccountSettings Store executed')
-            // console.log(payload)
             const form = new FormData()
             if(payload.image){
                 form.append('image',payload.image)

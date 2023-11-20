@@ -1,5 +1,5 @@
 <template>
-  <progress-loading type="spin" v-if="isLoading"></progress-loading>
+  <progress-loading type="torks" v-if="isLoading"></progress-loading>
   <div class="cardLogin" v-else>
         <form @submit.prevent="login">
             <div class="icon-container">

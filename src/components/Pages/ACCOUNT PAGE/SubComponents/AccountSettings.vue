@@ -17,42 +17,52 @@
          </section>
 
          <section class="form-section">
-            <label>User Account ID (not editable)</label>
-            <input v-model="mySettings.userId" readonly>
-         </section>
-         <section class="form-section">
-            <label>Email Linked (not editable)</label>
-            <input v-model="mySettings.email" readonly>
-         </section>
-         <section class="form-section">
-            <label>Username</label>
-            <input v-model="mySettings.username">
-         </section>
-         
-  
-         <section class="form-section">
-            <button class="change-pass-btn" type="button" @click="editPassword">Change Password</button>
-            <div v-if="editPasswordBool"> 
-
-               <section style="position: relative">
-                  <label>New Password</label>
-                  <input :type="passwordVisibilityComputed" v-model.trim="newPassword">
-                  <span class="eye" @click="togglePasswordVisibility">
-                     <font-awesome-icon icon="fa-solid fa-eye" v-if="passwordVisibility"/>
-                     <font-awesome-icon icon="fa-solid fa-eye-slash" v-else />   
-                  </span>
-               </section>
-               <section style="position: relative">
-                  <label>Confirm Password</label>
-                  <input :type="passwordVisibilityComputed" v-model.trim="confirmedPassword">
-                  <span class="eye" @click="togglePasswordVisibility">
-                     <font-awesome-icon icon="fa-solid fa-eye" v-if="passwordVisibility"/>
-                     <font-awesome-icon icon="fa-solid fa-eye-slash" v-else />  
-                  </span>
-               </section>   
-               
-
+            <div class="form-floating mb-2">
+              <input type="text" class="form-control" id="userIdPersonnel" placeholder="" v-model="mySettings.userId" readonly>
+              <label for="userIdPersonnel">User Account ID (not editable)</label>
             </div>
+         </section>
+        
+         <section class="form-section">
+            <!-- <label>Email Linked (not editable)</label>
+            <input v-model="mySettings.email" readonly> -->
+            <div class="form-floating mb-2">
+              <input type="text" class="form-control" id="emailPersonnel" placeholder="" v-model="mySettings.email" readonly>
+              <label for="emailPersonnel">Email Linked (not editable)</label>
+            </div>
+         </section>
+         <section class="form-section">
+            <div class="form-floating mb-2">
+              <input type="text" class="form-control" id="usernamePersonnel" placeholder="" v-model="mySettings.username">
+              <label for="usernamePersonnel">Username</label>
+            </div>
+         </section>
+            
+         <section class="form-section">
+
+            <section style="position: relative">
+               <div class="form-floating mb-2">
+                  <input :type="passwordVisibilityComputed" class="form-control" id="newPassPersonnel" placeholder="" v-model.trim="newPassword">
+                  <label for="newPassPersonnel">New Password</label>
+               </div>
+               <span class="eye" @click="togglePasswordVisibility">
+                  <font-awesome-icon icon="fa-solid fa-eye" v-if="passwordVisibility"/>
+                  <font-awesome-icon icon="fa-solid fa-eye-slash" v-else />   
+               </span>
+            </section>
+            </section>
+            <section class="form-section">
+            <section style="position: relative">
+               <div class="form-floating mb-2">
+                  <input :type="passwordVisibilityComputed" class="form-control" id="confirmNewPassPersonnel" placeholder=""  v-model.trim="confirmedPassword">
+                  <label for="confirmNewPassPersonnel">Confirm Password</label>
+               </div>
+               <span class="eye" @click="togglePasswordVisibility">
+                  <font-awesome-icon icon="fa-solid fa-eye" v-if="passwordVisibility"/>
+                  <font-awesome-icon icon="fa-solid fa-eye-slash" v-else />  
+               </span>
+            </section>   
+
          </section>         
 
       </article>
@@ -66,7 +76,7 @@
       ></submit-code>  
       
       <div class="background" v-if="isLoading"></div>
-      <progress-loading type="spin" v-if="isLoading"/>
+      <progress-loading type="torks" v-if="isLoading"/>
   </form>
 </template>
 
@@ -115,33 +125,77 @@ export default {
          this.$store.commit('auth/eraseLocalStorage')
          this.$router.push('/home')
       },
+
       async updateProfile(){
          const payload = {}
+
+         //add to the object if the user update profile
          if(this.profileChangedBool){
             payload.image = this.newImage
+            // this.requestNow(payload)
          }
+
+         //add to the object if the user changed the username
          if(this.usernameChangedBool){
             payload.username = this.mySettings.username
+            // this.requestNow(payload)
          }
-         if(this.paswordMatchBool && this.newPassword){
-            payload.password = this.confirmedPassword
+
+         //add the new password to the object, and it will add if the password is matched
+         if(this.newPassword){
+            if(this.paswordMatchBool){
+               payload.password = this.confirmedPassword
+            }
          }
-         
-         if(this.profileChangedBool || this.usernameChangedBool || this.paswordMatchBool && this.newPassword){
+
+         // console.log(payload)
+         // check if the object is empty, check if there is no changes on the inputs
+         if(Object.keys(payload).length>0){
             this.isLoading = true
-            try{
-               const response = await this.$store.dispatch('mySettings/updateMyAccountSettings',payload)
-               toast.success(response)
-               if(this.usernameChangedBool || this.paswordMatchBool && this.newPassword!== ""){
+
+            if(this.newPassword){
+               if(this.paswordMatchBool){
+                  console.log(payload)
+                  try{
+                  const response = await this.$store.dispatch('mySettings/updateMyAccountSettings',payload)
+                  toast.success(response)
+                  // if(this.usernameChangedBool || this.newPassword){
 
                   this.resendCodeObj = payload
                   this.submitCodeBool = true
+
+                  if(payload.image){
+                     this.$store.commit('auth/updateProfilePictureLocal',payload.image)
+                  }
+                     // }
+                  }catch(error){
+                     console.log(error)            
+                  }                   
+               }else{
+                  toast.warning("your password doesn't match")
                }
-            }catch(error){
-               console.log(error)            
-            }        
-            this.isLoading = false        
-         }else{
+            }else{
+               console.log(payload)
+               try{
+                  const response = await this.$store.dispatch('mySettings/updateMyAccountSettings',payload)
+                  toast.success(response)
+                  if(this.usernameChangedBool){
+
+                     this.resendCodeObj = payload
+                     this.submitCodeBool = true
+                  }
+
+                  if(payload.image){
+                     this.$store.commit('auth/updateProfilePictureLocal',payload.image)
+                  }
+               }catch(error){
+                  console.log(error)            
+               }                       
+            }
+
+            this.isLoading = false   
+         }     
+         else{
             toast.warning('no changes occured')
          }
 
@@ -215,6 +269,18 @@ export default {
 </script>
 
 <style scoped>
+button:active{
+   opacity: 0.5;
+}
+button:hover{
+   color: black;
+}
+button{
+   border: none;
+   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+   color: white;
+   background-color: #31A72A;
+}
 .background{
     position: absolute;
     top: 0;

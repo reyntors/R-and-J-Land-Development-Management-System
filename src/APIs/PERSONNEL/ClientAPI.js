@@ -248,7 +248,8 @@ export const updateUserProfile = async (payload) => {
 //start reservation form
 export const submitReservationFormAPI = async (payload) => {
     // console.log('API submitReservationFormAPI executed')
-    console.log(payload)
+    // console.log(payload)
+    
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.post(`${BASE_URL}forms/create-reservation/${payload.userId}`,payload.body,{

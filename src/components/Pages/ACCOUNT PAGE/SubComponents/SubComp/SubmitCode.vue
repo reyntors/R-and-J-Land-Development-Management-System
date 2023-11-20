@@ -14,7 +14,7 @@
         
     </section>
     <section class="section2">
-        <span style="color: blue;" @click="resendCode">Resend Code?</span>
+        <span style="color: blue;" @click="resendCode" class="resendButton"><p>Resend Code?</p></span>
         <span>
             <button type="button" @click="cancel">Cancel</button>
             <button type="button" @click="submitCode">Submit</button>  
@@ -47,8 +47,41 @@ export default {
 </script>
 
 <style scoped>
+.resendButton{
+    cursor: pointer;
+}
+p{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+
+}
+.resendButton:hover p{
+    text-decoration: underline;
+}
+.section2 span button:active{
+    opacity: .5;
+}
+.section2 span button:hover{
+    color: black;
+}
+.section2 span button{
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+    background-color: #31A72A;
+    color: white;
+}
+.section2 span{
+    display: flex;
+    gap: .5rem;
+}
 .sub-section input{
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.436);
+    border: none;
+    border-radius: 5px;
 }
 .sub-section{
     display: flex;
@@ -95,6 +128,7 @@ header{
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(9.4px);
     -webkit-backdrop-filter: blur(9.4px);
+    z-index:2;
     /* border: 1px solid rgba(255, 255, 255, 0.3); */
 }
 .card{
@@ -104,7 +138,8 @@ header{
     left: 50%;
     transform: translate(-50%,-50%);
     min-height: 100px;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.5);
     width:50%;
+    z-index: 2;
 }
 </style>
