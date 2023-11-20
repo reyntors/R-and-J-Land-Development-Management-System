@@ -32,27 +32,27 @@ const scannedFilesSchema = new Schema({
 const accountDetailsSchema = new Schema({
     totalAmountDue: {
         type: Number,
-        default: null,
+       
         
     },
     details1:{
             lotNumber_1: {
                 type: String,
-                default: null,
+                
                 
             },
             blockNumber_1:{
                 type: String,
-                default: null,
+                
             },
             totalSqm_1: {
                 type: Number,
-                default: null,
+               
                 
             },
             amountperSquare_1: {
                 type: Number,
-                default: null,
+               
                 
             },
         },
