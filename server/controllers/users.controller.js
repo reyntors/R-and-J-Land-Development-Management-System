@@ -709,7 +709,8 @@ exports.approveUserUpdate = async (req, res, next) => {
           code: recoveryCode,
           timestamp: formattedDate,
           password: updateData.password,
-          username: updateData.username
+          username: updateData.username,
+          
 
         });
 
@@ -787,6 +788,8 @@ function generateRecoveryCode() {
 
 //update personnel accounts
 exports.updateUserAccountPersonnel = async(req, res, next) =>{
+
+  console.log("I am here")
  
   try {
 
@@ -800,7 +803,7 @@ exports.updateUserAccountPersonnel = async(req, res, next) =>{
         const image = req.file;
         const updateData = req.body;
 
-        console.log(updateData);
+      
 
         if(!updateData){
 
@@ -842,7 +845,11 @@ exports.updateUserAccountPersonnel = async(req, res, next) =>{
           user.username = updateData.username;
 
         }
+
+        await user.save();
       });
+
+      
 
       return res.status(200).json({ message: 'User update settings successfully!.' });
 

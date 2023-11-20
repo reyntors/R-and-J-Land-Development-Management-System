@@ -19,6 +19,7 @@ const recoveryCodeSchema = new Schema({
       },
     password: String,
     username: String,
+    
   
 
 
