@@ -254,10 +254,40 @@ exports.updateTransaction = async (req, res) =>{
     }
 
 
-    if(updatedData.amount){
+    if (updatedData.amount) {
 
-      user.transactions[transactionIndex].amount = updatedData.amount;
+      const oldAmount = user.transactions[transactionIndex].amount;
+      const newAmount = updatedData.amount;
+
+      user.transactions[transactionIndex].amount = newAmount;
+
+      if (user.transactions[transactionIndex].purpose === 'reservation') {
+        user.paymentDetails.reservationPayment += newAmount - oldAmount;
+
+      } else if (user.transactions[transactionIndex].purpose === 'downpayment') {
+        user.paymentDetails.downPayment += newAmount - oldAmount;
+
+        // Recalculate monthly amortization
+        const annualInterestRate = 0.02;
+        const monthlyInterestRate = annualInterestRate / 12;
+        const loanTermMonths = 12;
+        const totalAmountDue = user.accountDetails.totalAmountDue;
+        const downPayment = user.paymentDetails.downPayment || 0;
+        const principal = totalAmountDue - downPayment;
+        const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
+        const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
+        const monthlyAmortization = (numerator / denominator).toFixed(2);
+        user.paymentDetails.monthlyAmortizationDue = monthlyAmortization;
+
+      } else if (user.transactions[transactionIndex].purpose === 'monthly-payment') {
+        const amountPaid = parseFloat(newAmount);
+       
+        console.log("I am here")
+        user.accountingDetails.totalPayment += amountPaid - oldAmount;
+        user.accountingDetails.totalAmountPayable -= amountPaid - oldAmount;
+      }
     }
+
 
     if(updatedData.purpose){
 
@@ -286,7 +316,10 @@ exports.updateTransaction = async (req, res) =>{
 
     await user.save();
 
-   return res.status(200).json({message: 'Update successfully!'}); 
+   return res.status(200).json({
+    message: 'Update successfully!',
+    data: user.transactions[transactionIndex]
+  }); 
     
   })
   } catch (error) {
