@@ -52,6 +52,19 @@ exports.createReservation = async (req, res, next) => {
     // Save the reservation to the database using async/await
     const savedReservation = await newReservation.save();
 
+     // Calculate the totalAmountDue for the new reservation
+    let totalAmountDueForNewReservation = customer.accountDetails.totalAmountDue || 0;
+
+    if(reservationData.phase_1 && 
+      reservationData.block_1 && 
+      reservationData.lot_1 && 
+      reservationData.area_1 && 
+      reservationData.price_per_sq_1 && 
+      reservationData.downpayment_1 && 
+      reservationData.balance_1 && 
+      reservationData.contract_price_1){
+
+
     const newReserveData1 = {
       lotNumber_1: reservationData.lot_1,
       blockNumber_1: reservationData.block_1,
@@ -59,13 +72,8 @@ exports.createReservation = async (req, res, next) => {
       amountperSquare_1: reservationData.price_per_sq_1,
     };
 
-    
-
     customer.accountDetails.details1 = newReserveData1;
 
-
-    // Calculate the totalAmountDue for the new reservation
-    let totalAmountDueForNewReservation = customer.accountDetails.totalAmountDue || 0;
 
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_1 && reservationData.block_1 && reservationData.area_1 && reservationData.price_per_sq_1) {
@@ -73,6 +81,8 @@ exports.createReservation = async (req, res, next) => {
       totalAmountDueForNewReservation += newReserveData1.totalSqm_1 * newReserveData1.amountperSquare_1;
 
     }
+  }
+
 
     if(reservationData.phase_2 && 
       reservationData.block_2 && 
@@ -82,6 +92,8 @@ exports.createReservation = async (req, res, next) => {
       reservationData.downpayment_2 && 
       reservationData.balance_2 && 
       reservationData.contract_price_2){
+
+       
 
     const newReserveData2 = {
       lotNumber_2: reservationData.lot_2,
@@ -97,10 +109,9 @@ exports.createReservation = async (req, res, next) => {
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_2 && reservationData.block_2 && reservationData.area_2 && reservationData.price_per_sq_2) {
       
-      console.log( totalAmountDueForNewReservation + newReserveData2.totalSqm_2 * newReserveData2.amountperSquare_2)
-
+      
       totalAmountDueForNewReservation += newReserveData2.totalSqm_2 * newReserveData2.amountperSquare_2;
-      console.log(typeof(totalAmountDueForNewReservation))
+      
     }
   }
 
@@ -112,6 +123,7 @@ exports.createReservation = async (req, res, next) => {
     reservationData.downpayment_3 && 
     reservationData.balance_3 && 
     reservationData.contract_price_3){
+
 
     const newReserveData3 = {
       lotNumber_3: reservationData.lot_3,
@@ -182,6 +194,8 @@ async function generateReservationPDF(user, reservationData){
         reservationData.balance_1 && 
         reservationData.contract_price_1){
 
+        
+
       form.getTextField(fieldNames[4]).setText(reservationData.phase_1)
       form.getTextField(fieldNames[5]).setText(reservationData.block_1)
       form.getTextField(fieldNames[6]).setText(reservationData.lot_1)
@@ -190,6 +204,9 @@ async function generateReservationPDF(user, reservationData){
       form.getTextField(fieldNames[9]).setText(String(reservationData.contract_price_1))
       form.getTextField(fieldNames[10]).setText(String(reservationData.downpayment_1))
       form.getTextField(fieldNames[31]).setText(String(reservationData.balance_1))
+
+
+      
         }
  
       if(reservationData.typePayment === 'cash payment'){
@@ -237,6 +254,8 @@ async function generateReservationPDF(user, reservationData){
         reservationData.balance_3 && 
         reservationData.contract_price_3){
 
+        
+
        form.getTextField(fieldNames[23]).setText(reservationData.block_3)
        form.getTextField(fieldNames[24]).setText(reservationData.phase_3)
        form.getTextField(fieldNames[25]).setText(reservationData.lot_3)
@@ -245,6 +264,9 @@ async function generateReservationPDF(user, reservationData){
        form.getTextField(fieldNames[28]).setText(String(reservationData.contract_price_3))
        form.getTextField(fieldNames[29]).setText(String(reservationData.downpayment_3))
        form.getTextField(fieldNames[30]).setText(String(reservationData.balance_3))
+
+      
+
       }
 
       pdfDoc
