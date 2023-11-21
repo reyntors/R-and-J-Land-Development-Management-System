@@ -50,10 +50,14 @@ exports.createReservation = async (req, res, next) => {
     });
 
     // Save the reservation to the database using async/await
-    const savedReservation = await newReservation.save();
+     await newReservation.save();
 
      // Calculate the totalAmountDue for the new reservation
     let totalAmountDueForNewReservation = customer.accountDetails.totalAmountDue || 0;
+
+    let details1
+    let details2
+    let details3
 
     if(reservationData.phase_1 && 
       reservationData.block_1 && 
@@ -65,20 +69,20 @@ exports.createReservation = async (req, res, next) => {
       reservationData.contract_price_1){
 
 
-    const newReserveData1 = {
+      details1 = {
       lotNumber_1: reservationData.lot_1,
       blockNumber_1: reservationData.block_1,
       totalSqm_1: reservationData.area_1,
       amountperSquare_1: reservationData.price_per_sq_1,
     };
 
-    customer.accountDetails.details1 = newReserveData1;
+    customer.accountDetails.details1 = details1;
 
 
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_1 && reservationData.block_1 && reservationData.area_1 && reservationData.price_per_sq_1) {
       
-      totalAmountDueForNewReservation += newReserveData1.totalSqm_1 * newReserveData1.amountperSquare_1;
+      totalAmountDueForNewReservation += details1.totalSqm_1 * details1.amountperSquare_1;
 
     }
   }
@@ -95,7 +99,7 @@ exports.createReservation = async (req, res, next) => {
 
        
 
-    const newReserveData2 = {
+      details2 = {
       lotNumber_2: reservationData.lot_2,
       blockNumber_2: reservationData.block_2,
       totalSqm_2: reservationData.area_2,
@@ -104,13 +108,13 @@ exports.createReservation = async (req, res, next) => {
 
    
 
-    customer.accountDetails.details2 = newReserveData2;
+    customer.accountDetails.details2 = details2;
 
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_2 && reservationData.block_2 && reservationData.area_2 && reservationData.price_per_sq_2) {
       
       
-      totalAmountDueForNewReservation += newReserveData2.totalSqm_2 * newReserveData2.amountperSquare_2;
+      totalAmountDueForNewReservation += details2.totalSqm_2 * details2.amountperSquare_2;
       
     }
   }
@@ -125,7 +129,7 @@ exports.createReservation = async (req, res, next) => {
     reservationData.contract_price_3){
 
 
-    const newReserveData3 = {
+      details3 = {
       lotNumber_3: reservationData.lot_3,
       blockNumber_3: reservationData.block_3,
       totalSqm_3: reservationData.area_3,
@@ -134,11 +138,11 @@ exports.createReservation = async (req, res, next) => {
 
     
 
-    customer.accountDetails.details3 = newReserveData3;
+    customer.accountDetails.details3 = details3;
 
     // Calculate the totalAmountDue for the third reservation if it exists
     if (reservationData.lot_3 && reservationData.block_3 && reservationData.area_3 && reservationData.price_per_sq_3) {
-      totalAmountDueForNewReservation += newReserveData3.totalSqm_3 * newReserveData3.amountperSquare_3;
+      totalAmountDueForNewReservation += details3.totalSqm_3 * details3.amountperSquare_3;
     }
   }
 
@@ -149,10 +153,16 @@ exports.createReservation = async (req, res, next) => {
     // Save to the database
     await customer.save();
 
+    const savedData = [{
+      details1, 
+      details2, 
+      details3
+  }].filter(Boolean);
+
     return res.status(200).json({
       message: 'Reservation created successfully',
       pdfPath: pdfPath,
-      data: savedReservation,
+      data: savedData,
       totalAmountDue: totalAmountDueForNewReservation,
     });
   } catch (error) {
