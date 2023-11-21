@@ -257,6 +257,7 @@ export const submitReservationFormAPI = async (payload) => {
                 'Authorization': `Bearer ${token}`,
             },
         })
+        console.log(response)
         return response.data
     }catch(error){
         throw (error.response.data.message);

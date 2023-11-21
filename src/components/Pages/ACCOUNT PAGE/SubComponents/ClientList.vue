@@ -179,6 +179,7 @@
       flex-direction: column;
       width: 50%;
       position: relative;
+      margin-top: 2rem;
   }
   .body .searchSection input{
       /* outline: 1px solid black; */
@@ -186,6 +187,7 @@
       border-radius: 5px;
       padding: .5rem;
       padding-right: 4rem;
+      
       height: 100%;
       width: 100%;
   }

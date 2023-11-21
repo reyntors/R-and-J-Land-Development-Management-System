@@ -1,7 +1,7 @@
 <template>
    <div class="account-details-cont">
       <section>
-         <p class="fw-bold fs-4">My Account</p>
+         <h4>My Account</h4>
       </section>
       <article>
          <p class="fs-5">Account Details</p>
@@ -56,8 +56,8 @@
       </article>
 
       <br>
-      <section style="border-top: 1px solid black;">
-         <p class="fw-bold fs-4">Transactions History</p>
+      <section style="border-top: 1px solid black; padding-left: 1rem;">
+         <p class="fs-5">Transactions History</p>
       </section>
       <article>
          <table>
@@ -113,11 +113,15 @@ table{
   display: flex;
   align-items: center;
   gap: .5rem;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 input{
   border-radius: 5px;
   outline: none;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  /* border: none; */
   padding: 5px;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.4);
@@ -132,6 +136,15 @@ article{
    /* border:1px solid black; */
    width: 90%;
    margin: auto;
-   padding-bottom: 2rem;
+   margin-top: 2rem;
+   margin-bottom: 2rem;
+   padding: 1rem;
+   background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid white;
+    border-radius: 5px; 
+}
+p{
+   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.399);
+   text-transform: uppercase;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="account-profile">
-    <div class="background" v-if="isLoading"></div>
+    <div class="background" v-if="isLoading || isUploading"></div>
     <section>
-      <p class="fw-bold fs-4">Profile</p>
+      <h4>Profile</h4>
     </section>
     <div class="buttons">
       <button class="btn" @click="saveUpdate">Save</button>
@@ -68,16 +68,24 @@
         <input type="text" v-model="myProfile.businessAddress" :readonly="!editable" :class="{editable: !editable}">
       </section>    
 
-      <progress-loading type="spin" v-if="isLoading"/>
+      <progress-loading type="torks" v-if="isLoading"/>
       
     </form>
     <hr>
     <div style="margin-top: 1rem;"> 
-      <p class="fw-bold fs-4">Uploaded ID</p>
+      <header style="display: flex; justify-content: space-between; margin-bottom: .5rem;"> 
+        <h4>Uploaded ID</h4>
+        <button class="btn" v-if="image" @click="uploadToCloud">Upload</button>
+      </header>
+      
       <section class="uploadedID">
-        <add-govt-id></add-govt-id>
+        <!-- <add-govt-id></add-govt-id> -->
+        <progress-loading type="torks" v-if="isUploading"/>
+          <div class="box"> 
+            <input type="file" id="idUpload" accept="image/*" @change="uploadedImg">
+          </div>
           <ul v-for="(image,index) in myProfile.uploadId" :key="index">
-            <li>
+            <li class="box">
               <img :src="image.url">
             </li>
             
@@ -92,18 +100,18 @@
 </template>
 
 <script>
-import AddGovtId from './SubComp/AddGovtId.vue'
+// import AddGovtId from './SubComp/AddGovtId.vue'
 import { toast } from 'vue3-toastify'
 export default {
   props: ['profile'],
   components: {
-    AddGovtId
+    // AddGovtId
   },
   data(){
     return{
       myProfile: null,
       editable: false,
-
+      
       fullnameChangedBool: false,
       addressChangedBool: false,
       businessAddressChangedBool: false,
@@ -119,6 +127,10 @@ export default {
       employerChangedBool: false,
 
       isLoading : false,
+
+      image: null,
+      userId: null,
+      isUploading: false,
     }
   },
   methods:{
@@ -211,8 +223,36 @@ export default {
       }else{
         toast.warning('no changes')
       }
-      
-
+    },
+    uploadedImg(event){
+        const img = event.target.files[0]
+        if(img){
+            console.log(img)
+            this.image = img
+        }else{
+          this.image = null
+        }
+    },
+    async uploadToCloud(){
+        if(this.image){
+            // console.log('image present')
+            this.isUploading = true
+            const data = new FormData()
+            data.append('image',this.image)
+            const payload = {
+                id: this.userId,
+                image: data
+            }
+            try{
+                const response = await this.$store.dispatch('myProfile/uploadID',payload)
+                console.log(response)
+            }catch(error){
+                console.error(error)
+            }  
+            this.isUploading = false
+        }else{
+          toast.warning('no uploaded imaged detected')
+        }
     }
   },
   computed:{
@@ -227,6 +267,7 @@ export default {
   created(){
     // console.log(this.profile)
     this.myProfile = {...this.profile}
+    this.userId = this.$store.getters['auth/getUserId']
   },
   watch:{
       'myProfile.fullname': function(newValue){
@@ -339,6 +380,7 @@ export default {
 </script>
 
 <style scoped>
+
 .background{
     position: absolute;
     top: 0;
@@ -349,10 +391,12 @@ export default {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(9.4px);
     -webkit-backdrop-filter: blur(9.4px);
+    z-index: 2;
 }
 .editable{
-  border: none;
-  background-color: rgba(255, 255, 255, 0.4);
+  /* outline: none; */
+  /* border: 1px solid black; */
+  /* background-color: rgba(255, 255, 255, 0.4); */
 }
 li{
   height: 100%;
@@ -363,12 +407,12 @@ ul{
   list-style: none;
 }
 img{
-  padding: .5rem;
+  padding: 5px;
   object-fit: cover;
   width: 100%;
   height: 100%;
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
+  /* box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 5px; */
 }
 .uploadedID{
   /* height: 50vh; */
@@ -377,11 +421,13 @@ img{
   gap: 5px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  position: relative;
 }
 
 .form{
   width: 100%;
   position: relative;
+  padding: 0 1rem;
   /* background-color: white;; */
   /* display: grid;
   grid-template-columns: 1fr 1fr; */
@@ -391,7 +437,7 @@ img{
   top: 0;
   right: 0;
   margin-right: 1rem;
-  margin-top: 5px;
+  margin-top: .5rem;
   display: flex;
   gap: .5rem;
 }
@@ -400,16 +446,24 @@ img{
   border: none;
   outline: none;
   border-radius: 5px;
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
-  background-color: white;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+  background-color: #31A72A;
+  color: white;
+}
+.btn:hover{
+  color: black;
+}
+.btn:active{
+  opacity: .5;
 }
 .form-section label{
   min-width: 180px;
 }
 input{
   border-radius: 5px;
-  outline: none;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  /* outline: none; */
+  /* border: none; */
   padding: 5px;
   width: 100%;
 }
@@ -418,12 +472,20 @@ input{
   display: flex;
   align-items: center;
   gap: .5rem;
+  background-color: white;
+  margin-bottom: 1rem;
+  border-radius: 5px;
 }
 .account-profile{
   position: relative;
   width: 90%;
   margin: auto;
-  /* border: 1px solid black; */
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid white;
+  border-radius: 5px; 
 }
 @media screen and (max-width: 1240px) {
   /* .form{
@@ -434,6 +496,17 @@ input{
   } */
   .uploadedID{
   grid-template-columns: 1fr 1fr;
+  }
 }
+
+.box{
+  max-height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  display: flex;
+}
+.box input{
+  border: none;
+  outline: none;
 }
 </style>

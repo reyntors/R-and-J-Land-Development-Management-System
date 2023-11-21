@@ -1,11 +1,11 @@
 <template>
     <form @click="uploadToCloud" enctype="multipart/form-data">
-        <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" size="3x" />
+        <!-- <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" size="3x" /> -->
 
-        <p>{{ fileName }}</p>
-        <label for="idUpload" @click="aw">
+        <!-- <p>{{ fileName }}</p> -->
+        <!-- <label for="idUpload" @click="aw">
             Upload File
-        </label>
+        </label> -->
         <input type="file" id="idUpload" accept="image/*" @change="uploadedImg">
     </form>
     
@@ -76,13 +76,13 @@ p{
     color: blue;
 }
 input{
-    display: none;
+    /* display: none; */
 }
 form:hover{
     background-color: rgba(255, 255, 255, 0.2)
 }
 form{
-    border: 1px solid black;
+    /* border: 1px solid black;
     height: 50%;
     width: 50%;
     background-color: rgba(255, 255, 255, 0.5);
@@ -96,6 +96,6 @@ form{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    min-height: 200px;
+    min-height: 200px; */
 }
 </style>

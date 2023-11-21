@@ -1,5 +1,5 @@
 <template>
-  <div id="carousel-control" class="carousel slide carousel-slide carousel-dark" data-bs-ride="carousel" data-bs-interval="1000">
+  <div id="carousel-control" class="carousel slide carousel-fade carousel-dark" data-bs-ride="carousel" data-bs-interval="2000">
     <div class="carousel-indicators c-">  
   
       <button type="button" data-bs-target="#carousel-control" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>

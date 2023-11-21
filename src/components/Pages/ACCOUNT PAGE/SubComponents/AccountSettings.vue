@@ -1,7 +1,7 @@
 <template>
    <form class="account-settings-cont" enctype="multipart/form-data" @submit.prevent="updateProfile">
       <section>
-         <p class="fw-bold fs-4">Settings</p>
+         <h4>Settings</h4>
       </section>
       
       <article>
@@ -342,5 +342,11 @@ article{
    margin: 0 auto 2rem;
    position: relative;
    padding: 5px;
+   margin-top: 2rem;
+   margin-bottom: 2rem;
+   padding: 1rem;
+   background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid white;
+    border-radius: 5px; 
 }
 </style>

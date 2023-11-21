@@ -411,6 +411,7 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
   object-fit: cover;
   width: 100%;
   height: 100%;
+  max-height: 300px;
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
 }

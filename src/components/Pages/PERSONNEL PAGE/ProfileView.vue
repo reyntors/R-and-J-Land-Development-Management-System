@@ -42,7 +42,8 @@ h5{
     text-align: center;
 }
 .profileViewContainer{
-    max-width: 20vw;
+    width: 20vw;
+    min-width: 200px;
     /* height: 85vh; */
     padding: 1rem;
     z-index: 1;

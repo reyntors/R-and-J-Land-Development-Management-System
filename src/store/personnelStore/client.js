@@ -379,8 +379,8 @@ export default{
 
                 context.commit('updateAccountDetails',{
                     userId: payload.userId,
-                    object,
-                    totalAmountDue: response.totalAmountDue
+                    object: response.data[0],
+                    totalAmountDue: response.totalAmountDue,
                 }) 
                 return response          
             }catch(error){
