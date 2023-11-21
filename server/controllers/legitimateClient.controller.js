@@ -333,11 +333,17 @@ exports.approvalLegitClient = async (req, res, next) => {
              const request = await Request.findOne({"requests.requestLegitId": newrequestLegitId});
              const matchingRequest = request.requests.find(item => item.requestLegitId === newrequestLegitId);
              
-            matchingRequest.approvalStatus = isApproved
+             if (matchingRequest !== -1 ) {
+
+                matchingRequest.approvalStatus = isApproved;
+   
+                request.requests.splice(matchingRequest, 1);
 
             
 
             await request.save()
+
+        }
 
             return res.status(200).json({ message: 'User update request has been ' + isApproved });
 
