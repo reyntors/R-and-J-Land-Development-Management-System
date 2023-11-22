@@ -51,12 +51,13 @@ exports.listLegitimateClients = async (req, res, next) => {
     try {
         
         
-        const legitimateClients = await User.findOne({ legitimate: true, roles: 'customer' });
-       console.log(legitimateClients)
+        const user = await User.find({ legitimate: true });
+    
+        const filteredLegitClients = user.filter((pending) => pending.legitimate === true && pending.roles === 'customer');
 
         return res.status(200).json({
             message: 'List of legitimate clients',
-            data: legitimateClients,
+            data: filteredLegitClients,
         });
     } catch (error) {
        
