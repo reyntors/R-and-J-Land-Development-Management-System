@@ -117,18 +117,18 @@ async function  generateBirTinRequestPDF( user, birTinRequestData) {
 
         fieldNames = fieldNames.map((f) => f.getName())
 
-        console.log(fieldNames);
-
+        console.log(fieldNames)
   
         const form = pdfDoc.getForm()
 
         form.getTextField(fieldNames[0]).setText(formattedDate)
-        form.getTextField(fieldNames[1]).setText(birTinRequestData.name)
-        form.getTextField(fieldNames[2]).setText(birTinRequestData.address)
-        form.getTextField(fieldNames[3]).setText(birTinRequestData.birthday)
-        form.getTextField(fieldNames[4]).setText(birTinRequestData.tinNumber)
-        form.getTextField(fieldNames[5]).setText(birTinRequestData.respectfulYours)
-       
+        form.getTextField(fieldNames[1]).setText(birTinRequestData.address)
+        form.getTextField(fieldNames[2]).setText(birTinRequestData.birthday)
+        form.getTextField(fieldNames[3]).setText(birTinRequestData.tinNumber)
+        form.getTextField(fieldNames[4]).setText(birTinRequestData.respectfulYours)
+        form.getTextField(fieldNames[5]).setText(birTinRequestData.firstname)
+        form.getTextField(fieldNames[6]).setText(birTinRequestData.middlename)
+        form.getTextField(fieldNames[7]).setText(birTinRequestData.lastname)
         pdfDoc
             .getForm()
             .getFields()

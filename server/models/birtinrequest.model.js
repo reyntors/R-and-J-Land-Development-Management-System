@@ -17,7 +17,15 @@ const birTinRequestSchema = new Schema({
         required: true,
         
     },
-    name: {
+    firstname: {
+        type: String,
+        required: true
+    },
+    middlename: {
+        type: String,
+        required: true
+    },
+    lastname: {
         type: String,
         required: true
     },
