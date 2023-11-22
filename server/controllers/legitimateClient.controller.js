@@ -50,9 +50,9 @@ const Request = require('../models/requestAddedLegitClient.model');
 exports.listLegitimateClients = async (req, res, next) => {
     try {
         
-
-        const legitimateClients = await User.find({ legitimate: true });
-       
+        
+        const legitimateClients = await User.findOne({ legitimate: true, roles: 'customer' });
+       console.log(legitimateClients)
 
         return res.status(200).json({
             message: 'List of legitimate clients',
@@ -126,13 +126,25 @@ exports.updateFalseLegitimacy = async (req, res, next) => {
 exports.listPendingClients = async (req, res, next) => {
     try {
         
+      
+        const user = await User.find({legitimate: false});
 
-        const legitimateClients = await User.find({ legitimate: false });
-       
+      
+
+        const filteredPendingClients = user.filter((pending) => pending.legitimate === false && pending.roles === 'customer');
+
+        
+
+        if (filteredPendingClients.length === 0) {
+            res.status(404).json({ message: 'No Pending Clients' });
+            return;
+        }
+
+
 
         return res.status(200).json({
-            message: 'List of legitimate clients',
-            data: legitimateClients,
+            message: 'List of Pending clients',
+            data: filteredPendingClients,
         });
     } catch (error) {
        
