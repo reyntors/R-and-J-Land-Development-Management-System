@@ -6,6 +6,7 @@ const { Schema } = mongoose;
 const birTinRequestSchema = new Schema({
     url:{
         type: String,
+        default: null
     },
     isSubmitted: {
         type: Boolean,
@@ -16,73 +17,28 @@ const birTinRequestSchema = new Schema({
         required: true,
         
     },
-    authorizedTo: {
-        type: String,
-        required: true,
-    },
     name: {
         type: String,
-        required: true,
+        required: true
     },
     address: {
         type: String,
-        required: true,
+        required: true
     },
     birthday: {
         type: String,
-        required: true,
+        required: true
     },
     tinNumber: {
         type: String,
-        required: true,
+        required: true
     },
     respectfulYours: {
         type: String,
-        required: true,
-    },
-    spaName: {
-        type: String,
-        required: true,
-    },
-    spaAge: {
-        type: String,
-        required: true,
-    },
-    spaResident: {
-        type: String,
-        required: true,
-    },
-    spaAttyName: {
-        type: String,
-        required: true,
-    },
-    spaAttyAge: {
-        type: String, 
-        required: true,
-    },
-    spaAttyResident: {
-        type: String, 
-        required: true,
-    },
-    witnessDay: {
-        type: String,
-        required: true,
-    },
-    witnessMonth: {
-        type: String, 
-        required: true,
-    },
-    witnessYear: {
-        type: String, 
-        required: true,
-    },
-    witnessAddress: {
-        type: String,
-        required: true,
+        required: true
     },
     createdBy: {
-        type: Schema.Types.ObjectId, 
-        ref: 'user', 
+        type: String,
         required: true,
     },
     

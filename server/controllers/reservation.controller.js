@@ -7,10 +7,6 @@ const User = require('../models/user.model');
 
 
 
-
-
-
-
 const date = new Date()
 const year = date.getFullYear();
 const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-based, so add 1 and format as two digits
@@ -334,10 +330,11 @@ exports.deleteReservation = async (req, res) => {
     let deletedReservationData;
 
     if (details === 'details1') {
-      
+
       deletedReservationData = user.accountDetails.details1;
       const newTotalAmountDue = deletedReservationData.totalSqm_1 * deletedReservationData.amountperSquare_1
       user.accountDetails.totalAmountDue = user.accountDetails.totalAmountDue - newTotalAmountDue;
+      user.accountingDetails.totalAmountDue = user.accountDetails.totalAmountDue
       user.accountDetails.details1 = undefined;
 
     } else if (details === 'details2') {
@@ -345,6 +342,7 @@ exports.deleteReservation = async (req, res) => {
       deletedReservationData = user.accountDetails.details2;
       const newTotalAmountDue = deletedReservationData.totalSqm_2 * deletedReservationData.amountperSquare_2
       user.accountDetails.totalAmountDue = user.accountDetails.totalAmountDue - newTotalAmountDue;
+      user.accountingDetails.totalAmountDue = user.accountDetails.totalAmountDue
       user.accountDetails.details2 = undefined;
 
     } else if (details === 'details3') {
@@ -352,6 +350,7 @@ exports.deleteReservation = async (req, res) => {
       deletedReservationData = user.accountDetails.details3;
       const newTotalAmountDue = deletedReservationData.totalSqm_3 * deletedReservationData.amountperSquare_3
       user.accountDetails.totalAmountDue = user.accountDetails.totalAmountDue - newTotalAmountDue;
+      user.accountingDetails.totalAmountDue = user.accountDetails.totalAmountDue
       user.accountDetails.details3 = undefined;
 
     } else {
