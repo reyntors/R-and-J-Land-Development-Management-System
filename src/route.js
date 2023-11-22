@@ -6,18 +6,25 @@ import ProvidePage from './components/Pages/PROVIDE PAGE/ProvidePage.vue'
 import ProjectPage from './components/Pages/PROJECT PAGE/ProjectPage.vue'
 import CareerPage from './components/Pages/CAREER PAGE/CareerPage.vue'
 import CustomerService from './components/Pages/CUSTOMER SERVICE PAGE/CustomerService.vue'
-import InquireNowPage from './components/Pages/INQUIRE_NOW PAGE/InquireNowPage.vue'
 import AccountPage from './components/Pages/ACCOUNT PAGE/AccountPage.vue'
+
+
+// revised forms
+    // public access
+import InquireNowPage from './components/Pages/INQUIRE_NOW PAGE/InquireNowPage.vue' //used
+    // required to login before access
+import GuestLetterOfIntent from './components/Forms Used/LetterOfIntent.vue' //used
+import BuyerInfoSheet from './components/Forms Used/BuyerInfoSheet.vue' //used not yet redirected
+import GuestBIRRequest from './components/Forms Used/GuestBIRRequest.vue'
 
 
 
 //GUEST FORMS NEW PAGE
 import GuestFormPage from './components/Pages/FORM PAGE/GuestFormPage.vue'
-import GuestLetterOfIntent from './components/Forms Used/LetterOfIntent.vue' //used
-import GuestContractDetails from './components/Pages/FORM PAGE/GuestForms/GuestContractDetails.vue'
-import GuestBIRtinRequest from './components/Pages/FORM PAGE/GuestForms/GuestBirTinRequest.vue'
+// import GuestBIRtinRequest from './components/Pages/FORM PAGE/GuestForms/GuestBirTinRequest.vue'
 import GuestIndividualBuyerDeclaration from './components/Pages/FORM PAGE/GuestForms/GuestIndividualBuyerDeclaration.vue'
-import BuyerInfoSheet from './components/Forms Used/BuyerInfoSheet.vue'
+// import BuyerInfoSheet from './components/Forms Used/BuyerInfoSheet.vue'
+// import GuestContractDetails from './components/Pages/FORM PAGE/GuestForms/GuestContractDetails.vue'
 
 //ADMIN & STAFF PAGE
 import PersonnelHomePage from './components/Pages/PERSONNEL PAGE/PersonnelPage.vue'
@@ -49,8 +56,8 @@ const route = createRouter({
             {path:'/guest-forms', component: GuestFormPage, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/letter-of-intent', component: GuestLetterOfIntent, meta: {requiresAuthGuest: true}}, //used
             {path:'/guest-forms/buyer-info-sheet', component: BuyerInfoSheet, meta: {requiresAuthGuest: true}}, //used
-            {path:'/guest-forms/contract-details', component: GuestContractDetails, meta: {requiresAuthGuest: true}},
-            {path:'/guest-forms/bir-tin-request', component: GuestBIRtinRequest, meta: {requiresAuthGuest: true}},
+            // {path:'/guest-forms/contract-details', component: GuestContractDetails, meta: {requiresAuthGuest: true}},
+            {path:'/guest-forms/bir-tin-request', component: GuestBIRRequest, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/individual-buyer-declaration', component: GuestIndividualBuyerDeclaration, meta: {requiresAuthGuest: true}},
 
             

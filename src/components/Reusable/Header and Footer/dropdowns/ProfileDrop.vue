@@ -18,6 +18,7 @@
 <script>
 export default {
     props: ['imgProfile'],
+    emits: ['logout-now'],
     data(){
         return{
             listVisible: false,
@@ -33,9 +34,10 @@ export default {
             }else if(path === 'account'){
                 this.$router.push('/account')
             }else{
-                this.$store.commit('auth/eraseStoreState')
-                this.$store.commit('auth/eraseLocalStorage')
-                this.$router.push('/home')
+                // this.$store.commit('auth/eraseStoreState')
+                // this.$store.commit('auth/eraseLocalStorage')
+                // this.$router.push('/home')
+                this.$emit('logout-now')
             }
         }
     }

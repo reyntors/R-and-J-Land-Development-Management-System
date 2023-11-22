@@ -49,7 +49,7 @@ export default{
                 console.log('getMyAccountSettings Store personnel executed')
                 try{
                     const response = await Setttings.myAccountSettings()
-                    // console.log(response)
+                    console.log(response)
                     context.commit('setMyAccountSettings',response.data)
                 }catch(error){
                     console.error(error)

@@ -1,4 +1,8 @@
 <template>
+  
+  <div style="position: absolute; z-index: 10; top:0; left: 0; width: 100%; height: 100%; background-color: red; visibility: hidden;">
+    <progress-loading type="torks"/>
+  </div>
   <progress-loading type="torks" v-if="isLoading"></progress-loading>
   <div class="cardLogin" v-else>
         <form @submit.prevent="login">
@@ -77,7 +81,7 @@ export default {
   
     async login(){
         if(this.loginUsername !== '' && this.loginPassword !=='' && this.loginRoles !== ''){
-    
+          console.log('logging in Now')
           this.isLoginError = false;
           this.isLoading = true;
   

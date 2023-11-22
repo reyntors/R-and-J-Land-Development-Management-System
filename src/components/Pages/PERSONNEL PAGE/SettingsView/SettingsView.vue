@@ -45,15 +45,14 @@ export default {
     },
 
   },
-  async mounted(){
+  async created(){
     try{
-      // await this.$store.dispatch('personnel/getMyAccountSettings')
+      await this.$store.dispatch('personnel/getMyAccountSettings')
       this.mySettings = this.$store.getters['personnel/myAccountSettingsGetter']    
       console.log(this.mySettings)
       if(this.mySettings){
         this.isReady = true;  
       }
-      
     }catch(error){
       console.erro(error)
     }      

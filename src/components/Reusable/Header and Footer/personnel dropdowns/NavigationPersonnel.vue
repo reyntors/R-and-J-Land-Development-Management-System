@@ -55,6 +55,7 @@ export default {
 .dropdown{
     background-color: white;
     box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.1);
+    z-index: 3;
 }
 .navStaffAdmin{
     display: flex;

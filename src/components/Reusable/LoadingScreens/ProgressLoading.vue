@@ -1,9 +1,9 @@
 <template>
   <div id="loadingSpinner">
-    <div class="custom-loader-spin" v-if="type === 'spin'"></div>
+    <!-- <div class="custom-loader-spin" v-if="type === 'spin'"></div> -->
     <div class="custom-loader-progress" v-if="type === 'progress'"></div>
     <div class="custom-loader-dot" v-if="type === 'dot'"></div> 
-    <div class="torks-loader" v-if="type === 'torks'"></div>
+    <div class="torks-loader" v-if="type === 'torks' || type === 'spin'"></div>
   </div>
   
 </template>
@@ -23,7 +23,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;

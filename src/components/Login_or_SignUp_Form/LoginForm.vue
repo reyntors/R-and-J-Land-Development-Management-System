@@ -21,6 +21,7 @@
       @toast-message = "toastRender"
     />
   </div>
+  
 
 
 </template>
@@ -54,15 +55,13 @@ export default {
       this.mode= 'forgot'
     },
     toastRender(param){
-      // console.log(param)
-      // toast.success(param)
       if(param.status === 'error'){
         toast.error(param.message)
       }else{
         toast.success(param.message)
       }
     }
-  }
+  },
 }
 </script>
 

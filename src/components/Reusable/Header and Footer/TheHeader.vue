@@ -32,7 +32,7 @@
           <router-link to="/careers" >CAREERS</router-link>
           <router-link to="/customer-service" >CUSTOMER SERVICE</router-link>
 
-          <profile-drop v-if="isUserValidComputed && authorizationRoleGuest" :imgProfile="profilePicComputed"></profile-drop>
+          <profile-drop v-if="isUserValidComputed && authorizationRoleGuest" :imgProfile="profilePicComputed" @logout-now="logout"></profile-drop>
 
 
          
@@ -69,6 +69,11 @@
 
       <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form>
 
+      <!-- <div style="position: absolute; z-index: 10; top:0; left: 0; width: 100%; height: 100vh; background-color: red;" >
+        <progress-loading type="torks"/>
+      </div> -->
+      <loading-logout v-if="isLoggingOut"></loading-logout>
+
     </div>
 
   </template>
@@ -85,6 +90,8 @@
   import ColumnNav from '../Header Column/ColumnNav.vue'
   import logo from '@/assets/logo.png'
 
+  import LoadingLogout from '@/components/Login_or_SignUp_Form/LoadingLogout.vue'
+
   export default {
     props: ['homeNav'],
     emits: ['navigation-scroll'],
@@ -95,6 +102,7 @@
         ServicesDrop,
         ProfileDrop,
         NavigationPersonnel,
+        LoadingLogout,
         // WeBuildDrop,
         // WeSellDrop,
         // WeProvideDrop,
@@ -115,6 +123,9 @@
 
         //STAFF&ADMIN
         // isShowStaffAdminColumn: false,
+
+        //log out promt
+        isLoggingOut: false,
 
       }
     },
@@ -189,10 +200,15 @@
       // toggleStaffAdminColumn(){
       //   this.isShowStaffAdminColumn = !this.isShowStaffAdminColumn
       // },
-      logout(){
+      async logout(){
+        console.log('loggin out now')
+        this.isLoggingOut = true;
+        await new Promise(resolve => setTimeout(resolve,1500))
         this.$store.commit('auth/eraseStoreState')
         this.$store.commit('auth/eraseLocalStorage')
+        this.$store.commit('personnel/switchDashboard') //ensure the personnel dashboard shown first when going to log in as personnel
         this.$router.push('/home')
+        this.isLoggingOut = false
       }
     },
     computed: {
@@ -251,8 +267,7 @@
       },
       activeHomeSubdivision(){
         return this.homeNav ==='subdivision'?true:false
-      }
-
+      },
     },
   }
   </script>

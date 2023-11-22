@@ -53,7 +53,7 @@ const store = createStore({
             },
             resetHomeId(state){
                 state.homeID = ''
-            }
+            },
         },
 
         getters:{
@@ -86,7 +86,7 @@ const store = createStore({
                 }else{
                     return false
                 }
-            }
+            },
         }
        
 })

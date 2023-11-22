@@ -41,7 +41,7 @@ export default {
       return this.$store.getters['personnel/isSettingsViewGetter']
     }
   },
-  async created(){
+  async beforeCreate(){
     console.log('created')
     this.isLoading = true
     try{
@@ -61,15 +61,13 @@ export default {
       // //get the subidivsion lists
       await this.$store.dispatch('subdivision/getPropertyList')
 
-      //request for settings info
-      await this.$store.dispatch('personnel/getMyAccountSettings')
 
     }catch(error){
       console.error(error)
       toast.error(error)
     }
 
-    await new Promise(resolve => setTimeout(resolve,200))
+    // await new Promise(resolve => setTimeout(resolve,200))
     this.isLoading = false
   } 
 }

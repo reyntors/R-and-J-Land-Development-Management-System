@@ -31,9 +31,9 @@
 
     <section class="option">
         <span v-if="obj.subject === 'Request to update the data' && obj.userId" class="approve-decline">
-           <button @click="approveRequest('approved')">Approve</button> 
-           <button @click="approveRequest('rejected')">Reject</button> 
-           <button>Reviewed</button>
+           <button @click="approveRequest('approved')" v-if="buttonApprovalVisiblity">Approve</button> 
+           <button @click="approveRequest('rejected')"  v-if="buttonApprovalVisiblity">Reject</button> 
+           <button  v-if="!buttonApprovalVisiblity" class="reviewedBtn" @click="clickedReviewBtn">Reviewed</button>
         </span>
         <span v-else> 
             <button @click="mark(obj.inquiryId)" v-if="!obj.mark">Mark read <font-awesome-icon :icon="['fas', 'envelope-circle-check']" /></button>
@@ -98,11 +98,22 @@ export default {
             }catch(error){
                 toast.error(error)
             }
+        },
+        clickedReviewBtn(){
+            toast.warn('This inquiry has been reviewed already')
         }
     },
     computed:{
         email(){
             return this.obj.email
+        },
+        buttonApprovalVisiblity(){
+            console.log(this.obj.approvalStatus)
+            if(this.obj.approvalStatus === 'pending'){
+                return true
+            }else{
+                return false
+            }
         }
     },
     mounted(){
@@ -195,5 +206,14 @@ button:hover{
 button:active{
     color: rgba(0, 0, 0, 0.322);
     box-shadow: none;
+}
+.reviewedBtn{
+    background-color: white;
+}
+.reviewedBtn:hover{
+    background-color: white;
+}
+.reviewedBtn:active{
+    background-color: white;
 }
 </style>

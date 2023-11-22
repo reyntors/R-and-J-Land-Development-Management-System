@@ -1,6 +1,8 @@
 <template>
   <router-view></router-view>
   <messenger-chat v-if="isNotPersonnel"></messenger-chat>
+  
+
 
 </template>
 

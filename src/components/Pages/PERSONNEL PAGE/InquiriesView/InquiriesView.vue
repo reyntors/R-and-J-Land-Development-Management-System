@@ -74,16 +74,11 @@
     },
 
     async mounted(){
-      // this.isLoading = true
-      // await new Promise(resolve => setTimeout(resolve,1000))
-      // await this.$store.dispatch('inquiries/getInquiriesList')
-      // this.isLoading = false
-      // this.setUpScrollEvent()
+      const list = this.$store.getters['inquiries/listInquiriesGetter']
+
+      console.log(list)
     }
-    // beforeUnmount(){
-    //       window.removeEventListener('scroll',this.handleScroll)
-    //   }
-  
+
   }
   </script>
   
