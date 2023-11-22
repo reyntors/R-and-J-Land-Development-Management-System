@@ -82,29 +82,7 @@ exports.updateLegitimacy = async (req, res, next) => {
             });
         }
 
-        const request = await Request.findOne({"requests.userId": id});
-
-         if(request){
-
-            const matchingRequest = request.requests.find(item => item.userId === id);
-
-         
-
-         if (matchingRequest !== -1 ) {
-
-            
-
-             request.requests.splice(matchingRequest, 1);
-
-             await request.save()
-        
-         }else{
-            return res.status(404).json({message: 'request not found for the specified requestId'})
-         }
-
-        }else{
-            return res.status(404).json({message: 'No matching  request found '})
-        }
+       
 
         return res.status(200).json({
             message: 'User legitimacy status updated successfully.',
