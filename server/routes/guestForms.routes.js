@@ -28,6 +28,8 @@ router.post("/create-buyer-info-sheet", auth.authenticateToken, userController.r
 
 //Reservation Form Agreement
 router.post('/create-reservation/:id',auth.authenticateToken, userController.restrict(['staff','management']), reservationController.createReservation);
+router.delete('/delete-reservation/:id',auth.authenticateToken, userController.restrict(['management']), reservationController.deleteReservation);
+
 
 
 

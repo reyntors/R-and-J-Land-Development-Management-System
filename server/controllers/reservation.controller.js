@@ -317,13 +317,66 @@ async function generateReservationPDF(user, reservationData){
 
 }
 
+exports.deleteReservation = async (req, res) => {
+  
+  try {
+    const { id } = req.params;
+    const { details } = req.body;
 
 
 
+    const user = await User.findOne({ userId: id });
 
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
+    let deletedReservationData;
 
+    if (details === 'details1') {
+      
+      deletedReservationData = user.accountDetails.details1;
+      const newTotalAmountDue = deletedReservationData.totalSqm_1 * deletedReservationData.amountperSquare_1
+      user.accountDetails.totalAmountDue = user.accountDetails.totalAmountDue - newTotalAmountDue;
+      user.accountDetails.details1 = undefined;
 
+    } else if (details === 'details2') {
+
+      deletedReservationData = user.accountDetails.details2;
+      const newTotalAmountDue = deletedReservationData.totalSqm_2 * deletedReservationData.amountperSquare_2
+      user.accountDetails.totalAmountDue = user.accountDetails.totalAmountDue - newTotalAmountDue;
+      user.accountDetails.details2 = undefined;
+
+    } else if (details === 'details3') {
+
+      deletedReservationData = user.accountDetails.details3;
+      const newTotalAmountDue = deletedReservationData.totalSqm_3 * deletedReservationData.amountperSquare_3
+      user.accountDetails.totalAmountDue = user.accountDetails.totalAmountDue - newTotalAmountDue;
+      user.accountDetails.details3 = undefined;
+
+    } else {
+      return res.status(400).json({ message: 'Invalid reservationDetails' });
+    }
+
+   
+
+   
+    
+    // Save the updated user object to the database
+    await user.save();
+
+    
+
+    return res.status(200).json({
+      message: 'Reservation deleted successfully',
+      deletedReservationData,
+      totalAmountDue: user.accountDetails.totalAmountDue,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal server error', error });
+  }
+};
 
 
 // Function to get reservation details by ID or retrieve all reservations
@@ -372,20 +425,3 @@ exports.updateReservation = async (req, res, next) => {
     }
 };
 
-// Delete a reservation agreement by ID
-
-exports.deleteReservation = async (req, res, next) => {
-    try {
-      const reservationId = req.params.id;
-      
-      const deletedReservation = await Reservation.findByIdAndRemove(reservationId);
-      
-      if (!deletedReservation) {
-        return res.status(404).json({ message: 'Reservation not found' });
-      }
-      
-      return res.status(200).json({ message: 'Reservation deleted successfully' });
-    } catch (error) {
-      return next(error);
-    }
-  };
