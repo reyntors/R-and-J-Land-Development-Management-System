@@ -4,15 +4,15 @@
     <section class="grid-item" @click="navLetterIntent">
         <form-thumbnail title="Letter-of-Intent" imgThumbTitle="letterOfIntent"/> 
     </section>
-    <section class="grid-item" @click="navigateContractDetails">
-        <form-thumbnail title="Contract Details" imgThumbTitle="contractDetails"/>
-    </section>
-    <section class="grid-item" @click=" navigateIndividualBuyer">
-        <form-thumbnail title="Individual Buyer Declaration" imgThumbTitle="individualBuyerDeclaration"/>     
+    <section class="grid-item" @click="navigateBuyerInfoSheet">
+        <form-thumbnail title="Contract Details" imgThumbTitle="buyerinfo"/>
     </section>
     <section class="grid-item" @click="navigateBIR_TIN">
-        <form-thumbnail title="BIR TIN REQUEST" imgThumbTitle="BIR-TIN-Request"/>
+        <form-thumbnail title="BIR TIN REQUEST" imgThumbTitle="BirTinRequest"/>
     </section>
+    <!-- <section class="grid-item" @click=" navigateIndividualBuyer">
+        <form-thumbnail title="Individual Buyer Declaration" imgThumbTitle="individualBuyerDeclaration"/>     
+    </section> -->
   </div>
   <the-footer/>
 </template>
@@ -23,8 +23,8 @@ export default {
     navLetterIntent(){
       this.$router.push('/guest-forms/letter-of-intent')
     },
-    navigateContractDetails(){
-      this.$router.push('/guest-forms/contract-details')
+    navigateBuyerInfoSheet(){
+      this.$router.push('/guest-forms/buyer-info-sheet')
     },
     navigateIndividualBuyer(){
       this.$router.push('/guest-forms/individual-buyer-declaration')
@@ -71,7 +71,7 @@ export default {
 }
 @media screen and (min-width: 855px) {
   .forms{
-  grid-template-columns: calc(100%/3) calc(100%/3) calc(100%/3);
+  grid-template-columns: calc(100%/4) calc(100%/4) calc(100%/4) calc(100%/4);
   }
   .grid-item{
   width: 100%;

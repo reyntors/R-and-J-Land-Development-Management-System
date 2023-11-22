@@ -28,6 +28,7 @@ export default{
         async submitBirTinRequest(_,payload){
             try{
                 const response = await API.submitBirTinRequest(payload)
+                console.log(response)
                 return response.message
             }catch(error){
                 console.log(error)

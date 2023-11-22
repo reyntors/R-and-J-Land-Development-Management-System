@@ -70,6 +70,7 @@ export default{
 
         //start set local guest list
         setLocalListPending(state,response){
+            // console.log(response)
             state.clientsPending = []
             response.data.forEach(item => {
                 state.clientsPending.push(item)
@@ -85,6 +86,7 @@ export default{
 
         //start set local legit client list
         setLocalLegitList(state,list){
+            // console.log(list)
             state.clientsAdded = list
         },
         //end set local legit client list
@@ -119,7 +121,7 @@ export default{
         // end reset temporary arrays
 
         // start add transaction
-        updateAccountingDetails(state,payload){
+        updatePaymentDetails(state,payload){
 
             const index = state.clientsAdded.findIndex(item => item.userId === payload.userId)
             const purpose = payload.object.purpose
@@ -190,6 +192,40 @@ export default{
             // state.clientsAdded[index].accountingDetails.totalAmountPayable = state.clientsAdded[index].accountingDetails.totalAmountPayable - payload.amountPaid
             // state.clientsAdded[index].accountingDetails.totalPayment =  state.clientsAdded[index].accountingDetails.totalPayment + payload.amountPaid
         },
+        deletePaymentAccountDetails(state,payload){
+            const index = state.clientsAdded.findIndex(item => item.userId === payload.userId)
+            if(index>=0){
+                
+                //get the list of keys of the the object accountDetails
+                const keyList = Object.keys(state.clientsAdded[index].accountDetails)
+
+                //find the index of the matched keyname
+                const newIndex  = keyList.findIndex(keyName => keyName === payload.details)
+
+                //ensure the key exists
+                if(newIndex >=0){
+    
+                    //update the keyList and removed the key name matched
+                    keyList.splice(newIndex,1)
+
+                    //loop the keylist to get each value of the object
+                    //create new object
+                    const newObject = {}
+                    for(let key of keyList){
+                        //set new key-value pairs
+                        newObject[key] = state.clientsAdded[index].accountDetails[key]
+                    }
+
+                    //rewrite the current client's account details
+                    state.clientsAdded[index].accountDetails = newObject
+
+                }else{
+                    console.log('no match of the details key on the local list accounting details')
+                }
+            }else{
+                console.log('not found')
+            }
+        },
         // end add transaction
 
         //start reservation form
@@ -198,7 +234,8 @@ export default{
             const index = state.clientsAdded.findIndex(item => item.userId === payload.userId)
             if(index>=0){
                 // state.clientsAdded[index].accountDetails = {}
-                state.clientsAdded[index].accountDetails = {...payload.object,totalAmountDue: payload.totalAmountDue}
+                state.clientsAdded[index].accountDetails = {...payload.object}
+                state.clientsAdded[index].accountingDetails.totalAmountDue = payload.totalAmountDue
             }else{
                 console.error('somethings wrong updating the amount due')
             }
@@ -291,7 +328,8 @@ export default{
                 const response = await Client.addPaymentTransaction({
                     userId:payload.userId,
                     object:payload.object,})
-                context.commit('updateAccountingDetails',payload)
+                context.commit('updatePaymentDetails',payload)
+                console.log(response)
                 return response.message
             }catch(error){
                 console.log(error)
@@ -320,6 +358,17 @@ export default{
             }catch(error){
                 console.error(error)
                 throw error
+            }
+        },
+
+        async deleteAccountDetails(context,payload){
+            try{
+                const response = await Client.deletePaymentAccountDetails(payload)
+                context.commit('deletePaymentAccountDetails',payload)
+                return response.message
+            }catch(error){
+                console.error(error)
+                throw(error)
             }
         },
         //end payment transactions

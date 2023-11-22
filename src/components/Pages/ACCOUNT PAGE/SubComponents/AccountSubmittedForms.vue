@@ -1,6 +1,6 @@
 <template>
   <div class="account-submitted-forms">
-    <p class="fw-bold">Your Submitted Forms</p>
+    <h4>Your Submitted Forms</h4>
     <div class="c-conts">
       <ul v-for="(item,index) in list" :key="index">
         <li>
@@ -34,6 +34,7 @@ export default {
  
   async created(){
     this.list = {...this.formLists}
+    console.log(this.list)
   }
 }
 </script>
@@ -49,12 +50,13 @@ section{
 }
 .c-conts{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 1rem 0;
   /* border: 1px solid black; */
 }
 .account-submitted-forms{
   width: 90%;
   margin: auto;
+  margin-top: 2rem;
 }
 </style>

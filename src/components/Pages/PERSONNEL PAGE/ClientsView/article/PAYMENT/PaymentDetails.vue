@@ -26,7 +26,7 @@
           </div>
           <ul>
             <div v-if="client.accountDetails.details1" class="accountDetailsElement">
-              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin"/>
+              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details1')"/>
               <section>
                 <span>Lot Number:</span>
                 <span class="var">{{ client.accountDetails.details1.lotNumber_1 }}</span>
@@ -45,7 +45,7 @@
               </section>
             </div> 
             <div v-if="client.accountDetails.details2" class="accountDetailsElement">
-              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin"/>
+              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details2')"/>
               <section>
                 <span>Lot Number:</span>
                 <span class="var">{{ client.accountDetails.details2.lotNumber_2 }}</span>
@@ -64,7 +64,7 @@
               </section>
             </div> 
             <div v-if="client.accountDetails.details3" class="accountDetailsElement">
-              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin"/>
+              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details3')"/>
               <section>
                 <span>Lot Number:</span>
                 <span class="var">{{ client.accountDetails.details3.lotNumber_3 }}</span>
@@ -276,13 +276,16 @@ export default {
           this.editObj = {...obj}
           this.transactionId = obj.transactionId
       },
+
       cancelEditElement(){
         this.editPaymentForm = false
         this.focusElement = null
       },
+
       setAttachment(event){
         this.newAttachment = event.target.files[0]
       },
+
       async saveEdit(){
         console.log('saving edit')
         const object = {
@@ -309,6 +312,7 @@ export default {
             toast.error(error,{autoClose: false})
         }   
       },
+
       async deleteTransaction(transactionId){
         const confirmed = confirm("are you sure to delete this transaction?")
         if(confirmed){
@@ -317,13 +321,23 @@ export default {
             userId: this.clientID,
             transactionId: transactionId
             })       
-            console.log(response)
             toast.success(response)   
           }catch(error){
             toast.error(error)
           }          
         }
 
+      },
+
+      async deleteADetails(value){
+        try{
+          const response = await this.$store.dispatch('client/deleteAccountDetails',{
+            userId: this.clientID,
+            details:value})
+          toast.success(response)
+        }catch(error){
+          toast.error(error)
+        }
       },
       elementNumber(index){
         return index + 1 + '.'

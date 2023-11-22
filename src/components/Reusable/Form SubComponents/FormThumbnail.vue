@@ -10,14 +10,17 @@
 </template>
 
 <script>
-import LetterOfIntent from '@/assets/form-thumbnails/Letter-of-intent.png';
-import ContractDetails from '@/assets/form-thumbnails/contract-details.png';
+import LetterOfIntent from '@/assets/form-thumbnails/letter-of-intent.jpg';
+import BIR_TIN_Request from '@/assets/form-thumbnails/bir.jpg';
+import BuyerInfo from '@/assets/form-thumbnails/buyer-info.jpg';
+import ReservationAgreement from '@/assets/form-thumbnails/reservation.jpg';
+
 import individual from '@/assets/form-thumbnails/individual-buyer-declaration.png';
-import BIR_TIN_Request from '@/assets/form-thumbnails/BIR-TIN-Request.png';
+
 import ApprovedPaymentScheme from '@/assets/form-thumbnails/approve-payment.png';
 import ChecklistClosingSale from '@/assets/form-thumbnails/checklist-for-closing.png';
 import CallSlip from '@/assets/form-thumbnails/call-slip.png';
-import ReservationPayment from '@/assets/form-thumbnails/reservation.png';
+
 export default {
     props: ['title','imgThumbTitle'],
     data(){
@@ -29,21 +32,33 @@ export default {
         imgLink(){
             if(this.imgThumbTitle === 'letterOfIntent'){
                 return LetterOfIntent
-            }else if(this.imgThumbTitle === 'ContractDetails'){
-                return ContractDetails
-            }else if(this.imgThumbTitle === 'individualDeclaration'){
-                return individual
-            }else if(this.imgThumbTitle === 'approvePaymentScheme'){
-                return ApprovedPaymentScheme
-            }else if(this.imgThumbTitle === 'checklist'){
-                return ChecklistClosingSale
-            }else if(this.imgThumbTitle === 'call-slip'){
-                return CallSlip
-            }else if(this.imgThumbTitle === 'reservation'){
-                return ReservationPayment
-            }else if(this.imgThumbTitle === 'BirTinRequest'){
+            }
+            else if(this.imgThumbTitle === 'BirTinRequest'){
                 return BIR_TIN_Request
-            }else{
+            }
+            else if(this.imgThumbTitle === 'buyerinfo'){
+                return BuyerInfo
+            }
+
+
+            else if(this.imgThumbTitle === 'individualDeclaration'){
+                return individual
+            }
+            else if(this.imgThumbTitle === 'approvePaymentScheme'){
+                return ApprovedPaymentScheme
+            }
+            else if(this.imgThumbTitle === 'checklist'){
+                return ChecklistClosingSale
+            }
+            else if(this.imgThumbTitle === 'call-slip'){
+                return CallSlip
+            
+            }
+            else if(this.imgThumbTitle === 'reservation'){
+                return ReservationAgreement
+            }
+            
+            else{
                 return null
             }
         }

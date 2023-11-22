@@ -4,7 +4,7 @@ const BASE_URL = process.env.VUE_APP_KEY;
 
 //start initializer when entering the CLIENT DIMENSION
 export const requestLegitList = async () => {
-    // console.log('API requestLegitList executed')
+    console.log('API requestLegitList executed')
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.get(`${BASE_URL}users/client/legit-clients`,{
@@ -12,6 +12,7 @@ export const requestLegitList = async () => {
                 'Authorization': `Bearer ${token}`
             }
         }) 
+        // console.log(response)
         return response.data      
     }catch(error){
         throw (error.response.data.message);
@@ -37,27 +38,33 @@ export const requestPendingList = async () => {
 export const addToLegitClient = async (payload) => {
     // console.log('API addToLegitClient executed')
     const token =store.getters['auth/getTokenID']
-    try{
-        if(!payload.isAdmin){
+    console.log(payload.isAdmin)
+    if(!payload.isAdmin){
+        try{
+            console.log('executing api for staff only')
             const response = await axios.post(`${BASE_URL}users/update-legitimacy/${payload.userId}`,{legitimate: true},{
                 headers:{
                     'Authorization': `Bearer ${token}`
                 }
             })      
-            return response.data        
-        }else{
+            return response.data                   
+        }catch(error){
+            console.error(error)
+        }
+    }else{
+        try{
+            console.log('executing api for admin only')
             const response = await axios.put(`${BASE_URL}users/update-legitimate/${payload.userId}`,{legitimate: true},{
                 headers:{
                     'Authorization': `Bearer ${token}`
                 }
             })  
             console.log(response)
-            return response.data 
+            return response.data                 
+        }catch(error){
+            console.error(error)
         }
-             
-    }catch(error){
-        throw (error.response.data.message);
-    }
+    }           
 }
 export const removeToLegitClient = async (id) => {
     // console.log('API removeToLegitClient executed')
@@ -161,6 +168,28 @@ export const retrieveUploadedAttachment = async (id, filename) => {
         throw (error.response.data.message);
     }
 }
+export const deletePaymentAccountDetails = async (payload) => {
+    console.log(payload)
+    console.log('API deletePaymentAccountDetails executed')
+    const token =store.getters['auth/getTokenID']
+    const body = {
+        details: payload.details
+    }
+    try{
+        const response = await axios.delete(`${BASE_URL}forms/delete-reservation/${payload.userId}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            },
+            data: body
+        }) 
+        console.log(response)
+        return response.data     
+    }catch(error){
+        // console.log('AGAY')
+        throw (error.response.data.message);
+    }
+}
+
 //end article/payment
 
 //start article/form

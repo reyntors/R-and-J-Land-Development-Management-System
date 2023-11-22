@@ -1,7 +1,6 @@
 <template>
 <div class="bir-container">
     <the-header/>
-
     <form-card title="BIR Tin Request">
         <div class="c-container">
                 <strong>{{ dateNow }}</strong>
@@ -184,10 +183,12 @@ export default {
             getAllData(){
                 return {
                 date: this.dateNow,
-                name: this.firstname + ' ' + this.middlename + ' ' + this.lastname,
+                firstname: this.firstname,
+                middlename: this.middlename, 
+                lastname: this.lastname,
                 address: this.address,
                 birthday: this.birthday,
-                tinNumber: this.tinNumber,
+                tinNumber: String(this.tinNumber),
                 respectfulYours: this.respectfulYours,                  
                 }
             },
@@ -199,14 +200,15 @@ export default {
                     this.isLoading = true
                     const payload = this.getAllData()
                     console.log(payload)
-                    // try{
-                    //     const response = await this.$store.dispatch('guest/submitBirTinRequest',payload)
-                    //     toast.success(response, {autoClose: 1000,}); 
-                    //     await new Promise(resolve => setTimeout(resolve, 2000)) 
-                    //     this.$router.replace('/guest-forms')       
-                    // }catch(error){
-                    //     toast.error(error, {autoClose:1000})
-                    // }
+                    try{
+                        const response = await this.$store.dispatch('form/submitBirTinRequest',payload)
+                        console.log(response)
+                        toast.success(response, {autoClose: 1000,}); 
+                        await new Promise(resolve => setTimeout(resolve, 2000)) 
+                        this.$router.replace('/guest-forms')       
+                    }catch(error){
+                        toast.error(error, {autoClose:1000})
+                    }
                     await new Promise(resolve => setTimeout(resolve, 2000))
                     this.isLoading = false
                 }else{

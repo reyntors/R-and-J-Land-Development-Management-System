@@ -19,6 +19,7 @@
               <th>Action</th>
               <th v-if="authorizationRoleAdmin">Delete</th>
             </tr>
+            <!-- {{ clientsComputed }} -->
             <tbody v-for="(client,index) in clientsComputed" :key="index">
               <tr>
                   <td class="name">{{ numberIndex(index) }} {{ client.fullname }}</td>
@@ -104,6 +105,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
           return this.profileClientVisible
         },
         clientsComputed(){
+          // console.log(this.$store.getters['client/clientsGetter'])
           return this.$store.getters['client/clientsGetter']
         },
         authorizationRoleAdmin(){

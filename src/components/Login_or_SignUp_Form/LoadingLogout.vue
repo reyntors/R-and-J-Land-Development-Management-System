@@ -1,10 +1,11 @@
 <template>
   <div class="logout-loading-cont">
     
-    <progress-loading type="torks"/>
-    <div class="logoutPrompt">
+    <!-- <div class="logoutPrompt">
       <h1>Logging Out</h1>
-    </div>
+    </div> -->
+    <progress-loading type="torks"/>
+    
   </div>
 </template>
 
