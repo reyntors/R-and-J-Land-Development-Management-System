@@ -257,7 +257,7 @@ exports.updateTransaction = async (req, res) =>{
     if (updatedData.amount) {
 
       const oldAmount = user.transactions[transactionIndex].amount;
-      const newAmount = updatedData.amount;
+      const newAmount = parseInt(updatedData.amount);
 
       user.transactions[transactionIndex].amount = newAmount;
 
@@ -280,11 +280,13 @@ exports.updateTransaction = async (req, res) =>{
         user.paymentDetails.monthlyAmortizationDue = monthlyAmortization;
 
       } else if (user.transactions[transactionIndex].purpose === 'monthly-payment') {
-        const amountPaid = parseFloat(newAmount);
        
-        console.log("I am here")
-        user.accountingDetails.totalPayment += amountPaid - oldAmount;
-        user.accountingDetails.totalAmountPayable -= amountPaid - oldAmount;
+        // Update totalPayment and totalAmountPayable based on the difference
+        const difference = newAmount - oldAmount;
+
+        user.accountingDetails.totalPayment += difference;
+        user.accountingDetails.totalAmountPayable -= difference;
+        
       }
     }
 
