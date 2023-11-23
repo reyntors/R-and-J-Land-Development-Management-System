@@ -352,6 +352,13 @@ exports.deleteTransactionbyId = async (req, res) => {
       return res.status(404).json({ message: 'Transaction not found' });
     }
 
+    
+
+    const oldAmount = user.transactions[transactionIndex].amount;
+
+    user.accountingDetails.totalPayment = user.accountingDetails.totalPayment - oldAmount 
+    user.accountingDetails.totalAmountPayable =  user.accountingDetails.totalAmountPayable - oldAmount
+
     // Remove the transaction from the array
     user.transactions.splice(transactionIndex, 1);
 
