@@ -69,51 +69,78 @@ exports.updateLot = async (req, res, next) => {
         return res.status(500).json({ message: 'File upload failed', error: err });
       }
 
-        const { lotNumber } = req.params;
-        const  updateLotData = req.body;
+        const { lotKey } = req.params;
+        const  newlotData = req.body;
         const uploadedImage = req.file
 
-        console.log("image data:", uploadedImage);
+       
+
+       
+          // Extract 'lots' property from the array
+      const [firstItem] = await Lot.find();
+
+      const updatedLot = firstItem ? firstItem.lots : {};
+
+      if (!updatedLot) {
+        return res.status(404).json({ message: "Lot not found" });
+      }
+     
+      const lot = updatedLot.get(lotKey);
+
+      if (lot) {
+        // Check if 'totalSqm' exists in the lot object
+
         
-
-        const updatedLot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
-
-        if (!updatedLot) {
-          return res.status(404).json({ message: "Lot not found" });
-        }
-        const array = lotNumber - 1;
-
         if(uploadedImage){
+          
+          if('image' in lot ){
 
-          updatedLot.subdivision[array].image.push({
-            filename: uploadedImage.originalname,
-            contentType: uploadedImage.mimetype,
-            url: uploadedImage.location
+            lot.image.push({
+              filename: uploadedImage.originalname,
+              contentType: uploadedImage.mimetype,
+              url: uploadedImage.location
 
-          });
+            });
+          }
+      }
+
+        if ('totalSqm' in lot) {
+          // Update the value of 'totalSqm' with the new value
+          lot.totalSqm = newlotData.totalSqm;
+        } 
+
+        if ('amountperSquare' in lot) {
+          lot.amountperSquare = newlotData.amountperSquare;
         }
 
+        if ('totalAmountDue' in lot) {
+          lot.totalAmountDue = newlotData.totalAmountDue;
+        }
 
-        if (updateLotData.totalSqm) {
-          updatedLot.subdivision[array].totalSqm = updateLotData.totalSqm;
+        if ('status' in lot) {
+          lot.status = newlotData.status;
         }
-        if (updateLotData.amountperSquare) {
-          updatedLot.subdivision[array].amountperSquare = updateLotData.amountperSquare;
-        }
-        if (updateLotData.totalAmountDue) {
-          updatedLot.subdivision[array].totalAmountDue = updateLotData.totalAmountDue;
-        }
-        if (updateLotData.status) {
-          updatedLot.subdivision[array].status = updateLotData.status;
-        }
+      }
+     
+       
+
+       
+
+       
+       
+        
           
 
-        // Save the updated lot
-        const savedLot = await updatedLot.save();
+        // Update 'lots' property in the array
+      const updatedItem = await firstItem.save();
+
+      if (!updatedItem) {
+        return res.status(500).json({ message: "Failed to update lot" });
+      }
 
         return res.status(200).json({
           message: "Lot Information Successfully updated",
-          data: savedLot.subdivision[array],
+          data: updatedItem ,
     });
   });
     

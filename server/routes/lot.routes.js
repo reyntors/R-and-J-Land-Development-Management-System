@@ -9,7 +9,7 @@ const uploadedController = require("../controllers/uploaded.controller")
 router.get("/allLot",  lotController.getPublicLotDetails);
 router.get("/:lotNumber", lotController.getPublicLotDetails);
 router.post("/addlot", auth.authenticateToken, userController.restrict(['staff','management']), lotController.createLot);
-router.put("/updatelot/:lotNumber", auth.authenticateToken, userController.restrict(['staff','management']), lotController.updateLot);
+router.put("/updatelot/:lotKey", auth.authenticateToken, userController.restrict(['staff','management']), lotController.updateLot);
 router.get("/retrieve-lotImage/:lotNumber/:filename", uploadedController.retrieveLotImage);
 
 
