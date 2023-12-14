@@ -6,75 +6,56 @@ const Inquiry = require('../models/inquiries.model');
 
 
 
+
 exports.createLot = async (req, res, next) => {
   try {
-    
-         // Generate and create 362 lots
-        for (let i = 1; i <= 362; i++) {
+    // Generate and create 5 lots
+    for (let i = 1; i <= 362; i++) {
       
+      const lotKey = "lot" + i;
+      const newLotData = {
+        image: [],
+        lotNumber: i,
+        totalSqm: null,
+        amountperSquare: null,
+        totalAmountDue: null,
+        status: null,
+      };
+      
+      const update = {
+        $set: {
+          [`lots.${lotKey}`]: newLotData,
+        },
+      };
 
-          // Create new lot
-          const newLot = new Lot({
-             
-              image: [],
-              lotNumber: i,
-              totalSqm: null,
-              amountperSquare: null,
-              totalAmountDue: null,
-              status: null,
-          });
-
-          // Use Lot.create instead of Lot.save
-          await newLot.save();
-
-         
-      }
-
-
-      return res.status(201).json({ message: "Lots created  successfully" });
-  } catch (error) {
-      return next(error);
-  }
-};
-
-
-
-
-  
-exports.getPublicLotDetails = async (req, res, next) => {
-  try {
-    const { lotNumber } = req.params;
-
-    if (lotNumber){
-
-      const lot = await Lot.findOne({ "subdivision.lotNumber": lotNumber });
-
-      array = lotNumber-1;
-
-
-      if (!lot) {
-        return res.status(404).json({ message: "Lot not found" });
+      // Use Lot.updateOne to add or update the lot
+      await Lot.updateOne({}, update, { upsert: true });
     }
 
-
-    return res.status(200).json({ message: "Lot found", data: lot.subdivision[array] });
-
- 
-
-  }else{
-    const allLots = await Lot.find();
-
-            return res.status(200).json({
-                message: 'All Lots ',
-                data: allLots
-            });
-  }
-
-    
+    return res.status(201).json({ message: "Lots created successfully" });
   } catch (error) {
     return next(error);
   }
 };
+
+ 
+exports.getPublicLotDetails = async (req, res, next) => {
+  try {
+    const allLots = await Lot.find();
+
+
+   
+
+    return res.status(200).json({
+      message: 'All Lots',
+      data: allLots, // Wrap lotsObject inside an object
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+
 
 exports.updateLot = async (req, res, next) => {
   

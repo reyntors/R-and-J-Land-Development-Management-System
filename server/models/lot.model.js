@@ -19,8 +19,6 @@ const subdivisionSchema = new mongoose.Schema({
     lotNumber: {
         type: String,
         
-       
-      
     },
     totalSqm: {
         type: Number,
@@ -40,6 +38,13 @@ const subdivisionSchema = new mongoose.Schema({
     },
 });
 
+const lotSchema = new Schema({
+        lots: {
+            type: Map,
+            of: subdivisionSchema,
+        },
+    });
+
 
 
 subdivisionSchema.set("toJSON", {
@@ -50,6 +55,14 @@ subdivisionSchema.set("toJSON", {
     },
 });
 
+lotSchema.set("toJSON", {
+    transform: (document, returnedObject) => {
+        returnedObject.id = document._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+    },
+});
 
 
-module.exports = mongoose.model('Lot', subdivisionSchema);
+
+module.exports = mongoose.model('Lot', lotSchema);
