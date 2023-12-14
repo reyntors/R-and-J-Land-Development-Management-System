@@ -307,8 +307,10 @@ function sendUpdateResponseEmail(fullname, recipientEmail, subject) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'reyntors2@gmail.com', 
-      pass: 'lkwo goeh mdbh afug', 
+      // user: 'reyntors2@gmail.com', 
+      // pass: 'lkwo goeh mdbh afug', 
+      user: 'rjlanddevcorp@gmail.com',
+      pass: 'lnif npwl ujfc kyod'
     },
   });
 
@@ -334,7 +336,7 @@ function sendUpdateResponseEmail(fullname, recipientEmail, subject) {
 
 
  const mailOptions = {
-   from: 'reyntors2@gmail.com',
+   from: 'rjlanddevcorp@gmail.com',
    to: recipientEmail,
    subject: subject,
    html: htmlContent, // Use HTML content with an image
@@ -354,8 +356,10 @@ function sendUpdateApprovedResponseEmail(fullname, recipientEmail, subject) {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'reyntors2@gmail.com', 
-      pass: 'lkwo goeh mdbh afug', 
+      // user: 'reyntors2@gmail.com', 
+      // pass: 'lkwo goeh mdbh afug', 
+      user: 'rjlanddevcorp@gmail.com',
+      pass: 'lnif npwl ujfc kyod'
     },
   });
 
@@ -380,7 +384,7 @@ function sendUpdateApprovedResponseEmail(fullname, recipientEmail, subject) {
 
 
  const mailOptions = {
-   from: 'reyntors2@gmail.com',
+   from: 'rjlanddevcorp@gmail.com',
    to: recipientEmail,
    subject: subject,
    html: htmlContent, // Use HTML content with an image
@@ -789,7 +793,7 @@ function generateRecoveryCode() {
 //update personnel accounts
 exports.updateUserAccountPersonnel = async(req, res, next) =>{
 
-  console.log("I am here")
+
  
   try {
 
@@ -862,11 +866,6 @@ exports.updateUserAccountPersonnel = async(req, res, next) =>{
 
 
 
-
-
-
-
-
   exports.forgotPassword = async(req, res) => {
 
 
@@ -932,8 +931,10 @@ function sendRecoveryResponseEmail(fullname, recipientEmail, subject, recoveryCo
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'reyntors2@gmail.com', 
-      pass: 'lkwo goeh mdbh afug', 
+      // user: 'reyntors2@gmail.com', 
+      // pass: 'lkwo goeh mdbh afug', 
+      user: 'rjlanddevcorp@gmail.com',
+      pass: 'lnif npwl ujfc kyod'
     },
   });
 
@@ -958,7 +959,7 @@ function sendRecoveryResponseEmail(fullname, recipientEmail, subject, recoveryCo
 
 
  const mailOptions = {
-   from: 'reyntors2@gmail.com',
+   from: 'rjlanddevcorp@gmail.com',
    to: recipientEmail,
    subject: subject,
    html: htmlContent, // Use HTML content with an image
@@ -1031,8 +1032,10 @@ exports.resetPassword = async(req, res) =>{
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: 'reyntors2@gmail.com', 
-        pass: 'lkwo goeh mdbh afug', 
+        // user: 'reyntors2@gmail.com', 
+        // pass: 'lkwo goeh mdbh afug', 
+       user: 'rjlanddevcorp@gmail.com',
+       pass: 'lnif npwl ujfc kyod'
       },
     });
   
@@ -1057,7 +1060,7 @@ exports.resetPassword = async(req, res) =>{
   
   
    const mailOptions = {
-     from: 'reyntors2@gmail.com',
+     from: 'rjlanddevcorp@gmail.com',
      to: recipientEmail,
      subject: subject,
      html: htmlContent, // Use HTML content with an image

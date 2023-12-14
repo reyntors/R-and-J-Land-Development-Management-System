@@ -18,8 +18,6 @@ exports.createPdfTemplate = async (req, res) => {
             return res.status(404).json({message: 'User not found!'})
         }
 
-
-
         // Create a new PDF document
         const pdfDoc = await PDFDocument.create();
 

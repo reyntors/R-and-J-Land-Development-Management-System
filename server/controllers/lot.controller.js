@@ -7,205 +7,36 @@ const Inquiry = require('../models/inquiries.model');
 
 
 exports.createLot = async (req, res, next) => {
-    const {lotData} = req.body;
-  
-    try {
-
-
-      const newLot = new Lot({
-        ...lotData,
-        subdivision: [
-          {
-            image: [],
-            lotNumber: 1,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 2,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 3,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 4,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 5,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 6,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 7,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 8,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 9,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 10,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 11,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 12,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 13,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 14,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 15,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 16,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 17,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 18,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 19,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-          {
-            image: [],
-            lotNumber: 20,
-            totalSqm: null,
-            amountperSquare: null,
-            totalAmountDue: null,
-            status: null,
-            
-          },
-        ],
-      });
-
-      const savedLot = await newLot.save();
-
-      return res.status(201).json({ message: "Lot created and associated with the user successfully", data: savedLot });
+  try {
     
-    } catch (error) {
+         // Generate and create 362 lots
+        for (let i = 1; i <= 362; i++) {
+      
+
+          // Create new lot
+          const newLot = new Lot({
+             
+              image: [],
+              lotNumber: i,
+              totalSqm: null,
+              amountperSquare: null,
+              totalAmountDue: null,
+              status: null,
+          });
+
+          // Use Lot.create instead of Lot.save
+          await newLot.save();
+
+         
+      }
+
+
+      return res.status(201).json({ message: "Lots created  successfully" });
+  } catch (error) {
       return next(error);
-    }
-  };
+  }
+};
+
 
 
 

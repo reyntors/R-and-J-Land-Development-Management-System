@@ -18,7 +18,9 @@ const subdivisionSchema = new mongoose.Schema({
     image: [imageSchema], // Define image as an array of images
     lotNumber: {
         type: String,
-        unique: true,
+        
+       
+      
     },
     totalSqm: {
         type: Number,
@@ -38,13 +40,9 @@ const subdivisionSchema = new mongoose.Schema({
     },
 });
 
-const lotSchema = new Schema({
-    subdivision: [subdivisionSchema],
-});
 
 
-
-lotSchema.set("toJSON", {
+subdivisionSchema.set("toJSON", {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString();
         delete returnedObject.__id;
@@ -54,4 +52,4 @@ lotSchema.set("toJSON", {
 
 
 
-module.exports = mongoose.model('Lot', lotSchema);
+module.exports = mongoose.model('Lot', subdivisionSchema);
