@@ -16,7 +16,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://r-j-land-developement-corp.web.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  }));
 
 mongoose.set("strictQuery", false);
 mongoose.connect(dbConfig.db, {
