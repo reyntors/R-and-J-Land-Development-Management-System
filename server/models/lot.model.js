@@ -34,7 +34,7 @@ const subdivisionSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: null
+        default: 'sell'
     },
 });
 

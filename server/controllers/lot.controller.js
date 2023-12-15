@@ -113,23 +113,17 @@ exports.updateLot = async (req, res, next) => {
           lot.amountperSquare = newlotData.amountperSquare;
         }
 
-        if ('totalAmountDue' in lot) {
-          lot.totalAmountDue = newlotData.totalAmountDue;
-        }
+        // if ('totalAmountDue' in lot) {
+        //   lot.totalAmountDue = newlotData.totalAmountDue;
+        // }
 
         if ('status' in lot) {
           lot.status = newlotData.status;
         }
       }
-     
-       
-
-       
-
-       
-       
-        
-          
+      if(newlotData.totalSqm && newlotData.amountperSquare){
+      lot.totalAmountDue = lot.totalSqm * lot.amountperSquare;
+      } 
 
         // Update 'lots' property in the array
       const updatedItem = await firstItem.save();
@@ -140,7 +134,7 @@ exports.updateLot = async (req, res, next) => {
 
         return res.status(200).json({
           message: "Lot Information Successfully updated",
-          data: updatedItem ,
+          data: lot ,
     });
   });
     
