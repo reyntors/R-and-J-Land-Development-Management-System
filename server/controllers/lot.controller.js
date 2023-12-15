@@ -103,14 +103,15 @@ exports.updateLot = async (req, res, next) => {
             });
           }
       }
-        if(newlotData.totalSqm){
+      
+        if(newlotData.totalSqm !== undefined && !isNaN(newlotData.totalSqm)){
 
           if ('totalSqm' in lot) {
             // Update the value of 'totalSqm' with the new value
             lot.totalSqm = newlotData.totalSqm;
           } 
       }
-        if(newlotData.amountperSquare){
+        if(newlotData.amountperSquare !== undefined && !isNaN(newlotData.amountperSquare)){
 
           if ('amountperSquare' in lot) {
             lot.amountperSquare = newlotData.amountperSquare;
@@ -122,6 +123,8 @@ exports.updateLot = async (req, res, next) => {
         // }
         if(newlotData.status){
 
+          console.log("i am here")
+
           if ('status' in lot) {
             lot.status = newlotData.status;
           }
@@ -131,6 +134,8 @@ exports.updateLot = async (req, res, next) => {
 
         lot.totalAmountDue = lot.totalSqm * lot.amountperSquare;
       } 
+
+      console.log(newlotData.status);
 
         // Update 'lots' property in the array
       const updatedItem = await firstItem.save();
