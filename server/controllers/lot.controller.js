@@ -103,26 +103,33 @@ exports.updateLot = async (req, res, next) => {
             });
           }
       }
+        if(newlotData.totalSqm){
 
-        if ('totalSqm' in lot) {
-          // Update the value of 'totalSqm' with the new value
-          lot.totalSqm = newlotData.totalSqm;
-        } 
+          if ('totalSqm' in lot) {
+            // Update the value of 'totalSqm' with the new value
+            lot.totalSqm = newlotData.totalSqm;
+          } 
+      }
+        if(newlotData.amountperSquare){
 
-        if ('amountperSquare' in lot) {
-          lot.amountperSquare = newlotData.amountperSquare;
-        }
+          if ('amountperSquare' in lot) {
+            lot.amountperSquare = newlotData.amountperSquare;
+          }
+      }
 
         // if ('totalAmountDue' in lot) {
         //   lot.totalAmountDue = newlotData.totalAmountDue;
         // }
+        if(newlotData.status){
 
-        if ('status' in lot) {
-          lot.status = newlotData.status;
-        }
+          if ('status' in lot) {
+            lot.status = newlotData.status;
+          }
+      }
       }
       if(newlotData.totalSqm && newlotData.amountperSquare){
-      lot.totalAmountDue = lot.totalSqm * lot.amountperSquare;
+
+        lot.totalAmountDue = lot.totalSqm * lot.amountperSquare;
       } 
 
         // Update 'lots' property in the array
