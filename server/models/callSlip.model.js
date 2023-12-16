@@ -26,11 +26,11 @@ const callSlipSchema = new Schema({
         required: true,
     },
     telNumber: {
-        type: Number,
+        type: String,
         required: true,
     },
     contactNumber: {
-        type: Number,
+        type: String,
         required: true,
     },
     email: {
