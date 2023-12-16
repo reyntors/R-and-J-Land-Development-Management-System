@@ -25,7 +25,7 @@ const callSlipSchema = new Schema({
         type: String,
         required: true,
     },
-    telNumber: {
+    messengerAcc: {
         type: String,
         required: true,
     },
