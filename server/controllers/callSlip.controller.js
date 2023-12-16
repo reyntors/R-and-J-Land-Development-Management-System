@@ -36,7 +36,7 @@ exports.addCallSlip =  async (req, res, next) => {
         firstName: callSlipData.firstName,
         middleName: callSlipData.middleName,
         spouseName: callSlipData.spouseName,
-        telNumber: callSlipData.telNumber,
+        messengerAcc: callSlipData.messengerAcc,
         contactNumber: callSlipData.contactNumber,
         email: callSlipData.email,
         prospects: callSlipData.prospects
@@ -88,6 +88,7 @@ exports.addCallSlip =  async (req, res, next) => {
                             });
 
     }catch(error){
+        console.log(error)
         throw error;
     }
 
