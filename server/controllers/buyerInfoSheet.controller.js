@@ -69,6 +69,29 @@ try{
 
     user.buyerInfoSheet = savedBuyerInfoSheet;
 
+    //add to profile details
+    const newProfileDetails = {
+
+        fullname: user.fullname,
+        contactNumber: savedBuyerInfoSheet.buyerMobileNo,
+        email: savedBuyerInfoSheet.buyerEmailAddress,
+        birthday: savedBuyerInfoSheet.buyerBirthdate,
+        address: savedBuyerInfoSheet.buyerPrimaryAddress,
+        civilStatus: savedBuyerInfoSheet.buyerCivilStatus,
+        spouseName: savedBuyerInfoSheet.spouseFirstname,
+        occupation: savedBuyerInfoSheet.buyerEmploymentPosition,
+        monthlyGrossIncome: savedBuyerInfoSheet.buyerEmploymentGrossMonthly,
+        buyerSourceOfIncome: savedBuyerInfoSheet.buyerEmploymentType,
+        typeOfEmployment: savedBuyerInfoSheet.buyerEmploymentType,
+        employer: savedBuyerInfoSheet.buyerEmployerBusinessName,
+        businessName: savedBuyerInfoSheet.buyerEmployerBusinessName,
+        businessAddress: savedBuyerInfoSheet.buyerOfficeAddress,
+     
+
+    }
+
+    user.profileDetails = newProfileDetails
+
       // Generate inquiryId
       const inquiryId = await generateInquiryId();
 

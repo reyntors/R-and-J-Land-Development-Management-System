@@ -212,11 +212,7 @@ const profileDetailsSchema = new Schema({
         default: null,
        
     },
-    monthlyGrossIncome: {
-        type: String,
-        default: null,
-       
-    },
+
     uploadId: [{
         filename: String,
         contentType: String,
@@ -450,487 +446,408 @@ const birTinRequestSchema = new Schema({
     
 });
 
-const contractDetailsSchema = new Schema({ 
-    url: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
+const buyerInfoSheetSchema = new Schema({ 
+    url: String,
     isSubmitted: {
         type: Boolean,
         default: false,
-        ref: 'Contract Details'
+        
     },
-    property: {
+    projectName: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    typeBuyer: {
+    lotUnit: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    buyerLastname: {
+    purposePurchase: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
+    },
+    buyerDesirePurchase: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
     },
     buyerFirstname: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
     buyerMiddlename: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    buyerOccupation: {
+    buyerLastname: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    buyerPrimaryAddress: {
+    buyerBirthdate: {
         type: String,
         default: null,
-        ref: 'Contract Details'
-    },
-    buyerPrimaryZip: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerCivilStatus: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerAge: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerSecondaryAddress: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerSecondaryZip: {
-        type: String, 
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerSex: {
-        type: String, 
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerBirthday: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerPlaceBirth: {
-        type: String, 
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerHomePhoneNo: {
-        type: String, 
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerFaxNo: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerIncludeCountry: {
-        type: String,
-      
-        ref: 'Contract Details'
-    },
-    buyerMobileNo: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerEmail: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerTIN: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    buyerCitizen: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
     buyerReligion: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    buyerIssuedID: {
+    buyerCivilStatus: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    businessName: {
+    buyerSex: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    businessAddress: {
+    buyerCitizenship: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    businessPhoneNo: {
+    buyerTIN: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    businessfaxNo: {
+    buyerPassportNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    businessPosition: {
+    buyerPassportDateIssued: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    businessProfession: {
+    buyerPassportDateExpiration: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    businessEmploymentStatus: {
+    buyerMobileNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spouseLastname: {
+    buyerMessengerAccount: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmailAddress: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerViberNo: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerGovtIssuedID: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerGovtIssuedIDNo: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerPrimaryAddress: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerAbroadAddress: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerOwnershipCurrentResidence: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerOwnershipCurrentResidenceYears: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmploymentType: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmployerBusinessName: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerOfficeAddress: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmploymentIndustry: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmploymentPosition: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmploymentYearsService: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmploymentOfficeMobileNo: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmploymentOfficeEmail: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
+    },
+    buyerEmploymentGrossMonthly: {
+        type: String,
+        default: null,
+        ref: 'Buyer Info Sheet'
     },
     spouseFirstname: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spouseMiddleName: {
+    spouseMiddlename: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spouseOccupation: {
+    spouseLastname: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spousePhoneNo: {
+    spouseBirthdate: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spouseMobileNo: {
+    spouseReligion: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spouseEmail: {   
+    spouseCivilStatus: {
         type: String,
         default: null,
-        ref: 'Contract Details'
-    },
-    spouseTIN: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    spouseCitizenship: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    spouseFaxNo: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
     spouseSex: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spouseEmployment: {
+    spouseCitizenship: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    spouseNoChildren: {
+    spouseTIN: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyLastname: {
+    spousePassportNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyFirstname: {
+    spousePassportDateIssued: {
         type: String,
         default: null,
-        ref: 'Contract Details'         
+        ref: 'Buyer Info Sheet'
     },
-    attyMiddlename: {
+    spousePassportDateExpiration: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyOccupation: {
+    spouseMobileNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyPrimaryAddress: {
+    spouseMessengerAccount: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyPrimaryZip: {
+    spouseEmailAddress: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyCivilStatus: {
+    spouseViberNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyAge: {
+    spouseGovtIssuedID: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attySecondaryAddress: {
+    spouseGovtIssuedIDNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attySecondaryZip: {
+    spousePrimaryAddress: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyBirthdate: {
+    spouseAbroadAddress: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attySex: {
+    spouseOwnershipCurrentResidence: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyHomeNo: {
+    spouseOwnershipCurrentResidenceYears: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyFaxNo: {
+    spouseEmploymentType: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyIncludeCountry: {
+    spouseEmployerBusinessName: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyMobileNo: {
+    spouseOfficeAddress: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyTIN: {
+    spouseEmploymentIndustry: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyEmail: {
+    spouseEmploymentPosition: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyCitizenship: {
+    spouseEmploymentYearsService: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    attyGovtIssuedID: {
+    spouseEmploymentOfficeMobileNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpName: {
+    spouseEmploymentOfficeEmail: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpBusinessName: {
+    spouseEmploymentGrossMonthly: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpBusinessAddress: {
+    spaFirstname: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpZipCode: {
+    spaMiddlename: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpBusinessPhoneNo: {
+    spaLastname: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpFaxNo: {
+    spaMobileNo: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedLastname: {
+    spaMessengerAcc: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedFirstname: {
+    spaEmailAddress: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedMiddlename: {
+    spaPostalAddress: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedPosition: {
+    spaCivilStatus: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedSecondaryAddress: {
+    spaSex: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedZip: {
+    spaCitizenship: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedBirthdate: {
+    spaTIN: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedBirthPlace: {
+    spaRelationToBuyer: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedSex: {
+    spaDateBirth: {
         type: String,
         default: null,
-        ref: 'Contract Details'
+        ref: 'Buyer Info Sheet'
     },
-    corpAuthorizedHomePhoneNo: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedFaxNo: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedIncludeCtry: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedMobileNo: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedTIN: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedEmail: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedCitizenship: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedCivilStatus: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    corpAuthorizedGovtIssuedID: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    otherBanks: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    otherTypeAccount: {
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },
-    otherReasonPurchase: [{
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },],
-    otherConsideredFactor: [{
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },],
-    otherWhereHeard: [{
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },],
-    otherPurchasedBefore: [{
-        type: String,
-        default: null,
-        ref: 'Contract Details'
-    },]
     
 });
 
@@ -994,56 +911,6 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    additionalInfo: {
-        civilStatus: {
-            type: String,
-            default: null
-        },
-        spouseName: {
-            type: String,
-            default: null
-        },
-        occupation: {
-            type: String,
-            default: null
-        },
-        monthlyGrossIncome:{
-            type: Number,
-            default: null
-        },
-        buyerSourceOfIncome: {
-            type: String,
-            default: null
-        },
-        typeOfEmployment: {
-            type: String,
-            default: null
-        },
-        employer: {
-            type: String,
-            default: null
-        },
-        employerAddress: {
-            type: String,
-            default: null
-        },
-        grossSalary: {
-            type: Number,
-            default: null
-        },
-        businessName: {
-            type: String,
-            default: null
-        },
-        businessAddress:{
-            type: String,
-            default: null
-        },
-        businessMonthlyIncome:{
-            type: Number,
-            default: null
-        },
-    },
     profileDetails: {
         type: profileDetailsSchema,
         default: {}
@@ -1084,8 +951,8 @@ const userSchema = new Schema({
         type: birTinRequestSchema,
         default: {}
     },
-    ContractDetails: {
-        type: contractDetailsSchema,
+    buyerInfoSheet: {
+        type: buyerInfoSheetSchema,
         default: {}
     },
     
