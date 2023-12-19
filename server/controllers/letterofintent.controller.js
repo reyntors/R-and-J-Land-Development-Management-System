@@ -258,7 +258,8 @@ async function  generateLetterOfIntentPDF( user, letterOfIntentData) {
 
         form.getTextField(fieldNames[0]).setText(formattedDate)
         form.getTextField(fieldNames[1]).setText(letterOfIntentData.project)
-        form.getTextField(fieldNames[2]).setText(letterOfIntentData.lotNumber)
+        const lotNumberText = letterOfIntentData.lotNumber.join(', ');
+        form.getTextField(fieldNames[2]).setText(lotNumberText)
         form.getTextField(fieldNames[3]).setText(letterOfIntentData.fullname)
         form.getTextField(fieldNames[4]).setText(letterOfIntentData.citizenship)
         form.getTextField(fieldNames[5]).setText(letterOfIntentData.contactNo)
