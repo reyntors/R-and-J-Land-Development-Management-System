@@ -20,7 +20,7 @@ const letterOfIntentSchema = new Schema({
         
     },
     lotNumber: {
-        type: String,
+        type: [String], // Assuming lotNumber is an array of strings
         required: true,
     },
     project: {
