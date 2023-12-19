@@ -239,60 +239,43 @@ const letterOfIntentSchema = new Schema({
         ref: 'Letter of Intent',
         
     },
-    purchase: {
-        type: String,
-        default: null,
-        ref: 'Letter of Intent',
+    lotNumber: {
+        type: [String], 
+        ref: 'Letter of Intent'
     },
     project: {
         type: String,
         default: null,
         ref: 'Letter of Intent',
     },
-    locationPH: {
+    fullname: {
         type: String,
-        default: null,
-        ref: 'Letter of Intent',
-    },
-    locationBlk: {
-        type: String,
-        default: null,
-        ref: 'Letter of Intent',
-    },
-    locationLotOrUnit: {
-        type: String,
-        default: null,
-        ref: 'Letter of Intent',
-    },
-    name: {
-        type: String,
-        default: null,
-        ref: 'Letter of Intent',
-    },
-    address: {
-        type: String,
-        default: null,
-        ref: 'Letter of Intent',
+        ref: 'Letter of Intent'
     },
     citizenship: {
         type: String,
-        default: null,
-        ref: 'Letter of Intent',
+        required: true,
+        ref: 'Letter of Intent'
     },
     contactNo: {
         type: String,
-        default: null,
-        ref: 'Letter of Intent',
+        required: true,
+        ref: 'Letter of Intent'
     },
     emailAddress: {
         type: String,
-        default: null,
-        ref: 'Letter of Intent',
+        required: true,
+        ref: 'Letter of Intent'
     },
-    reservationTimeSpan: {
-        type: String, 
-        default: null,
-        ref: 'Letter of Intent',
+    messengerAccount: {
+        type: String,
+        ref: 'Letter of Intent'
+      
+    },
+    viberNo: {
+        type: String,
+        ref: 'Letter of Intent'
+       
     },
 });
 
