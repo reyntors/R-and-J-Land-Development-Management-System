@@ -28,7 +28,7 @@ async function login({username, password, roles}, callback){
                 username: user.username, 
                 roles: user.roles }, 
                 process.env.JWT_SECRET_KEY, { 
-                    expiresIn: '1h' 
+                    expiresIn: '24h' 
                 });
             callback(null, {...user.toJSON(), token});
         } 
