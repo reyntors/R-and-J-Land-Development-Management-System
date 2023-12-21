@@ -1,22 +1,16 @@
 <template>
-    <!-- <div id="about"> -->
-
         <container-widget id="about" title="About" typeBG="2">
-            <header>
-                <!-- <h2>ABOUT</h2>
-                <span class="line"></span> -->
-            </header>
             <article class="description">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quae molestias soluta officia! Magnam repudiandae corrupti saepe quos nobis quis dolorem sint maxime, necessitatibus dolorum.ing elit. Ullam quae molestias soluta officia! Magnam repudiandae corrupti saepe quos nobis quis dolorem sint maxime, necessitatibus dolorum.   </p>
             </article>
-            <article class="mission-vision">
+            <article class="mission-vision mb-5">
                 <section class="vision">
-                    <h4>VISION</h4>
+                    <h3 class="subtitle">VISION</h3>
                     <span class="line"/>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum esse qui beatae porro facilis aliquam error omnis dicta quasi, magnam voluptates quam reprehenderit cupiditate soluta non, quod, nobis veritatis! Aspernatur!</p>
                 </section>
                 <section class="mission">
-                    <h4>MISSION</h4>
+                    <h3 class="subtitle">MISSION</h3>
                     <span class="line"/>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae sint corrupti libero doloribus temporibus labore nemo facilis, dicta qui quibusdam quo voluptatem saepe ducimus voluptatibus perspiciatis impedit perferendis eius mollitia.</p>
                 </section>
@@ -33,19 +27,13 @@
                 LICENSES AND PERMITS
             </article>
          </container-widget>  
-        <!-- </div> -->
 
 </template>
 
-<script>
-export default {
-
-}
-</script>
-
 <style scoped>
-
-
+.subtitle{
+    color: white;
+}
 .line{
     display: block;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -55,6 +43,8 @@ export default {
     margin-top: .5rem;
     text-align: center;
     line-height: 1.5rem;
+    width: 75%;
+    margin: auto;
 }
 .mission-vision{
     display: flex;
@@ -82,5 +72,17 @@ export default {
         width: 100%;
     }
     
+}
+@media only screen and (max-width: 900px) {
+    .description{
+        width: 100%;
+    }
+    .mission-vision{
+        display: block;
+    }
+    .vision, .mission{
+        width: 100%;
+        margin-top: 1rem;
+    }
 }
 </style>

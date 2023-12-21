@@ -193,6 +193,27 @@ export const deletePaymentAccountDetails = async (payload) => {
 //end article/payment
 
 //start article/form
+/////////////////CODE HERE FOR SUBMITTED FORMS BY CLIENT
+export const listSubmittedForms = async (id) => {
+    console.log('API personnel listSubmittedForms executed')
+    const token =store.getters['auth/getTokenID']
+    // console.log(token)
+    try {
+        const response = await axios.get(`${BASE_URL}users/forms/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        },);
+        // console.log(response.data)
+        return response.data
+
+    } catch (error) {
+        // console.log(error)
+        throw (error.response.data);
+        
+    }
+}
+
 export const retrieveUploadedForm = async (id, filename) => {
     // console.log('API retrieveUploadedForm executed')
     const token =store.getters['auth/getTokenID']

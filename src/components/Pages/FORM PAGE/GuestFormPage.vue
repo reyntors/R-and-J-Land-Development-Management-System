@@ -5,7 +5,7 @@
         <form-thumbnail title="Letter-of-Intent" imgThumbTitle="letterOfIntent"/> 
     </section>
     <section class="grid-item" @click="navigateBuyerInfoSheet">
-        <form-thumbnail title="Contract Details" imgThumbTitle="buyerinfo"/>
+        <form-thumbnail title="Contract Details" imgThumbTitle="buyerInfoSheet"/>
     </section>
     <section class="grid-item" @click="navigateBIR_TIN">
         <form-thumbnail title="BIR TIN REQUEST" imgThumbTitle="BirTinRequest"/>

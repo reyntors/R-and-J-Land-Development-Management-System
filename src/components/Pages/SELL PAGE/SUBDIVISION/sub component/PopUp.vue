@@ -17,7 +17,8 @@
                         </ul>
                     </li>
                     <li class="button-container">
-                       <a class="button" v-if="availableButton" @click="clickedReserveNow">Reserve now</a>
+                        <animated-button v-if="availableButton" @click="clickedReserveNow">Reserve now</animated-button>
+                       <!-- <a class="button" v-if="availableButton" @click="clickedReserveNow">Reserve now</a> -->
                     </li>
                     
                 </ul>
@@ -109,18 +110,21 @@ export default {
     }
 }
 .sell{
-    background-image: linear-gradient(120deg, rgba(0, 0, 255, .5),rgba(0, 0, 255, .1),rgba(0, 0, 255, .5));
-    /* outline: .8rem solid rgba(0, 0, 255, .2); */
+    /* background-image: linear-gradient(120deg, rgba(0, 0, 255, .5),rgba(0, 0, 255, .1),rgba(0, 0, 255, .5)); */
+    outline: .2rem solid rgba(0, 0, 255, .2);
+    background-image: radial-gradient(white,rgba(82, 114, 242, .95));
+    /* background-color: rgba(82, 114, 242, .95); */
     box-shadow: 0 0 1rem .1rem rgba(0, 0, 255, .3);
 }
 .sold{
-    /* outline: .8rem solid rgba(255, 0, 0, .8); */
-    background-image: linear-gradient(120deg, rgba(255, 0, 0, .5),rgba(255, 0, 0, .1),rgba(255, 0, 0, .5));
+    outline: .2rem solid rgba(255, 0, 0, .2);
+    /* background-image: linear-gradient(120deg, rgba(255, 0, 0, .5),rgba(255, 0, 0, .1),rgba(255, 0, 0, .5)); */
+    background-image: radial-gradient(white,rgba(255, 0, 0, .5));
     box-shadow: 0 0 1rem .1rem rgba(255, 0, 0, .3);
 }
 .reserved{
-    /* outline: .8rem solid rgba(255, 217, 0, .8); */
-    background-image: linear-gradient(120deg, rgba(255, 217, 0, .5),rgba(255, 217, 0, .1),rgba(255, 217, 0, .5));
+    outline: .2rem solid rgba(255, 217, 0, 1);
+    background-image: radial-gradient( white,rgba(255, 217, 0, .5));
     box-shadow: 0 0 1rem .1rem rgba(255, 217, 0, .3);
 }
 .popup-container .popup-container-section{
@@ -128,13 +132,14 @@ export default {
     height: 100%;
     padding: 1rem;
     position: relative;
+    /* border: 1px solid black; */
 }
 .popup-container .popup-container-section .icon{
     position: absolute;
     top: 0;
     right: 0;
     z-index: 100;
-    color: rgba(128, 128, 128, 0.5);
+    color: rgba(0, 0, 0, 0.5);
     transform: scale(1.1);
     padding: .5rem;
     transition: color .3s ease-in-out;

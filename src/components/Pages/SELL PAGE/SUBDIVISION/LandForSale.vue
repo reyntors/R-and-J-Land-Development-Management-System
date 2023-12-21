@@ -20,7 +20,7 @@
             </section>
         </div>
 
-        <div class="mapContainer">
+        <div class="mapContainer mb-5 ">
           <section class="section"> 
             <map-svg @showDetails="openDetails" v-if="doneRequestSubdivision"></map-svg>
             <blur-loading v-else></blur-loading>
@@ -98,16 +98,6 @@ export default {
 </script>
 
   <style scoped>
-.containerMap{
-    width: 100%;
-    margin: auto;
-    padding-top: 2rem;
-    border: 1px solid black;
-    overflow: auto;
-  }
-  .containerMap h2{
-    text-align: center;
-  }
 .description{
   min-height: 60vh;
   width: 85%;
@@ -130,9 +120,6 @@ export default {
 .description .section2 p {
   line-height: 2rem;
 }
-.description .section2 li{
-  /* font-size: clamp(.5rem, 1.5vw, 1rem); */
-}
 @media only screen and (max-width:1200px){
   .description{
     grid-template-columns: 1fr;
@@ -144,11 +131,14 @@ export default {
 
 .mapContainer{
   /* overflow: auto; */
+  background-color: white;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
   box-shadow: 0 0 1rem 2px rgba(0, 0, 0, 0.196);
   position: relative;
   margin-top: 2rem;
-  border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  border-radius: 1rem;
 }
 .mapContainer .section{
   overflow: auto;
@@ -169,16 +159,13 @@ export default {
 
 /* Scrollbar Handle */
 ::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(120deg, rgba(0, 0, 255, .5),rgba(255, 0, 0, .5),rgba(255, 217, 0, .5));
-  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 3rem; /* Optional: add rounded corners to the handle */
 }
 
 /* Scrollbar Track */
 ::-webkit-scrollbar-track {
-  background: rgba(165, 42, 42, 0.2); /* Set the color of the track */
-  border-bottom-left-radius: 3rem;
-  border-bottom-right-radius: 3rem;
+  background: rgba(0, 0, 0, 0.1); /* Set the color of the track */
 }
 
   </style>

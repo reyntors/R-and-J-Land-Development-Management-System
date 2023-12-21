@@ -4,7 +4,7 @@
     <land-for-sale></land-for-sale>
     <others-view></others-view>
     
-    <!-- <the-footer/> -->
+    <the-footer/>
   </template>
   
   <script>

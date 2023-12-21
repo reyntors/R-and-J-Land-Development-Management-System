@@ -3,7 +3,7 @@
 
     <div class="footer-title">
       <h4 style="margin: 0; padding: 0;" class="fs-2 fw-bold">CONTACT R&J LAND DEVELOPMENT CORPORATION STAFF</h4>
-      <button @click="contacts">Contact Us</button>
+      <clickable-button @click="contacts">Contact Us</clickable-button>
     </div>
 
     <hr>
@@ -51,14 +51,16 @@
       </section>
 
       <section class="section6">
-        <h5>Projects</h5>
+        <h5>Customer Services</h5>
+        <h5>Projects</h5>  
+        <h5>Careers</h5>
       </section>
-      <section class="section7">
+      <!-- <section class="section7">
         <h5>Careers</h5>
       </section>
       <section class="section8">
         <h5>Customer Services</h5>
-      </section>
+      </section> -->
 
     </div>
   </div>
@@ -83,9 +85,10 @@ export default {
 
 <style scoped>
 .footer-cont{
-  background: rgb(34,156,134);
-  background: linear-gradient(163deg, rgba(34,156,134,1) 35%, rgba(11,109,49,1) 100%);
+  background-color: rgb(30, 30, 30);
   padding: 2rem;
+  color: white;
+  overflow: hidden;
 }
 
 .footer-title{
@@ -106,7 +109,7 @@ button{
 
 .grid{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 section{
   padding: .5rem;
@@ -114,6 +117,7 @@ section{
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+  text-align: center;
 
 }
 .section1{
@@ -123,7 +127,56 @@ section{
 .section1 img{
   width: 100%;
 }
+ul{
+  list-style: none;
+  padding: 0;
+}
+li{
+  cursor: default;
+}
+li:hover{
+  text-decoration: underline;
+}
 h5{
-  font-weight: 500;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: default;
+  transition: color .3s ease-in-out;
+}
+h5:hover{
+  color: gold;
+}
+@media only screen and (max-width: 1240px ) {
+  .grid{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .section1{
+    grid-row: span 3;
+  }
+  h4{
+    transform: scale(.8);
+  }
+}
+@media only screen and (max-width: 904px ) {
+  .grid{
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .section1{
+    grid-row: span 3;
+  }
+  h4{
+    transform: scale(.8);
+  }
+}
+@media only screen and (max-width: 750px ) {
+  .grid{
+    grid-template-columns: 1fr;
+  }
+  .section1{
+    grid-row: span 3;
+  }
+  h4{
+    transform: scale(.8);
+  }
 }
 </style>

@@ -63,7 +63,8 @@
                             <!-- <input type="text" id="fbSearch" readonly v-model="fbAccount"> -->
                         </section> 
                         <section class="button">
-                            <button @click="addNow" :disabled="userId===''">Add <font-awesome-icon icon="fa-solid fa-plus" /></button>        
+                            <clickable-button @click="addNow" :disabled="userId===''">Add <font-awesome-icon icon="fa-solid fa-plus" /></clickable-button>
+                            <!-- <button @click="addNow" :disabled="userId===''">Add <font-awesome-icon icon="fa-solid fa-plus" /></button>         -->
                         </section>  
                     </div>    
                 </section>  
@@ -357,7 +358,7 @@ export default{
     width: 50%;
     /* border: 1px solid black; */
 }
-.button button{
+/* .button button{
     width: 100%;
     padding: .5rem;
     border: none;
@@ -372,5 +373,5 @@ export default{
 }
 .button button:active{
     color: black
-}
+} */
 </style>

@@ -10,8 +10,8 @@
 
       <attorney-fact @passData="getSPADetails"></attorney-fact>
 
-    <submit-form-button @click="submit">Submit Form</submit-form-button> 
-    <!-- <blur-loading/> -->
+      <submit-form-button @click="submit" class="mb-4">Submit Form</submit-form-button> 
+      <blur-loading v-if="isLoading"/>
     </form-card>
 </template>
   
@@ -35,6 +35,7 @@ export default{
       spouseDetails: {},
       spaDetails:{},
 
+      isLoading: false,
       showSpouseDetails: true,  //var holder to show the spouse details
       emptyValues: false, //var holder that will be true if there is null or "" values
       emptyKeys: false, //var holder tath will decide if the object has at least one key or none
@@ -111,7 +112,7 @@ export default{
       }
 
     },
-    submit(){
+    async submit(){
       this.emptyValues = false    //instantiate to false the var holder to assume details are not empty
       this.emptyKeys = false      //instantiate to false the var holder to assume that the object has at least one key
       const payload = {
@@ -128,8 +129,17 @@ export default{
       !this.emptyKeys &&                                  //ok if the final object is not empty
         Object.keys(this.propertydetails).length>0 &&     //ok if property details is not empty/IT IS STRICT REQUIRED FIELD
         Object.keys(this.buyerDetails).length>0           //ok if buyer details is not empty/ IT IS STRICT REQUIRED FIELD
-        ){         
-        toast.success('complete')
+        ){     
+          this.isLoading  = true
+          try{
+            
+            const response = await this.$store.dispatch('form/submitBuyerInfoSheet',payload)
+            console.log(response)
+            toast.success(response)
+          }catch(error){
+            toast.error(error)
+          }
+          this.isLoading  = false
       }else{
         toast.warning('Please complete the required details')
       }

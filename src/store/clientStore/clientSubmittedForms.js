@@ -18,7 +18,7 @@ export default{
         async listSubmittedForms(context,id){
             try{
                 const response = await API.listSubmittedForms(id)
-                // console.log(response.data)
+                console.log(response)
                 context.commit('setSubmittedForms',response.data)
             }catch(error){
                 console.error(error)

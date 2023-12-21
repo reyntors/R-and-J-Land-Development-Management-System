@@ -3,8 +3,8 @@
     <slot></slot>
     </button>
   </template>
-
-
+  
+  
   <style scoped>
   button{
       border: none;
@@ -16,12 +16,9 @@
       box-shadow: 0 0 .2rem .1rem rgba(0, 0, 0, 0.2);
       position: relative;
       white-space: nowrap;
-      background-color: #F0A500;
+      background-color: gold;
       cursor: pointer;
       z-index: 1;
-      transition: all .5s ease-in-out;
-      text-transform: capitalize;
-      margin: .5rem;
   }
   button::before{
       content: "";
@@ -33,10 +30,9 @@
       height: 100%;
       border-radius: .5rem;
       transition: all .5s ease-in-out;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgb(255, 255, 255);
       z-index: -1;
-      transform: scale(.9);
-      font-weight: 600;
+      animation: animation 1s ease-in-out infinite;
   }
   button::after{
       content: "";
@@ -47,23 +43,24 @@
       width: 100%;
       height: 100%;
       border-radius: .5rem;
-      background-color: #F0A500;
+      background-color: gold;
       z-index: -1;
-      transition: all .5s ease-in-out;
   }
   button:hover::after,
+  button:hover::before,
   button:hover{
-    background-color:  #CF7500;
-    color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      animation: none;
+      color: white;
   }
-  button:hover::before{
-    transform: scale(1.5);
-    opacity: 0;
+  @keyframes animation{
+  0%{
+    opacity: 1;
+    transform: scale(1);
   }
-
-  button:active::after,
-  button:active{
-    transform: scale(.95);
-    box-shadow: none;
+  100%{
+    transform: scale(1.4);
+    opacity: .1;
   }
+}
   </style>

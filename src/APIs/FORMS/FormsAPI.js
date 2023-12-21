@@ -59,15 +59,16 @@ export const submitBirTinRequest = async (credentials) => {
     }
 }
 
-export const submitContractForm = async (credentials) => {
-    console.log('API submitContractForm executed')
+export const submitBuyerInfoSheet = async (credentials) => {
+    console.log('API BuyerInfoSheetted')
     const token =store.getters['auth/getTokenID']
     try {
-        const response = await axios.post(`${BASE_URL}contractdetails/addcontract`,credentials,{
+        const response = await axios.post(`${BASE_URL}forms/create-buyer-info-sheet`,credentials,{
             headers: {
                 Authorization: `Bearer ${token}`
             } 
         },);
+        console.log(response)
         
         return response.data
 

@@ -52,7 +52,7 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="" id="buyer-widow" value="widow-widower" v-model="buyerCivilStatus">
+              <input class="form-check-input" type="radio" name="" id="buyer-widow" value="widow" v-model="buyerCivilStatus">
               <label class="form-check-label" for="buyer-widow">
                 Widower/Widow
               </label>
@@ -163,13 +163,13 @@
           <p>Government Issued ID:</p>
           <div class="col-md mt-0">
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="buyer-IDissuedDriver" value="driver's license"  v-model="buyerGovtIssuedID">
+              <input class="form-check-input" type="radio" id="buyer-IDissuedDriver" value="drivers license"  v-model="buyerGovtIssuedID">
               <label class="form-check-label" for="buyer-IDissuedDriver">
                 Driver's License
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="buyer-IDissuedSSS-GSIS" value="SSS-GSIS" v-model="buyerGovtIssuedID">
+              <input class="form-check-input" type="radio" id="buyer-IDissuedSSS-GSIS" value="sss/gsis" v-model="buyerGovtIssuedID">
               <label class="form-check-label" for="buyer-IDissuedSSS-GSIS">
                 SSS/GSIS
               </label>
@@ -211,7 +211,7 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="buyer-liveW/Relatives" value="with relatives" v-model="buyerOwnershipCurrentResidence">
+              <input class="form-check-input" type="radio" id="buyer-liveW/Relatives" value="living with relatives" v-model="buyerOwnershipCurrentResidence">
               <label class="form-check-label" for="buyer-liveW/Relatives">
                 Living with relatives
               </label>
@@ -241,13 +241,13 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" id="buyer-locallyEmpmloyed" value="locally Employed" v-model="buyerEmploymentType">
+              <input class="form-check-input" type="radio" id="buyer-locallyEmpmloyed" value="locally employed" v-model="buyerEmploymentType">
               <label class="form-check-label" for="buyer-locallyEmpmloyed">
                 Locally Employed
               </label>
             </div>
             <div class="form-check mb-2">
-              <input class="form-check-input" type="radio" id="buyer-OFW" value="OFW" v-model="buyerEmploymentType">
+              <input class="form-check-input" type="radio" id="buyer-OFW" value="overseas" v-model="buyerEmploymentType">
               <label class="form-check-label" for="buyer-OFW">
                 Overseas Contract Worker
               </label>

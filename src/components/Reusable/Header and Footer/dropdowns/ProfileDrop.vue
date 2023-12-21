@@ -52,7 +52,7 @@ img{
     width: 100%; */
     object-fit: cover;
     border-radius: 100%;
-    outline: 1px solid black;
+    outline: 1px solid white;
 }
 li:hover{
     background-color: rgb(219, 219, 219);
@@ -84,17 +84,21 @@ ul{
     transition: color 0.2s;
 }
   .profile .caret{
-    box-shadow: inset 0 0 1px 1px rgb(72, 62, 8);
+    /* box-shadow: inset 0 0 1px 1px rgb(72, 62, 8); */
     outline: 1px solid black;
-    /* box-shadow: 0 0 1px 5px white; */
+    color: black;
     background-color: gold;
     border-radius: 100%;
     padding: 2px;
     position: absolute;
     right: 0;
     bottom: 0;
+    transition: all .3s ease-in-out;
   }
   .profile{
     position: relative;
+  }
+  .profile:hover .caret{
+    transform: rotate(540deg);
   }
 </style>

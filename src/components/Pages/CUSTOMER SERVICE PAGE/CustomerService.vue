@@ -9,11 +9,11 @@
     <article class="article2">
       <h1 class="fw-bold">CONTACT US</h1>
       <p>Connect with us through our contact details below.</p>
-      <section style="margin-top: .5rem;">
-        <p>Phone Number: +639388534616</p>
-        <p>Email Address: randjLandDevelopementCorp@gmail.com</p>
-        <p @click="openFB">Facebook Page:  
-          <span class="fblink">
+      <section style="margin-top: 1rem;">
+        <p class="text">Phone Number: <span class = "companyDetails">{{ companyContactNumber }}</span></p>
+        <p class="text">Email Address: <span class = "companyDetails">{{ companyEmail }}</span></p>
+        <p class="text" @click="openFB">Facebook Page:  
+          <span class="fblink companyDetails">
             <font-awesome-icon icon="fa-brands fa-square-facebook" size="1x" style="color: #0b68ff;" />
           RandJLandDevCorp
         </span>
@@ -21,69 +21,104 @@
         </p>
       </section>
       
-      <button class="otherBtn" @click="openReserve">Reserve Now</button>
-      <button class="otherBtn" @click="openInquire">Inquire Now</button>
+      <clickable-button @click="openReserve">Reserve Now</clickable-button>
+      <clickable-button @click="openInquire">Inquire Now</clickable-button>
 
       <hr>
       
       <form @submit.prevent="submitContactUS">
-          <section class="grid">
-            <input placeholder="First name" v-model="firstName">
-            <input placeholder="Last name" v-model="lastName">
+            <div class="row g-2 mb-1">
+              <div class="col-md">
+                <div class="form-floating mb-2">
+                  <input type="text" class="form-control" id="floatingFirstname" placeholder="Juan" v-model="firstName">
+                  <label for="floatingFirstname">Firstname</label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-floating mb-2">
+                  <input type="text" class="form-control" id="floatingLastname" placeholder="Cruz" v-model="lastName">
+                  <label for="floatingLastname">LastName</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-2 mb-1">
+              <div class="col-md">
+                <div class="form-floating mb-2">
+                  <input type="text" class="form-control" id="floatingCompany" placeholder="R&J" v-model="company">
+                  <label for="floatingCompany">Company</label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-floating mb-2">
+                  <input type="text" class="form-control" id="floatingJobtitle" placeholder="Programmer" v-model="jobTitle">
+                  <label for="floatingJobtitle">Jobtitle</label>
+                </div>
+              </div>
+            </div>
           
-            <input placeholder="Company" v-model="company">
-            <input placeholder="Job Title" v-model="jobTitle">
-          
-            <input placeholder="Phone" v-model="phone">
-            <input placeholder="Email" v-model="email">
-          
-            <input placeholder="Facebook Link (optional)" v-model="facebookLink">
-            <select v-model="type">
-              <option value="default">I am a...</option>
-              <option value="current-client">Current Client</option>
-              <option value="potential-client">Potential Client</option>
-              <option value="guest">Guest</option>
-              <option value="other">Other</option>
-            </select>
+
+            <div class="row g-2 mb-1">
+              <div class="col-md">
+                <div class="form-floating mb-2">
+                  <input type="text" class="form-control" id="floatingPhone" placeholder="09123456789" v-model="phone">
+                  <label for="floatingPhone">Phone</label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-floating mb-2">
+                  <input type="email" class="form-control" id="floatingEmail" placeholder="sample@gmail.com" v-model="email">
+                  <label for="floatingEmail">Email</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="email" class="form-control" id="floatingFacebookLInk" placeholder="https://fblink" v-model="facebookLink">
+              <label for="floatingFacebookLInk">Facebook Link (optional)</label>
+            </div>
+
+            <div class="mb-2"> 
+              <h4>Interest in</h4>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="checkval1" value="1" v-model="temp">
+                <label class="form-check-label" for="checkval1">Switch Value 1</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="checkval2" value="2" v-model="temp">
+                <label class="form-check-label" for="checkval2">Switch Value 2</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="checkval3" value="3" v-model="temp">
+                <label class="form-check-label" for="checkval3">Switch Value 3</label>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="checkval4" value="4" v-model="temp">
+                <label class="form-check-label" for="checkval4">Switch Value 4</label>
+              </div>              
+            </div>
+
+            <div class="mb-3">
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Message here.." v-model="message"></textarea>
+            </div>
+
+          <section class="submit-container">
+            <clickable-button  class="submit" type="submit">Send</clickable-button> 
           </section>
+          
 
-          <section class="checkboxes" >
-              <h6>Interest id:</h6>
-              <section>
-                <input type="checkbox" id="val1" value="val1" v-model="temp">
-                <label for="val1">Value 1</label>
-              </section>
-              <section>
-                <input type="checkbox" id="val2" value="val2" v-model="temp">
-                <label for="val2">Value 2</label>
-              </section>
-              <section>
-                <input type="checkbox" id="val3" value="val3" v-model="temp">
-                <label for="val3">Value 3</label>
-              </section>
-              <section>
-                <input type="checkbox" id="val4" value="val4" v-model="temp">
-                <label for="val4">Value 4</label>
-              </section>
-              <section>
-                <input type="checkbox" id="val5" value="val5" v-model="temp">
-                <label for="val5">Value 5</label> 
-              </section>
-          </section>  
-
-          <textarea placeholder="Message" v-model="message"></textarea>
-
-          <button class="submit" type="submit">Send</button>
       </form>
       
     </article>
   </div>
 
+  <the-footer/>
 </template>
 
 <script>
+import ClickableButton from '@/components/Reusable/widgets/ClickableButton.vue'
 import { toast } from 'vue3-toastify'
 export default {
+  components: { ClickableButton },
   data(){
     return{
       typeClient: 'default',
@@ -157,24 +192,32 @@ export default {
         toast.warning("please check your information", {autoClose: 500})
       }
     }
+  },
+  computed:{
+    companyEmail(){
+      return this.$store.getters['companyEmail']
+    },
+    companyContactNumber(){
+      return this.$store.getters['companyContactNumber']
+    }
   }
 }
 </script>
 
 <style scoped>
-.otherBtn{
-  padding: .5rem 1rem;
-  border: none;
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.299);;
-  margin: .5rem 0;
-  margin-right: .5rem;
-  background-color: gold;
-  display: block;
-  border-radius: 5px;
-  display: inline;
+.companyDetails{
+  margin-left: .5rem;
+  font-weight: 500;
+  transition: all .2s ease-in;
 }
-p {
-  font-size: clamp(16px, 3vw, 24px);
+.companyDetails:hover{
+  font-weight: 700;
+}
+.text{
+  cursor: default;
+}
+.text:hover .companyDetails{
+  font-weight: 700;
 }
 .fblink:hover{
   border-bottom: 2px solid rgba(0, 0, 255, 0.75); 
@@ -185,12 +228,15 @@ p {
   display: inline; color: blue; 
   cursor: pointer;
 }
-.submit{
-  border: none;
-  outline: 1px solid black;
-  padding: .5rem 0;
+.submit-container{
   width: 100%;
-  background-color: gold;
+  box-sizing: content-box;
+
+}
+.submit{
+  margin: auto;
+  width: 50%;
+  display: block;
 }
 textarea{
   resize: none;
@@ -199,45 +245,16 @@ textarea{
   padding: .5rem;
   box-sizing: border-box;
 }
-.checkboxes h6{
-  grid-column-start: 1;
-  grid-column-end: 3;
-  padding: 0 .2rem;
-}
-.checkboxes section{
-  /* border: 1px solid black; */
-  padding: .2rem;
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-}
-.checkboxes{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: .2rem;
-}
-select{
-  padding:.5rem;
-}
-input{
-  padding: .5rem;
-}
-.grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: .5rem;
-  gap: .5rem;
-}
 .article2{
   padding: 2rem;
 }
 .article1{
   display: flex;
-  background-image: url('https://media.istockphoto.com/id/991072110/photo/advertising-billboard-immersed-in-a-rural-scene-with-vacant-land-for-sale-written-on-it-image.jpg?s=612x612&w=0&k=20&c=5eIIcRJmzyketlCJLlwwLiLcFqVDR7ESlhCqeTlUpSo=');
+  background-image: url('../../../assets/contact us/contactus1.jpg');
   /* height: 85vh; */
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 75%;
+  background-position: center;
 }
 .display{
   display: grid;
@@ -252,10 +269,11 @@ input{
   }
   .article2{
     width: 100%;
-    background-image: linear-gradient(120deg,rgba(255, 255, 255, 0.7  ),rgba(0, 0, 0, 0.3)),url('https://media.istockphoto.com/id/991072110/photo/advertising-billboard-immersed-in-a-rural-scene-with-vacant-land-for-sale-written-on-it-image.jpg?s=612x612&w=0&k=20&c=5eIIcRJmzyketlCJLlwwLiLcFqVDR7ESlhCqeTlUpSo=');
+    background-image: linear-gradient(120deg,rgba(255, 255, 255, 0.7  ),rgba(0, 0, 0, 0.3)),url('../../../assets/contact us/contactus1.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: conver;
     background-position: center;
+
   }
 }
 </style>

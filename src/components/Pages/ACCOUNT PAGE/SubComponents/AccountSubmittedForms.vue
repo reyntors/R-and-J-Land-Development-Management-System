@@ -1,6 +1,6 @@
 <template>
   <div class="account-submitted-forms">
-    <h4>Your Submitted Forms</h4>
+    <h2>Your Submitted Forms</h2>
     <div class="c-conts">
       <ul v-for="(item,index) in list" :key="index">
         <li>
@@ -58,5 +58,15 @@ section{
   width: 90%;
   margin: auto;
   margin-top: 2rem;
+}
+@media only screen and (min-width: 1200px){
+  .c-conts{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+@media only screen and (max-width: 600px){
+  .c-conts{
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>

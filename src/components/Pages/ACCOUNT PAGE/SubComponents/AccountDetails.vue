@@ -1,25 +1,25 @@
 <template>
    <div class="account-details-cont">
       <section>
-         <h4>My Account</h4>
+         <h2 class="mb-3">My Account</h2>
       </section>
       <article>
          <p class="fs-5">Account Details</p>
          <section class="form-section">
             <label>Block and Lot No.</label>
-            <input v-model="myDetails.accountDetails.lotNumber">
+            <input disabled v-model="myDetails.accountDetails.lotNumber">
          </section>
          <section class="form-section">
             <label>Total Squared Meters</label>
-            <input v-model="myDetails.accountDetails.totalSqm">
+            <input disabled v-model="myDetails.accountDetails.totalSqm">
          </section>
          <section class="form-section">
             <label>Amount per Square</label>
-            <input v-model="myDetails.accountDetails.amountperSquare">
+            <input disabled v-model="myDetails.accountDetails.amountperSquare">
          </section>
          <section class="form-section">
             <label>Total Amount Due</label>
-            <input v-model="myDetails.accountDetails.totalAmountDue">
+            <input disabled v-model="myDetails.accountDetails.totalAmountDue">
          </section>
       </article>
       <hr>
@@ -27,15 +27,15 @@
          <p class="fs-5">Payment Details</p>
          <section class="form-section">
             <label>Reservation Payment</label>
-            <input v-model="myDetails.paymentDetails.reservationPayment">
+            <input disabled v-model="myDetails.paymentDetails.reservationPayment">
          </section>
          <section class="form-section">
             <label>Downpayment</label>
-            <input v-model="myDetails.paymentDetails.downPayment">
+            <input disabled v-model="myDetails.paymentDetails.downPayment">
          </section>
          <section class="form-section">
             <label>Monthly Amortization Due</label>
-            <input v-model="myDetails.paymentDetails.monthlyAmortizationDue">
+            <input disabled v-model="myDetails.paymentDetails.monthlyAmortizationDue">
          </section>
       </article>
       <hr>
@@ -43,15 +43,15 @@
          <p class="fs-5">Accounting Details</p>
          <section class="form-section">
             <label>Total Amount Due</label>
-            <input v-model="myDetails.accountingDetails.totalAmountDue">
+            <input disabled v-model="myDetails.accountingDetails.totalAmountDue">
          </section>
          <section class="form-section">
             <label>Total Payment Made</label>
-            <input v-model="myDetails.accountingDetails.totalPayment">
+            <input disabled v-model="myDetails.accountingDetails.totalPayment">
          </section>
          <section class="form-section">
             <label>Total Amount Payable</label>
-            <input v-model="myDetails.accountingDetails.totalAmountPayable">
+            <input disabled v-model="myDetails.accountingDetails.totalAmountPayable">
          </section>
       </article>
 

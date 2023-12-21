@@ -19,8 +19,9 @@ export default {
 <style scoped>
 .legend-container{
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
     /* width: 15rem;
     height: 11rem; */
     background-color: white;

@@ -2,12 +2,15 @@
   <div class="account-profile">
     <div class="background" v-if="isLoading || isUploading"></div>
     <section>
-      <h4>Profile</h4>
+      <h2 class="mb-4">Profile</h2>
     </section>
     <div class="buttons">
-      <button class="btn" @click="saveUpdate">Save</button>
+      <!-- <button class="btn" @click="saveUpdate">Save</button>
       <button class="btn" @click=" toggleEdit" v-if="!editable">Edit</button>
-      <button class="btn" @click=" cancelEdit" v-else>Cancel <font-awesome-icon icon="fa-solid fa-xmark" /></button>
+      <button class="btn" @click=" cancelEdit" v-else>Cancel <font-awesome-icon icon="fa-solid fa-xmark" /></button> -->
+      <clickable-button class="btn" @click="saveUpdate">Save</clickable-button>
+      <clickable-button class="btn" @click=" toggleEdit" v-if="!editable">Edit</clickable-button>
+      <clickable-button class="btn" @click=" cancelEdit" v-else>Cancel <font-awesome-icon icon="fa-solid fa-xmark" /></clickable-button>
     </div>
     
     <form class="form">
@@ -460,22 +463,7 @@ img{
   display: flex;
   gap: .5rem;
 }
-.btn{
-  padding: .25rem .5rem;
-  margin-left: .3rem;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
-  background-color: #31A72A;
-  color: white;
-}
-.btn:hover{
-  color: black;
-}
-.btn:active{
-  opacity: .5;
-}
+
 .form-section label{
   min-width: 180px;
 }

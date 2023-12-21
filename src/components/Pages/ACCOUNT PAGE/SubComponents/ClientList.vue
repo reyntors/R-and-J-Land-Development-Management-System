@@ -231,18 +231,18 @@
       padding-left: 0;
       border-radius: 5px;
   }
-  .grid ul::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: .5rem; /* Width of the scrollbar */
   }
-  .grid ul::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: #f1f1f1; /* Color of the scrollbar track */
     border-radius: 5px;
   }
-  .grid ul::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     background: #888; /* Color of the scrollbar handle */
     border-radius: 5px; /* Rounded corners for the handle */
   }
-  .grid ul::-webkit-scrollbar-thumb:hover {
+  ::-webkit-scrollbar-thumb:hover {
     background: #7f7e7e; /* Color of the scrollbar handle on hover */
   }
   .grid li{

@@ -290,7 +290,7 @@
       width: 100%vw;
       background-repeat: no-repeat;
       background-size: cover;
-      height: 15vh;
+      height: 10vh;
       background-position: center center;
       box-shadow: 0 1px 11px 0.5px rgba(0, 0, 0, 0.407);
       display: flex;
@@ -351,14 +351,14 @@
     padding: .5rem 1rem;
     font-weight: 700;
     font-size: 1rem;
-    background-color: #86D916;
+    background-color: #F0A500;
     height: 100%;
     border-radius: 100px;
     transition: all .3s ease-in-out;
   }
   button:active,
   button:hover{
-    background-color: #84d9169f;
+    background-color: #CF7500;
     color: white;
   } 
 

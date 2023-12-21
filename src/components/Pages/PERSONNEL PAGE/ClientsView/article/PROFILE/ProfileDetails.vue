@@ -3,7 +3,7 @@
       
         <div class="header">
             <h3>Profile Details</h3>
-            <button @click="toggleEdit">{{ editBtnText }}</button>
+            <clickable-button @click="toggleEdit">{{ editBtnText }}</clickable-button>
         </div>
         <form>
             <section class="items-form">
@@ -76,7 +76,7 @@
                 </ul>
             </section>
         </div>
-      <button style="margin-top: 1rem" @click="saveNow">Save</button>
+      <clickable-button style="margin-top: 1rem; width: 50%; margin: auto;" @click="saveNow">Save</clickable-button>
       <div class="shade" v-if="isLoading"/>
       <progress-loading type="torks" v-if="isLoading && isError"/>
     </div>
@@ -375,20 +375,6 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
       margin-bottom: 1rem;
   
       /* border: 1px solid black; */
-  }
- button{
-      padding: 2px .5rem;
-      background-color: #31A72A;
-      color:white;
-      border: none;
-      box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
-  }
- button:hover{
-      background-color: #30a72a8e;
-  }
- button:active{
-      color: black;
   }
   .items-form{
       margin-bottom: .5rem;

@@ -154,13 +154,13 @@ export default {
     computed:{
         setColor(){
             if(this.subdivision.status === 'sell'){
-                return 'background-color: rgba(0, 0, 255, 0.8)'
+                return 'background-image: radial-gradient(white,rgba(0, 0, 255, 0.8))'
             }else if(this.subdivision.status === 'sold'){
-                return 'background-color: rgba(255, 0, 0, 0.8)'
+                return 'background-image: radial-gradient(white,rgba(255, 0, 0, 0.8))'
             }else if(this.subdivision.status === 'reserved'){
-                return 'background-color: rgba(255, 217, 0, .8)'
+                return 'background-image: radial-gradient(white,rgba(255, 217, 0, .8))'
             }else{
-                return 'background-color: white'
+                return 'background-image: radial-gradient(white,white)'
             }
         },
         idSelect(){

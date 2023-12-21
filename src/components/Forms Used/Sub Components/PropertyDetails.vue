@@ -19,25 +19,25 @@
     <div class="mb-3"> 
         <p>Purpose of Purchase:</p>
         <div class="form-check" @click="resetOther">
-            <input class="form-check-input" type="radio" name="purposePurchase" id="primary" value="Primary Residence" v-model="purposePurchase">
+            <input class="form-check-input" type="radio" name="purposePurchase" id="primary" value="primary residence" v-model="purposePurchase">
             <label class="form-check-label" for="primary">
             Primary Residence
             </label>
         </div>
         <div class="form-check" @click="resetOther">
-            <input class="form-check-input" type="radio" name="purposePurchase" id="secondary" value="Secondary Residence" v-model="purposePurchase">
+            <input class="form-check-input" type="radio" name="purposePurchase" id="secondary" value="secondary residence" v-model="purposePurchase">
             <label class="form-check-label" for="secondary">
             Secondary Residence
             </label>
         </div>      
         <div class="form-check" @click="resetOther">
-            <input class="form-check-input" type="radio" name="purposePurchase" id="tertiary" value="ertiary Residence" v-model="purposePurchase">
+            <input class="form-check-input" type="radio" name="purposePurchase" id="tertiary" value="tertiary residence" v-model="purposePurchase">
             <label class="form-check-label" for="tertiary">
             Tertiary Residence
             </label>
         </div>      
         <div class="form-check" @click="resetOther">
-            <input class="form-check-input" type="radio" name="purposePurchase" id="investment" value="Investment" v-model="purposePurchase">
+            <input class="form-check-input" type="radio" name="purposePurchase" id="investment" value="investment" v-model="purposePurchase">
             <label class="form-check-label" for="investment">
             Investment
             </label>
@@ -51,25 +51,25 @@
         <div class="mb-5"> 
         <p>THE BUYERS DESIRE THE PURCHASE TO BE REGISTERED AS:</p>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="registeredAs" id="sole" value="Sole" v-model="buyerDesirePurchase">
+            <input class="form-check-input" type="radio" name="registeredAs" id="sole" value="sole" v-model="buyerDesirePurchase">
             <label class="form-check-label" for="sole">
             Sole
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="registeredAs" id="married" value="Married" v-model="buyerDesirePurchase">
+            <input class="form-check-input" type="radio" name="registeredAs" id="married" value="married" v-model="buyerDesirePurchase">
             <label class="form-check-label" for="married">
             Married
             </label>
         </div>      
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="registeredAs" id="partnership" value="Partnership" v-model="buyerDesirePurchase">
+            <input class="form-check-input" type="radio" name="registeredAs" id="partnership" value="partnership" v-model="buyerDesirePurchase">
             <label class="form-check-label" for="partnership">
             Partnership
             </label>
         </div>      
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="registeredAs" id="corporation" value="Corporation" v-model="buyerDesirePurchase">
+            <input class="form-check-input" type="radio" name="registeredAs" id="corporation" value="corporation" v-model="buyerDesirePurchase">
             <label class="form-check-label" for="corporation">
             Corporation
             </label>

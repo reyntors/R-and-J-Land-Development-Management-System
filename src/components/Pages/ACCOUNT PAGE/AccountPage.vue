@@ -23,7 +23,7 @@
     </section>
   </div>
 
-  <!-- <the-footer/> -->
+  <the-footer/>
 </template>
 
 <script>
@@ -247,4 +247,5 @@ export default {
       width: 100%;
     }
 }
+
 </style>

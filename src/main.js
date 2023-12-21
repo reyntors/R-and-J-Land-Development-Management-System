@@ -39,7 +39,8 @@ import SubmitFormButton from './components/Reusable/Form SubComponents/SubmitFor
 import DotLoading from './components/Reusable/LoadingScreens/DotLoading.vue'
 import BlurLoading from './components/Reusable/LoadingScreens/BlurLoading.vue'
 import containerWidget from './components/Reusable/widgets/containerWidget.vue'
-import ClickableButton from './components/Reusable/widgets/ClickableButton.vue'
+import AnimatedButton from './components/Reusable/widgets/AnimatedButton.vue'
+import ClickableButton from './components/Reusable/widgets/ClickableButton'
 
 
 const app = createApp(App)
@@ -57,6 +58,7 @@ app.component('submit-form-button',SubmitFormButton)
 app.component('dot-loading',DotLoading)
 app.component('blur-loading',BlurLoading)
 app.component('container-widget',containerWidget)
+app.component('animated-button',AnimatedButton)
 app.component('clickable-button',ClickableButton)
 
 app.mount('#app')

@@ -36,9 +36,9 @@ export default{
             }
         },
 
-        async submitContractForm(_,payload){
+        async submitBuyerInfoSheet(_,payload){
             try{
-                const response = await API.submitContractForm(payload)
+                const response = await API.submitBuyerInfoSheet(payload)
                 return response.message
             }catch(error){
                 console.log(error)

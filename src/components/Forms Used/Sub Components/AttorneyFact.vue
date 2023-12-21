@@ -58,7 +58,7 @@
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" id="spa-widow-widower" value="widow/widower" v-model="spaCivilStatus">
+            <input class="form-check-input" type="radio" id="spa-widow-widower" value="widow" v-model="spaCivilStatus">
             <label class="form-check-label" for="spa-widow-widower">
             Widower/Widow
             </label>

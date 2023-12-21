@@ -52,7 +52,7 @@
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="" id="spouse-widow" value="widow-widower" v-model="spouseCivilStatus">
+            <input class="form-check-input" type="radio" name="" id="spouse-widow" value="widow" v-model="spouseCivilStatus">
             <label class="form-check-label" for="spouse-widow">
               Widower/Widow
             </label>
@@ -63,12 +63,12 @@
               Married
             </label>
           </div>               
-          <div class="form-check">
+          <!-- <div class="form-check">
             <input class="form-check-input" type="radio" name="" id="spouse-spouse" value="spouse" v-model="spouseCivilStatus">
             <label class="form-check-label" for="spouse-spouse">
               Spouse
             </label>
-          </div>               
+          </div>                -->
         </div>      
         <div class="col-md mt-0">
           <p>Sex:</p>
@@ -169,13 +169,13 @@
         <p>Government Issued ID:</p>
         <div class="col-md mt-0">
           <div class="form-check">
-            <input class="form-check-input" type="radio" id="spouse-IDissuedDriver" value="driver's license"  v-model="spouseGovtIssuedID">
+            <input class="form-check-input" type="radio" id="spouse-IDissuedDriver" value="drivers license"  v-model="spouseGovtIssuedID">
             <label class="form-check-label" for="spouse-IDissuedDriver">
               Driver's License
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" id="spouse-IDissuedSSS-GSIS" value="SSS-GSIS" v-model="spouseGovtIssuedID">
+            <input class="form-check-input" type="radio" id="spouse-IDissuedSSS-GSIS" value="sss/gsis" v-model="spouseGovtIssuedID">
             <label class="form-check-label" for="spouse-IDissuedSSS-GSIS">
               SSS/GSIS
             </label>
@@ -211,13 +211,13 @@
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" id="spouse-locallyEmpmloyed" value="locally Employed" v-model="spouseEmploymentType">
+            <input class="form-check-input" type="radio" id="spouse-locallyEmpmloyed" value="locally employed" v-model="spouseEmploymentType">
             <label class="form-check-label" for="spouse-locallyEmpmloyed">
               Locally Employed
             </label>
           </div>
           <div class="form-check mb-2">
-            <input class="form-check-input" type="radio" id="spouse-OFW" value="OFW" v-model="spouseEmploymentType">
+            <input class="form-check-input" type="radio" id="spouse-OFW" value="overseas" v-model="spouseEmploymentType">
             <label class="form-check-label" for="spouse-OFW">
               Overseas Contract Worker
             </label>

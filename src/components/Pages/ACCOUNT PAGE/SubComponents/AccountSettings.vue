@@ -1,8 +1,8 @@
 <template>
    <form class="account-settings-cont" enctype="multipart/form-data" @submit.prevent="updateProfile">
-      <section>
-         <h4>Settings</h4>
-      </section>
+
+         <h2>Settings</h2>
+
       
       <article>
 
@@ -67,7 +67,8 @@
 
       </article>
 
-      <button type="submit" class="submit-btn fw-bold">Update</button>
+      <!-- <button type="submit" class="submit-btn fw-bold">Update</button> -->
+      <clickable-button type="submit" class="submit-btn" >Update</clickable-button>
 
       <submit-code v-if="submitCodeBool" 
          @close-submit-code="closeSubmitCode"
@@ -296,9 +297,6 @@ button{
    position: absolute;
    top: 0;
    right: 0;
-   padding: .5rem 1rem;
-   margin: .5rem 1rem;
-   border-radius: 5px;
 }
 .eye{
    position: absolute;

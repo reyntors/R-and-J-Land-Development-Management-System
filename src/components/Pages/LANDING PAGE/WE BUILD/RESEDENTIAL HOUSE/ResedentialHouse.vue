@@ -1,9 +1,5 @@
 <template>
-  <div id="residential-house" class="model-house-cont">
-      <!-- <header>
-        <h2>MODEL HOUSES</h2>
-      </header> -->
-
+  <div id="residential-house" class="model-house-cont mb-5">
       <article>
         <section class="section1">
           <div class="div1">
@@ -33,10 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.model-house-cont{
-  /* margin-top: 2rem;
-  padding-top: 1rem; */
-}
 .model-house-cont h2{
   text-align: center;
   margin-bottom: 1rem;

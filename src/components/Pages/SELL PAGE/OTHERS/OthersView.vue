@@ -12,8 +12,6 @@ export default {
 
 <style scoped>
 #sell-others{
-    margin-top: 2rem;
     height: 300px;
-    border: 1px solid black;
 }
 </style>

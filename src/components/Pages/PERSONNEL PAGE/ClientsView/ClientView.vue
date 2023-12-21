@@ -3,9 +3,7 @@
       <div v-if="!addFormVisibleComputed">
         <article class="searchPart">
             <h4 >Client List</h4>
-            <div @click="toggleShowAddForm">
-              Add New Client
-            </div>
+            <clickable-button @click="toggleShowAddForm">Add new client</clickable-button>
         </article>
 
         <progress-loading v-if="isLoading" type="spin"></progress-loading>
@@ -122,17 +120,16 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
       },   
 
       async mounted(){
-        // this.isLoading = true
-        // try{
-        //   await this.$store.dispatch('client/getLegitList')  //for legit list
-        //   // await this.$store.dispatch('client/getPendingList') //for guest pending list
+        this.isLoading = true
+        try{
+          await this.$store.dispatch('client/getLegitList')  //for legit list
+          // await this.$store.dispatch('client/getPendingList') //for guest pending list
 
-        //   // await this.$store.dispatch('rawForms/getRawFormsList')  //for raw forms
-        //   this.isLoading = false
-        // }catch(error){
-        //   console.log(error)
-        //   toast.error(error)
-        // }
+          // await this.$store.dispatch('rawForms/getRawFormsList')  //for raw forms
+          this.isLoading = false
+        }catch(error){
+          toast.error(error)
+        }
         
       }
   }

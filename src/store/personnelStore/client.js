@@ -20,6 +20,8 @@ export default{
 
             listGuestSuggestions: [],
 
+            listSubmittedForms : [],
+
             // something: ''
         }
     },
@@ -107,9 +109,13 @@ export default{
         },
         //end payment transactions
 
-        // start set scanned files
+        // start set scanned files and submitted forms
         setLocalCurrentUploadedScannedFiles(state,list){
             state.listCurrentClientScannedFiles = list.reverse()
+        },
+        setListSubmittedForms(state,data){
+            console.log(data)
+            state.listSubmittedForms = data
         },
         // end set scanned files
 
@@ -373,7 +379,15 @@ export default{
         },
         //end payment transactions
 
-        //start downloadable Form
+        //start downloadable Form and Submitted Forms
+        async listSubmittedForms(context,id){
+            try{
+                const response = await Client.listSubmittedForms(id)
+                context.commit('setListSubmittedForms',response.data)
+            }catch(error){
+                console.log(error)
+            }
+        },
         async retrieveUploadedForm(_,payload){
             try{
                 const response = await Client.retrieveUploadedForm({
@@ -467,11 +481,14 @@ export default{
         },
         /*end transaction payment */
 
-        //start set scannedfiles
+        //start get scannedfiles
+        listSubmittedFormsGetter(state){
+            return state.listSubmittedForms
+        },
         listCurrentClientScannedFilesGetter(state){
             // console.log(state.listCurrentClientScannedFiles)
             return state.listCurrentClientScannedFiles
         }
-        //start set scannedfiles
+        //start get scannedfiles
     }
 }

@@ -36,7 +36,7 @@ export default {
             else if(this.imgThumbTitle === 'BirTinRequest'){
                 return BIR_TIN_Request
             }
-            else if(this.imgThumbTitle === 'buyerinfo'){
+            else if(this.imgThumbTitle === 'buyerInfoSheet'){
                 return BuyerInfo
             }
 

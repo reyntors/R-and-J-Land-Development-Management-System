@@ -8,27 +8,17 @@
         <h5>Submitted Forms</h5>
         
         <div class="flexCont">
-            <section @click="openForm('letterIntent')" v-if="clientObj.letterOfIntent.url !== null && clientObj.letterOfIntent.isSubmitted === true">
-              <p>Letter of Intent</p>
-              <!-- <img src="@/assets/form-thumbnails/Letter-of-intent.png">               -->
-            </section>
+          <!-- {{ listSubmittedForms }} -->
+          <ul v-for="(item,index) in listSubmittedForms" :key="index">
+            <li>
+              <section>
+                <a :href="item.url" :download="fileName(index)">
+                  <form-thumbnail :imgThumbTitle="index" :title="index"></form-thumbnail>
+                </a>  
+              </section>
+            </li>
+          </ul>
 
-            <section @click="openForm('buyerDeclaration')" v-if="clientObj.individualDeclaration.url !== null && clientObj.individualDeclaration.isSubmitted === true">
-              <p>Individual Declaration</p>
-              <!-- <img src="@/assets/form-thumbnails/individual-buyer-declaration.png">               -->
-            </section>
-
-            <section @click="openForm('bir-tin')" v-if="clientObj.BirTinRequest.url !== null && clientObj.BirTinRequest.isSubmitted === true">
-              <p>BIR-TIN-Request</p>
-              <!-- <img src="@/assets/form-thumbnails/BIR-TIN-Request.png">               -->
-            </section>
-
-            <!-- <section  @click="openForm('contractDetails')" v-if="clientObj.ContractForm.url !== null">
-              <p>Contract Details</p>
-              <img src="@/assets/form-thumbnails/contract-details.png">              
-            </section> -->
-     
-          
         </div>
       </section>
 <hr>
@@ -72,22 +62,23 @@
 
     </div>
 
-    <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms" :client-obj="clientObj.letterOfIntent" :whole-object="clientObj"/>
+    <!-- <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms" :client-obj="clientObj.letterOfIntent" :whole-object="clientObj"/>
     <buyer-declaration v-if="formVisible === 'buyerDeclaration'" @back-click="toggleOpenForms" :client-obj="clientObj.individualDeclaration" :whole-object="clientObj"/>
     <bir-tin v-if="formVisible === 'bir-tin'" @back-click="toggleOpenForms" :client-obj="clientObj.BirTinRequest" :whole-object="clientObj"/>
-    <contract-details v-if="formVisible === 'contractDetails'" @back-click="toggleOpenForms" :client-obj="clientObj.ContractDetails"></contract-details>
+    <contract-details v-if="formVisible === 'contractDetails'" @back-click="toggleOpenForms" :client-obj="clientObj.ContractDetails"></contract-details> -->
       
   </div>
 </template>
 
 <script>
 import { toast } from 'vue3-toastify'
-import ContractDetails from './FormComponents/ContractDetails.vue'
-import BirTin from './FormComponents/BirTin.vue'
-import BuyerDeclaration from './FormComponents/BuyerDeclaration.vue'
-import LetterIntent from './FormComponents/LetterIntent.vue'
+// import ContractDetails from './FormComponents/ContractDetails.vue'
+// import BirTin from './FormComponents/BirTin.vue'
+// import BuyerDeclaration from './FormComponents/BuyerDeclaration.vue'
+// import LetterIntent from './FormComponents/LetterIntent.vue'
+import LetterOfIntentImage from '@/assets/form-thumbnails/letter-of-intent.jpg'
 export default {
-  components: { LetterIntent, BuyerDeclaration,BirTin,ContractDetails},
+  // components: { LetterIntent, BuyerDeclaration,BirTin,ContractDetails},
   props: ['clientObj'],
     data(){
       return{
@@ -102,14 +93,20 @@ export default {
 
         listWithUrl: [],
         emptyList: true,
+
+        LetterOfIntentImage: LetterOfIntentImage,
+
       }
     },
     methods: {
-      toggleOpenForms(){
-        console.log('clicked')
-        this.openForms = !this.openForms
-        this.formVisible = null 
+      fileName(title){
+        return title+'.pdf'
       },
+      // toggleOpenForms(){
+      //   console.log('clicked')
+      //   this.openForms = !this.openForms
+      //   this.formVisible = null 
+      // },
       openForm(param){
         this.openForms = !this.openForms
         if(param === 'letterIntent'){
@@ -160,6 +157,7 @@ export default {
       async getListScannedFiles(){
         this.isLoading = true
         try{
+          await this.$store.dispatch('client/listSubmittedForms',this.clientObj.userId)
           await this.$store.dispatch('client/getListScannedFile', this.clientObj.userId)
           await new Promise(resolve => setTimeout(resolve,500))
           this.isLoading = false
@@ -190,12 +188,16 @@ export default {
       },   
       listUploadedScannedFiles(){
         return this.$store.getters['client/listCurrentClientScannedFilesGetter']
-      }     
+      },
+      listSubmittedForms(){
+        return this.$store.getters['client/listSubmittedFormsGetter']
+      }
+
     },
 
     mounted(){
-      this.getListScannedFiles()
-      // console.log(this.clientObj)
+      console.log(this.getListScannedFiles())
+      console.log(this.clientObj)
     }
  
 }
@@ -234,11 +236,15 @@ p{
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
 }
+.flexCont ul{
+  list-style: none;
+  padding: 0;
+}
 .flexCont section{
   text-align: center;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   /* width: 25%; */
-  padding: .2rem .5rem .5rem;
+  /* padding: .2rem .5rem .5rem; */
   cursor: pointer;
 }
 @media screen and (max-width: 850px) {

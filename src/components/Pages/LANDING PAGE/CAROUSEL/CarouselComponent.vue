@@ -12,8 +12,8 @@
         <h1 class="title">R & J Land Development Corporation</h1>
         
         <span class="redirect-buttons">
-          <clickable-button>Reserve Now</clickable-button>
-          <clickable-button>Inquire Now</clickable-button>
+          <animated-button @click="reserveNow">Reserve Now</animated-button>
+          <animated-button @click="inquireNow">Inquire Now</animated-button>
           <!-- <button class="clickme fw-bold" @click="reserveNow"></button>
           <button class="clickme fw-bold" @click="inquireNow">Inquire Now</button> -->
         </span>
@@ -114,6 +114,8 @@ export default {
 #carousel-control{
     text-align: center;
     z-index: 0;
+    padding: 0;
+    height: 85vh;
 }
 
 
@@ -122,5 +124,6 @@ export default {
   height: 85vh;
   object-fit: cover;
   object-position: center;
+  margin: 0;
 }
 </style>
