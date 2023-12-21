@@ -19,7 +19,7 @@
         </span>
       </div>
       <video class="video" autoplay muted loop>
-        <source src="../../../../assets/video/video.mp4">
+        <source src="https://aws-bucket-nodejs.s3.amazonaws.com/uploads/videos/video.mp4">
       </video>
     </div>
 
