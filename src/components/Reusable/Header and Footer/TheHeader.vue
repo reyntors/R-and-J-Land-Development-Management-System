@@ -308,10 +308,12 @@
     cursor: pointer;
     opacity: 0.5;
     margin-right: 1rem;
-  }
-  .barsStaffAdmin:active{
-    scale: 1.1;
     transition: scale .1s ease-in;
+    color: white;
+  }
+  .barsStaffAdmin:active,
+  .barsStaffAdmin:hover{
+    scale: 1.1;
   }
   /* .header img{
     width: 15vw;
@@ -375,7 +377,7 @@
     border-bottom: 2px solid white;
   }
 
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width:1000px) {
       .rowNav{
         display: none;
       }
@@ -383,7 +385,7 @@
         display: visible;
       }
   }
-  @media only screen and (min-width: 1201px) {
+  @media only screen and (min-width: 1001px) {
       .rowNav{
         display: visible;
       }

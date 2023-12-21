@@ -1,16 +1,8 @@
 <template>
-    <div class="navStaffAdmin">
-        <p class="text"><font-awesome-icon icon="fa-solid fa-circle-user" size="2x" /> {{ fullname }}</p>
-        <font-awesome-icon class="icon"  :icon="['fas', 'caret-down']" @click="toggleStaffAdminColumn" />
-        <!-- <font-awesome-icon class="icon" v-if="isShowStaffAdminColumn" :icon="['fas', 'caret-up']" @click="toggleStaffAdminColumn" /> -->
+    <div class="navStaffAdmin" @mouseenter="toggleStaffAdminColumn" @mouseleave="toggleStaffAdminColumn">
+        <!-- <font-awesome-icon class="icon icon1" icon="fa-solid fa-circle-user"/> -->
+        <p class="text">{{ fullname }}<font-awesome-icon class="icon icon2"  :icon="['fas', 'caret-down']"/></p>
         <div class="dropdown" v-if="isShowStaffAdminColumn">
-            <!-- <router-link to="/personnel/client" @click="toggleStaffAdminColumn">CLIENTS</router-link>
-            <router-link to="/personnel/subdivision" @click="toggleStaffAdminColumn">SUBDIVISION</router-link>
-            <router-link to="/personnel/inquiries" @click="toggleStaffAdminColumn">INQUIRIES</router-link>
-            <router-link to="/personnel/emptyForms" @click="toggleStaffAdminColumn">EMPTY FORMS</router-link>
-            <router-link to="/personnel/reports" @click="toggleStaffAdminColumn">REPORTS</router-link>
-            <button>STAFF REQUEST</button> -->
-            <!-- <button>Profile</button> -->
             <button @click="gotoSettings">Settings</button>
             <button @click="gotoDashboard">Dashboard</button>
             <button @click="logout">Log Out</button>
@@ -51,22 +43,22 @@ export default {
 </script>
 
 <style scoped>
-
-.dropdown{
-    background-color: white;
-    box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.1);
-    z-index: 3;
-}
 .navStaffAdmin{
     color: white;
     display: flex;
     align-items: center;
     position: relative;
     margin-right: 1rem;
+    position: relative;
+  }
+  .dropdown{
+    background-color: white;
+    box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.1);
+    z-index: 3;
   }
   .navStaffAdmin .text{
-    margin-left: .2rem;
-    margin-right: .5rem;
+    /* margin-left: 1rem; */
+    margin-right: .1rem;
     text-transform: capitalize;
     transition: all .3s ease-in-out;
     cursor: default;
@@ -89,10 +81,12 @@ export default {
   .navStaffAdmin .text:hover::after{
     visibility: visible;
   }
-  .navStaffAdmin .text:hover + .icon{
-    
+  .icon{
+    transition: transform .3s ease-in-out;
   }
-
+  .navStaffAdmin:hover .text .icon2{
+    transform: rotate(180deg);
+  }
   .navStaffAdmin div{
     position: absolute;
     right: 0;
@@ -101,13 +95,9 @@ export default {
     width: 100%;
     flex-direction: column;
   }
-  .navStaffAdmin .icon{
+  .navStaffAdmin .icon2{
     cursor: pointer;
     scale: 1.5;
-  }
-  .navStaffAdmin .icon:hover{
-    scale: 1.8;
-    transition: scale .1s ease-in;
   }
   button{
     background-color: transparent;

@@ -72,4 +72,15 @@ export default {
     padding-top: .5rem;
     text-align: center;
 }
+@media only screen and (max-width: 600px) {
+    .mission-vision{
+        display: block;
+        
+    }
+    .vision,.mission{
+        margin-top: 1rem;
+        width: 100%;
+    }
+    
+}
 </style>
