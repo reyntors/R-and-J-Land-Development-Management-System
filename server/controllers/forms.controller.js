@@ -29,6 +29,9 @@ exports.getAllFormsById = async (req, res) => {
         if (user.BirTinRequest.isSubmitted) {
             submittedForms.BirTinRequest = user.BirTinRequest;
         }
+        if (user.buyerInfoSheet.isSubmitted) {
+            submittedForms.buyerInfoSheet = user.buyerInfoSheet;
+        }
 
         return res.status(200).json({
             message: `All forms requested by ${user.username}`,
