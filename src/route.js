@@ -84,9 +84,11 @@ const route = createRouter({
 
     route.beforeEach(function(to,_,next){
         //get the localStorage in case HARD REFRESH
-        // this.$store.commit('resetHomeId')
-        store.commit('auth/getLocalStorage')
-        store.commit('resetHomeId')
+        store.dispatch('auth/monitorTokenSpan')     //monitor the token span every navigation
+        store.commit('auth/getLocalStorage')    //get the local storage every navigation
+        store.commit('resetHomeId')     //reset the element container ID
+        
+
         // store.dispatch('mySettings/getMyAccountSettings')
 
         //this condition sets the path that required the user to be authenticated before they can access it

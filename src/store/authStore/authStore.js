@@ -11,11 +11,16 @@ export default {
             userId: null,
             profilePic: null,
             fullname: null,
+            baseNumericTime: null,
+            autoLogoutNow: false,
 
             openLoginForm: false,
         }
     },
     mutations:{
+        autoLogoutNow(state,bool){
+            state.autoLogoutNow = bool
+        },
         toggleLoginForm(state,bool){
             state.openLoginForm = bool
         },
@@ -25,6 +30,7 @@ export default {
             state.userId = responseData.userId
             state.profilePic = responseData.profilePic
             state.fullname = responseData.fullname
+            state.baseNumericTime = responseData.baseNumericTime
         },
         eraseStoreState(state){
             state.role = null;
@@ -32,6 +38,7 @@ export default {
             state.userId = null
             state.profilePic = null
             state.fullname = null
+            state.baseNumericTime = null
         },
         addLocalStorage(_,responseData){
             console.log(responseData)
@@ -40,6 +47,7 @@ export default {
             localStorage.setItem('userId',responseData.userId)
             localStorage.setItem('profilePic',responseData.profilePic)
             localStorage.setItem('fullname',responseData.fullname)
+            localStorage.setItem('baseNumericTime',responseData.baseNumericTime)
         },
         getLocalStorage(state){
             state.role = localStorage.getItem('user')
@@ -47,6 +55,7 @@ export default {
             state.userId = localStorage.getItem('userId')
             state.profilePic = localStorage.getItem('profilePic')
             state.fullname = localStorage.getItem('fullname')
+            state.baseNumericTime = localStorage.getItem('baseNumericTime')
         },
         eraseLocalStorage(){
             localStorage.removeItem('user')
@@ -54,6 +63,7 @@ export default {
             localStorage.removeItem('userId')
             localStorage.removeItem('profilePic')
             localStorage.removeItem('fullname')
+            localStorage.removeItem('baseNumericTime')
         },
 
         updateProfilePictureLocal(state,file){
@@ -65,22 +75,55 @@ export default {
 
     },
     actions:{
+        async monitorTokenSpan(context){
+            console.log('monitoring the token time span')
+            const isLoggedIn = context.getters['authGetter']    //check if the user is logged in
+            if(isLoggedIn){
+                const timeNow = new Date()      //get the date now
+                const numericTimeNow = timeNow.getTime()        //convert the date now into numeric
+                const baseTime = context.getters['baseNumericTimeGetter']   //get the numeric time that saved on the browser when the time the user logged in
+                const diff = numericTimeNow - baseTime      //get the difference of both values the time now and thes time logged in
+                const minuteDiff = diff/60000   //convert into minute the difference result
+                if(minuteDiff>=1){      //auto log out when the exceeds 1 minute
+                    console.log("already exceeds one minute")
+                    context.commit('autoLogoutNow',true)    //show the auto logout animation
+                    await new Promise(resolve => setTimeout(resolve,1500))
+                    context.commit('eraseStoreState')   //delete the state of the app
+                    context.commit('eraseLocalStorage') //delete the local storage of the browser
+                    context.commit('autoLogoutNow',false)   //close the logout animation
+                    context.commit('toggleLoginForm',true)  //open login form
+                    
+                }else{
+                    console.log('all goods keep going!!')
+                }                
+            }else{
+                console.log('the user is not logged in')
+            }
+
+        },
         //LOGIN REQUEST
         async login(context, credentials){
             console.log('login clicked')
             try{
                const responseData = await Auth.login(credentials);
 
+               const timeNow = new Date()   //get the time now when log in
+               const baseNumericTime = timeNow.getTime()    //convert into numeric the time now
+               console.log(baseNumericTime)
+
                 const Data = {
                     tokenID: responseData.data.token,
                     roles: responseData.data.roles,
                     userId: responseData.data.userId,
                     profilePic: responseData.data.profilePicture.url,
-                    fullname: responseData.data.fullname
+                    fullname: responseData.data.fullname,
+                    baseNumericTime : baseNumericTime,
                 }
+
 
                 context.commit('addLocalStorage',Data)
                 context.commit('addStoreState',Data)
+                context.commit('autoLogoutNow',false)
 
                 return responseData;
 
@@ -226,6 +269,14 @@ export default {
 
         fullnameGetter(state){
             return state.fullname
+        },
+
+        baseNumericTimeGetter(state){
+            return state.baseNumericTime
+        },
+
+        autoLogoutNowGetter(state){
+            return state.autoLogoutNow
         }
     }
 
