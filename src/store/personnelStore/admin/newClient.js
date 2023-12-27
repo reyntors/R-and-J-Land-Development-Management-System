@@ -1,5 +1,5 @@
 import * as API from '@/APIs/PERSONNEL/ADMIN/NewClientAPI.js'
-
+import store from '@/store/store.js'
 export default{
     namespaced: true,
 
@@ -26,6 +26,7 @@ export default{
 
     actions: {
         async getList(context){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.getNewClientsList()
                 context.commit('setList',response.data[0].requests)
@@ -34,6 +35,7 @@ export default{
             }
         },
         async approval(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.approvalAddingClient(payload)
                 context.commit('remove',payload.requestId)

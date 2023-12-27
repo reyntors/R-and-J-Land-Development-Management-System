@@ -1,5 +1,5 @@
 import * as API from '@/APIs/BOTH/BothAPI.js'
-
+import store from '@/store/store.js'
 export default {
     namespaced: true,
     state(){
@@ -82,6 +82,7 @@ export default {
 
         // start guest
         async reserveSubdivision(_,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response =  await API.reserveSubdivision(payload)
                 return response
@@ -95,6 +96,7 @@ export default {
         //start - personnel
         async update(_,payload){
             // context.commit('update',payload)
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.SubdivisionLotUpdate(payload.lotNo, payload.form)
                 console.log(response.message)

@@ -1,4 +1,5 @@
 import * as RAW from '@/APIs/PERSONNEL/RawFormsAPI.js'
+import store from '@/store/store.js'
 export default {
     namespaced: true,
     state(){
@@ -14,6 +15,7 @@ export default {
 
     actions:{
         async getRawFormsList(context){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await RAW.requestRawFormsList()
                 const list = response.data.forms

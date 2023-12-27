@@ -1,5 +1,4 @@
 import * as API from '@/APIs/CLIENT/AccountAPI.js'
-
 export default{
     namespaced: true,
     state(){

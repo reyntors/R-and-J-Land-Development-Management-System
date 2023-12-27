@@ -1,4 +1,5 @@
 import * as Client from '@/APIs/PERSONNEL/ClientAPI.js'
+import store from '@/store/store.js'
 
 export default{
 
@@ -253,6 +254,7 @@ export default{
 
         //start getting guest list
         async getPendingList(context){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.requestPendingList()
                 context.commit('setLocalListPending',response)
@@ -264,6 +266,7 @@ export default{
 
         //start getting legit list
         async getLegitList(context){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.requestLegitList()
                 // console.log(response.data)
@@ -277,6 +280,7 @@ export default{
 
         // start update profile
         async updateClient(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             console.log('updating profile details')
             try{
                  const response = await Client.updateUserProfile(payload)
@@ -289,6 +293,7 @@ export default{
         // end update profile
         //start adding GUEST to LEGIT CLIENT
         async addClient(context,payload){   
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.addToLegitClient(payload)
                 console.log('isAdmin:',payload.isAdmin)
@@ -303,6 +308,7 @@ export default{
         },
 
         async removeClient(context,id){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 await Client.removeToLegitClient(id)
                 context.commit('removeClient',id)
@@ -314,6 +320,7 @@ export default{
 
         //start payment transactions
         async getListTransaction(context,id){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.getListTransaction(id)
                 const list = response.data
@@ -329,6 +336,7 @@ export default{
         },
 
         async addPayment(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             console.log(payload.object)
             try{
                 const response = await Client.addPaymentTransaction({
@@ -344,6 +352,7 @@ export default{
         },
 
         async updatePayment(_,payload){
+            store.dispatch('auth/monitorTokenSpan')
             console.log('updating store')
 
             try{
@@ -356,6 +365,7 @@ export default{
         },
         
         async deleteTransactionPayment(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.deletePaymentTransaction(payload)
                 context.commit('deleteTransactionPayment',payload.transactionId)
@@ -368,6 +378,7 @@ export default{
         },
 
         async deleteAccountDetails(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.deletePaymentAccountDetails(payload)
                 context.commit('deletePaymentAccountDetails',payload)
@@ -381,6 +392,7 @@ export default{
 
         //start downloadable Form and Submitted Forms
         async listSubmittedForms(context,id){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.listSubmittedForms(id)
                 context.commit('setListSubmittedForms',response.data)
@@ -389,6 +401,7 @@ export default{
             }
         },
         async retrieveUploadedForm(_,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.retrieveUploadedForm({
                     id: payload.id,
@@ -401,6 +414,7 @@ export default{
             }
         },
         async uploadScannedFile(_,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.uploadScannedFile(payload.id,payload.data)
                 return response.message
@@ -409,6 +423,7 @@ export default{
             }
         },
         async getListScannedFile(context,id){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                const response = await Client.listScannedFile(id)
                const list = response.scannedFiles
@@ -421,6 +436,7 @@ export default{
 
         //start reservation form
         async submitReservationForm(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             console.log(payload)
             try{
                 const response = await Client.submitReservationFormAPI(payload)

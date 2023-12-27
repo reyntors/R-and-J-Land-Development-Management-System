@@ -1,4 +1,5 @@
 import * as API from '@/APIs/PERSONNEL/ReportsAPI.js'
+import store from '@/store/store.js'
 export default {
     namespaced: true,
     state(){
@@ -54,6 +55,7 @@ export default {
     },
     actions:{
         async dailyRequest(context,payload){  
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.requestDailyReport(payload)
                 console.log(response)
@@ -77,6 +79,7 @@ export default {
         },
 
         async weeklyReport(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.requestWeeklyReport(payload)
                 console.log(response)
@@ -99,6 +102,7 @@ export default {
         },
 
         async monthlyReport(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.requestMonthlyReport(payload)
                 const file = await API.requestExcelFileReport(response.filename)
@@ -120,6 +124,7 @@ export default {
         },
 
         async customReport(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.requestCustomReport(payload)
                 const file = await API.requestExcelFileReport(response.filename)

@@ -2,14 +2,20 @@
   <router-view></router-view>
   <messenger-chat v-if="isNotPersonnel"></messenger-chat>
   
-
+  <auto-logout v-if="autoLogoutNow"></auto-logout>
 
 </template>
 
 <script>
 import MessengerChat from './components/MESSENGER/MessengerChat.vue'
+import AutoLogout from './components/Reusable/LoadingScreens/AutoLogout.vue'
 export default {
-  components: {MessengerChat},
+  components: {MessengerChat,AutoLogout},
+  data(){
+    return{
+      autoLogoutNow: false,
+    }
+  },
   computed:{
     isNotPersonnel(){
       const role = this.$store.getters['auth/getRoleType']
@@ -18,8 +24,22 @@ export default {
       }else{
         return false
       }
+    },
+    isAutoLougout(){
+      return this.$store.getters['auth/autoLogoutNowGetter']
     }
   },
+  watch:{
+    'isAutoLougout': async function(newValue) {
+      if(newValue === true){
+        this.$router.push('/home')
+        this.autoLogoutNow = true;
+        await new Promise(resolve => setTimeout(resolve, 4000))
+        this.autoLogoutNow = false;
+      }
+    }
+  }
+
 }
 </script>
 

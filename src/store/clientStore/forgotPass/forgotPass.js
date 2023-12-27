@@ -1,5 +1,4 @@
 import * as API from '@/APIs/CLIENT/ForgotPass/ForgotAPI.js'
-
 export default{
     namespaced: true,
     actions:{

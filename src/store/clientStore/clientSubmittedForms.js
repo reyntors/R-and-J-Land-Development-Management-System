@@ -1,5 +1,5 @@
 import * as API from '@/APIs/CLIENT/SubmittedFormsAPI.js'
-
+import store from '@/store/store.js'
 export default{
     namespaced: true,
     state(){
@@ -16,6 +16,7 @@ export default{
     },
     actions:{
         async listSubmittedForms(context,id){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.listSubmittedForms(id)
                 console.log(response)

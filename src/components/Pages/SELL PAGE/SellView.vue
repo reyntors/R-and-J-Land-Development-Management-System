@@ -51,6 +51,7 @@
     },
 
     mounted() {
+        
         this.fromPushtoScrollNavigate()
         this.setUpScrollEvent()
     },

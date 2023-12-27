@@ -84,13 +84,13 @@ export default {
                 const baseTime = context.getters['baseNumericTimeGetter']   //get the numeric time that saved on the browser when the time the user logged in
                 const diff = numericTimeNow - baseTime      //get the difference of both values the time now and thes time logged in
                 const minuteDiff = diff/60000   //convert into minute the difference result
-                if(minuteDiff>=1){      //auto log out when the exceeds 1 minute
+                if(minuteDiff>=5){      //auto log out when the exceeds 5 minute
                     console.log("already exceeds one minute")
-                    context.commit('autoLogoutNow',true)    //show the auto logout animation
-                    await new Promise(resolve => setTimeout(resolve,1500))
+                    // context.commit('autoLogoutNow',true)    //show the auto logout animation
+                    // await new Promise(resolve => setTimeout(resolve,1500))
                     context.commit('eraseStoreState')   //delete the state of the app
                     context.commit('eraseLocalStorage') //delete the local storage of the browser
-                    context.commit('autoLogoutNow',false)   //close the logout animation
+                    context.commit('autoLogoutNow',true)   //toggle the autologout variable when the page is going to mount
                     context.commit('toggleLoginForm',true)  //open login form
                     
                 }else{

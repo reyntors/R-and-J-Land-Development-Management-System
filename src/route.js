@@ -84,7 +84,7 @@ const route = createRouter({
 
     route.beforeEach(function(to,_,next){
         //get the localStorage in case HARD REFRESH
-        store.dispatch('auth/monitorTokenSpan')     //monitor the token span every navigation
+        
         store.commit('auth/getLocalStorage')    //get the local storage every navigation
         store.commit('resetHomeId')     //reset the element container ID
         
@@ -100,6 +100,7 @@ const route = createRouter({
         else if(to.meta.requiresAuthGuest && store.getters['auth/authorizationRoleGuest'] && true){
             // console.log('guest: '+store.getters['auth/authorizationRoleGuest'])
             console.log('AUTHORIZED AS GUEST and ALLOWED TO ACCESS THIS ROUTE')
+            store.dispatch('auth/monitorTokenSpan')     //monitor the token span every navigation
             next();
         }
         else if(to.meta.requiredAuthPersonnel && !store.getters['auth/authorizationPersonnel']){
@@ -110,6 +111,7 @@ const route = createRouter({
         else if(to.meta.requiredAuthPersonnel && store.getters['auth/authorizationPersonnel']){
             // console.log('staff: '+store.getters['auth/authorizationRoleStaff'])
             console.log('AUTHORIZED AS PERSONNEL and ALLOWED TO ACCESS THIS ROUTE')
+            store.dispatch('auth/monitorTokenSpan')     //monitor the token span every navigation
             next();
         }
         else{

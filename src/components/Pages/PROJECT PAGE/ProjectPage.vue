@@ -9,6 +9,9 @@ import ProjectGallery from './ProjectGallery.vue'
 export default {
   components: {
     ProjectGallery
+  },
+  mounted(){
+ 
   }
 }
 </script>

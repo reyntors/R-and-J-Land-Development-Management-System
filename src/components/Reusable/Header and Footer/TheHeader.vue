@@ -55,7 +55,7 @@
 
     <navigation-personnel v-if="authorizationPersonnel" @logout-now="logout"/>  <!-- open navigation header if personnel user -->
     <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form> <!-- open login form -->
-    <loading-logout v-if="isLoggingOut || autoLogoutNow"></loading-logout> <!-- loggin out animation -->
+    <loading-logout v-if="isLoggingOut"></loading-logout> <!-- loggin out animation -->
 
   </div>
 

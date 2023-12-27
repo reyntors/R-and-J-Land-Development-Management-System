@@ -1,5 +1,5 @@
 import * as API from '@/APIs/CLIENT/ProfileAPI.js'
-
+import store from '@/store/store.js'
 export default{
     namespaced: true,
     state(){
@@ -17,6 +17,7 @@ export default{
     },
     actions:{
         async getMyDetails(context,id){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.getMyDetails(id)
                 console.log('store profile details',response)
@@ -26,6 +27,7 @@ export default{
             }
         },
         async uploadID(context,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.uploadID(payload)
                 context.commit('pushImage',response.data)
@@ -35,6 +37,7 @@ export default{
             }
         },
         async requestSaveUpdate(_,payload){
+            store.dispatch('auth/monitorTokenSpan')
             console.log(payload)
             try{
                 const response = await API.requestSaveUpdate(payload)

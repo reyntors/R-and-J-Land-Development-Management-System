@@ -1,5 +1,5 @@
 import * as API from '@/APIs/BOTH/SettingsAPI.js'
-
+import store from '@/store/store.js'
 export default{
     namespaced: true,
     state(){
@@ -25,6 +25,7 @@ export default{
             }
         },
         async updateMyAccountSettings(_,payload){
+            store.dispatch('auth/monitorTokenSpan')
             console.log('updateMyAccountSettings Store executed')
             const form = new FormData()
             if(payload.image){

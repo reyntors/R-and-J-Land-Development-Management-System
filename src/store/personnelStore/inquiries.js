@@ -1,5 +1,5 @@
 import * as API from '@/APIs/PERSONNEL/InquiriesAPI.js'
-
+import store from '@/store/store.js'
 export default{
 
     namespaced: true,
@@ -22,6 +22,7 @@ export default{
 
     actions: {
         async getInquiriesList(context){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.requestInquiriesList()
                 context.commit('setInquiriesList',response.data[0].inquiries)
@@ -30,6 +31,7 @@ export default{
             }
         },
         async markInquiry(context,id){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.markInquiry(id)
                 console.log(response)
@@ -40,6 +42,7 @@ export default{
             }
         },
         async approveUpdateRequest(_,payload){
+            store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await API.approveUpdateRequest(payload)
                 console.log(response)
