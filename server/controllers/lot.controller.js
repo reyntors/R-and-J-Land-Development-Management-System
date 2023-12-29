@@ -123,7 +123,7 @@ exports.updateLot = async (req, res, next) => {
         // }
         if(newlotData.status){
 
-          console.log("i am here")
+         
 
           if ('status' in lot) {
             lot.status = newlotData.status;

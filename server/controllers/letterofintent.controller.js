@@ -4,6 +4,8 @@ const { PDFDocument} = require('pdf-lib');// Import StandardFonts
 const Inquiry = require('../models/inquiries.model');
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const axios = require('axios');
+const Lot = require('../models/lot.model')
+const Reservation = require('../models/reservation.model')
 
 
 async function generateInquiryId() {
@@ -104,6 +106,45 @@ exports.createLetterOfIntent = async (req, res, next) => {
         // save to users record
         await user.save();
 
+        const temp = user.letterOfIntent.lotNumber[0]
+
+        const lotKey =  'lot' + temp;
+
+
+        //this function is used when accountDetails is not existed
+        if(!user.accountDetails || !user.accountDetails.details1 || JSON.stringify(user.accountDetails.details1) === '{}'){
+        console.log("user account details is empty")
+        // Schedule the task to rollback lot status to "sell" after 5 days
+       await scheduleLotRollback(lotKey);
+
+        }else {
+            console.log("details1 is not empty");
+            
+        }
+
+
+        const [firstItem] = await Lot.find();
+
+        const updatedLot = firstItem ? firstItem.lots : {};
+
+
+        if (!updatedLot) {
+            return res.status(404).json({ message: "Lot not found" });
+          }
+        
+        const lot = updatedLot.get(lotKey);
+
+
+        if(lot) {
+                
+            if ('status' in lot) {
+                lot.status = 'reserved';
+              }
+
+
+        }
+
+        await firstItem.save();
         
 
         return res.status(200).send({
@@ -116,6 +157,8 @@ exports.createLetterOfIntent = async (req, res, next) => {
         return next(error);
     }
 };
+
+
 
 // Function to generate PDF content for Letter of Intent
 // async function  generateLetterOfIntentPDF(pdfDoc, user, letterOfIntentData) {
@@ -299,6 +342,36 @@ async function  generateLetterOfIntentPDF( user, letterOfIntentData) {
         console.error('Error:', error);
     }
 }
+
+
+// Function to update lot status to "sell" after 5 days if no reservation is submitted
+async function scheduleLotRollback(lotKey) {
+    // Schedule the task to run after 5 days
+    setTimeout(async () => {
+        const [firstItem] = await Lot.find();
+
+        if (!firstItem) {
+            return console.error("Lot not found");
+        }
+
+        const updatedLot = firstItem.lots;
+
+        if (!updatedLot) {
+            return console.error("Lot not found");
+        }
+
+        const lot = updatedLot.get(lotKey);
+
+        if (lot && 'status' in lot && lot.status === 'reserved') {
+            // Update lot status to "sell" if it is still reserved after 5 days
+            lot.status = 'sell';
+            await firstItem.save();
+            console.log(`Lot ${lotKey} status rolled back to "sell"`);
+        }
+    }, 5 * 24 * 60 * 60 * 1000); //  5 * 60 * 1000
+}
+  
+  
 
 
 

@@ -3,6 +3,7 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const axios = require('axios');
 const { PDFDocument} = require('pdf-lib');// Import StandardFonts
 const User = require('../models/user.model');
+const Lot = require('../models/lot.model')
 
 
 
@@ -148,6 +149,20 @@ exports.createReservation = async (req, res, next) => {
 
     // Save to the database
     await customer.save();
+
+
+    if(customer.transactions.length === 0){
+
+      console.log("transaction  is empty")
+    const temp = reservationData.lot_1; 
+    const lotKey = 'lot' + temp;
+
+     
+    await scheduleLotReservation(lotKey);
+    }else {
+      console.log("transaction is not empty")
+    }
+
 
     const savedData = [{
       details1, 
@@ -312,6 +327,34 @@ async function generateReservationPDF(user, reservationData){
     }
 
 }
+
+// Function to update lot status to "reserved" after 30 days when reservation is submitted
+async function scheduleLotReservation(lotKey) {
+  // Schedule the task to run after 30 days
+  setTimeout(async () => {
+      const [firstItem] = await Lot.find();
+
+      if (!firstItem) {
+          return console.error("Lot not found");
+      }
+
+      const updatedLot = firstItem.lots;
+
+      if (!updatedLot) {
+          return console.error("Lot not found");
+      }
+
+      const lot = updatedLot.get(lotKey);
+
+      if (lot && 'status' in lot && lot.status === 'reserved') {
+          // Update lot status to "reserved" if it is still available after 30 days
+          lot.status = 'sell';
+          await firstItem.save();
+          console.log(`Lot ${lotKey} status set to "sell" after 30 days`);
+      }
+  }, 30 * 24 * 60 * 60 * 1000); //  5 * 60 * 1000
+}
+
 
 exports.deleteReservation = async (req, res) => {
   
