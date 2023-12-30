@@ -13,8 +13,10 @@ export default {
             fullname: null,
             baseNumericTime: null,
             autoLogoutNow: false,
-
             openLoginForm: false,
+
+            submittedLetterIntent : false,  //var holder if the current user submitted already the letter of intent
+            submittedBuyerInfo : false,     //var hodler if the current user submitted already the buyer info sheet
         }
     },
     mutations:{
@@ -25,12 +27,15 @@ export default {
             state.openLoginForm = bool
         },
         addStoreState(state,responseData){
+            console.log(responseData)
             state.role = responseData.roles
             state.tokenID = responseData.tokenID
             state.userId = responseData.userId
             state.profilePic = responseData.profilePic
             state.fullname = responseData.fullname
             state.baseNumericTime = responseData.baseNumericTime
+            state.submittedLetterIntent = responseData.submittedLetterIntent
+            state.submittedBuyerInfo = responseData.submittedBuyerInfo
         },
         eraseStoreState(state){
             state.role = null;
@@ -39,6 +44,8 @@ export default {
             state.profilePic = null
             state.fullname = null
             state.baseNumericTime = null
+            state.submittedLetterIntent = false
+            state.submittedBuyerInfo = false
         },
         addLocalStorage(_,responseData){
             console.log(responseData)
@@ -76,7 +83,7 @@ export default {
     },
     actions:{
         async monitorTokenSpan(context){
-            console.log('monitoring the token time span')
+            // console.log('monitoring the token time span')
             const isLoggedIn = context.getters['authGetter']    //check if the user is logged in
             if(isLoggedIn){
                 const timeNow = new Date()      //get the date now
@@ -85,19 +92,17 @@ export default {
                 const diff = numericTimeNow - baseTime      //get the difference of both values the time now and thes time logged in
                 const minuteDiff = diff/60000   //convert into minute the difference result
                 if(minuteDiff>=5){      //auto log out when the exceeds 5 minute
-                    console.log("already exceeds one minute")
-                    // context.commit('autoLogoutNow',true)    //show the auto logout animation
-                    // await new Promise(resolve => setTimeout(resolve,1500))
+                    // console.log("already exceeds one minute")
                     context.commit('eraseStoreState')   //delete the state of the app
                     context.commit('eraseLocalStorage') //delete the local storage of the browser
                     context.commit('autoLogoutNow',true)   //toggle the autologout variable when the page is going to mount
                     context.commit('toggleLoginForm',true)  //open login form
                     
                 }else{
-                    console.log('all goods keep going!!')
+                    // console.log('all goods keep going!!')
                 }                
             }else{
-                console.log('the user is not logged in')
+                // console.log('the user is not logged in')
             }
 
         },
@@ -105,12 +110,11 @@ export default {
         async login(context, credentials){
             console.log('login clicked')
             try{
-               const responseData = await Auth.login(credentials);
+                const responseData = await Auth.login(credentials);
 
-               const timeNow = new Date()   //get the time now when log in
-               const baseNumericTime = timeNow.getTime()    //convert into numeric the time now
-               console.log(baseNumericTime)
-
+                const timeNow = new Date()   //get the time now when log in
+                const baseNumericTime = timeNow.getTime()    //convert into numeric the time now
+            //    console.log(baseNumericTime)
                 const Data = {
                     tokenID: responseData.data.token,
                     roles: responseData.data.roles,
@@ -118,6 +122,8 @@ export default {
                     profilePic: responseData.data.profilePicture.url,
                     fullname: responseData.data.fullname,
                     baseNumericTime : baseNumericTime,
+                    submittedLetterIntent: responseData.data.letterOfIntent.isSubmitted,
+                    submittedBuyerInfo: responseData.data.buyerInfoSheet.isSubmitted
                 }
 
 
@@ -277,6 +283,15 @@ export default {
 
         autoLogoutNowGetter(state){
             return state.autoLogoutNow
+        },
+
+        submittedLetterOfIntentGetter(state){     //return the bool of the var holder is client submitted the letter of intent
+            console.log("is sumbitted letter of intent?", state.submittedLetterIntent)
+            return state.submittedLetterIntent
+        },
+        submittedBuyerInfoGetter(state){    //retun the bool of the var holder if the client submitted the buyer info sheet
+            console.log("is sumbitted letter of intent?", state.submittedBuyerInfo)
+            return state.submittedBuyerInfo
         }
     }
 

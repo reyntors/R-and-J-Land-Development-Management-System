@@ -143,7 +143,13 @@ export default{
         try{
           const response = await this.$store.dispatch('form/submitLetterOfIntent',payload)
           toast.success(response)
-          this.$router.push("/guest-forms/buyer-info-sheet")  //redirect next to the buyer info sheet
+          const isSubmitBuyerInfoSheet = this.$store.getters['auth/submittedBuyerInfoGetter']
+          if(!isSubmitBuyerInfoSheet){    //test if the user already submitted info sheet before
+            this.$router.push("/guest-forms/buyer-info-sheet")  //redirect next to the buyer info sheet
+          }else{
+            this.$router.back()   //redirect back to the map
+          }
+          
         }catch(error){
           toast.error(error)
         }

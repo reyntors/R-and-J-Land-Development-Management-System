@@ -6,7 +6,7 @@ export default {
         return {
 
             //guest-end
-            redirectLetterOfIntent: false,  //var holder deciison to redirect after login
+            redirectToForm: false,  //var holder deciison to redirect after login
             reservationTarget:{     //var holder to the lot info the client want to reserve
                 projectName: "",
                 lotNumberSelected: ""
@@ -22,13 +22,12 @@ export default {
 
     mutations:{
         //start - guest
-        redirectLetterOfIntent(state,bool){     //toggle the boolean of the redirect after login
-            state.redirectLetterOfIntent = bool
+        redirectToForm(state,bool){     //toggle the boolean of the redirect either letter of intent or buyer info sheet forms after login
+            state.redirectToForm = bool
         },
         setlotNumberSelected(state,details){      //set the lot details of the client want to reserve
             state.reservationTarget.projectName = details.projectName
             state.reservationTarget.lotNumberSelected = details.lotNumberSelected
-
         },
         //end - guest
 
@@ -128,8 +127,8 @@ export default {
     getters: {
 
         //start guest
-        redirectLetterOfIntentGetter(state){    //return boolean to redirect lettter of intent after login
-            return state.redirectLetterOfIntent
+        redirectToFormGetter(state){    //return boolean to redirect either lettter of intent or buyer info sheet after login
+            return state.redirectToForm
         },
         lotNumberSelectedGetter(state){    //return value of the lot details the client want to reserve
             return state.reservationTarget

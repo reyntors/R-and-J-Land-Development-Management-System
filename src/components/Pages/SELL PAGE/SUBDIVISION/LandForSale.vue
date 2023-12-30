@@ -65,20 +65,25 @@ export default {
       this.showPopup = false
     },
 
-    reserveNow(details){  //click reserve now
-      console.log(details)
+    reserveNow(){  //click reserve now
+      // console.log(details)
       const isGuest = this.$store.getters['auth/authorizationRoleGuest']
-      if(isGuest){
-        console.log('submiting the request')
-        // const confirmed = confirm("are you sure to delete this transaction?")
-        // if(confirmed){
-        //   // console.log('confirmed')
-        // }else{
-        //   // console.log('reject')
-        // }
-        this.$router.push('/guest-forms/letter-of-intent')
+      if(isGuest){  //test if the user log in or not
+        const isSubmitLetterOfintent = this.$store.getters['auth/submittedLetterOfIntentGetter']
+        const isSubmitBuyerInfoSheet = this.$store.getters['auth/submittedBuyerInfoGetter']
+        if(!isSubmitLetterOfintent && !isSubmitBuyerInfoSheet){
+          this.$router.push('/guest-forms/letter-of-intent')
+        }else if(!isSubmitLetterOfintent && isSubmitBuyerInfoSheet){
+          this.$router.push('/guest-forms/letter-of-intent')
+        }else if(isSubmitLetterOfintent && !isSubmitBuyerInfoSheet){
+          this.$router.push('/guest-forms/buyer-info-sheet')
+        }else{
+          toast.info('Submitted Already a Reservation Reservation')
+          toast.info('Only Once allowed to Avoid Spamming.')
+        }
+        
       }else{
-        this.$store.commit('auth/toggleLoginForm',true)
+        this.$store.commit('auth/toggleLoginForm',true)     //toggle the variable that will open the form
       }
     },
 

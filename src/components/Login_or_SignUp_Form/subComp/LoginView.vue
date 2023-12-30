@@ -101,12 +101,24 @@ export default {
             console.log('loginview',response.data.roles)
   
             if(response.data.roles === 'realtor' || response.data.roles === 'customer'){
-              const isRedirectToLetterOfIntent = this.$store.getters['subdivision/redirectLetterOfIntentGetter']  //var holder to decide to redirect to the letterof intent or not
+              const isRedirectToLetterOfIntent = this.$store.getters['subdivision/redirectToFormGetter']  //var holder to decide to redirect to the letterof intent or not
               if(isRedirectToLetterOfIntent){
-                this.$router.push('/guest-forms/letter-of-intent')   //redirect to the letter of intent form
+                const isSubmitLetterOfintent = this.$store.getters['auth/submittedLetterOfIntentGetter']
+                const isSubmitBuyerInfoSheet = this.$store.getters['auth/submittedBuyerInfoGetter']
+                if(!isSubmitLetterOfintent && !isSubmitBuyerInfoSheet){   //if not submitted neither letter of intent or buyer info sheet
+                  this.$router.push('/guest-forms/letter-of-intent')
+                }else if(!isSubmitLetterOfintent && isSubmitBuyerInfoSheet){  //if submitted buyer info sheet but not letter of intent
+                  this.$router.push('/guest-forms/letter-of-intent')
+                }else if(isSubmitLetterOfintent && !isSubmitBuyerInfoSheet){  //if submitted letter of intent but not buyer info sheet
+                  this.$router.push('/guest-forms/buyer-info-sheet')
+                }else{
+                  toast.info('Submitted Already a Reservation Request')
+                  toast.info('Only Once allowed to Avoid Spamming.')
+                }
               }else{
                 this.$router.replace('/home')     //redirect to home
               }
+
             }else{
               this.$router.replace('/personnel/client')
             }

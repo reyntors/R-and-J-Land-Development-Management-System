@@ -65,8 +65,8 @@ export default {
                 projectName:this.projectName,
                 lotNumberSelected:this.details.lotNumber
             })  
-            this.$store.commit('subdivision/redirectLetterOfIntent',true)   //set the redirect to letter of intent to true after logging in
-            this.$emit('reserveNow',this.details)
+            this.$store.commit('subdivision/redirectToForm',true)   //set the redirect to the forms to true after logging in
+            this.$emit('reserveNow')
         }
     },
     computed:{

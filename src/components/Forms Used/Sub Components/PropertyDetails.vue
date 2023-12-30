@@ -121,6 +121,11 @@ export default{
         buyerDesirePurchase(){
             this.passData()
         },
+    },
+    created(){
+        const lotDetails = this.$store.getters['subdivision/lotNumberSelectedGetter']
+        this.projectName = lotDetails.projectName
+        this.lotUnit = lotDetails.lotNumberSelected
     }
 
 }

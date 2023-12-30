@@ -198,7 +198,7 @@ export default {
       this.$store.commit('auth/eraseStoreState')
       this.$store.commit('auth/eraseLocalStorage')
       this.$store.commit('personnel/switchDashboard') //ensure the personnel dashboard shown first when going to log in as personnel
-      this.$store.commit('subdivision/redirectLetterOfIntent',false)   //set the redirect to letter of intent to false after logging out
+      this.$store.commit('subdivision/redirectToForm',false)   //set the redirect to letter of intent to false after logging out
       this.$router.push('/home')
       this.isLoggingOut = false
     }
@@ -294,7 +294,7 @@ export default {
     width: 100%vw;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 15vh;
+    height: 10vh;
     background-position: center center;
     box-shadow: 0 1px 11px 0.5px rgba(0, 0, 0, 0.407);
     display: flex;
