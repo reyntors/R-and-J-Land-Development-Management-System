@@ -74,6 +74,7 @@ exports.createReservation = async (req, res, next) => {
     };
 
     customer.accountDetails.details1 = details1;
+    customer.paymentDetails.downPayment = reservationData.downpayment_1 
 
 
     // Calculate the totalAmountDue for the second reservation if it exists
