@@ -4,7 +4,7 @@ const axios = require('axios');
 const { PDFDocument} = require('pdf-lib');// Import StandardFonts
 const User = require('../models/user.model');
 const Lot = require('../models/lot.model')
-
+const { stopLotRollback } = require('./letterofintent.controller');
 
 
 
@@ -159,6 +159,7 @@ exports.createReservation = async (req, res, next) => {
 
      
     await scheduleLotReservation(lotKey);
+    stopLotRollback();
     }else {
       console.log("transaction is not empty")
     }
@@ -328,10 +329,13 @@ async function generateReservationPDF(user, reservationData){
 
 }
 
+let reservationTimeout;
+let isStopLotRollbackCalled = false
+
 // Function to update lot status to "reserved" after 30 days when reservation is submitted
 async function scheduleLotReservation(lotKey) {
   // Schedule the task to run after 30 days
-  setTimeout(async () => {
+  reservationTimeout = setTimeout(async () => {
       const [firstItem] = await Lot.find();
 
       if (!firstItem) {
@@ -347,13 +351,33 @@ async function scheduleLotReservation(lotKey) {
       const lot = updatedLot.get(lotKey);
 
       if (lot && 'status' in lot && lot.status === 'reserved') {
-          // Update lot status to "reserved" if it is still available after 30 days
+          // Update lot status to "sell" 
           lot.status = 'sell';
           await firstItem.save();
           console.log(`Lot ${lotKey} status set to "sell" after 30 days`);
       }
-  }, 30 * 24 * 60 * 60 * 1000); //  5 * 60 * 1000
+  }, 5 * 60 * 1000); //   30 * 24 * 60 * 60 * 1000
 }
+
+
+
+// You can call this function to stop the rollback process
+exports.stopLotReservationRollback = async() => {
+  if (!isStopLotRollbackCalled) {
+    console.log("the 30 days rollback is stopped!");
+    clearTimeout(reservationTimeout);
+    isStopLotRollbackCalled = true;
+}
+
+}
+
+
+
+
+
+
+
+
 
 
 exports.deleteReservation = async (req, res) => {

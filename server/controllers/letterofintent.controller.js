@@ -5,7 +5,7 @@ const Inquiry = require('../models/inquiries.model');
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const axios = require('axios');
 const Lot = require('../models/lot.model')
-const Reservation = require('../models/reservation.model')
+
 
 
 async function generateInquiryId() {
@@ -343,11 +343,12 @@ async function  generateLetterOfIntentPDF( user, letterOfIntentData) {
     }
 }
 
+let rollbackTimeout;
 
 // Function to update lot status to "sell" after 5 days if no reservation is submitted
 async function scheduleLotRollback(lotKey) {
     // Schedule the task to run after 5 days
-    setTimeout(async () => {
+    rollbackTimeout = setTimeout(async () => {
         const [firstItem] = await Lot.find();
 
         if (!firstItem) {
@@ -368,10 +369,17 @@ async function scheduleLotRollback(lotKey) {
             await firstItem.save();
             console.log(`Lot ${lotKey} status rolled back to "sell"`);
         }
-    }, 5 * 24 * 60 * 60 * 1000); //  5 * 60 * 1000
+    }, 3 * 60 * 1000); //   5 * 24 * 60 * 60 * 1000
 }
-  
-  
+
+// You can call this function to stop the rollback process
+exports.stopLotRollback = async() => {
+    console.log("the 5 days rollback is stopped!")
+    clearTimeout(rollbackTimeout);
+}
+
+
+ 
 
 
 

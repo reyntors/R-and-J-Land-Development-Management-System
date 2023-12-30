@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const { uploadAttachment } = require('../middlewares/multer');
 const Report = require('../models/reports.model')
+const { stopLotReservationRollback } = require('./reservation.controller')
 
 
 function generateTransactionId(length = 8) {
@@ -27,7 +28,7 @@ exports.addTransaction = async (req, res, next) => {
       const { date, amount, purpose } = req.body;
       const attachments = req.file; // The uploaded file is now available in req.file
 
-      console.log("I receieved:" , attachments);
+      
 
       // Find the client by their userId
       const client = await User.findOne({ userId: id, roles: 'customer' });
@@ -56,7 +57,6 @@ exports.addTransaction = async (req, res, next) => {
           url: attachments.location,
           
         };
-        console.log("File Data:", fileData);
 
         // Push the file data into the attachments array
         newTransaction.attachments.push(fileData);
@@ -104,7 +104,11 @@ exports.addTransaction = async (req, res, next) => {
       }
  
 
+      
+
       if (newTransaction.purpose === 'monthly-payment') {
+
+        stopLotReservationRollback();
 
         const amountPaid = parseFloat(newTransaction.amount);
         const totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
@@ -149,18 +153,18 @@ exports.addTransaction = async (req, res, next) => {
         contactNo: client.contactNumber,
         fblink: client.fbAccount,
         email: client.email,
-        civilStatus: client.additionalInfo.civilStatus,
-        spouseName: client.additionalInfo. spouseName,
-        occupation: client.additionalInfo.occupation,
-        businessMonthlyIncome: client.additionalInfo.businessMonthlyIncome,
-        buyerSourceOfIncome: client.additionalInfo.buyerSourceOfIncome,
-        typeOfEmployment: client.additionalInfotypeOfEmployment,
-        employer: client.additionalInfo. employer,
-        employerAddress: client.additionalInfo.employerAddress,
-        grossSalary: client.additionalInfo.grossSalary,
-        businessName: client.additionalInfo.businessName,
-        businessAddress: client.additionalInfo.businessAddress,
-        monthlyGrossIncome: client.additionalInfo. monthlyGrossIncome,
+        civilStatus: client.profileDetails.civilStatus,
+        spouseName: client.profileDetails.spouseName,
+        occupation: client.profileDetails.occupation,
+        businessMonthlyIncome: client.profileDetails.businessMonthlyIncome,
+        buyerSourceOfIncome: client.profileDetails.buyerSourceOfIncome,
+        typeOfEmployment: client.profileDetails.typeOfEmployment,
+        employer: client.profileDetails.employer,
+        employerAddress: client.profileDetails.employerAddress,
+        grossSalary: client.profileDetails.grossSalary,
+        businessName: client.profileDetails.businessName,
+        businessAddress: client.profileDetails.businessAddress,
+        monthlyGrossIncome: client.profileDetails.monthlyGrossIncome,
 
 
       };
