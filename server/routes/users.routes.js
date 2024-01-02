@@ -10,6 +10,7 @@ const scanfilesController = require('../controllers/scanFiles.controller');
 const uploadedController = require('../controllers/uploaded.controller');
 const contactController = require('../controllers/contactUs.controller');
 const callSlipController = require('../controllers/callSlip.controller');
+const approvePaymentController = require('../controllers/approvePaymentScheme.controller')
 
 const auth = require("../middlewares/auth");
 const express = require("express");
@@ -41,6 +42,8 @@ router.post("/update-user", auth.authenticateToken, userController.restrict(['re
 router.put("/update-user/:id", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserDetails);
 router.put("/approve-pending-update/:userId/:requestId/:inquiryId", auth.authenticateToken, userController.restrict(['staff','management']), userController.approveUserUpdate);
 router.put("/update-user-account-personnel", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserAccountPersonnel);
+router.post("/create-payment-scheme/:id", auth.authenticateToken, userController.restrict(['staff','management']), approvePaymentController.createApprovePaymentScheme);
+
 
 // transaction
 router.post("/add-transaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.addTransaction);
