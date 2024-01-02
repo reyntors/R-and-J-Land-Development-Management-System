@@ -14,7 +14,11 @@
 
           <button :class="{flat:clientFormsVisibleComputed}" @click="goto('forms')">Forms</button>
 
-          <button :class="{flat:clientReservationFormVisible}" @click="goto('reservation-form')">Reservation Form</button>
+          <button :class="{flat:clientReservationFormVisible}" @click="goto('reservation-form')">Reservation</button>
+
+          <button :class="{flat:clientPaymentSchemeVisible}" @click="goto('payment-scheme')">Payment Scheme</button>
+
+          <button> Download CTS</button>
 
         </div>
       
@@ -25,6 +29,7 @@
           <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj" :clientID="clientObj.userId"/>
          <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
          <client-reservation v-if="clientReservationFormVisible" :clientID="clientObj.userId"></client-reservation>
+         <client-payment-scheme v-if="clientPaymentSchemeVisible" :clientID="clientObj.userId"></client-payment-scheme>
     </section>
   </div>
 </template>
@@ -34,6 +39,7 @@ import ClientPayment from '../article/PAYMENT/PaymentDetails.vue';
 import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
 import ClientForms from '../article/FORMS/FormsDetails.vue'
 import ClientReservation from '../article/RESERVATION/ReservationAgreement.vue'
+import ClientPaymentScheme from '../article/PAYMENT SCHEME/PaymentScheme.vue'
 export default {
   props: ['clientObj'],
   components: {
@@ -41,6 +47,7 @@ export default {
     ClientForms,
     ClientPayment,
     ClientReservation,
+    ClientPaymentScheme
   },
   data(){
     return{
@@ -48,6 +55,7 @@ export default {
       clientPaymentVisible: false,
       clientFormsVisible: false,
       clientReservationFormVisible: false,
+      clientPaymentSchemeVisible: false,
     }
   },
 
@@ -63,8 +71,10 @@ export default {
         this.clientPaymentVisible = true
       }else if(params === 'forms'){
         this.clientFormsVisible = true
-      }else{
+      }else if(params === 'reservation-form'){
         this.clientReservationFormVisible = true
+      }else if(params === 'payment-scheme'){
+        this.clientPaymentSchemeVisible = true
       }
     },
     reset(){
@@ -72,6 +82,7 @@ export default {
       this.clientPaymentVisible = false
       this.clientFormsVisible = false
       this.clientReservationFormVisible = false
+      this.clientPaymentSchemeVisible = false
     },
   },
 
@@ -99,17 +110,14 @@ export default {
 
 <style scoped>
 .imageProfile{
-  /* margin-top: 1rem; */
-  height: 50%;
-  display: flex;
-  flex-direction: column;
+  margin-top: 1rem;
+  /* border: 1px solid black; */
 }
 .imageProfile img{
-  width: 100%;
-  height: 100%;
-  max-height: 200px;
-  max-width: 200px;
-  object-fit: cover;
+  width: 95%;
+  max-height: 15rem;
+  object-fit: contain;
+  margin-bottom: .5rem;
 }
 
 
@@ -157,7 +165,7 @@ button::after{
   border-radius: .5rem;
   background-color: #F0A500;
   z-index: -1;
-  transition: all .5s ease-in-out;
+  transition: all .3s ease-in-out;
 }
 button:hover::after,
 button:hover{
@@ -165,7 +173,7 @@ button:hover{
   color: white;
 }
 button:hover::before{
-  transform: scale(1.5);
+  transform: scale(1.4);
   opacity: 0;
 }
 
@@ -177,13 +185,17 @@ button:active{
 .flat{
   outline: none;
   border: none;
-  background-color: #CF7500;
+  /* background-color: rgba(0, 0, 0, 0.5); */
   color: white;
   box-shadow: none;
+}
+.flat::after{
+  background-color: rgba(0, 0, 0, 1);
 }
 .details-nav{
   width: 100%;
   height: 80vh;
+  overflow: auto;
   padding: .5rem;
   display: flex;
   gap: 1rem;
@@ -191,6 +203,7 @@ button:active{
 }
 .details-nav .section-left{
   width: 25%;
+  overflow-y: auto;
   /* box-shadow: 0 0 3px 1px black; */
   border-radius: 5px;
   /* border: 1px solid black; */
@@ -202,17 +215,18 @@ button:active{
   gap: 2rem;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.8);
+  overflow-x: hidden;
   /* backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px); */
 }
 .details-nav .section-left .navigationBtns{
-  width: 90%;
+  width: 95%;
   display: flex;
   flex-direction: column;
   gap: .5rem;
   align-items: center;
   /* border: 1px dashed black; */
-  height: 50%;
+  /* height: 50%; */
   padding-top: 1rem;
 }
 
@@ -232,6 +246,7 @@ button:active{
   background-color: white;
   background-color: rgba(255, 255, 255, 0.8);
   overflow-y: auto;
+  box-sizing: border-box;
 }
 ::-webkit-scrollbar {
   width: 12px;

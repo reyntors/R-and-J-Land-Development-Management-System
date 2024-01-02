@@ -91,7 +91,7 @@ export default {
                 const baseTime = context.getters['baseNumericTimeGetter']   //get the numeric time that saved on the browser when the time the user logged in
                 const diff = numericTimeNow - baseTime      //get the difference of both values the time now and thes time logged in
                 const minuteDiff = diff/60000   //convert into minute the difference result
-                if(minuteDiff>=5){      //auto log out when the exceeds 5 minute
+                if(minuteDiff>=30){      //auto log out when the exceeds 5 minute
                     // console.log("already exceeds one minute")
                     context.commit('eraseStoreState')   //delete the state of the app
                     context.commit('eraseLocalStorage') //delete the local storage of the browser

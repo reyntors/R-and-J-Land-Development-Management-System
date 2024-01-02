@@ -70,7 +70,7 @@ export default {
 .report-container{
     width:80vw;
     flex-grow: 1;
-    height: 85vh;
+    height: 90vh;
     padding: 1rem;
     border-left: 2px solid rgba(0, 0, 0, 0.5);
     position: relative;

@@ -6,10 +6,10 @@
 
         <div class="personnel-cont" v-else>
     
-        <transition name="profile">
-          <profile-view
-            v-if="isShowProfile"/>
-        </transition>
+          <transition name="profile">
+            <profile-view
+              v-if="isShowProfile"/>
+          </transition>
           <router-view></router-view>
           
         </div>
@@ -91,6 +91,8 @@ export default {
     /* transform: translateX(0); */
 }
 .personnel-cont {
+  /* border: 10px solid black; */
+  /* height: 90vh; */
   display: flex;
   flex-wrap: nowrap;
   position: relative; /* Change to relative so ::before is positioned relative to this element */

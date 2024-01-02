@@ -14,6 +14,9 @@ export default{
             togglePofileShow(state){
                 state.isProfileShown = !state.isProfileShown
             },
+            hidePofileShow(state){
+                state.isProfileShown = false
+            },
             switchSettings(state){
                 state.isSettingsView = true;
             },

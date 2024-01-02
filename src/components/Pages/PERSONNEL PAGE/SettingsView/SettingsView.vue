@@ -69,7 +69,7 @@ export default {
 .section2{
   /* background-color: rgba(255, 217, 0, 0.5); */
   padding-top: 2rem;
-  min-height: 85vh;
+  min-height: 90vh;
   position: relative;
   width: 75%;
 }

@@ -76,6 +76,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
           this.addFormVisible = !this.addFormVisible
         },
         showClientProfile(params){
+          this.$store.commit('personnel/hidePofileShow')
           if(this.selectedClient === params){
             this.selectedClient = null
           }else{
@@ -152,7 +153,7 @@ import ClientDetailsNav from './aside/ClientDetailsNav.vue'
       border-left: 2px solid rgba(0, 0, 0, 0.5);
       padding: 1rem;
       position: relative;
-      min-height: 85vh;
+      min-height: 90vh;
       /* z-index: 100; */
   }
   .searchPart{

@@ -79,8 +79,8 @@
       <header style="display: flex; justify-content: space-between; margin-bottom: .5rem;"> 
         <h4>Uploaded ID</h4>
         <section> 
-          <button class="btn" v-if="image" @click=" cancelUploadImg">Cancel</button>
-          <button class="btn" v-if="image" @click="uploadToCloud">Upload</button>  
+          <clickable-button class="btn" v-if="image" @click=" cancelUploadImg">Cancel</clickable-button>
+          <clickable-button class="btn" v-if="image" @click="uploadToCloud">Upload</clickable-button>  
         </section>
         
       </header>

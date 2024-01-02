@@ -3,7 +3,11 @@
       
         <div class="header">
             <h3>Profile Details</h3>
-            <clickable-button @click="toggleEdit">{{ editBtnText }}</clickable-button>
+            <span>
+                <clickable-button @click="toggleEdit">{{ editBtnText }}</clickable-button>
+                <clickable-button @click="saveNow" v-if="editable">Save</clickable-button>                
+            </span>
+
         </div>
         <form>
             <section class="items-form">
@@ -68,15 +72,16 @@
             <p class="fw-bold fs-4">Uploaded ID</p>
             <section class="uploadedID">
                 <p v-if="client.uploadId.length<1">No Valid ID's Uploaded</p>
-                <ul v-for="(image,index) in client.uploadId" :key="index">
-                    <li>
-                    <img :src="image.url">
+                <ul>
+                    <li v-for="(image,index) in client.uploadId" :key="index">
+                        <img :src="image.url">
+                        <font-awesome-icon icon="fa-solid fa-trash-can" class="eraseBtn" v-if="authorizationRoleAdmin" @click="deleteID"/>
                     </li>
                     
                 </ul>
             </section>
         </div>
-      <clickable-button style="margin-top: 1rem; width: 50%; margin: auto;" @click="saveNow">Save</clickable-button>
+      
       <div class="shade" v-if="isLoading"/>
       <progress-loading type="torks" v-if="isLoading && isError"/>
     </div>
@@ -175,6 +180,9 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
 
 
             },
+            deleteID(){
+                toast.success('deleteing the id')
+            }
         },
   
         computed:{
@@ -189,6 +197,9 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
               }else{
                   return 'Cancel'
               }
+            },
+            authorizationRoleAdmin(){
+                return this.$store.getters['auth/authorizationRoleAdmin']
             },
         },
   
@@ -323,8 +334,7 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
             }else{
                 this.client = {}
             }
-            
-
+        
         }
   
   }
@@ -393,7 +403,7 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
   }
   img{
   padding: .5rem;
-  object-fit: cover;
+  object-fit: contain;
   width: 100%;
   height: 100%;
   max-height: 300px;
@@ -411,5 +421,24 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
 input{
   background-color: transparent;
   border-radius: 3px;
+}
+ul{
+    list-style: none;
+}
+li{
+    position: relative;
+}
+.eraseBtn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 1rem;
+    transform: scale(1.2);
+    color: rgba(0, 0, 0, 0.4);
+    cursor: default;
+    transition: all .3s ease-in-out
+}
+.eraseBtn:hover{
+    color: rgba(0, 0, 0, 0.8);
 }
   </style>

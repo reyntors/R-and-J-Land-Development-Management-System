@@ -338,13 +338,16 @@ export default {
       },
 
       async deleteADetails(value){
-        try{
-          const response = await this.$store.dispatch('client/deleteAccountDetails',{
-            userId: this.clientID,
-            details:value})
-          toast.success(response)
-        }catch(error){
-          toast.error(error)
+        const confirmed = confirm("are you sure to delete this ",value)
+        if(confirmed){
+          try{
+            const response = await this.$store.dispatch('client/deleteAccountDetails',{
+              userId: this.clientID,
+              details:value})
+            toast.success(response)
+          }catch(error){
+            toast.error(error)
+          }          
         }
       },
       elementNumber(index){

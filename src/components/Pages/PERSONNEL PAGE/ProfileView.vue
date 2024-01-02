@@ -8,12 +8,12 @@
     <br>
         <section class="navigations">
             <!-- <router-link to="/personnel/dashboard">DASHBOARD</router-link> -->
-            <router-link to="/personnel/client">CLIENTS</router-link>
-            <router-link to="/personnel/inquiries">INQUIRIES</router-link>
-            <router-link to="/personnel/approval" v-if="isUserAdmin">ADDED CLIENTS</router-link>
-            <router-link to="/personnel/subdivision">SUBDIVISION</router-link> 
-            <router-link to="/personnel/emptyForms">EMPTY FORMS</router-link>
-            <router-link to="/personnel/reports">REPORTS</router-link>
+            <router-link @click="toggle" to="/personnel/client">CLIENTS</router-link>
+            <router-link @click="toggle" to="/personnel/inquiries">INQUIRIES</router-link>
+            <router-link @click="toggle" to="/personnel/approval" v-if="isUserAdmin">ADDED CLIENTS</router-link>
+            <router-link @click="toggle" to="/personnel/subdivision">SUBDIVISION</router-link> 
+            <router-link @click="toggle" to="/personnel/emptyForms">EMPTY FORMS</router-link>
+            <router-link @click="toggle" to="/personnel/reports">REPORTS</router-link>
             
         </section>
 
@@ -22,6 +22,11 @@
 
 <script>
 export default {
+    methods:{
+        toggle(){
+            this.$store.commit('personnel/togglePofileShow')
+        }
+    },
     computed:{
         profile(){
             return this.$store.getters['auth/profilePicGetter']

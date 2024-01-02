@@ -32,8 +32,9 @@
         <div v-else>
           <h6 v-if="islistUploadedScannedFilesEmpty">NOTHING UPLOADED YET</h6>    
           <ul v-else>
-            <li v-for="(file,index) in listUploadedScannedFiles" :key="index">
+            <li v-for="(file,index) in listUploadedScannedFiles" :key="index" class="uploadedScannedFiles">
                 <a :href="file.url" :download="file.filename">{{ file.filename }}</a>
+                <font-awesome-icon icon="fa-solid fa-trash-can" class="eraseBtn" v-if="authorizationRoleAdmin" @click="deleteScannedFile"/>
             </li>
           </ul>          
         </div>
@@ -165,6 +166,15 @@ export default {
           console.log(error)
           toast.error(error)
         }
+      },
+
+      deleteScannedFile(){
+        const confirmed = confirm('Are you sure to delete this file?')
+        if(confirmed){
+          toast.success('deleting scanned file')
+        }else{
+          toast.warning('cancel deleting file')
+        }
         
       }
     },
@@ -191,7 +201,10 @@ export default {
       },
       listSubmittedForms(){
         return this.$store.getters['client/listSubmittedFormsGetter']
-      }
+      },
+      authorizationRoleAdmin(){
+        return this.$store.getters['auth/authorizationRoleAdmin']
+      },
 
     },
 
@@ -236,7 +249,7 @@ p{
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
 }
-.flexCont ul{
+ul{
   list-style: none;
   padding: 0;
 }
@@ -264,12 +277,15 @@ p{
   width: 100%;
   border: 1px solid black;
 }
+.section2{
+  margin-bottom: 2rem;
+}
 .section2 form{
   margin-top: .5rem;
 }
 .section2 form label{
   padding: .5rem 1rem;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.1);
   display: flex;
@@ -292,12 +308,14 @@ p{
   border: none;
   color: white;
   background-color:#31A72A; 
-  padding: .2rem 0 ;
-  border: 1px solid black;
+  padding: .5rem 0 ;
+  font-weight: 700;
   border-top: none;
+  transition: all .3s ease-in-out;
 }
 .section2 form button:hover{
-  background-color: #30a72a8e;;
+  background-color: #30a72a8e;
+  color: black;
 }
 .section2 form button:active{
   color: black;
@@ -313,5 +331,25 @@ p{
   display: flex;
   justify-content: center;
   position: relative;
+}
+.uploadedScannedFiles{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .2rem 2rem;
+  cursor: default;
+  transition: all .3s ease-in-out;
+  border-radius: 3px;
+}
+.uploadedScannedFiles:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.eraseBtn{
+    color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: all .3s ease-in-out
+}
+.eraseBtn:hover{
+    color: rgba(0, 0, 0, 0.8);
 }
 </style>

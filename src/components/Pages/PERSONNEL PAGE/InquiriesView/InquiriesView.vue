@@ -92,7 +92,7 @@
 .inquiries-cont{
     width: 80vh;
     flex-grow: 1;
-    min-height: 85vh;
+    min-height: 90vh;
     padding: 1rem;
     border-left: 2px solid rgba(0, 0, 0, 0.5);
     position: relative;

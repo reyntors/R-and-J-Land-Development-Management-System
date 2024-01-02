@@ -2,7 +2,7 @@
     <form-card id="reservation-agreement"  title="Reservation Agreement Lot Only">
         <progress-loading v-if="isLoading" type="torks" class="overRideLoading"></progress-loading>
     <div class="address">
-        <strong>THE MANAGEMENT</strong>
+        <h5>THE MANAGEMENT</h5>
         <p>{{ companyName }}</p>
         <p>{{ companyAddress }}</p>
     </div>
@@ -91,7 +91,7 @@
         </div>        
     </div>
 
-    <p>The following sets out the basic terms upon which I/We would be prepared to purchase the
+    <!-- <p>The following sets out the basic terms upon which I/We would be prepared to purchase the
         property above-mentioned. The terms are not comprehensive and I/We expect that additional
         terms will be  incorporated into a formal agreement (Contract to Sell/ Deed of Absolute Sale).
     </p>
@@ -254,11 +254,6 @@
 
     <div class="acknowledgement">
         <section class="republic">
-            <!-- <p>
-                REPUBLIC OF THE PHILLPINES)
-                IN THE CITY OF DAVAO.............) S.S.
-                X -----------------------------------------X
-            </p> -->
         </section>
         
         <div class="notary-message">
@@ -294,9 +289,12 @@
                 <input v-model.trim="series_no" :class="{disabled: true}" disabled>;
             </div>
         </section>
-    </div>
+    </div> -->
 
-    <submit-form-button class="mt-2" @click="submit">Submit</submit-form-button>
+    <section class="button-container">
+       <submit-form-button class="mt-2" @click="submit">Submit</submit-form-button> 
+    </section>
+    
     </form-card>
 </template>
 
@@ -523,9 +521,11 @@ export default{
     bottom: 0;
 }
 #reservation-agreement{
-    width: 100%;
+    /* width: 100%; */
+    height: 95%;
+    /* border: 1px solid black; */
     white-space: normal;
-    /* position: relative; */
+    position: relative;
 }
 th{
     text-align: center;
@@ -724,5 +724,12 @@ p{
 .disabled{
     border: none;
     outline: none;
+}
+.button-container{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
 }
 </style>
