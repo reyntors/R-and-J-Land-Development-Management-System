@@ -29,6 +29,13 @@ export default {
       return this.$store.getters['auth/autoLogoutNowGetter']
     }
   },
+  created(){
+    this.$store.commit('auth/getLocalStorage')    //get the local storage every new open
+    const isPersonnel = this.$store.getters['auth/authorizationPersonnel']  //true if the previous logged in is personnel
+    if(isPersonnel){
+      this.$router.replace('/personnel/client')   //route to personnel page
+    }
+  },
   watch:{
     'isAutoLougout': async function(newValue) {
       if(newValue === true){

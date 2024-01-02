@@ -49,7 +49,7 @@ export default {
         },
         addLocalStorage(_,responseData){
             console.log(responseData)
-            localStorage.setItem('user',responseData.roles)
+            localStorage.setItem('role',responseData.roles)
             localStorage.setItem('token',responseData.tokenID)
             localStorage.setItem('userId',responseData.userId)
             localStorage.setItem('profilePic',responseData.profilePic)
@@ -57,15 +57,16 @@ export default {
             localStorage.setItem('baseNumericTime',responseData.baseNumericTime)
         },
         getLocalStorage(state){
-            state.role = localStorage.getItem('user')
+            state.role = localStorage.getItem('role')
             state.tokenID = localStorage.getItem('token')
             state.userId = localStorage.getItem('userId')
             state.profilePic = localStorage.getItem('profilePic')
             state.fullname = localStorage.getItem('fullname')
             state.baseNumericTime = localStorage.getItem('baseNumericTime')
+            console.log('role',state.role)
         },
         eraseLocalStorage(){
-            localStorage.removeItem('user')
+            localStorage.removeItem('role')
             localStorage.removeItem('token')
             localStorage.removeItem('userId')
             localStorage.removeItem('profilePic')
@@ -216,6 +217,7 @@ export default {
             }
         },
         authorizationPersonnel(state){
+            console.log('role',state.role)
             if(state.role && state.tokenID){
                 if(state.role !== 'customer' && state.role !== 'realtor'){
                     return true
@@ -231,7 +233,7 @@ export default {
                 if(state.role === 'staff'){
                     return 'staff'
                 }else if(state.role === 'management'){
-                    return 'admin'
+                    return 'management'
                 }
             }else{
                 return 'SOMETHING UNKNONW'
