@@ -7,7 +7,7 @@
     
     <we-build></we-build>
     <about-comp></about-comp>
-    <the-footer ></the-footer>  
+    <the-footer @navigation-scroll="scrollNavigate"></the-footer>  
 </template>
 
 <script>

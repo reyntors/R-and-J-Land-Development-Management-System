@@ -5,7 +5,7 @@
     <!-- show when logged in as GUEST -->
     <img class="logo" :src="logo" alt="ERROR" @click="goToHome" v-if="!authorizationPersonnel"> 
     
-    <!-- show when logged in as personnel -->
+    <!-- show when logged in as PERSONNEL -->
     <div class="logoStaffAdmin" v-if="authorizationRoleStaff || authorizationPersonnel">
       <font-awesome-icon icon="fa-solid fa-bars" size="2x" class="barsStaffAdmin" @click="toggleProfile" v-if="!isPersonnelProfile"/>
       <img class="logo" :src="logo" alt="ERROR">       
@@ -15,7 +15,6 @@
     <!-- show when logged in as GUEST,REALTOR-->
     <nav class="rowNav" v-if="!authorizationPersonnel">
 
-      
         <section style="position: relative; display: flex; flex-direction: column;" :class="{active: isPathBuild || isPathSell || isPathProvide}">
           <services-drop @navigate-now="navigateServices" ></services-drop>      
         </section>
@@ -24,36 +23,28 @@
           <about-drop @navigate-now="navigateAbout"></about-drop>      
         </section>
 
-
-        
-
         <router-link to="/projects" >PROJECTS</router-link>
         <router-link to="/careers" >CAREERS</router-link>
         <router-link to="/customer-service" >CUSTOMER SERVICE</router-link>
 
         <profile-drop v-if="isUserValidComputed && authorizationRoleGuest" :imgProfile="profilePicComputed" @logout-now="logout"></profile-drop>
-
-
-       
         <button @click="closeOrOpenForm(true)" v-if="!isUserValidComputed">LOG IN <font-awesome-icon icon="fa-solid fa-user" /></button>
-
-      
     </nav>
 
-    
 
     <!-- COLLUMN NAV-->
     <!-- show when loggedin as GUEST -->
-    <!-- <nav class="navigationColumn"> -->
-      <font-awesome-icon v-if="!authorizationPersonnel" icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
-      <transition name="columnNav"> 
-        <column-nav v-if="isShowColumnNavComputed && !authorizationPersonnel" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)" @navigate-now="columnNavigationController"></column-nav>           
-      </transition>
-       
-    <!-- </nav> -->
-    
+    <font-awesome-icon v-if="!authorizationPersonnel" icon="fa-solid fa-bars" size="2x" class="bars" @click="showColumnNav(true)"/>
+    <transition name="columnNav"> 
+      <column-nav v-if="isShowColumnNavComputed && !authorizationPersonnel" @close-nav="showColumnNav(false)" @log-in="closeOrOpenForm(true)" @navigate-now="columnNavigationController"></column-nav>           
+    </transition>
 
-    <navigation-personnel v-if="authorizationPersonnel" @logout-now="logout"/>  <!-- open navigation header if personnel user -->
+    
+    <!-- open navigation header IF PERSONNEL USER -->
+    <navigation-personnel v-if="authorizationPersonnel" @logout-now="logout"/>  
+
+
+    <!-- toggled widgets -->
     <login-form v-if="isLoginBoolComputed" @close-button="closeOrOpenForm(false)"></login-form> <!-- open login form -->
     <loading-logout v-if="isLoggingOut"></loading-logout> <!-- loggin out animation -->
 
@@ -89,10 +80,7 @@ export default {
   },
   data(){
     return{
-      // activeHomeNav: '',
       logo: logo,
-      // profile,
-      // isLoginBool: false,
       isShowColumnNav: false,
 
       //user details
@@ -100,9 +88,6 @@ export default {
       userTokenID : null,
       isUserValid : false,
       tryAuth: this.$store.state.auth.tokenID,
-
-      //STAFF&ADMIN
-      // isShowStaffAdminColumn: false,
 
       //log out prompt
       isLoggingOut: false,
@@ -113,7 +98,7 @@ export default {
   },
   methods: {
 
-    columnNavigationController(sectionId,path){
+    columnNavigationController(sectionId,path){   //this method is for column navigation bars only scrolling events
         console.log(sectionId,path)
         if(path === ""){
           this.navigateAbout(sectionId)
@@ -122,8 +107,7 @@ export default {
         }
     },
 
-    navigateServices(sectionID,path){
-
+    navigateServices(sectionID,path){     //this method is for row navigation 
       if(this.$route.path === path){
         this.$emit('navigation-scroll',sectionID)
       }else{
@@ -137,45 +121,18 @@ export default {
           console.error('something wrong on navigation')
         } 
       }          
-
     },
 
-    navigateAbout(id){
-      // this.$store.commit('resetId')
+    navigateAbout(id){        //this method is for row navigation 
       this.scrollNavigateAbout(id)     
     },
-    scrollNavigateAbout(sectionID){
-      // this.activeHomeNav = sectionID
+    scrollNavigateAbout(sectionID){     //this method is for row navigation 
       if(this.$route.path === '/home'){
         this.$emit('navigation-scroll',sectionID)
       }else{
         this.$router.push({path:'/', query: {to: sectionID}});
       }
     },
-
-    // navigateSell(id){
-    //   this.scrollNavigateSell(id)
-    // },
-    // scrollNavigateSell(sectionID){
-    //   if(this.$route.path === '/sell'){
-    //     this.$emit('navigation-scroll',sectionID)
-    //   }else{
-    //     this.$router.push({path:'/sell', query: {to: sectionID}});
-    //   }
-    // },
-
-    // navigateProvide(id){
-    //   this.scrollNavigateProvide(id)
-    // },
-    // scrollNavigateProvide(sectionID){
-    //   if(this.$route.path === '/provide'){
-    //     this.$emit('navigation-scroll',sectionID)
-    //   }else{
-    //     this.$router.push({path:'/provide', query: {to: sectionID}});
-    //   }
-    // },
-
-
     closeOrOpenForm(bool){
         this.$store.commit('auth/toggleLoginForm',bool)
     },
@@ -188,9 +145,6 @@ export default {
     toggleProfile(){
       this.$store.commit('personnel/togglePofileShow')
     },
-    // toggleStaffAdminColumn(){
-    //   this.isShowStaffAdminColumn = !this.isShowStaffAdminColumn
-    // },
     async logout(){
       console.log('loggin out now')
       this.isLoggingOut = true;
@@ -248,9 +202,6 @@ export default {
     isPersonnelProfile(){
       return this.$store.getters['personnel/isSettingsViewGetter']
     },
-    // authorizationPersonnelTEXT(){
-    //   return this.$store.getters['auth/authorizationPersonnelTEXT']
-    // },
     activeHomeAbout(){
       return this.homeNav ==='about'?true:false
     },
@@ -301,7 +252,8 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 0 1rem;
-    background-color: rgba(0, 0, 0, 0.9);
+    /* background-color: rgba(0, 0, 0, 0.9); */
+    background-color: rgb(24, 22, 22);
     z-index: 5;
 }
 .header .logoStaffAdmin{

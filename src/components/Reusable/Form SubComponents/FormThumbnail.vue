@@ -1,6 +1,6 @@
 <template>
   <div class="card-container">
-    <header>
+    <header class="fw-bold p-3">
         {{ title }}
     </header>
     <section>
@@ -41,7 +41,7 @@ export default {
             }
 
 
-            else if(this.imgThumbTitle === 'individualDeclaration'){
+            else if(this.imgThumbTitle === 'individualBuyerDeclaration'){
                 return individual
             }
             else if(this.imgThumbTitle === 'approvePaymentScheme'){
@@ -68,9 +68,6 @@ export default {
 
 
 <style scoped>
-header{
-      font-size: clamp(.8rem, 1vw, 2rem);
-}
 .card-container{
     /* width: 70%; */
     margin: auto;

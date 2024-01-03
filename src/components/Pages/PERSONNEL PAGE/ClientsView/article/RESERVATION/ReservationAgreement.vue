@@ -496,14 +496,17 @@ export default{
                         this.lot_1 = emptyArray[i].lotNumber;
                         this.area_1 = emptyArray[i].totalSqm;
                         this.price_per_sq_1 = emptyArray[i].amountperSquare;
+                        this.contract_price_1 = this.area_1 * this.price_per_sq_1
                     }else if(i == 1){
                         this.lot_2 = emptyArray[i].lotNumber;
                         this.area_2 = emptyArray[i].totalSqm;
                         this.price_per_sq_2 = emptyArray[i].amountperSquare;
+                        this.contract_price_2 = this.area_2 * this.price_per_sq_2
                     }else if(i==2){
                         this.lot_3 = emptyArray[i].lotNumber;
                         this.area_3 = emptyArray[i].totalSqm;
                         this.price_per_sq_3 = emptyArray[i].amountperSquare;
+                        this.contract_price_3 = this.area_3 * this.price_per_sq_3
                     }else{
                         toast.error('something wrong initializing the lot details')
                     }

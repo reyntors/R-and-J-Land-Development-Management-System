@@ -5,7 +5,7 @@
     <call-slip></call-slip>
     
     
-  
+    <the-footer/>
   </template>
   
   <script>

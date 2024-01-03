@@ -41,7 +41,7 @@ const store = createStore({
                 companyName: 'R & J Land Development Corporation',
                 companyAddress: 'Sitio Buenavista, Barangay Matutungan, Sta. Cruz, Davao del Sur',
                 companyEmail: 'rjlanddevcorp@gmail.com',
-                companyContactNumber: '09123456789',
+                companyContactNumber: '+639123456789',
                 //header
                 homeID: '',
             }

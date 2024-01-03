@@ -11,19 +11,19 @@
                 <form-thumbnail title="Letter of Intent" imgThumbTitle="letterOfIntent"/> 
           </section>
           <section class="grid-item" @click="show(this.obj.contractDetailsURL)">
-                <form-thumbnail title="Contract Details" imgThumbTitle="contractDetails"/>
+                <form-thumbnail title="Buyer Info Sheet" imgThumbTitle="buyerInfoSheet"/>
           </section>
           <section class="grid-item" @click="show(this.obj.individualBuyerURL)">
                 <form-thumbnail title="Individual Buyer Declaration" imgThumbTitle="individualBuyerDeclaration"/>    
           </section>
           <section class="grid-item" @click="show(this.obj.birTinURL)">
-                <form-thumbnail title="BIR TIN Request" imgThumbTitle="BIR-TIN-Request"/>
+                <form-thumbnail title="BIR TIN Request" imgThumbTitle="BirTinRequest"/>
           </section>
           <section class="grid-item" @click="show(this.obj.checklistURL)">
               <form-thumbnail title="Checklist" imgThumbTitle="checklist"/>
           </section>
           <section class="grid-item" @click="show(this.obj.approvePaymentURL)">
-              <form-thumbnail title="Approve Payment" imgThumbTitle="approve-payment"/>
+              <form-thumbnail title="Approve Payment" imgThumbTitle="approvePaymentScheme"/>
           </section>
           <section class="grid-item" @click="show(this.obj.callSlipURL)">
               <form-thumbnail title="Call Slip" imgThumbTitle="call-slip"/>
@@ -105,9 +105,26 @@ h4{
     overflow-y: auto;
     position: relative;
 }
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 .div2 .grid{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
 }
 @media screen and (max-width:933px) {

@@ -3,7 +3,6 @@
   <messenger-chat v-if="isNotPersonnel"></messenger-chat>
   
   <auto-logout v-if="autoLogoutNow"></auto-logout>
-
 </template>
 
 <script>

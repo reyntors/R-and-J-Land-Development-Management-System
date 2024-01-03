@@ -84,23 +84,40 @@
         <h5 class="fw-bold mb-1">INSTALLMENT PAYMENT</h5> 
 
         <ol class="list">
-            <li class="mb-3">
-                <div> 
+            <li class="mb-3 row">
+                <div class="col-md"> 
                     <p>Total Downpayment is <input class="input-custom" v-model="installment.PercentageDonwpayment">% of the Contract Price</p>
                     <p>Downpayment, net of Reservation Fee and Discount Due date to avail of <input class="input-custom" v-model="installment.DiscountOnDownpayment">% Discount on the Down payment</p>            
                 </div>
-                <div class="form-floating mb-1">
+                <!-- <div class="form-floating mb-1">
                     <input type="text" class="form-control" id="isntallment-a" placeholder="" v-model="installment.TotalDownpayment">
                     <label for="isntallment-a">Total</label>
+                </div> -->
+                <div class="col-md"> 
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">P</span>
+                        <input type="text" class="form-control" v-model="installment.TotalDownpayment1">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">P</span>
+                        <input type="text" class="form-control" v-model="installment.TotalDownpayment2">
+                    </div>                    
                 </div>
+
             </li>
-            <li class="mb-3">
-                <div> 
+            <li class="mb-3 row">
+                <div class="col-md"> 
                     <p>Balance for amortization, net of Reservation Fee, Downpayment and Discount and DP</p>          
                 </div>
-                <div class="form-floating mb-1">
-                    <input type="text" class="form-control" id="isntallment-a" placeholder="" v-model="installment.TotalbalanceOfAmortization">
-                    <label for="isntallment-a">Total</label>
+                <div class="col-md"> 
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">P</span>
+                        <input type="text" class="form-control" v-model="installment.TotalbalanceOfAmortization1">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">P</span>
+                        <input type="text" class="form-control" v-model="installment.TotalbalanceOfAmortization2">
+                    </div>                    
                 </div>
             </li>
         </ol>
@@ -233,8 +250,10 @@ export default{
             installment: {
                 PercentageDonwpayment: '',
                 DiscountOnDownpayment: '',
-                TotalDownpayment: '',
-                TotalbalanceOfAmortization: '',
+                TotalDownpayment1: '',
+                TotalDownpayment2: '',
+                TotalbalanceOfAmortization1: '',
+                TotalbalanceOfAmortization2: '',
                 DueMonth1: '',
                 DueMonth2: '',
                 AmountDue1: '',
@@ -246,8 +265,10 @@ export default{
             installmentCopy: {
                 PercentageDonwpayment: '',
                 DiscountOnDownpayment: '',
-                TotalDownpayment: '',
-                TotalbalanceOfAmortization: '',
+                TotalDownpayment1: '',
+                TotalDownpayment2: '',
+                TotalbalanceOfAmortization1: '',
+                TotalbalanceOfAmortization2: '',
                 DueMonth1: '',
                 DueMonth2: '',
                 AmountDue1: '',
@@ -286,6 +307,7 @@ export default{
     methods: {
         getData(){
             return {
+                typePayment: this.typePayment,
                 date: this.date,
                 name: this.name,
                 blockNo: this.blockNo,
@@ -416,5 +438,8 @@ export default{
 }
 ul{
     list-style: none;
+}
+p{
+    display: inline-block;
 }
 </style>

@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import TheFooter from '@/components/Reusable/Header and Footer/TheFooter.vue'
 import HeavyEquipment from './Heavy Equipements/HeavyEquipment.vue'
 import PermitsLicenses from './Permits and Licenses/PermitsLicenses.vue'
 import SurveyServices from './Survey Services/SurveyServices.vue'
@@ -24,7 +23,6 @@ export default {
     PermitsLicenses, 
     SurveyServices, 
     TitlingProcessing,
-    TheFooter,
     },
     methods: {  
           scrollNavigate(id){

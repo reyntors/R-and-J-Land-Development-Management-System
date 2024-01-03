@@ -334,5 +334,12 @@ li{
   }
   
 }
+@media screen and (min-width: 1600px) {
+  .div2 .singleCard,
+  .div2 .multipleCard{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  
+}
 
   </style>
