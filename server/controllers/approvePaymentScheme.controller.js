@@ -219,7 +219,7 @@ exports.createContractToSell = async (req, res) => {
 
             return res.status(404).json({message: 'this staff is not found'});
         }
-
+      
         const  newContractToSell = {
 
             clientName: customer.approvePaymentScheme.name,
@@ -271,32 +271,32 @@ async function generateContractToSellPDF(newContractToSell, customer){
 
 
 
-    //     pdfDoc
-    //     .getForm()
-    //     .getFields()
-    //     .forEach((field) => field.enableReadOnly());
+        pdfDoc
+        .getForm()
+        .getFields()
+        .forEach((field) => field.enableReadOnly());
 
-    // // Save the modified PDF to a new file
-    // const pdfBytes = await pdfDoc.save();
+    // Save the modified PDF to a new file
+    const pdfBytes = await pdfDoc.save();
 
-    // // AWS S3 configuration
-    // const s3 = new S3Client({
-    //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    //     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    //     region: process.env.AWS_REGION,
-    // });
+    // AWS S3 configuration
+    const s3 = new S3Client({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION,
+    });
 
-    // const s3Params = {
-    //     Bucket: process.env.AWS_BUCKET_NAME,
-    //     Key: `uploads/generatedForms/${customer.username}_approve_payment_scheme.pdf`, // Define the desired key (path) on S3
-    //     Body: pdfBytes, 
-    // };
+    const s3Params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `uploads/generatedForms/${customer.username}_approve_payment_scheme.pdf`, // Define the desired key (path) on S3
+        Body: pdfBytes, 
+    };
 
-    //     await s3.send(new PutObjectCommand(s3Params));
-    //     const pdfPath = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Params.Key}`;
+        await s3.send(new PutObjectCommand(s3Params));
+        const pdfPath = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Params.Key}`;
         
         
-    //     return pdfPath;
+        return pdfPath;
         
     } catch (error) {
         

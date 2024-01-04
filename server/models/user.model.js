@@ -22,7 +22,6 @@ const reservationSchema = new Schema({
     },
     date: {
         type: String,
-        required: true,
         ref: 'Reservation'
         
     },
