@@ -4,34 +4,14 @@
         <h4>Empty Forms</h4>
       </div>
       <div class="div2">
-
-        <progress-loading v-if="isLoading" type="spin"></progress-loading>
-        <div class="grid" v-else>
-          <section class="grid-item" @click="show(this.obj.letterOfIntentURL)">
-                <form-thumbnail title="Letter of Intent" imgThumbTitle="letterOfIntent"/> 
-          </section>
-          <section class="grid-item" @click="show(this.obj.contractDetailsURL)">
-                <form-thumbnail title="Buyer Info Sheet" imgThumbTitle="buyerInfoSheet"/>
-          </section>
-          <section class="grid-item" @click="show(this.obj.individualBuyerURL)">
-                <form-thumbnail title="Individual Buyer Declaration" imgThumbTitle="individualBuyerDeclaration"/>    
-          </section>
-          <section class="grid-item" @click="show(this.obj.birTinURL)">
-                <form-thumbnail title="BIR TIN Request" imgThumbTitle="BirTinRequest"/>
-          </section>
-          <section class="grid-item" @click="show(this.obj.checklistURL)">
-              <form-thumbnail title="Checklist" imgThumbTitle="checklist"/>
-          </section>
-          <section class="grid-item" @click="show(this.obj.approvePaymentURL)">
-              <form-thumbnail title="Approve Payment" imgThumbTitle="approvePaymentScheme"/>
-          </section>
-          <section class="grid-item" @click="show(this.obj.callSlipURL)">
-              <form-thumbnail title="Call Slip" imgThumbTitle="call-slip"/>
-          </section>
-          <section class="grid-item" @click="show(this.obj.reservationURL)">
-              <form-thumbnail title="Reservation Payment" imgThumbTitle="reservation"/>
-          </section>          
-        </div>
+        <ul class="grid">
+          <li v-for="(file, index) in list" :key="index">
+            <a :href="file.url" :download="file">
+                  <form-thumbnail :imgThumbTitle="file.thumbTitle" :title="file.filename"></form-thumbnail>
+                </a> 
+          </li>
+        </ul>
+  
 
      
       </div>
@@ -48,9 +28,9 @@
         }
       },
       computed:{
-        obj(){
+        list(){
           // console.log(this.$store.getters['rawForms/objectsOfDonwloadableGetter'])
-          return this.$store.getters['rawForms/objectsOfDonwloadableGetter']
+          return this.$store.getters['rawForms/rawFormsDownloadableGetter']
         }
       },
 
@@ -122,19 +102,26 @@ h4{
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 .div2 .grid{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
 }
-@media screen and (max-width:933px) {
-    .div2{
+@media only screen and (max-width:1350px) {
+    .div2 .grid{
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media only screen and (max-width:1000px) {
+    .div2 .grid{
       grid-template-columns: 1fr 1fr;
+      padding: 0 1rem;
     }
 }
-@media screen and (max-width:672px) {
-    .div2{
-      grid-template-columns: 1fr;
-    }
-}
+
   </style>

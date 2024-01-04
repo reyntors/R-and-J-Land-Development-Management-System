@@ -448,6 +448,7 @@ export default{
 
                     // download the FORM
                     console.log(response.pdfPath)
+                    // alert('Downloading the file directly')
                     window.open(response.pdfPath);
                     toast.success(response.message)   
                 }catch(error){

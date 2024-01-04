@@ -28,10 +28,6 @@ export default{
     },
     mutations:{
 
-        // setSomething(state,param){
-        //     state.something = param
-        // },
-
         //start search guest
         searchGuest(state,value){
             if(value !== '' || value !== null){
@@ -48,14 +44,11 @@ export default{
 
         //start modify legit client list local
         addClient(state,payload){
-            // console.log('added')
-            // console.log(payload)
             state.clientsAdded.push(payload)
         },
-        updateClient(state,payload){
+        updateClient(state,payload){        //update profile deailts
             console.log(payload)
             const index = state.clientsAdded.findIndex(item => item.userId=== payload.id)
-            // console.log(state.clientsAdded[0].profile)
             if(index>=0){
                 state.clientsAdded[index].profileDetails = payload.data
             }    
@@ -66,7 +59,16 @@ export default{
             if(index>=0){
                 state.clientsAdded.splice(index,1) 
             }
-            
+            console.log(state.clientsAdded)
+        },
+        deleteUploadedID(state,payload){    //delete the specific id locally
+            const index = state.clientsAdded.findIndex(item => item.userId === payload.userId)  //find the index of the client
+            if(index>=0){
+                const index2 = state.clientsAdded[index].profileDetails.uploadId.findIndex(item => item._id === payload.imageId) //get the index of the matched image ID
+                if(index2>=0){
+                    state.clientsAdded[index].profileDetails.uploadId.splice(index2,1)  //deleting now the image
+                }
+            }
             console.log(state.clientsAdded)
         },
         //end modify legit client list local
@@ -290,7 +292,22 @@ export default{
                 console.error(error)
             }
         },
+        async deleteUploadedID(context,payload){
+            console.log(payload)
+            store.dispatch('auth/monitorTokenSpan')
+            console.log('deleting uploaded id')
+            try{
+                 const response = await Client.deleteUploadedID(payload.userId, payload.imageId)
+                context.commit('deleteUploadedID',{userId: payload.userId, imageId: payload.imageId})   //delete the ID in local list
+                return response.message
+            }catch(error){
+                console.error(error)
+                return error
+            }
+        },
+
         // end update profile
+
         //start adding GUEST to LEGIT CLIENT
         async addClient(context,payload){   
             store.dispatch('auth/monitorTokenSpan')
@@ -432,6 +449,16 @@ export default{
                 console.log(error)
             } 
         },
+        async deleteScannedFile(_,payload){
+            console.log(payload)
+            store.dispatch('auth/monitorTokenSpan')
+            try{
+                const response = await Client.deleteSpecificScannedFile(payload.userId,payload.fileId)
+                return response.message
+            }catch(error){
+                console.log(error)
+            }
+        },
         //end downloadable Form
 
         //start reservation form
@@ -463,10 +490,60 @@ export default{
                 }) 
                 return response          
             }catch(error){
-                console.log(error)
+                return error
             } 
-        }
+        },
         //end reservation form
+
+        //start payment scheme
+        async submitPaymentScheme(_,payload){
+            const object = {
+                typePayment: payload.typePayment,
+                name: payload.name,
+                blockNo: payload.blockNo,
+                phaseNo: payload.phaseNo,
+                lotNo: payload.lotNo,
+                amount: payload.amount,
+                datePaid: payload.datePaid,
+            }
+            let body = {}
+            if(payload.typePayment === 'cash'){
+                body = {
+                    ...object,
+                    ...payload.cash
+                }
+            }else if(payload.typePayment === 'installment'){
+                body = {
+                    ...object,
+                    ...payload.installment
+                }
+            }else{
+                body = {
+                    ...object,
+                    ...payload.others
+                }
+            }
+            try{
+                const response = await Client.submitPaymentSchemeAPI(body,payload.userId)
+                return response
+            }catch(error){
+                return error
+            }
+        },
+        //end payment scheme
+
+        //start CTS contarct to sell
+        async triggerCTS(_,userId){
+            try{
+                const response = await Client.triggerCreateCtsAPI(userId)
+                console.log(response)
+                return response
+            }catch(error){
+                console.error(error)
+                throw error
+            }
+        }
+        //end CTS contract to sell
 
     },
     getters:{

@@ -18,7 +18,7 @@
 
           <button :class="{flat:clientPaymentSchemeVisible}" @click="goto('payment-scheme')">Payment Scheme</button>
 
-          <button> Download CTS</button>
+          <button @click="createCTS"> Download CTS</button>
 
         </div>
       
@@ -31,6 +31,8 @@
          <client-reservation v-if="clientReservationFormVisible" :clientID="clientObj.userId"></client-reservation>
          <client-payment-scheme v-if="clientPaymentSchemeVisible" :clientID="clientObj.userId"></client-payment-scheme>
     </section>
+
+    <blur-loading v-if="isLoading"/>
   </div>
 </template>
 
@@ -40,6 +42,7 @@ import ClientProfile from '../article/PROFILE/ProfileDetails.vue';
 import ClientForms from '../article/FORMS/FormsDetails.vue'
 import ClientReservation from '../article/RESERVATION/ReservationAgreement.vue'
 import ClientPaymentScheme from '../article/PAYMENT SCHEME/PaymentScheme.vue'
+import { toast } from 'vue3-toastify';
 export default {
   props: ['clientObj'],
   components: {
@@ -51,6 +54,7 @@ export default {
   },
   data(){
     return{
+      isLoading: false,
       clientProfileVisible: true,
       clientPaymentVisible: false,
       clientFormsVisible: false,
@@ -84,6 +88,20 @@ export default {
       this.clientReservationFormVisible = false
       this.clientPaymentSchemeVisible = false
     },
+    async createCTS(){
+        const isConfirmed = confirm("Download CTS now?")
+        if(isConfirmed){
+          this.isLoading = true
+          try{
+            const response = await this.$store.dispatch('client/triggerCTS',this.clientObj.userId)
+            window.open(response.pdfPath)
+          }catch(error){
+            toast.error(error)
+          }
+          this.isLoading = false          
+        }
+
+    }
   },
 
   

@@ -9,7 +9,7 @@
         </div>
         <div class="col-md"> 
             <label for="date" class=" col-form-label">Date:</label>
-            <input type="date" class="form-control" id="date" v-model="date">
+            <input type="date" class="form-control" id="date" v-model="date" disabled>
         </div>
     </div>
 
@@ -221,6 +221,7 @@
 <script>
 import { toast } from 'vue3-toastify'
 export default{
+    props: ['clientID'],
     data(){
         return{
             isLoading : false,
@@ -307,8 +308,8 @@ export default{
     methods: {
         getData(){
             return {
+                userId: this.clientID,
                 typePayment: this.typePayment,
-                date: this.date,
                 name: this.name,
                 blockNo: this.blockNo,
                 phaseNo: this.phaseNo,
@@ -321,7 +322,7 @@ export default{
             }
         },
         nullChecker(details){          //check if the all details has null or empty values
-            console.log(details)
+            // console.log(details)
             if(
                 this.name === '' ||
                 this.blockNo === '' ||
@@ -334,12 +335,12 @@ export default{
                     return false
             }
 
-            console.log('continue')
+            // console.log('continue')
             function checkValues(object){       //create function to test the object values if null or not
-                console.log(object)
+                // console.log(object)
                 //get the list of keys
                 const listKeys = Object.keys(object)
-                console.log(listKeys.length )
+                // console.log(listKeys.length )
                 if(listKeys.length === 0){
                     return false
                 }else{
@@ -373,11 +374,18 @@ export default{
         async submit(){
             this.isLoading = true
             const details = this.getData()          //gather the all data into one object
+            console.log(details)
             const isSubmit  = this.nullChecker(details)     //decide if ready to submit via checking if there is null values
             if(isSubmit){
-
-                await new Promise(resolve => setTimeout(resolve,1000))
-                toast.success('success')
+                
+                try{
+                    const response = await this.$store.dispatch('client/submitPaymentScheme',details) 
+                    toast.success(response.message)
+                    alert('Downloading the file directly')
+                    window.open(response.data.url)      //donwload the created file directly
+                }catch(error){
+                    console.error(error)
+                }     
             }else{
                 toast.warning('Please complete the required details')
             }

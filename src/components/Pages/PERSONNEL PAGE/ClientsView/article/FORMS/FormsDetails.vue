@@ -12,6 +12,7 @@
           <ul v-for="(item,index) in listSubmittedForms" :key="index">
             <li>
               <section>
+                {{ index }}
                 <a :href="item.url" :download="fileName(index)">
                   <form-thumbnail :imgThumbTitle="index" :title="index"></form-thumbnail>
                 </a>  
@@ -34,7 +35,7 @@
           <ul v-else>
             <li v-for="(file,index) in listUploadedScannedFiles" :key="index" class="uploadedScannedFiles">
                 <a :href="file.url" :download="file.filename">{{ file.filename }}</a>
-                <font-awesome-icon icon="fa-solid fa-trash-can" class="eraseBtn" v-if="authorizationRoleAdmin" @click="deleteScannedFile"/>
+                <font-awesome-icon icon="fa-solid fa-trash-can" class="eraseBtn" v-if="authorizationRoleAdmin" @click="deleteScannedFile(file._id)"/>
             </li>
           </ul>          
         </div>
@@ -63,11 +64,7 @@
 
     </div>
 
-    <!-- <letter-intent v-if="formVisible === 'letterIntent'" @back-click="toggleOpenForms" :client-obj="clientObj.letterOfIntent" :whole-object="clientObj"/>
-    <buyer-declaration v-if="formVisible === 'buyerDeclaration'" @back-click="toggleOpenForms" :client-obj="clientObj.individualDeclaration" :whole-object="clientObj"/>
-    <bir-tin v-if="formVisible === 'bir-tin'" @back-click="toggleOpenForms" :client-obj="clientObj.BirTinRequest" :whole-object="clientObj"/>
-    <contract-details v-if="formVisible === 'contractDetails'" @back-click="toggleOpenForms" :client-obj="clientObj.ContractDetails"></contract-details> -->
-      
+    
   </div>
 </template>
 
@@ -134,6 +131,7 @@ export default {
       //submit uploads
       async submitUpload(){
         if(this.uploadedFile && this.uploadedFileName){
+          this.isLoading = true
           const data = new FormData()
           data.append('file',this.uploadedFile)
           console.log(data)
@@ -150,6 +148,8 @@ export default {
           }
           
           this.$store.dispatch('client/getListScannedFile', this.clientObj.userId)
+
+          this.isLoading = false
         }else{
           console.log('no uploaded')
         }
@@ -168,12 +168,19 @@ export default {
         }
       },
 
-      deleteScannedFile(){
+      async deleteScannedFile(id){
         const confirmed = confirm('Are you sure to delete this file?')
         if(confirmed){
-          toast.success('deleting scanned file')
-        }else{
-          toast.warning('cancel deleting file')
+          this.isLoading = true
+          try{
+            const response = await this.$store.dispatch('client/deleteScannedFile',{userId: this.clientObj.userId, fileId: id})
+            toast.success(response)
+            await this.$store.dispatch('client/getListScannedFile', this.clientObj.userId)
+
+          }catch(error){
+            toast.error(error)
+          }
+          this.isLoading = false
         }
         
       }
@@ -220,6 +227,7 @@ export default {
 .uploadContainer{
   display: flex;
   flex-direction: column;
+ 
 }
 p{
   font-size: clamp(.6rem, 1vw, 1.5rem);
@@ -230,6 +238,7 @@ p{
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .header{
   margin-bottom: 1rem;
@@ -331,6 +340,7 @@ ul{
   display: flex;
   justify-content: center;
   position: relative;
+  padding: 1rem;
 }
 .uploadedScannedFiles{
   display: flex;

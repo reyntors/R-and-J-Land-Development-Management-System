@@ -14,12 +14,11 @@ import LetterOfIntent from '@/assets/form-thumbnails/letter-of-intent.jpg';
 import BIR_TIN_Request from '@/assets/form-thumbnails/bir.jpg';
 import BuyerInfo from '@/assets/form-thumbnails/buyer-info.jpg';
 import ReservationAgreement from '@/assets/form-thumbnails/reservation.jpg';
-
 import individual from '@/assets/form-thumbnails/individual-buyer-declaration.png';
-
 import ApprovedPaymentScheme from '@/assets/form-thumbnails/approve-payment.png';
 import ChecklistClosingSale from '@/assets/form-thumbnails/checklist-for-closing.png';
 import CallSlip from '@/assets/form-thumbnails/call-slip.png';
+import ContractToSell from '@/assets/form-thumbnails/Contract-to-sell.png'
 
 export default {
     props: ['title','imgThumbTitle'],
@@ -33,7 +32,7 @@ export default {
             if(this.imgThumbTitle === 'letterOfIntent'){
                 return LetterOfIntent
             }
-            else if(this.imgThumbTitle === 'BirTinRequest'){
+            else if(this.imgThumbTitle === 'birTinRequest'){
                 return BIR_TIN_Request
             }
             else if(this.imgThumbTitle === 'buyerInfoSheet'){
@@ -44,20 +43,23 @@ export default {
             else if(this.imgThumbTitle === 'individualBuyerDeclaration'){
                 return individual
             }
-            else if(this.imgThumbTitle === 'approvePaymentScheme'){
+            else if(this.imgThumbTitle === 'approvePayment'){
                 return ApprovedPaymentScheme
             }
-            else if(this.imgThumbTitle === 'checklist'){
+            else if(this.imgThumbTitle === 'checkListForClosing'){
                 return ChecklistClosingSale
             }
-            else if(this.imgThumbTitle === 'call-slip'){
+            else if(this.imgThumbTitle === 'callSlip'){
                 return CallSlip
             
             }
-            else if(this.imgThumbTitle === 'reservation'){
+            else if(this.imgThumbTitle === 'reservationAgreement'){
                 return ReservationAgreement
             }
-            
+            else if(this.imgThumbTitle === 'contractToSell'){
+                return ContractToSell
+            }
+            //contract to sell here
             else{
                 return null
             }
@@ -91,6 +93,8 @@ export default {
     padding: 1rem;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .card-container section{
     width: 100%;

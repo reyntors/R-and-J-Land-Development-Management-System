@@ -165,13 +165,14 @@
           </div>            
           </div>
 
-        <blur-loading v-if="isLoading"></blur-loading>
+        
         <!-- <progress-loading type="torks"></progress-loading> -->
 
       <clickable-button type="submit">Submit</clickable-button>
         </form>
       </div>
     </section>
+    <blur-loading v-if="isLoading"></blur-loading>
   </div>
 </template>
 
@@ -300,6 +301,7 @@ export default {
   border-top: 2px solid white;
   background-color: rgb(24, 22, 22);
   color: white;
+  position: relative;
 }
 h5,h6,p{
   padding: 0;

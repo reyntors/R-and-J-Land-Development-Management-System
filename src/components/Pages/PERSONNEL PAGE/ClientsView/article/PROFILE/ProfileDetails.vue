@@ -70,12 +70,12 @@
 <hr>
         <div style="margin-top: 1rem;"> 
             <p class="fw-bold fs-4">Uploaded ID</p>
-            <section class="uploadedID">
+            <section>
                 <p v-if="client.uploadId.length<1">No Valid ID's Uploaded</p>
-                <ul>
+                <ul class="uploadedID">
                     <li v-for="(image,index) in client.uploadId" :key="index">
                         <img :src="image.url">
-                        <font-awesome-icon icon="fa-solid fa-trash-can" class="eraseBtn" v-if="authorizationRoleAdmin" @click="deleteID"/>
+                        <font-awesome-icon icon="fa-solid fa-trash-can" class="eraseBtn" v-if="authorizationRoleAdmin" @click="deleteID(image._id)"/>
                     </li>
                     
                 </ul>
@@ -180,8 +180,37 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
 
 
             },
-            deleteID(){
-                toast.success('deleteing the id')
+            async deleteID(id){
+                const isConfirmed = confirm('Are you sure to delete this ID?')
+                if(isConfirmed){
+                    this.isLoading = true
+                    try{
+                        const response = await this.$store.dispatch('client/deleteUploadedID',{
+                            userId: this.clientID,
+                            imageId: id
+                        })
+                        toast.success(response)
+                    }catch(error){
+                        console.error(error)
+                        toast.error(error)
+                    }
+                    this.isLoading = false                    
+                }
+
+            },
+
+            getProfileDetails(){
+                this.$store.commit('client/resetTempArrays')
+                const list = this.$store.getters['client/clientsGetter']
+                const index = list.findIndex(item => item.userId === this.clientID)
+                if(index>=0){
+                    const obj = list[index]
+                    this.clientReference = {...obj.profileDetails}
+                    this.client = {...obj.profileDetails}
+                    console.log(this.client)
+                }else{
+                    this.client = {}
+                }
             }
         },
   
@@ -324,17 +353,7 @@ import ProgressLoading from '@/components/Reusable/LoadingScreens/ProgressLoadin
         },
 
         created(){
-            this.$store.commit('client/resetTempArrays')
-            const list = this.$store.getters['client/clientsGetter']
-            const index = list.findIndex(item => item.userId === this.clientID)
-            if(index>=0){
-                const obj = list[index]
-                this.clientReference = {...obj.profileDetails}
-                this.client = {...obj.profileDetails}
-            }else{
-                this.client = {}
-            }
-        
+            this.getProfileDetails();
         }
   
   }
@@ -424,6 +443,8 @@ input{
 }
 ul{
     list-style: none;
+    padding:0;
+    margin: 0;
 }
 li{
     position: relative;

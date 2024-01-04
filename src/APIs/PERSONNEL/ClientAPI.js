@@ -275,6 +275,21 @@ export const retrieveSpecificScannedFile = async (id,filename) => {
         throw (error.response.data.message);
     }
 }
+export const deleteSpecificScannedFile = async (userId,fileId) => {
+    // console.log('API deleteSpecificScannedFile executed')
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.delete(`${BASE_URL}users/delete-scanfiles/${userId}/${fileId}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        return response.data
+    }catch(error){
+        // console.log(error)
+        throw (error.response.data.message);
+    }
+}
 //end article/form
 
 //start profile
@@ -285,6 +300,21 @@ export const updateUserProfile = async (payload) => {
     const token =store.getters['auth/getTokenID']
     try{
         const response = await axios.put(`${BASE_URL}users/update-user/${payload.id}`,payload.data,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        return response.data
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+export const deleteUploadedID = async (userId,imageId) => {
+    console.log('API deleteUplaodedID executed')
+
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.delete(`${BASE_URL}users/delete-valid-image/${userId}/${imageId}`,{
             headers:{
                 'Authorization': `Bearer ${token}`,
             },
@@ -310,8 +340,50 @@ export const submitReservationFormAPI = async (payload) => {
         console.log(response)
         return response.data
     }catch(error){
+        console.log(error)
         throw (error.response.data.message);
     }
 }
 //end reservation form
+
+//start payment scheme
+export const submitPaymentSchemeAPI = async (body,userId) => {
+    console.log('API submitPaymentSchemeAPI executed')
+    // console.log(payload)
+    
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.post(`${BASE_URL}users/create-payment-scheme/${userId}`,body,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        console.log(response)
+        return response.data
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+//end payment scheme
+
+//start CTS contract to sell
+export const triggerCreateCtsAPI = async (userId) => {
+    console.log('API triggerCreateCtsAPI executed')
+    console.log(userId)
+    
+    const token =store.getters['auth/getTokenID']
+    console.log(token)
+    try{
+        const response = await axios.post(`${BASE_URL}users/create-contract-to-sell/${userId}`,{},{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        console.log(response)
+        return response.data
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+//end CTS contract to sell
 
