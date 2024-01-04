@@ -42,9 +42,8 @@ const individualBuyerDeclarationSchema = new Schema({
         required: true,
     },
     createdBy: {
-        type: Schema.Types.ObjectId, 
-        ref: 'user', 
-        required: true,
+        type: String, 
+        
     },
     
 });

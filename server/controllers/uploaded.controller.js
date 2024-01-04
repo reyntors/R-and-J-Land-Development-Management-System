@@ -170,3 +170,41 @@ exports.addValidImage = async (req, res, next) => {
   }
 
 };
+
+
+exports.deleteValidImage = async (req, res, next) => {
+  try {
+    const { id, fileId } = req.params;
+
+    // Find the user by their userId
+    const user = await User.findOne({ userId: id });
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found or you do not have permission to delete valid image for this user.',
+      });
+    }
+
+    // Find the index of the scannedFiles with the given fileId
+    const fileIndex = user.profileDetails.uploadId.findIndex(file => file._id.toString() === fileId);
+ 
+    if (fileIndex === -1) {
+      return res.status(404).json({
+        message: 'valid image not found.',
+      });
+    }
+
+    // Remove the scannedFiles from the array
+    const deletedFile = user.profileDetails.uploadId.splice(fileIndex, 1)[0];
+
+    // Save the updated user record
+    await user.save();
+
+    return res.status(200).json({
+      message: 'valid image deleted successfully.',
+      data: deletedFile,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

@@ -11,6 +11,343 @@ function generateUserId() {
 
 
 
+const reservationSchema = new Schema({
+    isSubmitted: {
+        type: Boolean,
+        default: false,
+    },
+    url: {
+        type: String,
+        ref: 'Reservation'
+    },
+    date: {
+        type: String,
+        required: true,
+        ref: 'Reservation'
+        
+    },
+     name: {
+        type: String,
+        ref: 'Reservation'
+       
+    },
+     land_at: {
+        type: String,
+        ref: 'Reservation'
+       
+    },
+     situated_at: {
+        type: String,
+        ref: 'Reservation'
+      
+    },
+     typePayment: {
+        type: String,
+        ref: 'Reservation'
+       
+    },
+     details1: {
+        area_1:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        block_1:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        contract_price_1:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        balance_1:{
+            type: Number,
+            ref: 'Reservation'
+           
+        },
+        downpayment_1:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        lot_1:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        phase_1:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        price_per_sq_1:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+    },
+    details2: {
+        area_2:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        block_2:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        contract_price_2:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        balance_2:{
+            type: Number,
+            ref: 'Reservation'
+           
+        },
+        downpayment_2:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        lot_2:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        phase_2:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        price_per_sq_2:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+    },
+    details3: {
+        area_3:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        block_3:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        contract_price_3:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        balance_3:{
+            type: Number,
+            ref: 'Reservation'
+           
+        },
+        downpayment_3:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+        lot_3:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        phase_3:{
+            type: String,
+            ref: 'Reservation'
+            
+        },
+        price_per_sq_3:{
+            type: Number,
+            ref: 'Reservation'
+            
+        },
+    },
+    
+   
+});
+
+
+const contractToSellSchema = new Schema ({
+    clientName: String,
+    projectName: String,
+    blockNo: String,
+    area: String,
+    contractNo: Number,
+    houseModel: String,
+    floorArea: String,
+    downpayment: Number,
+    balance: Number
+
+})
+
+
+
+
+const approvePaymentSchema = new Schema ({
+    isSubmitted: {
+        default: false,
+        
+    },
+    url: {
+        type: String,
+        ref: 'Approve Payment Scheme'
+    },
+    date: {
+        type: String, 
+        ref: 'Approve Payment Scheme'
+    },
+    name: {
+        type: String,
+        ref: 'Approve Payment Scheme'
+    },
+    blockNo: {
+        type: String,
+        ref: 'Approve Payment Scheme'
+    },
+    phaseNo: {
+        type: String,
+        ref: 'Approve Payment Scheme'
+    },
+    lotNo: {
+        type: String,
+        ref: 'Approve Payment Scheme'
+    },
+    amount: {
+        type: Number,
+        ref: 'Approve Payment Scheme'
+    },
+    datePaid: {
+        type: String,
+        ref: 'Approve Payment Scheme'
+    },
+    typePayment: {
+     type:   String,
+     ref: 'Approve Payment Scheme'
+    },
+    cash: {
+        contractPriceDiscountCash: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        discountAvailCash: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        totalCash: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+    },
+    installment: {
+        PercentageDonwpayment: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        DiscountOnDownpayment: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        TotalDownpayment1: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        TotalDownpayment2: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        TotalbalanceOfAmortization1: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        TotalbalanceOfAmortization2: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        DueMonth1: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        DueMonth2: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        AmountDue1: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        AmountDue2: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        FirstDueDate: {
+            type: String,
+            ref: 'Approve Payment Scheme'
+        },
+        EveryDate: {
+            type: String,
+            ref: 'Approve Payment Scheme'
+        },
+        Term: {
+            type: String,
+            ref: 'Approve Payment Scheme'
+        }
+    },
+    others: {
+        totalReservationFee: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        balancePayableIn: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        DueMonth1: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        DueMonth2: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        AmountDue1: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        AmountDue2: {
+            type: Number,
+            ref: 'Approve Payment Scheme'
+        },
+        FirstDueDate: {
+            type: String,
+            ref: 'Approve Payment Scheme'
+        },
+        EveryDate: {
+            type: String,
+            ref: 'Approve Payment Scheme'
+        },
+        Term: {
+            type: String,
+            ref: 'Approve Payment Scheme'
+        },         
+    },
+    createdBy: {
+        type: String,
+    ref: 'Approve Payment Scheme'
+    }
+
+
+});
+
 const transactionSchema = new Schema({
     transactionId:{
         type: Number, 
@@ -939,7 +1276,19 @@ const userSchema = new Schema({
         default: {}
     },
     
-    scannedFiles:[scannedFilesSchema]
+    scannedFiles:[scannedFilesSchema],
+    reservationAgreement: {
+        type: reservationSchema,
+        default: {}
+    },
+    approvePaymentScheme: {
+        type: approvePaymentSchema,
+        default: {}
+    },
+    contractToSell: {
+        type: contractToSellSchema,
+        default: {}
+    }
  
 });
 

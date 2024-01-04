@@ -43,6 +43,7 @@ router.put("/update-user/:id", auth.authenticateToken, userController.restrict([
 router.put("/approve-pending-update/:userId/:requestId/:inquiryId", auth.authenticateToken, userController.restrict(['staff','management']), userController.approveUserUpdate);
 router.put("/update-user-account-personnel", auth.authenticateToken, userController.restrict(['staff','management']), userController.updateUserAccountPersonnel);
 router.post("/create-payment-scheme/:id", auth.authenticateToken, userController.restrict(['staff','management']), approvePaymentController.createApprovePaymentScheme);
+router.post("/create-contract-to-sell/:id", auth.authenticateToken, userController.restrict(['staff','management']), approvePaymentController.createContractToSell);
 
 
 // transaction
@@ -67,15 +68,18 @@ router.get('/paymentdetails/:id', auth.authenticateToken, userController.restric
 //forms
 router.get('/forms/:id', auth.authenticateToken, userController.restrict(['customer','staff','management']), formsController.getAllFormsById);
 router.get('/retrieve-raw-forms/:filename', auth.authenticateToken, userController.restrict(['staff','management']), formsController.retrieveForms);
-
+router.put('/forms/update-form/:formName/:id', auth.authenticateToken, userController.restrict(['management']), formsController.updateFormById);
 
 //scanfiles
 router.post("/add-scanfiles/:id", auth.authenticateToken, userController.restrict(['staff','management']), scanfilesController.addScanFiles);
 router.get("/all-scanfiles/:id", auth.authenticateToken, userController.restrict(['staff','management']), scanfilesController.getAllScanFilesById);
 router.get("/retrieve-scanfiles/:id/:filename", auth.authenticateToken, userController.restrict(['staff','management']), scanfilesController.retrieveScanFile);
+router.delete("/delete-scanfiles/:id/:fileId", auth.authenticateToken, userController.restrict(['management']), scanfilesController.deleteScanFiles);
+
 
 //Valid Id Images
 router.post("/add-valid-image/:id", auth.authenticateToken, userController.restrict(['customer','staff','management']), uploadedController.addValidImage);
+router.delete("/delete-valid-image/:id/:fileId", auth.authenticateToken, userController.restrict(['management']), uploadedController.deleteValidImage);
 
 
 //files

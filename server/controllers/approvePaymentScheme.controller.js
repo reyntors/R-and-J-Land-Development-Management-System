@@ -3,6 +3,7 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const axios = require('axios');
 const { PDFDocument } = require('pdf-lib');
 const User = require('../models/user.model');
+const {contractToSellSchema} = require('../models/user.model');
 
 const date = new Date()
 const year = date.getFullYear();
@@ -195,5 +196,109 @@ async function generateApprovePaymentPDF(approvePaymentData, client){
     } catch (error) {
         console.log(error)
       throw error
+    }
+}
+
+exports.createContractToSell = async (req, res) => {
+    try {
+
+        const {id} = req.params;
+        const username = req.user.username;
+
+        const customer = await User.findOne({userId: id});
+
+        if(!customer){
+
+            return res.status(404).json({message: 'this customer is not found'});
+
+        }
+
+        const staff = await User.findOne({username});
+
+        if(!staff){
+
+            return res.status(404).json({message: 'this staff is not found'});
+        }
+
+        const  newContractToSell = {
+
+            clientName: customer.approvePaymentScheme.name,
+            projectName: customer.letterOfIntent.project,
+            blockNo: customer.approvePaymentScheme.blockNo,
+            area: customer.reservationAgreement.details1.area_1,
+            downpayment: customer.reservationAgreement.details1.downpayment_1
+
+        }
+
+
+        const savedData =  customer.save(newContractToSell);
+
+        const pdfPath =  await generateContractToSellPDF(newContractToSell, customer);
+
+
+
+
+
+        return res.status(200),json({
+            message: 'contract to sell  successfully created',
+            pdfPath: pdfPath,
+            data: savedData
+        })
+
+        
+    } catch (error) {
+        throw error
+    }
+}
+
+
+async function generateContractToSellPDF(newContractToSell, customer){
+
+        try {
+            const pdfUrl = 'https://aws-bucket-nodejs.s3.amazonaws.com/uploads/templates/Contract-to-Sell.pdf';
+            const response = await axios.get(pdfUrl, {responseType: 'arraybuffer'});
+            const existingPdfBytes = new Uint8Array(response.data);
+            const pdfDoc = await PDFDocument.load(existingPdfBytes);
+
+            // Access the first page
+        let fieldNames = pdfDoc.getForm().getFields()
+        
+        fieldNames = fieldNames.map((f) => f.getName())
+
+        console.log(fieldNames)
+        
+        const form = pdfDoc.getForm()
+
+
+
+    //     pdfDoc
+    //     .getForm()
+    //     .getFields()
+    //     .forEach((field) => field.enableReadOnly());
+
+    // // Save the modified PDF to a new file
+    // const pdfBytes = await pdfDoc.save();
+
+    // // AWS S3 configuration
+    // const s3 = new S3Client({
+    //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    //     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    //     region: process.env.AWS_REGION,
+    // });
+
+    // const s3Params = {
+    //     Bucket: process.env.AWS_BUCKET_NAME,
+    //     Key: `uploads/generatedForms/${customer.username}_approve_payment_scheme.pdf`, // Define the desired key (path) on S3
+    //     Body: pdfBytes, 
+    // };
+
+    //     await s3.send(new PutObjectCommand(s3Params));
+    //     const pdfPath = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Params.Key}`;
+        
+        
+    //     return pdfPath;
+        
+    } catch (error) {
+        
     }
 }

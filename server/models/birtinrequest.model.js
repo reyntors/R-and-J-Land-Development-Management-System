@@ -47,7 +47,6 @@ const birTinRequestSchema = new Schema({
     },
     createdBy: {
         type: String,
-        required: true,
     },
     
 });
