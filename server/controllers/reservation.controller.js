@@ -48,6 +48,10 @@ exports.createReservation = async (req, res, next) => {
 
     // Save the reservation to the database using async/await
      await newReservation.save();
+     
+     customer.reservationAgreement = newReservation;
+
+     await customer.save();
 
      // Calculate the totalAmountDue for the new reservation
     let totalAmountDueForNewReservation = customer.accountDetails.totalAmountDue || 0;

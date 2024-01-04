@@ -180,7 +180,7 @@ const contractToSellSchema = new Schema ({
     clientName: String,
     projectName: String,
     blockNo: String,
-    area: String,
+    area: Number,
     contractNo: Number,
     houseModel: String,
     floorArea: String,

@@ -49,6 +49,9 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             
             const savedPayment = await newApprovePayment.save();
 
+            client.approvePaymentScheme = newApprovePayment;
+            await client.save()
+
             return res.status(200).json({
                 message: 'Approve Payment Scheme created successfully',
                 data: savedPayment
@@ -66,6 +69,9 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             });
             
             const savedPayment = await newApprovePayment.save();
+
+            client.approvePaymentScheme = newApprovePayment;
+            await client.save()
 
             return res.status(200).json({
                 message: 'Approve Payment Scheme created successfully',
@@ -85,11 +91,16 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             
             const savedPayment = await newApprovePayment.save();
 
+            client.approvePaymentScheme = newApprovePayment;
+            await client.save()
+
             return res.status(200).json({
                 message: 'Approve Payment Scheme created successfully',
                 data: savedPayment
             });
         }
+
+       
 
         
     } catch (error) {
@@ -225,13 +236,19 @@ exports.createContractToSell = async (req, res) => {
             clientName: customer.approvePaymentScheme.name,
             projectName: customer.letterOfIntent.project,
             blockNo: customer.approvePaymentScheme.blockNo,
+            lotNo: customer.approvePaymentScheme.lotNo,
             area: customer.reservationAgreement.details1.area_1,
-            downpayment: customer.reservationAgreement.details1.downpayment_1
+            downpayment: customer.reservationAgreement.details1.downpayment_1,
+            contractPrice: customer.reservationAgreement.details1.contract_price_1,
+            balance: customer.reservationAgreement.details1.balance_1
 
         }
 
+        
 
-        const savedData =  customer.save(newContractToSell);
+         customer.contractToSell =  newContractToSell;
+
+         await customer.save();
 
         const pdfPath =  await generateContractToSellPDF(newContractToSell, customer);
 
@@ -239,10 +256,9 @@ exports.createContractToSell = async (req, res) => {
 
 
 
-        return res.status(200),json({
+        return res.status(200).json({
             message: 'contract to sell  successfully created',
             pdfPath: pdfPath,
-            data: savedData
         })
 
         
@@ -265,9 +281,24 @@ async function generateContractToSellPDF(newContractToSell, customer){
         
         fieldNames = fieldNames.map((f) => f.getName())
 
-        console.log(fieldNames)
+        
         
         const form = pdfDoc.getForm()
+
+        form.getTextField(fieldNames[0]).setText((newContractToSell.clientName));
+        form.getTextField(fieldNames[1]).setText((newContractToSell.projectName));
+        form.getTextField(fieldNames[2]).setText(String(newContractToSell.blockNo));
+        form.getTextField(fieldNames[3]).setText(String(newContractToSell.lotNo));
+        form.getTextField(fieldNames[4]).setText(String(newContractToSell.area));
+        form.getTextField(fieldNames[5]).setText(String(''));
+        form.getTextField(fieldNames[6]).setText(String(''));
+        form.getTextField(fieldNames[7]).setText(String(''));
+        form.getTextField(fieldNames[8]).setText(String(newContractToSell.contractPrice));
+        form.getTextField(fieldNames[9]).setText(String(newContractToSell.downpayment));
+        form.getTextField(fieldNames[10]).setText(String(newContractToSell.balance));
+
+
+
 
 
 
@@ -288,7 +319,7 @@ async function generateContractToSellPDF(newContractToSell, customer){
 
     const s3Params = {
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `uploads/generatedForms/${customer.username}_approve_payment_scheme.pdf`, // Define the desired key (path) on S3
+        Key: `uploads/generatedForms/${customer.username}_contract_to_sell.pdf`, // Define the desired key (path) on S3
         Body: pdfBytes, 
     };
 
