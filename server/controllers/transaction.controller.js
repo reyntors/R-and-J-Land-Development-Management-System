@@ -81,7 +81,7 @@ exports.addTransaction = async (req, res, next) => {
         // Calculate the monthly interest rate
         const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
 
-        console.log('monthly interest:',monthlyInterestRate)
+       
         // Define the loan term in months
         const loanTermMonths = 12; // For a 12-month loan term
 
@@ -110,8 +110,8 @@ exports.addTransaction = async (req, res, next) => {
 
         stopLotReservationRollback();
 
-        const amountPaid = parseFloat(newTransaction.amount);
-        const totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
+        let amountPaid = parseFloat(newTransaction.amount);
+        let totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
         
        
         client.accountingDetails.totalAmountDue = totalAmountDue;
@@ -137,6 +137,18 @@ exports.addTransaction = async (req, res, next) => {
            
     }
     
+    if (newTransaction.purpose === 'spot-cash'){
+
+      if(client.accountingDetails.totalPayment === 0){
+
+        client.accountingDetails.totalPayment = amountPaid;
+
+      }else{
+
+        client.accountingDetails.totalPayment += amountPaid
+      }
+
+    }
          
 
       // Save the updated user record

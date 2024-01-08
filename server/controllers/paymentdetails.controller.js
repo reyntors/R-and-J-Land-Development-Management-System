@@ -41,10 +41,14 @@ exports.getPaymentDetailsById = async (req, res) => {
 
         }
 
-        const paymentDetails = user.paymentDetails;
+        const allMyAccount = {};
+
+            allMyAccount.paymentDetails = user.paymentDetails;
+            allMyAccount.accountDetails = user.accountDetails;
+            allMyAccount.accountingDetails = user.accountingDetails;
 
         return res.status(200).json({
-            message: `Payment details of ${user.username}`, data: paymentDetails,
+            message: `Payment details of ${user.username}`, data: allMyAccount,
         });
     }catch (error) {
         return res.status(500).json({ error: 'Internal server error' });

@@ -256,35 +256,23 @@ const approvePaymentSchema = new Schema ({
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        TotalDownpayment1: {
+        ContractPrice: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        TotalDownpayment2: {
+        DiscountOnDownpayment: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        TotalbalanceOfAmortization1: {
+        TotalbalanceOfAmortization: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        TotalbalanceOfAmortization2: {
+        NoMonths: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        DueMonth1: {
-            type: Number,
-            ref: 'Approve Payment Scheme'
-        },
-        DueMonth2: {
-            type: Number,
-            ref: 'Approve Payment Scheme'
-        },
-        AmountDue1: {
-            type: Number,
-            ref: 'Approve Payment Scheme'
-        },
-        AmountDue2: {
+        AmountDue: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
@@ -310,19 +298,11 @@ const approvePaymentSchema = new Schema ({
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        DueMonth1: {
+        NoMonths: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        DueMonth2: {
-            type: Number,
-            ref: 'Approve Payment Scheme'
-        },
-        AmountDue1: {
-            type: Number,
-            ref: 'Approve Payment Scheme'
-        },
-        AmountDue2: {
+        AmountDue: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
@@ -369,7 +349,6 @@ const accountDetailsSchema = new Schema({
     totalAmountDue: {
         type: Number,
        
-        
     },
     details1:{
             lotNumber_1: {
@@ -468,6 +447,10 @@ const accountingDetailsSchema = new Schema({
         type: Number,
         default: 0,
        
+    },
+    totalInterest: {
+        type: Number,
+        default: 0,
     }
 
 });

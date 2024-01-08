@@ -49,28 +49,21 @@ const approvePaymentSchema = new Schema ({
         DiscountOnDownpayment: {
             type: Number
         },
-        TotalDownpayment1: {
+        ContractPrice: {
             type: Number
         },
-        TotalDownpayment2: {
+        DiscountOnDownpayment: {
             type: Number
         },
-        TotalbalanceOfAmortization1: {
+        TotalbalanceOfAmortization: {
             type: Number
         },
-        TotalbalanceOfAmortization2: {
-            type: Number
-        },
-        DueMonth1: {
+      
+        NoMonths: {
             type: Number,
         },
-        DueMonth2: {
-            type: Number
-        },
-        AmountDue1: {
-            type: Number
-        },
-        AmountDue2: {
+      
+        AmountDue: {
             type: Number
         },
         FirstDueDate: {
@@ -90,16 +83,10 @@ const approvePaymentSchema = new Schema ({
         balancePayableIn: {
             type: Number
         },
-        DueMonth1: {
+        NoMonths: {
             type: Number
         },
-        DueMonth2: {
-            type: Number
-        },
-        AmountDue1: {
-            type: Number
-        },
-        AmountDue2: {
+        AmountDue: {
             type: Number
         },
         FirstDueDate: {

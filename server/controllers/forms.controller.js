@@ -242,6 +242,7 @@ exports.getForms = async (req, res) => {
             const myforms = await Forms.findOne()
 
             const fileData = {
+                thumbTitle:  'contractToSell',
                 filename: formFile.originalname,
                 contentType: formFile.mimetype,  
                 url: formFile.location

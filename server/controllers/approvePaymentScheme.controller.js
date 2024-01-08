@@ -48,8 +48,14 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             });
             
             const savedPayment = await newApprovePayment.save();
-
+            client.paymentDetails.monthlyAmortizationDue = 0
+            client.accountingDetails.totalAmountDue = approvePaymentData.cash.totalCash
+            client.accountDetails.totalAmountDue = client.accountingDetails.totalAmountDue
             client.approvePaymentScheme = newApprovePayment;
+            client.accountingDetails.totalInterest = 0;
+            client.accountingDetails.totalAmountPayable = 0;
+
+
             await client.save()
 
             return res.status(200).json({
@@ -71,6 +77,54 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             const savedPayment = await newApprovePayment.save();
 
             client.approvePaymentScheme = newApprovePayment;
+
+
+            const downPayment = client.paymentDetails.downPayment;
+            const totalAmountDue = client.accountDetails.totalAmountDue;
+
+            const annualInterestRate = 0.02;
+
+            // Calculate the monthly interest rate
+            const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
+            
+            // Define the loan term in months
+            const loanTermMonths = 12; // For a 12-month loan term
+
+
+            const principal = totalAmountDue - downPayment;
+            // Calculate the monthly amortization
+            const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
+            const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
+            const monthlyAmortization = (numerator / denominator).toFixed(2)
+
+            client.paymentDetails.monthlyAmortizationDue = monthlyAmortization;
+            
+            if(approvePaymentData.NoMonths === 12) {
+
+
+                const reservationPayment = client.paymentDetails.reservationPayment
+                
+                client.accountingDetails.totalAmountDue = approvePaymentData.contractPrice - reservationPayment  - downPayment;
+
+                client.accountingDetails.totalInterest = 0;
+            }else{
+
+                client.accountingDetails.totalAmountDue = approvePaymentData.NoMonths * approvePaymentData.AmountDue;
+                client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - approvePaymentData.TotalbalanceOfAmortization;
+            }
+
+
+            if( client.accountingDetails.totalAmountPayable === 0){
+
+                client.accountingDetails.totalAmountPayable = totalAmountDue ;
+        
+              }else{
+        
+                client.accountingDetails.totalAmountPayable -= amountPaid
+        
+              }
+
+
             await client.save()
 
             return res.status(200).json({
@@ -79,7 +133,7 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             });
 
 
-        }else {
+        }else if (approvePaymentData.typePayment === 'others') {
             const newApprovePayment = new ApprovePayment({
                 ...approvePaymentData,
                 others: {...approvePaymentData},
@@ -100,7 +154,7 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             });
         }
 
-       
+        
 
         
     } catch (error) {
@@ -296,10 +350,6 @@ async function generateContractToSellPDF(newContractToSell, customer){
         form.getTextField(fieldNames[8]).setText(String(newContractToSell.contractPrice));
         form.getTextField(fieldNames[9]).setText(String(newContractToSell.downpayment));
         form.getTextField(fieldNames[10]).setText(String(newContractToSell.balance));
-
-
-
-
 
 
         pdfDoc
