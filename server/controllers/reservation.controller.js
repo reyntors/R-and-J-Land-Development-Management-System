@@ -364,7 +364,7 @@ async function scheduleLotReservation(lotKey) {
           // Update lot status to "sell" 
           lot.status = 'sell';
           await firstItem.save();
-          console.log(`Lot ${lotKey} status set to "sell" after 30 days`);
+          console.log(`Lot ${lotKey} status set to "sell" `);
       }
   }, 5 * 60 * 1000); //   30 * 24 * 60 * 60 * 1000
 }

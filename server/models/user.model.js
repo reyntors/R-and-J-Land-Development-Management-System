@@ -252,7 +252,7 @@ const approvePaymentSchema = new Schema ({
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        DiscountOnDownpayment: {
+        PercentageDiscountDownpayment: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
@@ -419,15 +419,15 @@ const accountDetailsSchema = new Schema({
 const paymentDetailsSchema = new Schema({
     reservationPayment: {
         type: Number, 
-        default: null,  
+        default: 0,  
     },
     downPayment: {
         type: Number,  
-        default: null, 
+        default: 0, 
     },
     monthlyAmortizationDue:{
         type: Number,
-        default: null,
+        default: 0,
     }
 
 });

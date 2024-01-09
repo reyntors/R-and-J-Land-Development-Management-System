@@ -37,6 +37,7 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
         
 
         if(approvePaymentData.typePayment === 'cash'){
+            
 
             const newApprovePayment = new ApprovePayment({
                 ...approvePaymentData,
@@ -49,7 +50,7 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             
             const savedPayment = await newApprovePayment.save();
             client.paymentDetails.monthlyAmortizationDue = 0
-            client.accountingDetails.totalAmountDue = approvePaymentData.cash.totalCash
+            client.accountingDetails.totalAmountDue = approvePaymentData.totalCash
             client.accountDetails.totalAmountDue = client.accountingDetails.totalAmountDue
             client.approvePaymentScheme = newApprovePayment;
             client.accountingDetails.totalInterest = 0;
@@ -88,7 +89,7 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
             
             // Define the loan term in months
-            const loanTermMonths = 12; // For a 12-month loan term
+            const loanTermMonths = approvePaymentData.NoMonths; // For a 12-month loan term
 
 
             const principal = totalAmountDue - downPayment;
@@ -98,14 +99,24 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             const monthlyAmortization = (numerator / denominator).toFixed(2)
 
             client.paymentDetails.monthlyAmortizationDue = monthlyAmortization;
+            // Calculate total interest
+            const totalInterest = client.accountingDetails.totalAmountDue - downPayment - principal;
+            console.log("total interest:",totalInterest)
+            client.accountingDetails.totalInterest = totalInterest;
+
+            const NoMonths = parseInt(approvePaymentData.NoMonths);
+            const contractPrice = parseInt(approvePaymentData.ContractPrice);
             
-            if(approvePaymentData.NoMonths === 12) {
+           
+           
+            if(NoMonths === 12) {
 
 
                 const reservationPayment = client.paymentDetails.reservationPayment
                 
-                client.accountingDetails.totalAmountDue = approvePaymentData.contractPrice - reservationPayment  - downPayment;
+                client.accountingDetails.totalAmountDue = contractPrice - reservationPayment  - downPayment;
 
+                
                 client.accountingDetails.totalInterest = 0;
             }else{
 
@@ -113,17 +124,8 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
                 client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - approvePaymentData.TotalbalanceOfAmortization;
             }
 
-
-            if( client.accountingDetails.totalAmountPayable === 0){
-
-                client.accountingDetails.totalAmountPayable = totalAmountDue ;
+                client.accountingDetails.totalAmountPayable = totalAmountDue - downPayment ;
         
-              }else{
-        
-                client.accountingDetails.totalAmountPayable -= amountPaid
-        
-              }
-
 
             await client.save()
 
@@ -199,15 +201,15 @@ async function generateApprovePaymentPDF(approvePaymentData, client){
     
         form.getCheckBox(fieldNames[11]).check()
         form.getTextField(fieldNames[12]).setText(String(approvePaymentData.PercentageDonwpayment));
-        form.getTextField(fieldNames[13]).setText(String(approvePaymentData.DiscountOnDownpayment));
-        form.getTextField(fieldNames[14]).setText(String(approvePaymentData.TotalDownpayment1));
-        form.getTextField(fieldNames[15]).setText(String(approvePaymentData.TotalDownpayment2));
-        form.getTextField(fieldNames[16]).setText(String(approvePaymentData.TotalbalanceOfAmortization1));
-        form.getTextField(fieldNames[17]).setText(String(approvePaymentData.TotalbalanceOfAmortization2));
-        form.getTextField(fieldNames[24]).setText(String(approvePaymentData.DueMonth1));
-        form.getTextField(fieldNames[34]).setText(String(approvePaymentData.DueMonth2));
-        form.getTextField(fieldNames[25]).setText(String(approvePaymentData.AmountDue1));
-        form.getTextField(fieldNames[26]).setText(String(approvePaymentData.AmountDue2));
+        form.getTextField(fieldNames[13]).setText(String(approvePaymentData.PercentageDiscountDownpayment));
+        form.getTextField(fieldNames[14]).setText(String(approvePaymentData.ContractPrice));
+        form.getTextField(fieldNames[15]).setText(String(approvePaymentData.DiscountOnDownpayment));
+        form.getTextField(fieldNames[16]).setText(String(approvePaymentData.TotalbalanceOfAmortization));
+        form.getTextField(fieldNames[17]).setText(String(''));
+        form.getTextField(fieldNames[24]).setText(String(approvePaymentData.NoMonths));
+        form.getTextField(fieldNames[34]).setText(String(''));
+        form.getTextField(fieldNames[25]).setText(String(approvePaymentData.AmountDue));
+        form.getTextField(fieldNames[26]).setText(String(''));
         form.getTextField(fieldNames[18]).setText(approvePaymentData.FirstDueDate);
         form.getTextField(fieldNames[19]).setText(approvePaymentData.EveryDate);
         form.getTextField(fieldNames[20]).setText(approvePaymentData.Term);
@@ -335,7 +337,7 @@ async function generateContractToSellPDF(newContractToSell, customer){
         
         fieldNames = fieldNames.map((f) => f.getName())
 
-        
+        console.log(fieldNames)
         
         const form = pdfDoc.getForm()
 
