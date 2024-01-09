@@ -79,13 +79,17 @@ exports.createReservation = async (req, res, next) => {
 
     customer.accountDetails.details1 = details1;
     customer.paymentDetails.downPayment = reservationData.downpayment_1;
+   
     customer.accountingDetails.totalPayment = customer.paymentDetails.downPayment;
-
+   
+    
+    
 
     // Calculate the totalAmountDue for the second reservation if it exists
     if (reservationData.lot_1 && reservationData.block_1 && reservationData.area_1 && reservationData.price_per_sq_1) {
       
       totalAmountDueForNewReservation += details1.totalSqm_1 * details1.amountperSquare_1;
+      customer.accountingDetails.totalAmountPayable = totalAmountDueForNewReservation - customer.accountingDetails.totalPayment;
 
     }
   }

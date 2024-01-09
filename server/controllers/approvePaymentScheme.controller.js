@@ -3,7 +3,7 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const axios = require('axios');
 const { PDFDocument } = require('pdf-lib');
 const User = require('../models/user.model');
-const {contractToSellSchema} = require('../models/user.model');
+const { stopLotReservationRollback } = require('./reservation.controller')
 
 const date = new Date()
 const year = date.getFullYear();
@@ -34,7 +34,7 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
 
         const pdfPath = await generateApprovePaymentPDF( approvePaymentData, client);
 
-        
+        stopLotReservationRollback();
 
         if(approvePaymentData.typePayment === 'cash'){
             
@@ -80,51 +80,25 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             client.approvePaymentScheme = newApprovePayment;
 
 
-            const downPayment = client.paymentDetails.downPayment;
-            const totalAmountDue = client.accountDetails.totalAmountDue;
-
-            const annualInterestRate = 0.02;
-
-            // Calculate the monthly interest rate
-            const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
-            
-            // Define the loan term in months
-            const loanTermMonths = approvePaymentData.NoMonths; // For a 12-month loan term
-
-
-            const principal = totalAmountDue - downPayment;
-            // Calculate the monthly amortization
-            const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
-            const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
-            const monthlyAmortization = (numerator / denominator).toFixed(2)
-
-            client.paymentDetails.monthlyAmortizationDue = monthlyAmortization;
-            // Calculate total interest
-            const totalInterest = client.accountingDetails.totalAmountDue - downPayment - principal;
-            console.log("total interest:",totalInterest)
-            client.accountingDetails.totalInterest = totalInterest;
 
             const NoMonths = parseInt(approvePaymentData.NoMonths);
-            const contractPrice = parseInt(approvePaymentData.ContractPrice);
-            
-           
-           
+          
             if(NoMonths === 12) {
 
 
-                const reservationPayment = client.paymentDetails.reservationPayment
-                
-                client.accountingDetails.totalAmountDue = contractPrice - reservationPayment  - downPayment;
-
+                client.paymentDetails.monthlyAmortizationDue = approvePaymentData.AmountDue;
                 
                 client.accountingDetails.totalInterest = 0;
+
             }else{
 
-                client.accountingDetails.totalAmountDue = approvePaymentData.NoMonths * approvePaymentData.AmountDue;
-                client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - approvePaymentData.TotalbalanceOfAmortization;
-            }
+                client.paymentDetails.monthlyAmortizationDue = approvePaymentData.AmountDue;
 
-                client.accountingDetails.totalAmountPayable = totalAmountDue - downPayment ;
+                client.accountingDetails.totalAmountDue = NoMonths * approvePaymentData.AmountDue;
+                
+                client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - client.accountingDetails.totalAmountPayable;
+            
+            }
         
 
             await client.save()
@@ -200,7 +174,7 @@ async function generateApprovePaymentPDF(approvePaymentData, client){
       if(approvePaymentData.typePayment === 'installment'){
     
         form.getCheckBox(fieldNames[11]).check()
-        form.getTextField(fieldNames[12]).setText(String(approvePaymentData.PercentageDonwpayment));
+        form.getTextField(fieldNames[12]).setText(String(approvePaymentData.PercentageDownpayment));
         form.getTextField(fieldNames[13]).setText(String(approvePaymentData.PercentageDiscountDownpayment));
         form.getTextField(fieldNames[14]).setText(String(approvePaymentData.ContractPrice));
         form.getTextField(fieldNames[15]).setText(String(approvePaymentData.DiscountOnDownpayment));

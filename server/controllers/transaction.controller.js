@@ -67,8 +67,21 @@ exports.addTransaction = async (req, res, next) => {
 
       if(newTransaction.purpose === 'reservation'){
  
+      
 
-          client.paymentDetails.reservationPayment = newTransaction.amount
+
+          client.paymentDetails.reservationPayment = newTransaction.amount;
+
+        if(client.accountingDetails.totalPayment === 0) {
+
+          client.accountingDetails.totalPayment = client.paymentDetails.reservationPayment;
+        
+        }else{
+          client.accountingDetails.totalPayment += client.paymentDetails.reservationPayment;
+          client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment;
+        }
+
+
 
       }
       if(newTransaction.purpose === 'downpayment'){
@@ -108,13 +121,11 @@ exports.addTransaction = async (req, res, next) => {
 
       if (newTransaction.purpose === 'monthly-payment') {
 
-        stopLotReservationRollback();
+        
 
         let amountPaid = parseFloat(newTransaction.amount);
-        let totalAmountDue = parseFloat(client.accountDetails.totalAmountDue);
+        let totalAmountPayable = parseFloat(client.accountingDetails.totalAmountPayable);
         
-       
-        client.accountingDetails.totalAmountDue = totalAmountDue;
 
       if(client.accountingDetails.totalPayment === 0){
 
@@ -127,7 +138,7 @@ exports.addTransaction = async (req, res, next) => {
 
       if( client.accountingDetails.totalAmountPayable === 0){
 
-        client.accountingDetails.totalAmountPayable = totalAmountDue - amountPaid;
+        client.accountingDetails.totalAmountPayable = totalAmountPayable - amountPaid;
 
       }else{
 
