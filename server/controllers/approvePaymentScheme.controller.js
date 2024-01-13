@@ -83,11 +83,14 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
 
             const NoMonths = parseInt(approvePaymentData.NoMonths);
           
+          
             if(NoMonths === 12) {
 
 
                 client.paymentDetails.monthlyAmortizationDue = approvePaymentData.AmountDue;
-                
+               
+                client.accountingDetails.totalAmountDue = client.reservationAgreement.details1.contract_price_1 - client.paymentDetails.reservationPayment - client.reservationAgreement.details1.downpayment_1;
+                client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment;
                 client.accountingDetails.totalInterest = 0;
 
             }else{
@@ -96,7 +99,8 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
 
                 client.accountingDetails.totalAmountDue = NoMonths * approvePaymentData.AmountDue;
                 
-                client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - client.accountingDetails.totalAmountPayable;
+                client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - client.reservationAgreement.details1.balance_1;
+                client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment
             
             }
         
@@ -177,7 +181,7 @@ async function generateApprovePaymentPDF(approvePaymentData, client){
         form.getTextField(fieldNames[12]).setText(String(approvePaymentData.PercentageDownpayment));
         form.getTextField(fieldNames[13]).setText(String(approvePaymentData.PercentageDiscountDownpayment));
         form.getTextField(fieldNames[14]).setText(String(approvePaymentData.ContractPrice));
-        form.getTextField(fieldNames[15]).setText(String(approvePaymentData.DiscountOnDownpayment));
+        form.getTextField(fieldNames[15]).setText(String(''));
         form.getTextField(fieldNames[16]).setText(String(approvePaymentData.TotalbalanceOfAmortization));
         form.getTextField(fieldNames[17]).setText(String(''));
         form.getTextField(fieldNames[24]).setText(String(approvePaymentData.NoMonths));

@@ -78,7 +78,6 @@ exports.addTransaction = async (req, res, next) => {
         
         }else{
           client.accountingDetails.totalPayment += client.paymentDetails.reservationPayment;
-          client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment;
         }
 
 
