@@ -88,29 +88,29 @@ exports.addTransaction = async (req, res, next) => {
 
         client.paymentDetails.downPayment = newTransaction.amount;
 
-        const annualInterestRate = 0.02;
+        // const annualInterestRate = 0.02;
 
-        // Calculate the monthly interest rate
-        const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
+        // // Calculate the monthly interest rate
+        // const monthlyInterestRate = annualInterestRate / 12; // Assuming monthly payments
 
        
-        // Define the loan term in months
-        const loanTermMonths = 12; // For a 12-month loan term
+        // // Define the loan term in months
+        // const loanTermMonths = 12; // For a 12-month loan term
 
 
-        const totalAmountDue = client.accountDetails.totalAmountDue;
+        // const totalAmountDue = client.accountDetails.totalAmountDue;
         
-        const downPayment = client.paymentDetails.downPayment || 0;
+        // const downPayment = client.paymentDetails.downPayment || 0;
 
-        const principal = totalAmountDue - downPayment;
+        // const principal = totalAmountDue - downPayment;
 
       
-        // Calculate the monthly amortization
-        const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
-        const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
-        const monthlyAmortization = (numerator / denominator).toFixed(2)
+        // // Calculate the monthly amortization
+        // const numerator = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTermMonths);
+        // const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
+        // const monthlyAmortization = (numerator / denominator).toFixed(2)
 
-        client.paymentDetails.monthlyAmortizationDue = monthlyAmortization
+        // client.paymentDetails.monthlyAmortizationDue = monthlyAmortization
 
 
       }

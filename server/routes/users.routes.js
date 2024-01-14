@@ -64,6 +64,8 @@ router.put("/approve-legit-client/:userId/:requestId/:requestLegitId", auth.auth
 //Payment Details
 router.post('/addpayment/:id', auth.authenticateToken, userController.restrict(['staff','management']), paymentDetailsController.createUserWithPaymentDetails);
 router.get('/paymentdetails/:id', auth.authenticateToken, userController.restrict(['staff','management']), paymentDetailsController.getPaymentDetailsById);
+router.put('/reset-payment-details/:id', auth.authenticateToken, userController.restrict(['management']), paymentDetailsController.resetPaymentDetails)
+
 
 //forms
 router.get('/forms/:id', auth.authenticateToken, userController.restrict(['customer','staff','management']), formsController.getAllFormsById);

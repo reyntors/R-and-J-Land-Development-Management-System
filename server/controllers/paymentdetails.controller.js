@@ -90,3 +90,44 @@ exports.getAllPaymentDetailsById = async (req, res) => {
 };
 
 
+exports.resetPaymentDetails = async (req, res) => {
+    try {
+
+        const {id} = req.params;
+
+
+        const user = await User.findOne({userId: id});
+
+        if (!user) {
+
+            return res.status(404).json({message: 'User not found'});
+
+        }
+
+        user.accountDetails.totalAmountDue = 0;
+
+        user.paymentDetails.reservationPayment = 0;
+        user.paymentDetails.downPayment = 0;
+        user.paymentDetails.monthlyAmortizationDue = 0;
+
+        user.accountingDetails.totalAmountDue = 0;
+        user.accountingDetails.totalPayment = 0;
+        user.accountingDetails.totalAmountPayable = 0;
+        user.accountingDetails.totalInterest = 0;
+
+
+        await user.save();
+
+        return res.status(200).json({message: 'Payment details sucessfully reset!'});
+
+        
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+
+
+
+}
+
+
