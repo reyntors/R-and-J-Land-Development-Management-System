@@ -26,113 +26,123 @@ exports.createApprovePaymentScheme = async (req, res, next) => {
             return res.status(404).json({message: 'user not found'});
         }
 
+
+
         const client = await User.findOne({ userId: id});
 
         if(!client) {
             return res.status(404).json({message: 'client not found!'});
         }
 
-        const pdfPath = await generateApprovePaymentPDF( approvePaymentData, client);
+        if(client.paymentDetails.reservationPayment === 0 || client.paymentDetails.downPayment === 0){
 
-        stopLotReservationRollback();
+            return res.status(404).json({message: 'This user has not paid the reservation payment or downpayment'})
+        }else{
+            const pdfPath = await generateApprovePaymentPDF( approvePaymentData, client);
 
-        if(approvePaymentData.typePayment === 'cash'){
-            
-
-            const newApprovePayment = new ApprovePayment({
-                ...approvePaymentData,
-                cash: {...approvePaymentData},
-                date: formattedDate,
-                url: pdfPath,
-                isSubmitted: true,
-                createdBy: staff.username,
-            });
-            
-            const savedPayment = await newApprovePayment.save();
-            client.paymentDetails.monthlyAmortizationDue = 0
-            client.accountingDetails.totalAmountDue = approvePaymentData.totalCash
-            client.accountDetails.totalAmountDue = client.accountingDetails.totalAmountDue
-            client.approvePaymentScheme = newApprovePayment;
-            client.accountingDetails.totalInterest = 0;
-            client.accountingDetails.totalAmountPayable = 0;
-
-
-            await client.save()
-
-            return res.status(200).json({
-                message: 'Approve Payment Scheme created successfully',
-                data: savedPayment
-            });
-
-        }else if(approvePaymentData.typePayment === 'installment'){
-
-            const newApprovePayment = new ApprovePayment({
-                ...approvePaymentData,
-                installment: {...approvePaymentData},
-                date: formattedDate,
-                url: pdfPath,
-                isSubmitted: true,
-                createdBy: staff.username,
-            });
-            
-            const savedPayment = await newApprovePayment.save();
-
-            client.approvePaymentScheme = newApprovePayment;
-
-
-
-            const NoMonths = parseInt(approvePaymentData.NoMonths);
-          
-          
-            if(NoMonths === 12) {
-
-
-                client.paymentDetails.monthlyAmortizationDue = approvePaymentData.AmountDue;
-               
-                client.accountingDetails.totalAmountDue = client.reservationAgreement.details1.contract_price_1 - client.paymentDetails.reservationPayment - client.reservationAgreement.details1.downpayment_1;
-                client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment;
-                client.accountingDetails.totalInterest = 0;
-
-            }else{
-
-                client.paymentDetails.monthlyAmortizationDue = approvePaymentData.AmountDue;
-
-                client.accountingDetails.totalAmountDue = NoMonths * approvePaymentData.AmountDue;
+            stopLotReservationRollback();
+    
+            if(approvePaymentData.typePayment === 'cash'){
                 
-                client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - client.reservationAgreement.details1.balance_1;
-                client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment
+    
+                const newApprovePayment = new ApprovePayment({
+                    ...approvePaymentData,
+                    cash: {...approvePaymentData},
+                    date: formattedDate,
+                    url: pdfPath,
+                    isSubmitted: true,
+                    createdBy: staff.username,
+                });
+                
+                const savedPayment = await newApprovePayment.save();
+                client.paymentDetails.monthlyAmortizationDue = 0
+                client.accountingDetails.totalAmountDue = approvePaymentData.totalCash
+                client.accountDetails.totalAmountDue = client.accountingDetails.totalAmountDue
+                client.approvePaymentScheme = newApprovePayment;
+                client.accountingDetails.totalInterest = 0;
+                client.accountingDetails.totalAmountPayable = 0;
+    
+    
+                await client.save()
+    
+                return res.status(200).json({
+                    message: 'Approve Payment Scheme created successfully',
+                    data: savedPayment
+                });
+    
+            }else if(approvePaymentData.typePayment === 'installment'){
+    
+                const newApprovePayment = new ApprovePayment({
+                    ...approvePaymentData,
+                    installment: {...approvePaymentData},
+                    date: formattedDate,
+                    url: pdfPath,
+                    isSubmitted: true,
+                    createdBy: staff.username,
+                });
+                
+                const savedPayment = await newApprovePayment.save();
+    
+                client.approvePaymentScheme = newApprovePayment;
+    
+    
+    
+                const NoMonths = parseInt(approvePaymentData.NoMonths);
+              
+              
+                if(NoMonths === 12) {
+    
+    
+                    client.paymentDetails.monthlyAmortizationDue = approvePaymentData.AmountDue;
+                   
+                    client.accountingDetails.totalAmountDue = client.reservationAgreement.details1.contract_price_1 - client.paymentDetails.reservationPayment - client.reservationAgreement.details1.downpayment_1;
+                    client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment;
+                    client.accountingDetails.totalInterest = 0;
+    
+                }else{
+    
+                    client.paymentDetails.monthlyAmortizationDue = approvePaymentData.AmountDue;
+    
+                    client.accountingDetails.totalAmountDue = NoMonths * approvePaymentData.AmountDue;
+                    
+                    client.accountingDetails.totalInterest = client.accountingDetails.totalAmountDue - client.reservationAgreement.details1.balance_1;
+                    client.accountingDetails.totalAmountPayable = client.accountingDetails.totalAmountDue - client.accountingDetails.totalPayment
+                
+                }
             
+    
+                await client.save()
+    
+                return res.status(200).json({
+                    message: 'Approve Payment Scheme created successfully',
+                    data: savedPayment
+                });
+    
+    
+            }else if (approvePaymentData.typePayment === 'others') {
+                const newApprovePayment = new ApprovePayment({
+                    ...approvePaymentData,
+                    others: {...approvePaymentData},
+                    date: formattedDate,
+                    url: pdfPath,
+                    isSubmitted: true,
+                    createdBy: staff.username,
+                });
+                
+                const savedPayment = await newApprovePayment.save();
+    
+                client.approvePaymentScheme = newApprovePayment;
+                await client.save()
+    
+                return res.status(200).json({
+                    message: 'Approve Payment Scheme created successfully',
+                    data: savedPayment
+                });
             }
-        
 
-            await client.save()
-
-            return res.status(200).json({
-                message: 'Approve Payment Scheme created successfully',
-                data: savedPayment
-            });
-
-
-        }else if (approvePaymentData.typePayment === 'others') {
-            const newApprovePayment = new ApprovePayment({
-                ...approvePaymentData,
-                others: {...approvePaymentData},
-                date: formattedDate,
-                url: pdfPath,
-                isSubmitted: true,
-                createdBy: staff.username,
-            });
-            
-            const savedPayment = await newApprovePayment.save();
-
-            client.approvePaymentScheme = newApprovePayment;
-            await client.save()
-
-            return res.status(200).json({
-                message: 'Approve Payment Scheme created successfully',
-                data: savedPayment
-            });
         }
+
+       
 
         
 
@@ -179,7 +189,7 @@ async function generateApprovePaymentPDF(approvePaymentData, client){
     
         form.getCheckBox(fieldNames[11]).check()
         form.getTextField(fieldNames[12]).setText(String(approvePaymentData.PercentageDownpayment));
-        form.getTextField(fieldNames[13]).setText(String(approvePaymentData.PercentageDiscountDownpayment));
+        form.getTextField(fieldNames[13]).setText(String(approvePaymentData.PercentageDiscountOnDownpayment));
         form.getTextField(fieldNames[14]).setText(String(approvePaymentData.ContractPrice));
         form.getTextField(fieldNames[15]).setText(String(''));
         form.getTextField(fieldNames[16]).setText(String(approvePaymentData.TotalbalanceOfAmortization));

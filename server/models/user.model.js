@@ -248,11 +248,11 @@ const approvePaymentSchema = new Schema ({
         },
     },
     installment: {
-        PercentageDonwpayment: {
+        PercentageDownpayment: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },
-        PercentageDiscountDownpayment: {
+        PercentageDiscountOnDownpayment: {
             type: Number,
             ref: 'Approve Payment Scheme'
         },

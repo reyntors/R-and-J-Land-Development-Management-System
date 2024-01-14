@@ -96,15 +96,26 @@ exports.resetPaymentDetails = async (req, res) => {
         const {id} = req.params;
 
 
-        const user = await User.findOne({userId: id});
+        const user = await User.findOneAndUpdate(
+            { userId: id },
+            {
+              $unset: {
+                'accountDetails.totalAmountDue': 1,
+                'accountDetails.details1': 1,
+                'accountDetails.details2': 1,
+                'accountDetails.details3': 1,
+                'transactions': [],
+                'reservationAgreement': 1,
+                'approvePaymentScheme': 1,
+              },
+            },
+            { new: true }
+          );
 
         if (!user) {
-
-            return res.status(404).json({message: 'User not found'});
-
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        user.accountDetails.totalAmountDue = 0;
 
         user.paymentDetails.reservationPayment = 0;
         user.paymentDetails.downPayment = 0;

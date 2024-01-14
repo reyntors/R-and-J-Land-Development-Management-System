@@ -43,10 +43,10 @@ const approvePaymentSchema = new Schema ({
         },
     },
     installment: {
-        PercentageDonwpayment: {
+        PercentageDownpayment: {
             type: Number
         },
-        PercentageDiscountDownpayment: {
+        PercentageDiscountOnDownpayment: {
             type: Number
         },
         ContractPrice: {

@@ -65,6 +65,10 @@ exports.addTransaction = async (req, res, next) => {
       // Push the new transaction into the client's transactions array
       client.transactions.push(newTransaction);
 
+
+      let amountPaid = parseFloat(newTransaction.amount);
+      let totalAmountPayable = parseFloat(client.accountingDetails.totalAmountPayable);
+
       if(newTransaction.purpose === 'reservation'){
  
       
@@ -117,48 +121,91 @@ exports.addTransaction = async (req, res, next) => {
  
 
       
+      
 
-      if (newTransaction.purpose === 'monthly-payment') {
+        if (newTransaction.purpose === 'monthly-payment') {
 
+
+          if(client.approvePaymentScheme.typePayment != 'cash'){
+
+            if( 
+              client.reservationAgreement.isSubmitted === false ||
+              client.approvePaymentScheme.isSubmitted === false ||
+              client.paymentDetails.reservationPayment === 0 ||
+              client.paymentDetails.downPayment === 0
+            ){
+
+              return res.status(404).json({
+                message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
+              });
+
+               
+        }else{
+
+              if(client.accountingDetails.totalPayment === 0){
+              
+                client.accountingDetails.totalPayment = amountPaid;
         
-
-        let amountPaid = parseFloat(newTransaction.amount);
-        let totalAmountPayable = parseFloat(client.accountingDetails.totalAmountPayable);
+              }else{
         
+                client.accountingDetails.totalPayment += amountPaid
+              }
+        
+              if( client.accountingDetails.totalAmountPayable === 0){
+        
+                client.accountingDetails.totalAmountPayable = totalAmountPayable - amountPaid;
+        
+              }else{
+        
+                client.accountingDetails.totalAmountPayable -= amountPaid
+        
+              }
 
-      if(client.accountingDetails.totalPayment === 0){
+        }
+               
+        }else{
+          return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not installment!'})
+        }
 
-        client.accountingDetails.totalPayment = amountPaid;
-
-      }else{
-
-        client.accountingDetails.totalPayment += amountPaid
       }
-
-      if( client.accountingDetails.totalAmountPayable === 0){
-
-        client.accountingDetails.totalAmountPayable = totalAmountPayable - amountPaid;
-
-      }else{
-
-        client.accountingDetails.totalAmountPayable -= amountPaid
-
-      }
-           
-    }
+      
     
-    if (newTransaction.purpose === 'spot-cash'){
+   
 
-      if(client.accountingDetails.totalPayment === 0){
+      if (newTransaction.purpose === 'spot-cash'){
 
-        client.accountingDetails.totalPayment = amountPaid;
+        if(client.approvePaymentScheme.typePayment === 'cash'){
+
+        if( 
+            client.reservationAgreement.isSubmitted === false ||
+            client.approvePaymentScheme.isSubmitted === false ||
+            client.paymentDetails.reservationPayment === 0 ||
+            client.paymentDetails.downPayment === 0
+          ) {
+
+            return res.status(404).json({
+              message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
+            });
+          }else{
+
+            if(client.accountingDetails.totalPayment === 0){
+
+              client.accountingDetails.totalPayment = amountPaid;
+      
+            }else{
+      
+              client.accountingDetails.totalPayment += amountPaid
+            }
+
+          }
 
       }else{
-
-        client.accountingDetails.totalPayment += amountPaid
+        return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not cash!'})
       }
 
-    }
+      
+  }
+
          
 
       // Save the updated user record
