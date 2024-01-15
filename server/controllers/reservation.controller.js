@@ -82,7 +82,19 @@ exports.createReservation = async (req, res, next) => {
    
     customer.accountingDetails.totalPayment = customer.paymentDetails.downPayment;
    
-    
+    if(customer.accountingDetails.totalPayment === 0){
+
+      
+
+      customer.accountingDetails.totalPayment = customer.paymentDetails.downPayment;
+
+    }else{
+
+      console.log("iamhere")
+      
+      customer.accountingDetails.totalPayment += customer.paymentDetails.downPayment;
+      
+    }
     
 
     // Calculate the totalAmountDue for the second reservation if it exists
@@ -120,10 +132,14 @@ exports.createReservation = async (req, res, next) => {
     
     if(customer.accountingDetails.totalPayment === 0){
 
+      
+
       customer.accountingDetails.totalPayment = customer.paymentDetails.downPayment;
 
     }else{
+      
       customer.accountingDetails.totalPayment += customer.paymentDetails.downPayment;
+      console.log(customer.accountingDetails.totalPayment)
     }
     
 
