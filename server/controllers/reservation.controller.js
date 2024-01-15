@@ -79,8 +79,7 @@ exports.createReservation = async (req, res, next) => {
 
     customer.accountDetails.details1 = details1;
     customer.paymentDetails.downPayment = reservationData.downpayment_1;
-   
-    customer.accountingDetails.totalPayment = customer.paymentDetails.downPayment;
+
    
     if(customer.accountingDetails.totalPayment === 0){
 
@@ -90,7 +89,6 @@ exports.createReservation = async (req, res, next) => {
 
     }else{
 
-      
       
       customer.accountingDetails.totalPayment += reservationData.downpayment_1;
       
