@@ -87,7 +87,26 @@ exports.addTransaction = async (req, res, next) => {
 
 
       }
-     
+      if(newTransaction.purpose === 'downpayment'){
+ 
+
+        client.paymentDetails.downPayment = amountPaid;
+
+        if(client.accountingDetails.totalPayment === 0){
+              
+          client.accountingDetails.totalPayment = amountPaid;
+  
+        }else{
+  
+          client.accountingDetails.totalPayment += amountPaid
+        }
+
+      }
+ 
+
+      
+      
+
         if (newTransaction.purpose === 'monthly-payment') {
 
 
@@ -394,9 +413,31 @@ exports.deleteTransactionbyId = async (req, res) => {
 
     const oldAmount = user.transactions[transactionIndex].amount;
 
-    user.accountingDetails.totalPayment = user.accountingDetails.totalPayment - oldAmount 
-    user.accountingDetails.totalAmountPayable =  user.accountingDetails.totalAmountPayable - oldAmount
+    if(user.transactions[transactionIndex].purpose === 'downpayment'){
 
+      user.paymentDetails.downPayment = 0;
+
+    }else if(user.transactions[transactionIndex].purpose === 'reservation'){
+
+      user.paymentDetails.reservationPayment = 0;
+    }
+
+    const totalPayment = user.accountingDetails.totalPayment;
+    const totalPayable = user.accountingDetails.totalAmountPayable;
+
+      // Ensure totalPayment and totalPayable don't go below zero
+    user.accountingDetails.totalPayment = Math.max(0, totalPayment - oldAmount);
+    if(user.accountingDetails.totalAmountPayable === 0){
+
+      user.accountingDetails.totalAmountPayable = 0;
+
+    }else{
+      
+      user.accountingDetails.totalAmountPayable = Math.max(0, totalPayable + oldAmount);
+  
+    }
+    
+    
     // Remove the transaction from the array
     user.transactions.splice(transactionIndex, 1);
 

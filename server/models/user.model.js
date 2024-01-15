@@ -1249,7 +1249,7 @@ const userSchema = new Schema({
         default: {}
     },
     
-    BirTinRequest: {
+    birTinRequest: {
         type: birTinRequestSchema,
         default: {}
     },
