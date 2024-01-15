@@ -86,13 +86,13 @@ exports.createReservation = async (req, res, next) => {
 
       
 
-      customer.accountingDetails.totalPayment = customer.paymentDetails.downPayment;
+      customer.accountingDetails.totalPayment = reservationData.downpayment_1;
 
     }else{
 
-      console.log("iamhere")
       
-      customer.accountingDetails.totalPayment += customer.paymentDetails.downPayment;
+      
+      customer.accountingDetails.totalPayment += reservationData.downpayment_1;
       
     }
     
@@ -134,11 +134,11 @@ exports.createReservation = async (req, res, next) => {
 
       
 
-      customer.accountingDetails.totalPayment = customer.paymentDetails.downPayment;
+      customer.accountingDetails.totalPayment = reservationData.downpayment_2;
 
     }else{
       
-      customer.accountingDetails.totalPayment += customer.paymentDetails.downPayment;
+      customer.accountingDetails.totalPayment += reservationData.downpayment_2;
       console.log(customer.accountingDetails.totalPayment)
     }
     
