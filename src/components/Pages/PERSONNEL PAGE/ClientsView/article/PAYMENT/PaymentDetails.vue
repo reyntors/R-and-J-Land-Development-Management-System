@@ -3,30 +3,23 @@
   <div class="container-payment" >
     <progress-loading v-if="isLoading" type="torks"></progress-loading>
     <div v-else>
-      <header>
-        <h3>Payment Details</h3>  
+      <header class="row justify-content-between main-head">
+        <h3 class="col">Payment Details</h3>  
+        <button class="col-auto" @click="reset" v-if="roleAdmin">Reset</button>
       </header>
       <div>
         <section>
-          <h6>Account Details</h6> 
-          
+          <h5>Account Details</h5> 
           <div v-if="!isDetailsPresent"> 
-            <section>
-              <span>Lot Number:</span>
-            </section>
-            <section>
-              <span>Block Number:</span>
-            </section>
-            <section>
-              <span>Total Squared Meters:</span>
-            </section>
-            <section class="mb-2">
-              <span>Amount/Square:</span>
-            </section>
+            <section><span>Lot Number:</span></section>
+            <section><span>Block Number:</span></section>
+            <section><span>Total Squared Meters:</span></section>
+            <section class="mb-2"><span>Amount/Square:</span></section>
           </div>
+
           <ul>
             <div v-if="client.accountDetails.details1" class="accountDetailsElement">
-              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details1')"/>
+              <!-- <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details1')"/> -->
               <section>
                 <span>Lot Number:</span>
                 <span class="var">{{ client.accountDetails.details1.lotNumber_1 }}</span>
@@ -44,8 +37,9 @@
                 <span class="var">{{ client.accountDetails.details1.amountperSquare_1 }}</span>
               </section>
             </div> 
+
             <div v-if="client.accountDetails.details2" class="accountDetailsElement">
-              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details2')"/>
+              <!-- <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details2')"/> -->
               <section>
                 <span>Lot Number:</span>
                 <span class="var">{{ client.accountDetails.details2.lotNumber_2 }}</span>
@@ -63,8 +57,9 @@
                 <span class="var">{{ client.accountDetails.details2.amountperSquare_2 }}</span>
               </section>
             </div> 
+
             <div v-if="client.accountDetails.details3" class="accountDetailsElement">
-              <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details3')"/>
+              <!-- <font-awesome-icon class="icon-delete-account-details" icon="fa-solid fa-circle-xmark" size="lg" v-if="roleAdmin" @click="deleteADetails('details3')"/> -->
               <section>
                 <span>Lot Number:</span>
                 <span class="var">{{ client.accountDetails.details3.lotNumber_3 }}</span>
@@ -82,64 +77,56 @@
                 <span class="var">{{ client.accountDetails.details3.amountperSquare_3 }}</span>
               </section>
             </div> 
-
           </ul>
  
+          <hr>
+          <h5>Payment Details</h5>
+          <section>
+            <span>Reservaton Payment:</span>
+            <span class="var">{{ details.paymentDetails.reservationPayment }}</span>
+          </section> 
+          <section>
+            <span>Downpayment:</span>
+            <span class="var">{{ details.paymentDetails.downPayment }}</span>
+          </section> 
+          <section>
+            <span>Monthly Amortization Due:</span>
+            <span class="var">{{ details.paymentDetails.monthlyAmortizationDue }}</span>
+          </section> 
 
+          <hr>
 
-      <hr>
-          <h6>Payment Details</h6>
-            <section>
-              <span>Reservaton Payment:</span>
-              <span class="var">{{ client.paymentDetails.reservationPayment }}</span>
-            </section> 
-            <section>
-              <span>Dowpayment:</span>
-              <span class="var">{{ client.paymentDetails.downPayment }}</span>
-            </section> 
-            <section>
-              <span>Monthly Amortization Due:</span>
-              <span class="var">{{ client.paymentDetails.monthlyAmortizationDue }}</span>
-            </section> 
-            <section>
-              <span>Interest Details:</span>
-              <span class="var">{{ client.paymentDetails.monthlyAmortizationDue }}</span>
-            </section> 
-      <hr>
-          <h6>Accounting Details</h6> 
-            <section>
-              <span>TOTAL AMOUNT DUE:</span>
-              <span class="var">{{ client.accountingDetails.totalAmountDue }}</span>
-            </section> 
-            <section>
-              <span>TOTAL INTEREST DETAILS:</span>
-              <span class="var">{{ client.accountingDetails.totalAmountDue }}</span>
-            </section> 
-            <section>
-              <span>Total Payment Made:</span>
-              <span class="var">{{ client.accountingDetails.totalPayment }}</span>
-            </section> 
-            <section>
-              <span>Total Amount Payable:</span>
-              <span class="var">{{ client.accountingDetails.totalAmountPayable }}</span>
-            </section> 
+          <h5>Accounting Details</h5> 
+          <section>
+            <span>TOTAL AMOUNT DUE:</span>
+            <span class="var">{{ details.accountingDetails.totalAmountDue }}</span>
+          </section> 
+          <section>
+            <span>INTEREST AMOUNT:</span>
+            <span class="var">{{ details.accountingDetails.totalInterest }}</span>
+          </section> 
+          <section>
+            <span>Total Payment Made:</span>
+            <span class="var">{{ details.accountingDetails.totalPayment }}</span>
+          </section> 
+          <section>
+            <span>Total Amount Payable:</span>
+            <span class="var">{{ details.accountingDetails.totalAmountPayable }}</span>
+          </section> 
         </section>
-      <!-- <br> -->
-      <hr>
-        <header>
+ 
+        <hr>
+
+        <header class="sub-head">
           <h5>TRANSACTIONS</h5> 
           <div> 
-            <button @click="saveEdit" style="margin-right: .5rem;" v-if="editPaymentForm ">
-              SAVE <font-awesome-icon icon="fa-solid fa-plus" />
-            </button>
+            <button @click="saveEdit" style="margin-right: .5rem;" v-if="editPaymentForm ">SAVE <font-awesome-icon icon="fa-solid fa-plus"/></button>
             <button @click="toggleAddPayment" style="padding: .5rem 1rem">ADD <font-awesome-icon icon="fa-solid fa-plus" /></button>
           </div>
-          
         </header>
+
         <section class="transaction-cont">
-         
           <table> 
-            
             <tr>
               <th>DATE</th>
               <th>AMOUNT RECEIVED</th>
@@ -151,8 +138,8 @@
             
             <tr v-if="isTransactionEmpty">
               <td :colspan="columnSpanNum"><h6 class="noHistory">No history</h6></td>
-              
             </tr>
+            
             <tbody v-for="(transaction,index) in clientTransactionGetter" :key="index">
               <tr v-if="!isTransactionEmpty">
                 <td>
@@ -161,37 +148,36 @@
                     <input type="date" v-model="editObj.date" v-if="editPaymentForm && focusElement === index">
                     <p style="white-space: nowrap;" v-else>{{ transaction.date }}</p>                      
                   </div>
-
                 </td>
+
                 <td>
                   <input v-model="editObj.amount" v-if="editPaymentForm && focusElement === index">
                   <p style="white-space: nowrap;" v-else>{{ transaction.amount }}</p>
                 </td>
+
                 <td>
                   <select v-if="editPaymentForm && focusElement === index" v-model="editObj.purpose">
-                    <option value="downpayment">downpayment</option>
+                    <!-- <option value="downpayment">downpayment</option> -->
                     <option value="reservation">reservation</option>
                     <option value="monthly-payment">monthly-payment</option>
                   </select>
                   <p v-else style="white-space: nowrap;">{{ transaction.purpose }}</p>
                 </td>
+
                 <td>
                   <input type="file" accept=".pdf" @input="setAttachment" v-if="editPaymentForm && focusElement === index">
                   <a v-else :href="transaction.attachments[0].url" :download="transaction.attachments[0].filename">{{ transaction.attachments[0].filename }}</a>
                 </td>
+
                 <td v-if="roleAdmin">
                   <font-awesome-icon class="icon" icon="fa-solid fa-file-pen" @click="toggleEditTransaction(transaction,index)" v-if="!editPaymentForm"/>
-                  <button v-else class="cancelEditBtn" @click="cancelEditElement">
-                    Cancel
-                    <font-awesome-icon class="icon" icon="fa-solid fa-xmark"  />
-                  </button>
+                  <button v-else class="cancelEditBtn" @click="cancelEditElement">Cancel<font-awesome-icon class="icon" icon="fa-solid fa-xmark"/></button>
                 </td>
+                
                 <td v-if="roleAdmin"><font-awesome-icon class="icon" icon="fa-solid fa-minus" @click="deleteTransaction(transaction.transactionId)"/></td>
               </tr>     
-              </tbody>
-            <!-- {{ paymentTransaction }} -->
+            </tbody>
           </table>
-          <!-- <h2 v-if="isLoading">Loading...</h2> -->
                   
         </section>
       </div>
@@ -253,10 +239,11 @@ export default {
         this.addPaymentForm = !this.addPaymentForm
       },
 
-      async getListTransaction(id){
+      async getListTransaction(){
         this.isLoading = true
         try{
-          await this.$store.dispatch('client/getListTransaction',id)
+          await this.$store.dispatch('client/getPaymentDetails',this.clientID)    //request for payment detiails
+          await this.$store.dispatch('client/getListTransaction',this.clientID)   //request for transction list
         }catch(error){
           toast.error(error,{autoClose:500})
         }
@@ -296,14 +283,12 @@ export default {
 
       async saveEdit(){
         console.log('saving edit')
-        const object = {
-          
+        const object = {         
           date: this.editObj.date,
           amount: this.editObj.amount,
           purpose: this.editObj.purpose,
           file:this.newAttachment
         }
-
         try{
           this.isLoading = true
           const response = await this.$store.dispatch('client/updatePayment',{
@@ -335,23 +320,18 @@ export default {
           }          
         }
 
-      },
-
-      async deleteADetails(value){
-        const confirmed = confirm("are you sure to delete this ",value)
-        if(confirmed){
-          try{
-            const response = await this.$store.dispatch('client/deleteAccountDetails',{
-              userId: this.clientID,
-              details:value})
-            toast.success(response)
-          }catch(error){
-            toast.error(error)
-          }          
-        }
-      },
+      },  
       elementNumber(index){
         return index + 1 + '.'
+      },
+      async reset(){
+        const confirmed = confirm('Are you sure to reset Payment details in this page?')
+        if(confirmed){
+          const response = await this.$store.dispatch('client/resetPaymentDetails',this.clientID)
+          toast.success(response.message)
+        }else{
+          toast.warn('You cancelled reseting the details')
+        }
       }
     },
 
@@ -368,12 +348,18 @@ export default {
           return true
         }
       },
-      client(){
+      client(){   //get the client list lot purchased
           const listClients =  this.$store.getters['client/clientsGetter']
           const index = listClients.findIndex(item => item.userId === this.clientID)
-          console.log(listClients[index])
           return listClients[index]
       },
+
+      //get the payment details
+      details(){
+        console.log(this.$store.getters['client/paymentDetailsGetter'])
+        return this.$store.getters['client/paymentDetailsGetter']
+      },
+
       roleAdmin(){
         return this.$store.getters['auth/authorizationRoleAdmin']
       },
@@ -395,9 +381,9 @@ export default {
         }
       }
     },
-    mounted(){
-      this.getListTransaction(this.clientID)
-    }
+    async created(){
+      await this.getListTransaction()
+    },
 }
 </script>
 
@@ -505,18 +491,33 @@ header{
   justify-content: space-between;
   width: 100%;
 }
-header button{
+header.main-head button{
+  padding: 0 .5rem;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  transition: 0.3s ease-in-out;
+}
+header.main-head button:hover{
+  background-color: orange;
+  /* color: black; */
+}
+header.main-head button:active{
+  opacity: 0.5;
+}
+header.sub-head button{
   padding: 0 .5rem;
   background-color: #31A72A;
   color: white;
   border: none;
   border-radius: 3px;
 }
-header button:hover{
+header.sub-head button:hover{
   background-color: #30a72a8e;
   color: black;
 }
-header button:active{
+header.sub-head button:active{
   opacity: 0.5;
 }
 .transaction-cont table{
@@ -541,5 +542,8 @@ td{
   display: flex;
   gap: .5rem;
   text-align: start;
+}
+span{
+  text-transform: uppercase;
 }
 </style>

@@ -87,24 +87,28 @@
             <li class="mb-3 row">
                 <div class="col-md"> 
                     <p>Total Downpayment is <input class="input-custom" v-model="installment.PercentageDonwpayment">% of the Contract Price</p>
-                    <p>Downpayment, net of Reservation Fee and Discount Due date to avail of <input class="input-custom" v-model="installment.DiscountOnDownpayment">% Discount on the Down payment</p>            
                 </div>
-                <!-- <div class="form-floating mb-1">
-                    <input type="text" class="form-control" id="isntallment-a" placeholder="" v-model="installment.TotalDownpayment">
-                    <label for="isntallment-a">Total</label>
-                </div> -->
                 <div class="col-md"> 
                     <div class="input-group mb-1">
                         <span class="input-group-text">P</span>
-                        <input type="text" class="form-control" v-model="installment.TotalDownpayment1">
+                        <input type="text" class="form-control" v-model="installment.ContractPrice">
                     </div>
+                </div>
+            </li>
+            <li class="mb-3 row">
+                <div class="col-md"> 
+                    <p>Downpayment, net of Reservation Fee and Discount Due date to avail of <input class="input-custom" v-model="installment.PercentageDiscountOnDownpayment">% Discount on the Down payment</p>            
+                </div>
+                <div class="col-md"> 
                     <div class="input-group mb-1">
                         <span class="input-group-text">P</span>
-                        <input type="text" class="form-control" v-model="installment.TotalDownpayment2">
+                        <input type="text" class="form-control" v-model="installment.DiscountDownpayment">
                     </div>                    
                 </div>
-
             </li>
+
+
+
             <li class="mb-3 row">
                 <div class="col-md"> 
                     <p>Balance for amortization, net of Reservation Fee, Downpayment and Discount and DP</p>          
@@ -112,42 +116,32 @@
                 <div class="col-md"> 
                     <div class="input-group mb-1">
                         <span class="input-group-text">P</span>
-                        <input type="text" class="form-control" v-model="installment.TotalbalanceOfAmortization1">
+                        <input type="text" class="form-control" v-model="installment.TotalbalanceOfAmortization">
                     </div>
-                    <div class="input-group mb-1">
-                        <span class="input-group-text">P</span>
-                        <input type="text" class="form-control" v-model="installment.TotalbalanceOfAmortization2">
-                    </div>                    
                 </div>
             </li>
         </ol>
 
         <ul>
             <li class="mb-3">
-                <p>Monthly Amrotization</p>
-                <p>Amount Due</p>
+                
                 <div class="row g2">
-                    <div class="col-md"> 
-                        <div class="input-group mb-1">
-                            <span class="input-group-text">Month</span>
-                            <input type="text" class="form-control" v-model="installment.DueMonth1">
-                            <span class="input-group-text">P</span>
-                            <input type="text" class="form-control" v-model="installment.AmountDue1">
-                        </div>
+                    <div class="col-md">
+                        <p>Monthly Amrotization, Amount Due</p>
                     </div>
                     <div class="col-md"> 
                         <div class="input-group mb-1">
                             <span class="input-group-text">Month</span>
-                            <input type="text" class="form-control" v-model="installment.DueMonth2">
+                            <input type="text" class="form-control" v-model="installment.NoMonths">
                             <span class="input-group-text">P</span>
-                            <input type="text" class="form-control" v-model="installment.AmountDue2">
+                            <input type="text" class="form-control" v-model="installment.AmountDue">
                         </div>
                     </div>
                 </div>
             </li>
 
             <li class="mb-4">
-                <p>First monthly amortization is due on <input class="input-custom2" v-model="installment.FirstDueDate"> and every <input class="input-custom2" v-model="installment.EveryDate">thereafter.</p>
+                <p>First monthly amortization is due on <input type="date" class="input-custom2" v-model="installment.FirstDueDate"> and every <input class="input-custom2" v-model="installment.EveryDate">thereafter.</p>
             </li>
 
             <li>
@@ -176,30 +170,23 @@
                 <p>Balance payable in <input class="input-custom" v-model="others.balancePayableIn"> equal monthly installments</p>
             </li>
             <li class="mb-3">
-                <p>Monthly Amrotization</p>
-                <p>Amount Due</p>
                 <div class="row g2">
-                    <div class="col-md"> 
-                        <div class="input-group mb-1">
-                            <span class="input-group-text">Month</span>
-                            <input type="text" class="form-control" v-model="others.DueMonth1">
-                            <span class="input-group-text">P</span>
-                            <input type="text" class="form-control" v-model="others.AmountDue1">
-                        </div>
+                    <div class="col-md">
+                        <p>Monthly Amrotization, Amount Due</p>
                     </div>
                     <div class="col-md"> 
                         <div class="input-group mb-1">
                             <span class="input-group-text">Month</span>
-                            <input type="text" class="form-control" v-model="others.DueMonth2">
+                            <input type="text" class="form-control" v-model="others.NoMonths">
                             <span class="input-group-text">P</span>
-                            <input type="text" class="form-control" v-model="others.AmountDue2">
+                            <input type="text" class="form-control" v-model="others.AmountDue">
                         </div>
                     </div>
                 </div>
             </li>
 
             <li class="mb-4">
-                <p>First monthly amortization is due on <input class="input-custom2" v-model="others.FirstDueDate"> and every <input class="input-custom2" v-model="others.EveryDate">thereafter.</p>
+                <p>First monthly amortization is due on <input type="date" class="input-custom2" v-model="others.FirstDueDate"> and every <input class="input-custom2" v-model="others.EveryDate">thereafter.</p>
             </li>
 
             <li>
@@ -222,6 +209,7 @@
 import { toast } from 'vue3-toastify'
 export default{
     props: ['clientID'],
+    emits: ['gotoPaymentDetails'],
     data(){
         return{
             isLoading : false,
@@ -250,30 +238,24 @@ export default{
             //isntallment type Payment
             installment: {
                 PercentageDonwpayment: '',
-                DiscountOnDownpayment: '',
-                TotalDownpayment1: '',
-                TotalDownpayment2: '',
-                TotalbalanceOfAmortization1: '',
-                TotalbalanceOfAmortization2: '',
-                DueMonth1: '',
-                DueMonth2: '',
-                AmountDue1: '',
-                AmountDue2: '',
+                PercentageDiscountOnDownpayment: '',
+                ContractPrice: '',      //TotalDownpayment1: '', change to Contract Price
+                DiscountDownpayment: '',  //TotalDownpayment2: '', change to Discount Donwpayment
+                TotalbalanceOfAmortization: '',  //TotalbalanceOfAmortization1: '', change to TotalbalanceOfAmortization
+                NoMonths: '',      //DueMonth1: '', change to NoMonths
+                AmountDue: '', //AmountDue1: '', change to 
                 FirstDueDate: '',
                 EveryDate: '',
                 Term: '',                
             },
             installmentCopy: {
                 PercentageDonwpayment: '',
-                DiscountOnDownpayment: '',
-                TotalDownpayment1: '',
-                TotalDownpayment2: '',
-                TotalbalanceOfAmortization1: '',
-                TotalbalanceOfAmortization2: '',
-                DueMonth1: '',
-                DueMonth2: '',
-                AmountDue1: '',
-                AmountDue2: '',
+                PercentageDiscountOnDownpayment: '',
+                ContractPrice: '',      //TotalDownpayment1: '', change to Contract Price
+                DiscountDownpayment: '',  //TotalDownpayment2: '', change to Discount Donwpayment
+                TotalbalanceOfAmortization: '', //TotalbalanceOfAmortization1: '', change to TotalbalanceOfAmortization
+                NoMonths: '',      //DueMonth1: '', change to NoMonths
+                AmountDue: '', //AmountDue: '', change to AmountDue
                 FirstDueDate: '',
                 EveryDate: '',
                 Term: '',                
@@ -283,10 +265,8 @@ export default{
             others: {
                 totalReservationFee: '',
                 balancePayableIn: '',
-                DueMonth1: '',
-                DueMonth2: '',
-                AmountDue1: '',
-                AmountDue2: '',
+                NoMonths: '',      //DueMonth1: '', change to NoMonths
+                AmountDue: '', //AmountDue: '', change to AmountDue
                 FirstDueDate: '',
                 EveryDate: '',
                 Term: '',                
@@ -294,10 +274,8 @@ export default{
             othersCopy: {
                 totalReservationFee: '',
                 balancePayableIn: '',
-                DueMonth1: '',
-                DueMonth2: '',
-                AmountDue1: '',
-                AmountDue2: '',
+                NoMonths: '',      //DueMonth1: '', change to NoMonths
+                AmountDue: '', //AmountDue: '', change to AmountDue
                 FirstDueDate: '',
                 EveryDate: '',
                 Term: '',                
@@ -381,10 +359,12 @@ export default{
                 try{
                     const response = await this.$store.dispatch('client/submitPaymentScheme',details) 
                     toast.success(response.message)
-                    alert('Downloading the file directly')
+                    alert('Downloading Payment Scheme file directly')
                     window.open(response.data.url)      //donwload the created file directly
+                    this.$emit('gotoPaymentDetails')    //go to payment details directly
                 }catch(error){
                     console.error(error)
+                    toast.error(error)
                 }     
             }else{
                 toast.warning('Please complete the required details')

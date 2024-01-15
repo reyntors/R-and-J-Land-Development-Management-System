@@ -387,3 +387,42 @@ export const triggerCreateCtsAPI = async (userId) => {
 }
 //end CTS contract to sell
 
+// start payment details
+export const getPaymentDetailsAPI = async (userId) => {
+    console.log('API getPaymentDetailsAPI executed')
+    console.log(userId)
+    
+    const token =store.getters['auth/getTokenID']
+    console.log(token)
+    try{
+        const response = await axios.get(`${BASE_URL}users/paymentdetails/${userId}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        console.log(response)
+        return response.data
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+export const resetPaymentDetailsAPI = async (userId) => {
+    console.log('API resetPaymentDetailsAPI executed')
+    console.log(userId)
+    const token =store.getters['auth/getTokenID']
+    console.log(token)
+    try{
+        const response = await axios.put(`${BASE_URL}users/reset-payment-details/${userId}`,{},{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+        console.log(response)
+        return response.data
+    }catch(error){
+        throw (error.response.data.message);
+    }
+}
+
+// end payment details
+

@@ -245,7 +245,8 @@ export default {
     width: 100%vw;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 10vh;
+    /* height: 10vh; */
+    height: 5rem;
     background-position: center center;
     box-shadow: 0 1px 11px 0.5px rgba(0, 0, 0, 0.407);
     display: flex;
@@ -276,7 +277,8 @@ export default {
   min-width: 120px;
 } */
 .logo{
-  width: 200px;
+  /* max-width: 200px; */
+  width: 180px;
 }
 /* .rowNav img{
   width: 50px;

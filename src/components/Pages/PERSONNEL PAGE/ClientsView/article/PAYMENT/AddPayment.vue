@@ -1,5 +1,4 @@
 <template>
-  <div></div>
   <form @submit.prevent="submit">
     <section class="form-controls-icon">
         <font-awesome-icon class="icon" icon="fa-solid fa-x" @click="close"/>
@@ -15,19 +14,16 @@
     <section class="form-controls">
         <label for="purpose">Purpose</label>
         <select id="purpose" v-model="purpose">
-            <option value="reservation">Reservation</option>
+            <option value="spot-cash">Spot Cash</option>
             <option value="downpayment">Downpayment</option>
+            <option value="reservation">Reservation</option>
             <option value="monthly-payment">Monthly Payment</option>
-        </select>
-        
+        </select>   
     </section>
     <section class="form-controls">
-        <label for="attacement">Attachemnts</label>
+        <label for="attacement">Attachements</label>
         <input id="attachment" type="file" accept=".pdf" @change="setAttachment">
     </section>
-
-    <!-- <a :href="url" download="aw.pdf">Donwlod here</a> -->
-
     <section class="c-btn">
       <button>Submit</button>  
     </section>

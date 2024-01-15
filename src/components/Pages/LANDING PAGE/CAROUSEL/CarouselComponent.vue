@@ -115,7 +115,7 @@ export default {
     text-align: center;
     z-index: 0;
     padding: 0;
-    height: 85vh;
+    height: 90dvh;
 }
 
 

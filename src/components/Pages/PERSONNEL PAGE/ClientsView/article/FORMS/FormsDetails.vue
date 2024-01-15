@@ -12,7 +12,6 @@
           <ul v-for="(item,index) in listSubmittedForms" :key="index">
             <li>
               <section>
-                {{ index }}
                 <a :href="item.url" :download="fileName(index)">
                   <form-thumbnail :imgThumbTitle="index" :title="index"></form-thumbnail>
                 </a>  

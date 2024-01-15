@@ -1,9 +1,9 @@
 <template>
         <container-widget id="about" title="About" typeBG="2">
-            <article class="description">
+            <article class="description" id="description">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quae molestias soluta officia! Magnam repudiandae corrupti saepe quos nobis quis dolorem sint maxime, necessitatibus dolorum.ing elit. Ullam quae molestias soluta officia! Magnam repudiandae corrupti saepe quos nobis quis dolorem sint maxime, necessitatibus dolorum.   </p>
             </article>
-            <article class="mission-vision mb-5">
+            <article class="mission-vision mb-5" id="misson-vision">
                 <section class="vision">
                     <h3 class="subtitle">VISION</h3>
                     <span class="line"/>
@@ -17,20 +17,74 @@
             </article>
        
         
-            <article id="sustainability" style="border: 1px solid black; width: 100%; height: 300px;">
-                SUSTAINABLITY
+            <article id="sustainability" class="mb-5">
+                <h3 class="subtitle">Sustainability</h3>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis ad quia adipisci ipsa sit. Maiores ut natus itaque sequi magni illum laboriosam doloribus perferendis commodi officia, vitae excepturi consectetur quod! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto et ipsum distinctio reprehenderit adipisci sit porro est? Facilis tempora non odit ab, ducimus sunt, eum atque expedita cumque cupiditate asperiores?
             </article>
-            <article id="corp-officers" style="border: 1px solid black; width: 100%; height: 300px;">
-                CORPORATE OFFICERS
+            <article id="corp-officers" class="mb-5">
+                <h3 class="subtitle">Corporation Officers</h3>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis ad quia adipisci ipsa sit. Maiores ut natus itaque sequi magni illum laboriosam doloribus perferendis commodi officia, vitae excepturi consectetur quod! Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam aperiam consectetur voluptatibus harum saepe illo rem amet, deleniti, dignissimos voluptatum cumque nulla, optio ea delectus debitis placeat eius molestias.
             </article>
-            <article id="licenses&permits" style="border: 1px solid black; width: 100%; height: 300px;">
-                LICENSES AND PERMITS
+            <article id="licenses&permits" class="licenses mb-5" v-scrollObserver>
+                <h3 class="subtitle">Licenses and Permits</h3>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis ad quia adipisci ipsa sit. Maiores ut natus itaque sequi magni illum laboriosam doloribus perferendis commodi officia, vitae excepturi consectetur quod! Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam aperiam consectetur voluptatibus harum saepe illo rem amet, deleniti, dignissimos voluptatum cumque nulla, optio ea delectus debitis placeat eius molestias.
             </article>
          </container-widget>  
 
 </template>
 
+<script>
+export default {
+    mounted(){
+        const scrollObserver = new IntersectionObserver(
+            (entries,scrollObserver) => {
+                console.log("hello world")
+                entries.forEach((entry) => {
+                    if(entry.isIntersecting){
+                        entry.target.classList.add('animateNow')
+                        scrollObserver.unobserve(entry.target)
+                    }
+                })
+            }
+        )
+ 
+        const description = document.getElementById('description')
+        const sustainability = document.getElementById('sustainability')
+        const corpOfficers = document.getElementById('corp-officers')
+        const licensesPermits = document.getElementById('licenses&permits')
+        const missonVision = document.getElementById('misson-vision')
+        description.classList.add('before-shown')
+        scrollObserver.observe(description)
+        sustainability.classList.add('before-shown')
+        scrollObserver.observe(sustainability)
+        corpOfficers.classList.add('before-shown')
+        scrollObserver.observe(corpOfficers)
+        licensesPermits.classList.add('before-shown')
+        scrollObserver.observe(licensesPermits)
+        missonVision.classList.add('before-shown')        
+        scrollObserver.observe(missonVision)
+    }
+}
+</script>>
+
 <style scoped>
+.before-shown{
+    opacity: 0;
+    transform: translateY(5rem);
+    transition: all 1s cubic-bezier(.56,-0.01,.23,1.43);
+    transition-delay: .5s;
+}
+.animateNow{
+    opacity: 1;
+    transform: translateY(0px);
+}
+#sustainability,#corp-officers,.licenses{
+    margin-top: .5rem;
+    text-align: center;
+    line-height: 1.5rem;
+    width: 75%;
+    margin: auto;
+}
 .subtitle{
     color: white;
 }
@@ -48,7 +102,8 @@
 }
 .mission-vision{
     display: flex;
-    width: 100%;
+    width: 75%;
+    margin: auto;
     justify-content: space-around;
     margin-top: .5rem;
 }

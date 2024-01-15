@@ -28,8 +28,8 @@
            <client-profile v-if="clientProfileVisibleComputed" :profile-details="clientObj" :clientID="clientObj.userId"/>
           <client-payment v-if="clientPaymentVisibleComputed" :client-obj="clientObj" :clientID="clientObj.userId"/>
          <client-forms  v-if="clientFormsVisibleComputed" :client-obj="clientObj"/> 
-         <client-reservation v-if="clientReservationFormVisible" :clientID="clientObj.userId"></client-reservation>
-         <client-payment-scheme v-if="clientPaymentSchemeVisible" :clientID="clientObj.userId"></client-payment-scheme>
+         <client-reservation v-if="clientReservationFormVisible" :clientID="clientObj.userId" @gotoPaymentDetails="goto('payment')"></client-reservation>
+         <client-payment-scheme v-if="clientPaymentSchemeVisible" :clientID="clientObj.userId" @gotoPaymentDetails="goto('payment')"></client-payment-scheme>
     </section>
 
     <blur-loading v-if="isLoading"/>
@@ -68,6 +68,7 @@ export default {
       // console.log(this.clientObj,this.clientObj.userId)
     },
     goto(params){
+      console.log('redirectinng noww!!!!')
       this.reset();
       if(params === 'profile'){
         this.clientProfileVisible = true

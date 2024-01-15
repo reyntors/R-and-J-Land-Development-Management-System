@@ -27,7 +27,6 @@ export default {
             state.openLoginForm = bool
         },
         addStoreState(state,responseData){
-            console.log(responseData)
             state.role = responseData.roles
             state.tokenID = responseData.tokenID
             state.userId = responseData.userId
@@ -48,7 +47,6 @@ export default {
             state.submittedBuyerInfo = false
         },
         addLocalStorage(_,responseData){
-            console.log(responseData)
             localStorage.setItem('role',responseData.roles)
             localStorage.setItem('token',responseData.tokenID)
             localStorage.setItem('userId',responseData.userId)
@@ -63,7 +61,6 @@ export default {
             state.profilePic = localStorage.getItem('profilePic')
             state.fullname = localStorage.getItem('fullname')
             state.baseNumericTime = localStorage.getItem('baseNumericTime')
-            console.log('role',state.role)
         },
         eraseLocalStorage(){
             localStorage.removeItem('role')
@@ -93,29 +90,27 @@ export default {
                 const diff = numericTimeNow - baseTime      //get the difference of both values the time now and thes time logged in
                 const minuteDiff = diff/60000   //convert into minute the difference result
                 if(minuteDiff>=1380){      //auto log out when the exceeds 23hrs
-                    // console.log("already exceeds one minute")
+
                     context.commit('eraseStoreState')   //delete the state of the app
                     context.commit('eraseLocalStorage') //delete the local storage of the browser
                     context.commit('autoLogoutNow',true)   //toggle the autologout variable when the page is going to mount
                     context.commit('toggleLoginForm',true)  //open login form
                     
                 }else{
-                    // console.log('all goods keep going!!')
+                    console.log('all goods keep going!!')
                 }                
             }else{
-                // console.log('the user is not logged in')
+                console.log('the user is not logged in')
             }
 
         },
         //LOGIN REQUEST
         async login(context, credentials){
-            console.log('login clicked')
             try{
                 const responseData = await Auth.login(credentials);
 
                 const timeNow = new Date()   //get the time now when log in
                 const baseNumericTime = timeNow.getTime()    //convert into numeric the time now
-            //    console.log(baseNumericTime)
                 const Data = {
                     tokenID: responseData.data.token,
                     roles: responseData.data.roles,
@@ -143,8 +138,6 @@ export default {
 
         //SIGNUP REQUEST
         async signup(context,credentials){
-            console.log('signup clicked')
-            console.log(credentials)
             try{
                 //change this to HTTP REQUEST
                 const responseData = await Auth.signUp(credentials);
@@ -173,7 +166,6 @@ export default {
             return state.openLoginForm
         },
         authGetter(state){
-            // console.log(state.role)
             if(state.role && state.tokenID){
                 return true
             }else{
@@ -217,7 +209,6 @@ export default {
             }
         },
         authorizationPersonnel(state){
-            console.log('role',state.role)
             if(state.role && state.tokenID){
                 if(state.role !== 'customer' && state.role !== 'realtor'){
                     return true
@@ -252,7 +243,6 @@ export default {
 
         getRoleType(state){
             if(state.role && state.tokenID){
-                console.log(state.role)
                 return state.role
             }else{
                 return undefined
@@ -288,11 +278,11 @@ export default {
         },
 
         submittedLetterOfIntentGetter(state){     //return the bool of the var holder is client submitted the letter of intent
-            console.log("is sumbitted letter of intent?", state.submittedLetterIntent)
+            // console.log("is sumbitted letter of intent?", state.submittedLetterIntent)
             return state.submittedLetterIntent
         },
         submittedBuyerInfoGetter(state){    //retun the bool of the var holder if the client submitted the buyer info sheet
-            console.log("is sumbitted letter of intent?", state.submittedBuyerInfo)
+            // console.log("is sumbitted letter of intent?", state.submittedBuyerInfo)
             return state.submittedBuyerInfo
         }
     }

@@ -145,30 +145,30 @@ export default {
             this.scrollY = window.scrollY
             if(this.scrollY >= this.topAbout && this.scrollY < this.topSustainability){
                 this.$store.commit('setHomeID','about')
-                console.log('about area')
+                // console.log('about area')
             }else if(this.scrollY >= this.topSustainability && this.scrollY < this.topCorpOfficers){
                 this.$store.commit('setHomeID','sustainability')
-                console.log('sustainability area')
+                // console.log('sustainability area')
             }else if(this.scrollY >= this.topCorpOfficers && this.scrollY < this.topLicensePermits){
                 this.$store.commit('setHomeID','corp-officers')
-                console.log('corp-officers area')
+                // console.log('corp-officers area')
             }else if(this.scrollY >= this.topLicensePermits && this.scrollY < this.topResedential){
                 this.$store.commit('setHomeID','licenses&permits')
-                console.log('license permits area')
+                // console.log('license permits area')
             }
 
             else if(this.scrollY >= this.topResedential && this.scrollY < this.topCommercial){
                 this.$store.commit('setHomeID','residential-house')
-                console.log('Resedential area')
+                // console.log('Resedential area')
             }else if(this.scrollY >= this.topCommercial && this.scrollY < this.topAmeneties){
                 this.$store.commit('setHomeID','commercial-bldg')
-                console.log('Commercial area')
+                // console.log('Commercial area')
             }else if(this.scrollY >= this.topAmeneties && this.scrollY < this.topStructural){
                 this.$store.commit('setHomeID','amenities')
-                console.log('Ameneties area')
+                // console.log('Ameneties area')
             }else if(this.scrollY >= this.topStructural){
                 this.$store.commit('setHomeID','structural-foundation')
-                console.log('Structural area')
+                // console.log('Structural area')
             }
             else{
                 this.$store.commit('setHomeID','')

@@ -43,6 +43,8 @@ import AnimatedButton from './components/Reusable/widgets/AnimatedButton.vue'
 import ClickableButton from './components/Reusable/widgets/ClickableButton'
 
 
+
+
 const app = createApp(App)
 
 app.use(router)

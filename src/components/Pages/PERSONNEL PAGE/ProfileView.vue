@@ -56,6 +56,7 @@ h5{
     box-sizing: border-box;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.3);
+    overflow: hidden;
 }
 .imageName{
     display: flex;
