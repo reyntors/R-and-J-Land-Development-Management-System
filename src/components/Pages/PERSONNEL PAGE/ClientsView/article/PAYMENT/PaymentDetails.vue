@@ -141,6 +141,7 @@
             </tr>
             
             <tbody v-for="(transaction,index) in clientTransactionGetter" :key="index">
+              {{ index }}
               <tr v-if="!isTransactionEmpty">
                 <td>
                   <div class="firstElement"> 

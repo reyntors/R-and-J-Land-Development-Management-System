@@ -88,11 +88,14 @@ export default{
 
         //START payment transactions
         setLocalCurrentClientTransaction(state,list){
-            state.listCurrentClientTransactions = list.reverse()                        
+            state.listCurrentClientTransactions = list                       
         },
         deleteTransactionPayment(state,id){
+            console.log(id)
+            console.log(state.listCurrentClientTransactions)
             const index = state.listCurrentClientTransactions.findIndex(item => item.transactionId = id)
             if(index>=0){
+                console.log(index,state.listCurrentClientTransactions[index])
                 const typePayment = state.listCurrentClientTransactions[index].purpose
                 const amount = state.listCurrentClientTransactions[index].amount
                 if(typePayment === 'reservation'){
@@ -100,7 +103,7 @@ export default{
                     state.clientPaymentDetails.accountingDetails.totalPayment -= amount
                 }else if(typePayment === 'monthly-payment'){
                     state.clientPaymentDetails.accountingDetails.totalPayment -= amount
-                    state.clientPaymentDetails.accountingDetails.totalPayment += amount
+                    state.clientPaymentDetails.accountingDetails.totalAmountPayable += amount
                 }else if(typePayment === 'spot-cash'){
                     state.clientPaymentDetails.accountingDetails.totalPayment -= amount
                 }else if(typePayment === 'downpayment'){
@@ -108,6 +111,8 @@ export default{
                     state.clientPaymentDetails.accountingDetails.totalPayment -= amount
                 }
                 state.listCurrentClientTransactions.splice(index,1)
+
+                console.log(state.clientPaymentDetails.accountingDetails)
             }else{
                 console.error('not found the transaction ID')
             }
@@ -266,6 +271,7 @@ export default{
             try{
                 const response = await Client.deletePaymentTransaction(payload)
                 context.commit('deleteTransactionPayment',payload.transactionId)
+                // const response = {message: 'aww'}
                 return response.message
             }catch(error){
                 console.error(error)
