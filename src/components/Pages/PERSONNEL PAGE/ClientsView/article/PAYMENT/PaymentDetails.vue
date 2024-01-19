@@ -1,4 +1,4 @@
-<template>
+  <template>
   
   <div class="container-payment" >
     <progress-loading v-if="isLoading" type="torks"></progress-loading>
@@ -141,7 +141,6 @@
             </tr>
             
             <tbody v-for="(transaction,index) in clientTransactionGetter" :key="index">
-              {{ index }}
               <tr v-if="!isTransactionEmpty">
                 <td>
                   <div class="firstElement"> 
@@ -315,6 +314,7 @@ export default {
             userId: this.clientID,
             transactionId: transactionId
             })       
+            this.getListTransaction(this.clientID)
             toast.success(response)   
           }catch(error){
             toast.error(error)
