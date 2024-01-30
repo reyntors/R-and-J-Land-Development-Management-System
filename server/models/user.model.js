@@ -573,17 +573,17 @@ const letterOfIntentSchema = new Schema({
     },
     citizenship: {
         type: String,
-        required: true,
+        
         ref: 'Letter of Intent'
     },
     contactNo: {
         type: String,
-        required: true,
+        
         ref: 'Letter of Intent'
     },
     emailAddress: {
         type: String,
-        required: true,
+       
         ref: 'Letter of Intent'
     },
     messengerAccount: {

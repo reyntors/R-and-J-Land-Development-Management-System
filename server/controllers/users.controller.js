@@ -54,6 +54,8 @@ async function generateRequestId() {
 exports.register = async (req, res, next) => {
     const {password} = req.body;
 
+   
+
     const salt = bcryptjs.genSaltSync(10);
 
     req.body.password = bcryptjs.hashSync(password, salt);
