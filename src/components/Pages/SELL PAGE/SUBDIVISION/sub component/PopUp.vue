@@ -4,10 +4,11 @@
             <font-awesome-icon icon="fa-solid fa-xmark" class="icon" @click="closeDetails"/>  
             <div class="details">
                 <ul class="unordered-list">
+        
                     <li class="unordered-list-item"><span>Lot Number:</span><span>{{ details.lotNumber }}</span></li>
                     <li class="unordered-list-item"><span>Total Squared Meters:</span><span>{{ details.totalSqm }}</span></li>
                     <li class="unordered-list-item"><span>Status:</span><span>{{ details.status }}</span></li>
-                    <li class="unordered-list-item"><span>Total Price:</span><span>{{ details.totalAmountDue }}</span></li>
+                    <li class="unordered-list-item"><span>Amount per Square:</span><span>{{ details.amountperSquare }}</span></li>
                     <li class="unordered-list-item"><span>Images:</span>
                         <ul class="sub-unordered-list"> 
                             <li class="sub-unordered-list-item" v-for="(image,index) in details.image" :key="index">
@@ -88,11 +89,9 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    min-height: 12rem;
-    min-width: 12rem;
-    height: 40%;
-    width: 50%;
-    max-width: 30rem;
+    height: 30%;
+    min-width: 19rem;
+    max-width: 20rem;
     background-color: white;
     box-shadow: 0 0 .2rem .2rem rgba(0, 0, 255, .3);
     animation: respawn .5s ease-in-out;
@@ -166,6 +165,8 @@ export default {
 }
 .unordered-list .unordered-list-item span{
     text-transform: capitalize;
+
+    
 }
 .unordered-list .unordered-list-item span:not(:first-child){
     font-weight: 900;
