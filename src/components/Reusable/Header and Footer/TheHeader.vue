@@ -197,7 +197,8 @@ export default {
         return this.$store.getters['auth/authorizationRoleGuest']
     },
     authorizationPersonnel(){
-      return this.$store.getters['auth/authorizationPersonnel']
+      return false;
+      // return this.$store.getters['auth/authorizationPersonnel']
     },
     isPersonnelProfile(){
       return this.$store.getters['personnel/isSettingsViewGetter']

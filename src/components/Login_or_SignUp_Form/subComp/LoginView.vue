@@ -18,7 +18,7 @@
               </div>
   
               <div class="style-form">
-                  <input type="text" placeholder=""  v-model.trim="loginPassword" @keydown="keydown">
+                  <input type="password" placeholder=""  v-model.trim="loginPassword" @keydown="keydown">
                   <label for="password">Password</label>
               </div>
   
@@ -121,9 +121,7 @@ export default {
 
             }else{
               this.$router.replace('/personnel/client')
-            }
-            
-            
+            } 
           }catch(error){
             
             toast.error(error+'', {autoClose: 3000,});

@@ -77,7 +77,6 @@ export default {
             localStorage.setItem('profilePic',url)
             state.profilePic = url
         }
-
     },
     actions:{
         async monitorTokenSpan(context){
@@ -102,13 +101,12 @@ export default {
             }else{
                 console.log('the user is not logged in')
             }
-
         },
         //LOGIN REQUEST
         async login(context, credentials){
             try{
                 const responseData = await Auth.login(credentials);
-
+                console.log(responseData);
                 const timeNow = new Date()   //get the time now when log in
                 const baseNumericTime = timeNow.getTime()    //convert into numeric the time now
                 const Data = {
@@ -121,44 +119,41 @@ export default {
                     submittedLetterIntent: responseData.data.letterOfIntent.isSubmitted,
                     submittedBuyerInfo: responseData.data.buyerInfoSheet.isSubmitted
                 }
-
-
                 context.commit('addLocalStorage',Data)
                 context.commit('addStoreState',Data)
                 context.commit('autoLogoutNow',false)
-
                 return responseData;
-
             }catch(error){
                 console.log(error)
                 throw error
             }
-  
         },
 
         //SIGNUP REQUEST
         async signup(context,credentials){
             try{
-                //change this to HTTP REQUEST
                 const responseData = await Auth.signUp(credentials);
-
+                console.log(responseData);
+                const timeNow = new Date()   //get the time now when log in
+                const baseNumericTime = timeNow.getTime()    //convert into numeric the time now
                 const Data = {
-                    
                     tokenID: responseData.data.token,
                     roles: responseData.data.roles,
-                    userId: responseData.data.userId
+                    userId: responseData.data.userId,
+                    profilePic: responseData.data.profilePicture.url,
+                    fullname: responseData.data.fullname,
+                    baseNumericTime : baseNumericTime,
+                    submittedLetterIntent: responseData.data.letterOfIntent.isSubmitted,
+                    submittedBuyerInfo: responseData.data.buyerInfoSheet.isSubmitted
                 }
-
                 context.commit('addLocalStorage',Data)
                 context.commit('addStoreState',Data)
-
+                context.commit('autoLogoutNow',false)
                 return responseData;
-
             }catch(error){
                 console.log(error)
                 throw error
             }
-  
         }
     },
     getters: {

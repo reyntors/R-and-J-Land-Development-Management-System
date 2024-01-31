@@ -162,9 +162,33 @@ export default {
     
                 try{
                 const response = await this.$store.dispatch('auth/signup',credentials)
-                toast.success(response.message, {autoClose: 1000,});
-                this.close()
-                this.$router.replace('/home')
+                  toast.success(response.message, {autoClose: 2000,});
+            
+                  this.close()
+                  console.log('signup',response.data.roles)
+        
+                  if(response.data.roles === 'realtor' || response.data.roles === 'customer'){
+                    const isRedirectToLetterOfIntent = this.$store.getters['subdivision/redirectToFormGetter']  //var holder to decide to redirect to the letterof intent or not
+                    if(isRedirectToLetterOfIntent){
+                      const isSubmitLetterOfintent = this.$store.getters['auth/submittedLetterOfIntentGetter']
+                      const isSubmitBuyerInfoSheet = this.$store.getters['auth/submittedBuyerInfoGetter']
+                      if(!isSubmitLetterOfintent && !isSubmitBuyerInfoSheet){   //if not submitted neither letter of intent or buyer info sheet
+                        this.$router.push('/guest-forms/letter-of-intent')
+                      }else if(!isSubmitLetterOfintent && isSubmitBuyerInfoSheet){  //if submitted buyer info sheet but not letter of intent
+                        this.$router.push('/guest-forms/letter-of-intent')
+                      }else if(isSubmitLetterOfintent && !isSubmitBuyerInfoSheet){  //if submitted letter of intent but not buyer info sheet
+                        this.$router.push('/guest-forms/buyer-info-sheet')
+                      }else{
+                        toast.info('Submitted Already a Reservation Request')
+                        toast.info('Only Once allowed to Avoid Spamming.')
+                      }
+                    }else{
+                      this.$router.replace('/home')     //redirect to home
+                    }
+
+                  }else{
+                    this.$router.replace('/personnel/client')
+                  } 
                 }catch(error){
                 toast.error(error+'', {autoClose: 3000,});
                 }
