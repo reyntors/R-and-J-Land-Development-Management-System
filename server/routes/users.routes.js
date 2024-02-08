@@ -51,7 +51,7 @@ router.post("/add-transaction/:id", auth.authenticateToken, userController.restr
 router.get("/alltransaction/:id", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.getTransaction);
 router.put("/update-transaction/:id/:transactionId", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.updateTransaction);
 router.delete("/delete-transaction/:id/:transactionId", auth.authenticateToken, userController.restrict(['staff','management']), transactionController.deleteTransactionbyId);
-
+router.post("/approve-transaction/:id/:requestId", auth.authenticateToken, userController.restrict(['management']), transactionController.approvalTransaction);
 
 //add legit clientslistPendingClients
 router.get("/client/legit-clients", auth.authenticateToken, userController.restrict(['staff','management']), legitClientController.listLegitimateClients);

@@ -1,7 +1,8 @@
 const User = require('../models/user.model');
 const { uploadAttachment } = require('../middlewares/multer');
 const Report = require('../models/reports.model')
-const { stopLotReservationRollback } = require('./reservation.controller')
+const { stopLotReservationRollback } = require('./reservation.controller');
+const requestTransaction = require('../models/requestTransaction.model');
 
 
 function generateTransactionId(length = 8) {
@@ -41,111 +42,341 @@ exports.addTransaction = async (req, res, next) => {
 
       const transactionId =  generateTransactionId();
       // Create a new transaction
-      const newTransaction = {
+      const newTransaction = new requestTransaction ({
+        request: [{
         transactionId,
         date,
         amount,
         purpose,
-        attachments: [],
-      };
-
-      // Process the uploaded file if it exists
-      if (attachments) {
-        const fileData = {
+        attachments: attachments ? [{
           filename: attachments.originalname,
           contentType: attachments.mimetype,
-          url: attachments.location,
+          url: attachments.locations,
+        }]:[],
+      }]
+      })
+
+      await newTransaction.save();
+
+      return res.status(200).json({
+        message: `${client.username}, Transaction request  successfully.`,
+        data: newTransaction,
+      });
+
+      });
+
+      // Process the uploaded file if it exists
+      // if (attachments) {
+      //   const fileData = {
+      //     filename: attachments.originalname,
+      //     contentType: attachments.mimetype,
+      //     url: attachments.location,
           
-        };
+      //   };
 
         // Push the file data into the attachments array
-        newTransaction.attachments.push(fileData);
-      }
+        // newTransaction.attachments.push(fileData);
+
+       
+
+
+        
+      
 
       // Push the new transaction into the client's transactions array
-      client.transactions.push(newTransaction);
+      // client.transactions.push(newTransaction);
+
+      
 
 
-      let amountPaid = parseFloat(newTransaction.amount);
-      let totalAmountPayable = parseFloat(client.accountingDetails.totalAmountPayable);
+  //     let amountPaid = parseFloat(newTransaction.amount);
+  //     let totalAmountPayable = parseFloat(client.accountingDetails.totalAmountPayable);
 
-      if(newTransaction.purpose === 'reservation'){
+  //     if(newTransaction.purpose === 'reservation'){
  
       
 
 
-          client.paymentDetails.reservationPayment = newTransaction.amount;
+  //         client.paymentDetails.reservationPayment = newTransaction.amount;
 
-        if(client.accountingDetails.totalPayment === 0) {
+  //       if(client.accountingDetails.totalPayment === 0) {
 
-          client.accountingDetails.totalPayment = client.paymentDetails.reservationPayment;
+  //         client.accountingDetails.totalPayment = client.paymentDetails.reservationPayment;
         
-        }else{
-          client.accountingDetails.totalPayment += client.paymentDetails.reservationPayment;
-        }
+  //       }else{
+  //         client.accountingDetails.totalPayment += client.paymentDetails.reservationPayment;
+  //       }
 
 
 
-      }
-      if(newTransaction.purpose === 'downpayment'){
+  //     }
+  //     if(newTransaction.purpose === 'downpayment'){
  
 
-        client.paymentDetails.downPayment = amountPaid;
+  //       client.paymentDetails.downPayment = amountPaid;
 
-        if(client.accountingDetails.totalPayment === 0){
+  //       if(client.accountingDetails.totalPayment === 0){
               
-          client.accountingDetails.totalPayment = amountPaid;
+  //         client.accountingDetails.totalPayment = amountPaid;
   
-        }else{
+  //       }else{
   
-          client.accountingDetails.totalPayment += amountPaid
-        }
+  //         client.accountingDetails.totalPayment += amountPaid
+  //       }
 
-      }
+  //     }
  
 
       
       
 
-        if (newTransaction.purpose === 'monthly-payment') {
+  //       if (newTransaction.purpose === 'monthly-payment') {
 
 
-          if(client.approvePaymentScheme.typePayment != 'cash'){
+  //         if(client.approvePaymentScheme.typePayment != 'cash'){
 
-            if( 
-              client.reservationAgreement.isSubmitted === false ||
-              client.approvePaymentScheme.isSubmitted === false ||
-              client.paymentDetails.reservationPayment === 0 ||
-              client.paymentDetails.downPayment === 0
-            ){
+  //           if( 
+  //             client.reservationAgreement.isSubmitted === false ||
+  //             client.approvePaymentScheme.isSubmitted === false ||
+  //             client.paymentDetails.reservationPayment === 0 ||
+  //             client.paymentDetails.downPayment === 0
+  //           ){
 
-              return res.status(404).json({
-                message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
-              });
+  //             return res.status(404).json({
+  //               message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
+  //             });
 
                
-        }else{
+  //       }else{
 
-              if(client.accountingDetails.totalPayment === 0){
+  //             if(client.accountingDetails.totalPayment === 0){
               
-                client.accountingDetails.totalPayment = amountPaid;
+  //               client.accountingDetails.totalPayment = amountPaid;
         
-              }else{
+  //             }else{
         
-                client.accountingDetails.totalPayment += amountPaid
-              }
+  //               client.accountingDetails.totalPayment += amountPaid
+  //             }
         
-              if( client.accountingDetails.totalAmountPayable === 0){
+  //             if( client.accountingDetails.totalAmountPayable === 0){
         
-                client.accountingDetails.totalAmountPayable = totalAmountPayable - amountPaid;
+  //               client.accountingDetails.totalAmountPayable = totalAmountPayable - amountPaid;
         
-              }else{
+  //             }else{
         
-                client.accountingDetails.totalAmountPayable -= amountPaid
+  //               client.accountingDetails.totalAmountPayable -= amountPaid
         
-              }
+  //             }
 
-        }
+  //       }
+               
+  //       }else{
+  //         return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not installment!'})
+  //       }
+
+  //     }
+      
+    
+   
+
+  //     if (newTransaction.purpose === 'spot-cash'){
+
+  //       if(client.approvePaymentScheme.typePayment === 'cash'){
+
+  //       if( 
+  //           client.reservationAgreement.isSubmitted === false ||
+  //           client.approvePaymentScheme.isSubmitted === false ||
+  //           client.paymentDetails.reservationPayment === 0 ||
+  //           client.paymentDetails.downPayment === 0
+  //         ) {
+
+  //           return res.status(404).json({
+  //             message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
+  //           });
+  //         }else{
+
+  //           if(client.accountingDetails.totalPayment === 0){
+
+  //             client.accountingDetails.totalPayment = amountPaid;
+      
+  //           }else{
+      
+  //             client.accountingDetails.totalPayment += amountPaid
+  //           }
+
+  //         }
+
+  //     }else{
+  //       return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not cash!'})
+  //     }
+
+      
+  // }
+
+         
+
+  //     // Save the updated user record
+  //     await client.save();
+
+     
+
+  //     const newReportEntry = {
+  //       date: newTransaction.date,
+  //       fullname: client.fullname,
+  //       amount: newTransaction.amount,
+  //       purpose: newTransaction.purpose,
+  //       address: client.homeAddress,
+  //       contactNo: client.contactNumber,
+  //       fblink: client.fbAccount,
+  //       email: client.email,
+  //       civilStatus: client.profileDetails.civilStatus,
+  //       spouseName: client.profileDetails.spouseName,
+  //       occupation: client.profileDetails.occupation,
+  //       businessMonthlyIncome: client.profileDetails.businessMonthlyIncome,
+  //       buyerSourceOfIncome: client.profileDetails.buyerSourceOfIncome,
+  //       typeOfEmployment: client.profileDetails.typeOfEmployment,
+  //       employer: client.profileDetails.employer,
+  //       employerAddress: client.profileDetails.employerAddress,
+  //       grossSalary: client.profileDetails.grossSalary,
+  //       businessName: client.profileDetails.businessName,
+  //       businessAddress: client.profileDetails.businessAddress,
+  //       monthlyGrossIncome: client.profileDetails.monthlyGrossIncome,
+
+
+  //     };
+
+  //     const reports = await Report.findOne();
+
+  //     if (!reports){
+
+  //       const newReports = new Report({ reports: [newReportEntry]  });
+  //       await newReports.save();
+  //     }else{
+
+  //       reports.reports.push(newReportEntry);
+
+  //       await reports.save();
+
+  //     }
+
+     
+  
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.approvalTransaction = async (req, res) => {
+  try {
+    const {id, requestId} = req.params;
+    const { isApproved } = req.body;
+
+    // Find the client by their userId
+    const client = await User.findOne({ userId: id, roles: 'customer' });
+
+    if (!client) {
+      return res.status(404).json({
+        message: 'Client not found or you do not have permission to add a transaction for this client.',
+      });
+    }
+
+    if(isApproved === 'approved'){
+
+      const request = await requestTransaction.findOne({"request._id": requestId})
+
+     
+
+      if(request){
+
+        const matchingRequestIndex = request.request.findIndex(item => item._id.toString() === requestId);
+
+        
+
+        if(matchingRequestIndex !== -1) {
+
+          const matchingRequest = request.request[matchingRequestIndex];
+
+                let amountPaid = parseFloat(matchingRequest.amount);
+                let totalAmountPayable = parseFloat(client.accountingDetails.totalAmountPayable);
+
+                if(matchingRequest.purpose === 'reservation'){
+          
+                
+
+
+                    client.paymentDetails.reservationPayment = matchingRequest.amount;
+
+                  if(client.accountingDetails.totalPayment === 0) {
+
+                    client.accountingDetails.totalPayment = client.paymentDetails.reservationPayment;
+                  
+                  }else{
+                    client.accountingDetails.totalPayment += client.paymentDetails.reservationPayment;
+                  }
+
+
+
+                }
+                if(matchingRequest.purpose === 'downpayment'){
+          
+
+                  client.paymentDetails.downPayment = amountPaid;
+
+                  if(client.accountingDetails.totalPayment === 0){
+                        
+                    client.accountingDetails.totalPayment = amountPaid;
+            
+                  }else{
+            
+                    client.accountingDetails.totalPayment += amountPaid
+                  }
+
+                }
+          
+
+                
+                
+
+                  if (matchingRequest.purpose === 'monthly-payment') {
+
+                    console.log("I am here")
+
+                    if(client.approvePaymentScheme.typePayment != 'cash'){
+
+                      if( 
+                        client.reservationAgreement.isSubmitted === false ||
+                        client.approvePaymentScheme.isSubmitted === false ||
+                        client.paymentDetails.reservationPayment === 0 ||
+                        client.paymentDetails.downPayment === 0
+                      ){
+
+                        return res.status(404).json({
+                          message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
+                        });
+
+                        
+                  }else{
+
+                        if(client.accountingDetails.totalPayment === 0){
+                        
+                          client.accountingDetails.totalPayment = amountPaid;
+                  
+                        }else{
+                  
+                          client.accountingDetails.totalPayment += amountPaid
+                        }
+                  
+                        if( client.accountingDetails.totalAmountPayable === 0){
+                  
+                          client.accountingDetails.totalAmountPayable = totalAmountPayable - amountPaid;
+                  
+                        }else{
+                  
+                          client.accountingDetails.totalAmountPayable -= amountPaid
+                  
+                        }
+
+                  }
                
         }else{
           return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not installment!'})
@@ -156,7 +387,7 @@ exports.addTransaction = async (req, res, next) => {
     
    
 
-      if (newTransaction.purpose === 'spot-cash'){
+      if (matchingRequest.purpose === 'spot-cash'){
 
         if(client.approvePaymentScheme.typePayment === 'cash'){
 
@@ -198,10 +429,10 @@ exports.addTransaction = async (req, res, next) => {
      
 
       const newReportEntry = {
-        date: newTransaction.date,
+        date: matchingRequest.date,
         fullname: client.fullname,
-        amount: newTransaction.amount,
-        purpose: newTransaction.purpose,
+        amount: matchingRequest.amount,
+        purpose: matchingRequest.purpose,
         address: client.homeAddress,
         contactNo: client.contactNumber,
         fblink: client.fbAccount,
@@ -236,15 +467,39 @@ exports.addTransaction = async (req, res, next) => {
 
       }
 
-      return res.status(200).json({
-        message: `${client.username}, Transaction added successfully.`,
-        data: newTransaction,
-      });
+          // request.request.splice(matchingRequest, 1);
+
+          await request.save()
+
+        }else{
+          return res.status(404).json({message: 'request not found'})
+        }
+
+      
+      }else {
+        return res.status(404).json({message: 'Not matching request found'})
+      }
+
+    }else{
+     
+        return res.status(500).json({ message: 'The request has been rejected!' });
+    }
+
+    return res.status(200).json({
+      message: `${client.username}, Transaction request  has been approved.`
     });
+
+    
   } catch (error) {
-    return next(error);
+    
+    console.log(error)
+    throw error
   }
-};
+
+
+
+
+}
 
 
 exports.getTransaction = async (req, res, next) => {
