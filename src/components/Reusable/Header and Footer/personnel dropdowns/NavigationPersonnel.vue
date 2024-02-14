@@ -1,5 +1,5 @@
 <template>
-    <div class="navStaffAdmin" @mouseenter="toggleStaffAdminColumn" @mouseleave="toggleStaffAdminColumn">
+    <div class="navStaffAdmin"  @click="toggleStaffAdminColumn">
         <!-- <font-awesome-icon class="icon icon1" icon="fa-solid fa-circle-user"/> -->
         <p class="text">{{ fullname }}<font-awesome-icon class="icon icon2"  :icon="['fas', 'caret-down']"/></p>
         <div class="dropdown" v-if="isShowStaffAdminColumn">
