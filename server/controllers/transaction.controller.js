@@ -502,6 +502,24 @@ exports.approvalTransaction = async (req, res) => {
 }
 
 
+exports.getAllPendingTransaction = async (req, res) => {
+
+    try {
+
+      const request = await requestTransaction.find();
+
+      return res.status(200).json({message: 'all request for approval transaction', data: request});
+      
+  } catch (error) {
+      throw error
+  }
+
+    
+}
+
+
+
+
 exports.getTransaction = async (req, res, next) => {
 
     try {
