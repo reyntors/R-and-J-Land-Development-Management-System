@@ -18,7 +18,6 @@ export default{
             const index = state.pendingClients.findIndex(item => item.requestId === requestId)
             if(index>=0){
                 state.pendingClients.splice(index,1)
-                console.log('deleted')
             }
             
         },

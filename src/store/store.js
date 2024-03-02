@@ -16,6 +16,7 @@ import myAccount from './clientStore/clientAccount.js'
 import mySettings from './clientStore/clientSettings.js'
 import forgotPass from './clientStore/forgotPass/forgotPass.js'
 import newClients from './personnelStore/admin/newClient.js'
+import newTransactions from './personnelStore/admin/newTransactions.js'
 
 const store = createStore({
         modules:{
@@ -34,7 +35,8 @@ const store = createStore({
             myAccount,
             mySettings,
             forgotPass,
-            newClients
+            newClients,
+            newTransactions
         },
         state(){
             return{

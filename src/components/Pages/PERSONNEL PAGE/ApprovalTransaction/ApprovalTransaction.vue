@@ -1,71 +1,38 @@
 <template>
     <div class="addedClient-container">
-        <h4>Added Clients</h4>
+        <h4>New Transactions</h4>
         <table>
             <thead>
                 <tr>
-                    <th>Staff</th>
-                    <th>Client</th>
+                    <!-- <th>Staff</th> -->
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Date</th>
+                    <th>Date(yyyy-mm-dd)</th>
                     <td>Action</td>
                 </tr>                
             </thead>        
-            <tbody>
+            <tbody v-for="(item,index) in list" :key="index">
                 <tr>
-                    <td>Sample Staff</td>
-                    <td>Sample Client</td>
-                    <td>Purpose</td>
-                    <td>500000</td>
-                    <td>02/18/24</td>
+                    <!-- <td>Sample Staff</td> -->
+                    <td>{{ item.request[0].purpose }}</td>
+                    <td>{{ item.request[0].amount }}</td>
+                    <td>{{ item.request[0].date }}</td>
                     <td class="option">
-                        <span class="check-span" @click="approval(item.userId,item.requestId,item.requestLegitId,'approved')">
+                        <span class="check-span" @click="approval(item._id,item.request[0].transactionId,'approved')">
                             Approve
                            <font-awesome-icon icon="fa-solid fa-check" class="icon check"/>
                         </span>
-                        <span @click="approval(item.userId,item.requestId,item.requestLegitId,'rejected')">
+                        <span @click="approval(item._id,item.request[0].transactionId,'rejected')">
                             Reject
                             <font-awesome-icon icon="fa-solid fa-xmark" class="icon ex"/>
                         </span>
                     </td>
-                </tr>   
-                <tr>
-                    <td>Sample Staff</td>
-                    <td>Sample Client</td>
-                    <td>Purpose</td>
-                    <td>500000</td>
-                    <td>02/18/24</td>
-                    <td class="option">
-                        <span class="check-span" @click="approval(item.userId,item.requestId,item.requestLegitId,'approved')">
-                            Approve
-                           <font-awesome-icon icon="fa-solid fa-check" class="icon check"/>
-                        </span>
-                        <span @click="approval(item.userId,item.requestId,item.requestLegitId,'rejected')">
-                            Reject
-                            <font-awesome-icon icon="fa-solid fa-xmark" class="icon ex"/>
-                        </span>
-                    </td>
-                </tr>   
-                <tr>
-                    <td>Sample Staff</td>
-                    <td>Sample Client</td>
-                    <td>Purpose</td>
-                    <td>500000</td>
-                    <td>02/18/24</td>
-                    <td class="option">
-                        <span class="check-span" @click="approval(item.userId,item.requestId,item.requestLegitId,'approved')">
-                            Approve
-                           <font-awesome-icon icon="fa-solid fa-check" class="icon check"/>
-                        </span>
-                        <span @click="approval(item.userId,item.requestId,item.requestLegitId,'rejected')">
-                            Reject
-                            <font-awesome-icon icon="fa-solid fa-xmark" class="icon ex"/>
-                        </span>
-                    </td>
-                </tr>   
+                </tr>    
             </tbody>
         </table>
+        <div class="emptyList" v-if="isEmptyList">
+            Empty List
+        </div>
     </div>
   </template>
   
@@ -79,22 +46,19 @@
         }
     },
     methods:{
-        async approval(userId,requestId, requestLegitId,isApproved){
-            console.log(isApproved)
-            var confirmed = null;
+        async approval(objectId,transactionId,isApproved){
+            let confirmed = null;
             if(isApproved === 'approved'){
-              confirmed = confirm('are you sure Add this user as legit Client?')
+              confirmed = confirm('are you sure to add this transaction?')
             }else{
-              confirmed = confirm('are you sure to REJECT this user?')
+              confirmed = confirm('are you sure to reject this transaction?')
             }
             if(confirmed){
               try{
-                const response = await this.$store.dispatch('newClients/approval',{
-                  userId,
-                  requestId,
-                  requestLegitId,
-                  isApproved
-                })
+                const response = await this.$store.dispatch('newTransactions/approval',{
+                  objectId: objectId,
+                  id:transactionId,
+                  approval:isApproved});
                 toast.success(response)
               }catch(error){
                 toast.error(error)
@@ -108,12 +72,15 @@
     },
     computed:{
         list(){
-            return this.$store.getters['newClients/listPendingClients']
+            return this.$store.getters['newTransactions/getList']
         },
         isEmptyList(){
-            return this.$store.getters['newClients/islistEmpty']
+            return this.$store.getters['newTransactions/islistEmpty']
         }
     },
+    async beforeMount(){
+      await this.$store.dispatch('newTransactions/getTransactions');
+    }
   }
   </script>
   
