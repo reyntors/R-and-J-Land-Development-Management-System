@@ -34,6 +34,7 @@ import PersonnelSubdivision from './components/Pages/PERSONNEL PAGE/SubdivisionV
 import PersonnelClient from './components/Pages/PERSONNEL PAGE/ClientsView/ClientView.vue'
 import PersonnelForm from './components/Pages/PERSONNEL PAGE/EmptyForms/EmptyForms.vue'
 import PersonnelApproval from './components/Pages/PERSONNEL PAGE/ApprovalAddingClient/ApprovalAddingClient.vue'
+import PersonnelApprovalTransaction from './components/Pages/PERSONNEL PAGE/ApprovalTransaction/ApprovalTransaction.vue'
 
 import store from './store/store.js'
 
@@ -56,7 +57,6 @@ const route = createRouter({
             {path:'/guest-forms', component: GuestFormPage, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/letter-of-intent', component: GuestLetterOfIntent, meta: {requiresAuthGuest: true}}, //used
             {path:'/guest-forms/buyer-info-sheet', component: BuyerInfoSheet, meta: {requiresAuthGuest: true}}, //used
-            // {path:'/guest-forms/contract-details', component: GuestContractDetails, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/bir-tin-request', component: GuestBIRRequest, meta: {requiresAuthGuest: true}},
             {path:'/guest-forms/individual-buyer-declaration', component: GuestIndividualBuyerDeclaration, meta: {requiresAuthGuest: true}},
 
@@ -70,6 +70,7 @@ const route = createRouter({
                     {path: 'emptyForms', component: PersonnelForm},
                     {path: 'reports', component: PersonnelReports},
                     {path: 'approval', component: PersonnelApproval},
+                    {path: 'approvalTransaction', component: PersonnelApprovalTransaction}
                 ]
             }
         ],

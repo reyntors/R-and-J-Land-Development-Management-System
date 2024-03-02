@@ -11,6 +11,7 @@
             <router-link @click="toggle" to="/personnel/client">CLIENTS</router-link>
             <router-link @click="toggle" to="/personnel/inquiries">INQUIRIES</router-link>
             <router-link @click="toggle" to="/personnel/approval" v-if="isUserAdmin">ADDED CLIENTS</router-link>
+            <router-link @click="toggle" to="/personnel/approvalTransaction" v-if="isUserAdmin">ADDED TRANSACTIONS</router-link>
             <router-link @click="toggle" to="/personnel/subdivision">SUBDIVISION</router-link> 
             <router-link @click="toggle" to="/personnel/emptyForms">EMPTY FORMS</router-link>
             <router-link @click="toggle" to="/personnel/reports">REPORTS</router-link>

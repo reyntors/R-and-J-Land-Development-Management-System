@@ -16,7 +16,7 @@ import { faBars,faX,faSearch,faPesoSign, faLeftLong, faRightLong, faCircleUser, 
     faCaretUp, faArrowLeftLong, faPlus,faMagnifyingGlass,faGear,faTrashCan,faCaretLeft,faCaretRight,
     faEnvelopeCircleCheck,faEnvelopeOpen, faEnvelope, faChevronDown, faXmark, faArrowUpFromBracket,
     faEyeSlash,faEye,faFilter,faUserXmark,faMinus,faFilePen,faUserCheck,faCircleXmark,faGripVertical,
-    faUser,
+    faUser,faCheck
     } from '@fortawesome/free-solid-svg-icons'
 
 import { faFacebook, faWhatsapp, faFacebookSquare } from '@fortawesome/free-brands-svg-icons'
@@ -26,7 +26,7 @@ library.add(faBars,faX,faSearch,faPesoSign,faLeftLong, faRightLong,faCircleUser,
     faCaretDown,faCaretUp,faArrowLeftLong,faPlus,faMagnifyingGlass,faGear,faTrashCan,
     faCaretLeft,faCaretRight,faEnvelopeCircleCheck,faEnvelopeOpen,faFacebook, faWhatsapp,faEnvelope,faChevronDown,
     faFacebookSquare,faXmark,faArrowUpFromBracket,faEyeSlash,faEye,faFilter,faUserXmark,faMinus,faFilePen,faUserCheck,
-    faCircleXmark,faGripVertical,faUser
+    faCircleXmark,faGripVertical,faUser,faCheck
     )
 
 /* resulsable components */

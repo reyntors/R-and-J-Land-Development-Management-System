@@ -23,7 +23,10 @@ export default{
 
             listSubmittedForms : [],
 
-            clientPaymentDetails : {},  //var for the whole payment details
+            clientPaymentDetails : {},
+
+            /* sample add transaction pending approval*/
+            transactionsApproval: [{}]
         }
     },
     mutations:{
