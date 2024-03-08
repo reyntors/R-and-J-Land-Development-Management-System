@@ -30,6 +30,7 @@ exports.addTransaction = async (req, res, next) => {
       const attachments = req.file; // The uploaded file is now available in req.file
 
       
+      
 
       // Find the client by their userId
       const client = await User.findOne({ userId: id, roles: 'customer' });
@@ -42,21 +43,44 @@ exports.addTransaction = async (req, res, next) => {
 
       const transactionId =  generateTransactionId();
       // Create a new transaction
-      const newTransaction = new requestTransaction ({
-        request: [{
+      const newTransaction = {
+      
         transactionId,
         date,
         amount,
         purpose,
+        userId: client.userId,
         attachments: attachments ? [{
           filename: attachments.originalname,
           contentType: attachments.mimetype,
-          url: attachments.locations,
+          url: attachments.location,
         }]:[],
-      }]
-      })
+    
+      }
 
-      await newTransaction.save();
+      const request = await requestTransaction.findOne()
+
+       if (!request) {
+
+        console.log(!request)
+           // If requests object doesn't exist, create it
+           const newRequests = new requestTransaction({ request: [newTransaction] });
+           await newRequests.save();
+       }else{
+
+           
+            // Check if the requestLegitId already exists in the requests array
+            const existingRequest = request.request.find(item => item.userId === newTransaction.userId);
+            
+
+            if (!existingRequest) {
+                // If the requestLegitId doesn't exist, push the new request
+                request.request.push(newTransaction);
+                // Save to requests
+                await request.save();
+
+            }
+    }
 
       return res.status(200).json({
         message: `${client.username}, Transaction request  successfully.`,
