@@ -57,8 +57,22 @@ exports.addTransaction = async (req, res, next) => {
         }]:[],
     
       }
+      if (purpose === 'monthly-payment' || purpose === 'spot-cash') {
 
-      const request = await requestTransaction.findOne()
+        if( 
+          client.reservationAgreement.isSubmitted === false ||
+          client.approvePaymentScheme.isSubmitted === false ||
+          client.paymentDetails.reservationPayment === 0 ||
+          client.paymentDetails.downPayment === 0
+        ){
+
+          return res.status(404).json({
+            message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
+          });
+
+        
+  }else{
+    const request = await requestTransaction.findOne()
 
        if (!request) {
 
@@ -68,7 +82,7 @@ exports.addTransaction = async (req, res, next) => {
            await newRequests.save();
        }else{
 
-           
+       
             // Check if the requestLegitId already exists in the requests array
             const existingRequest = request.request.find(item => item.userId === newTransaction.userId);
             
@@ -81,6 +95,11 @@ exports.addTransaction = async (req, res, next) => {
 
             }
     }
+
+  }
+}
+
+  
 
       return res.status(200).json({
         message: `${client.username}, Transaction request  successfully.`,
@@ -325,8 +344,7 @@ exports.approvalTransaction = async (req, res) => {
 
                 if(matchingRequest.purpose === 'reservation'){
           
-                
-
+  
 
                     client.paymentDetails.reservationPayment = matchingRequest.amount;
 
@@ -367,19 +385,7 @@ exports.approvalTransaction = async (req, res) => {
 
                     if(client.approvePaymentScheme.typePayment != 'cash'){
 
-                      if( 
-                        client.reservationAgreement.isSubmitted === false ||
-                        client.approvePaymentScheme.isSubmitted === false ||
-                        client.paymentDetails.reservationPayment === 0 ||
-                        client.paymentDetails.downPayment === 0
-                      ){
-
-                        return res.status(404).json({
-                          message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
-                        });
-
-                        
-                  }else{
+              
 
                         if(client.accountingDetails.totalPayment === 0){
                         
@@ -400,7 +406,7 @@ exports.approvalTransaction = async (req, res) => {
                   
                         }
 
-                  }
+             
                
         }else{
           return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not installment!'})
@@ -415,17 +421,7 @@ exports.approvalTransaction = async (req, res) => {
 
         if(client.approvePaymentScheme.typePayment === 'cash'){
 
-        if( 
-            client.reservationAgreement.isSubmitted === false ||
-            client.approvePaymentScheme.isSubmitted === false ||
-            client.paymentDetails.reservationPayment === 0 ||
-            client.paymentDetails.downPayment === 0
-          ) {
-
-            return res.status(404).json({
-              message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
-            });
-          }else{
+       
 
             if(client.accountingDetails.totalPayment === 0){
 
@@ -436,7 +432,7 @@ exports.approvalTransaction = async (req, res) => {
               client.accountingDetails.totalPayment += amountPaid
             }
 
-          }
+          
 
       }else{
         return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not cash!'})
