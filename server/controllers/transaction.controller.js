@@ -35,6 +35,8 @@ exports.addTransaction = async (req, res, next) => {
       // Find the client by their userId
       const client = await User.findOne({ userId: id, roles: 'customer' });
 
+     
+
       if (!client) {
         return res.status(404).json({
           message: 'Client not found or you do not have permission to add a transaction for this client.',
@@ -71,32 +73,47 @@ exports.addTransaction = async (req, res, next) => {
           });
 
         
-  }else{
-    const request = await requestTransaction.findOne()
+      }else{
+        const request = await requestTransaction.findOne()
 
-       if (!request) {
-
-        console.log(!request)
-           // If requests object doesn't exist, create it
-           const newRequests = new requestTransaction({ request: [newTransaction] });
-           await newRequests.save();
-       }else{
-
+        if (!request) {
+    
+          console.log(!request)
+            // If requests object doesn't exist, create it
+            const newRequests = new requestTransaction({ request: [newTransaction] });
+            await newRequests.save();
+        }else{
+ 
+                  // If the requestLegitId doesn't exist, push the new request
+                  request.request.push(newTransaction);
+                  // Save to requests
+                  await request.save();
+    
+         
+      }
+      }
+}else{
        
-            // Check if the requestLegitId already exists in the requests array
-            const existingRequest = request.request.find(item => item.userId === newTransaction.userId);
-            
+  const request = await requestTransaction.findOne()
 
-            if (!existingRequest) {
-                // If the requestLegitId doesn't exist, push the new request
-                request.request.push(newTransaction);
-                // Save to requests
-                await request.save();
+    if (!request) {
 
-            }
-    }
+      console.log(!request)
+        // If requests object doesn't exist, create it
+        const newRequests = new requestTransaction({ request: [newTransaction] });
+        await newRequests.save();
+    }else{
 
+     
+          
+              // If the requestLegitId doesn't exist, push the new request
+              request.request.push(newTransaction);
+              // Save to requests
+              await request.save();
+
+      
   }
+
 }
 
   
@@ -356,7 +373,7 @@ exports.approvalTransaction = async (req, res) => {
                     client.accountingDetails.totalPayment += client.paymentDetails.reservationPayment;
                   }
 
-
+                  
 
                 }
                 if(matchingRequest.purpose === 'downpayment'){
@@ -444,6 +461,7 @@ exports.approvalTransaction = async (req, res) => {
          
 
       // Save the updated user record
+      client.transactions.push(matchingRequest);
       await client.save();
 
      
@@ -487,7 +505,7 @@ exports.approvalTransaction = async (req, res) => {
 
       }
 
-          // request.request.splice(matchingRequest, 1);
+          request.request.splice(matchingRequest, 1);
 
           await request.save()
 
