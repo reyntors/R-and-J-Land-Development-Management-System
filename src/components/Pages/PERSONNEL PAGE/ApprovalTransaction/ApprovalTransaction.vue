@@ -14,15 +14,15 @@
             <tbody v-for="(item,index) in list" :key="index">
                 <tr>
                     <!-- <td>Sample Staff</td> -->
-                    <td>{{ item.request[0].purpose }}</td>
-                    <td>{{ item.request[0].amount }}</td>
-                    <td>{{ item.request[0].date }}</td>
+                    <td>{{ item.purpose }}</td>
+                    <td>{{ item.amount }}</td>
+                    <td>{{ item.date }}</td>
                     <td class="option">
-                        <span class="check-span" @click="approval(item._id,item.request[0].transactionId,'approved')">
+                        <span class="check-span" @click="approval(item.userId,item._id,'approved')">
                             Approve
                            <font-awesome-icon icon="fa-solid fa-check" class="icon check"/>
                         </span>
-                        <span @click="approval(item._id,item.request[0].transactionId,'rejected')">
+                        <span @click="approval(item.userId,item._id,'rejected')">
                             Reject
                             <font-awesome-icon icon="fa-solid fa-xmark" class="icon ex"/>
                         </span>
@@ -34,19 +34,19 @@
             Empty List
         </div>
     </div>
+    <blur-loading v-if="isLoading" type="torks" class="overRideLoading"></blur-loading>
   </template>
   
   <script>
   import { toast } from 'vue3-toastify'
-
   export default {
     data(){
         return{
-            
+            isLoading: false
         }
     },
     methods:{
-        async approval(objectId,transactionId,isApproved){
+        async approval(userId,transactionId,isApproved){
             let confirmed = null;
             if(isApproved === 'approved'){
               confirmed = confirm('are you sure to add this transaction?')
@@ -54,16 +54,17 @@
               confirmed = confirm('are you sure to reject this transaction?')
             }
             if(confirmed){
+              this.isLoading = true;
               try{
                 const response = await this.$store.dispatch('newTransactions/approval',{
-                  objectId: objectId,
-                  id:transactionId,
+                  userId: userId,
+                  transactionId:transactionId,
                   approval:isApproved});
-                toast.success(response)
+                toast.success(response.message)
               }catch(error){
                 toast.error(error)
               }
-
+              this.isLoading = false;
             }
         },
         numberGenerate(index){
@@ -72,6 +73,7 @@
     },
     computed:{
         list(){
+            console.log(this.$store.getters['newTransactions/getList']);
             return this.$store.getters['newTransactions/getList']
         },
         isEmptyList(){

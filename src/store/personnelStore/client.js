@@ -307,6 +307,7 @@ export default{
 
         // START reservation form
         async submitReservationForm(_,payload){
+            console.log('naa ko diri: ',payload);
             store.dispatch('auth/monitorTokenSpan')
             try{
                 const response = await Client.submitReservationFormAPI(payload)              

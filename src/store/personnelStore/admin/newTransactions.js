@@ -13,10 +13,11 @@ export default{
             state.transactionsList = data;
         },
         remove(state,transactionId){
-            console.log('mutations in new transactions',transactionId)
-            let index = state.transactionsList.findIndex(item => item.request[0].transactionId == transactionId);
+            let index = state.transactionsList.findIndex(item => item._id == transactionId);
             if(index>=0){
                 state.transactionsList.splice(index,1);
+            }else{
+                console.error('not found target transaction approval')
             }
         }
     },
@@ -25,16 +26,17 @@ export default{
             store.dispatch('auth/monitorTokenSpan');
             try{
                 const response = await API.getNewTransactions();
-                context.commit('setList',response.data);
+                console.log(response.data[0].request);
+                context.commit('setList',response.data[0].request);
             }catch(error){
                 console.error(error);
             }
         },
         async approval(context,payload){          
             try{
-                await API.approvalTransaction(payload);
-                context.commit('remove',payload.id);
-                return payload.approval;
+                const response = await API.approvalTransaction(payload);
+                context.commit('remove',payload.transactionId);
+                return response;
             }catch(error){
                 console.error(error);
             }
@@ -42,6 +44,7 @@ export default{
     },
     getters:{
         getList(state){
+            console.log(state.transactionsList);
             return state.transactionsList;
         },
         islistEmpty(state){

@@ -11,7 +11,7 @@ export const getNewTransactions = async () => {
                 'Authorization': `Bearer ${token}`
             }
         }) 
-        return response.data      
+        return response.data 
     }catch(error){
         throw (error.response.data.message);
     }
@@ -20,16 +20,15 @@ export const getNewTransactions = async () => {
 export const approvalTransaction = async (payload) => {
     console.log(payload);
     // console.log('API approvalTransaction executed')
-    // const token =store.getters['auth/getTokenID']
-    // try{
-    //     const response = await axios.put(`${BASE_URL}users/approve-transaction/:id/:requestId`,{isApproved:payload.isApproved},{
-    //         headers:{
-    //             'Authorization': `Bearer ${token}`
-    //         }
-    //     }) 
-    //     console.log(response)
-    //     return response.data      
-    // }catch(error){
-    //     throw (error.response.data.message);
-    // }
+    const token =store.getters['auth/getTokenID']
+    try{
+        const response = await axios.post(`${BASE_URL}users/approve-transaction/${payload.userId}/${payload.transactionId}`,{isApproved:payload.approval},{
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        }) 
+        return response.data      
+    }catch(error){
+        throw (error.response.data.message);
+    }
 }
