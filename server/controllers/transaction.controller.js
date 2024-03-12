@@ -519,7 +519,11 @@ exports.approvalTransaction = async (req, res) => {
       }
 
     }else{
-     
+      const request = await requestTransaction.findOne({"request._id": requestId})
+      const matchingRequestIndex = request.request.findIndex(item => item._id.toString() === requestId);
+      const matchingRequest = request.request[matchingRequestIndex];
+
+        request.request.splice(matchingRequest, 1);
         return res.status(500).json({ message: 'The request has been rejected!' });
     }
 
