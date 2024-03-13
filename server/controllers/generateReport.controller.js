@@ -23,7 +23,7 @@ exports.generateReports = async (req, res, next) => {
 
         const reports = await Report.findOne({ 'reports.date': date });
 
-     
+        console.log(reports)
 
         if (!reports) {
             res.status(404).json({ message: 'No report found for this date' });

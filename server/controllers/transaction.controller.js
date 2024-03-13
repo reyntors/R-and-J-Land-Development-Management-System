@@ -193,6 +193,7 @@ exports.addTransaction = async (req, res, next) => {
 
 
           const newReportEntry = {
+            transactionId,
             date: newTransaction.date,
             fullname: client.fullname,
             amount: newTransaction.amount,
@@ -271,7 +272,7 @@ exports.addTransaction = async (req, res, next) => {
       
            
         }
-        
+
         }
   }else{
          
@@ -650,6 +651,7 @@ exports.approvalTransaction = async (req, res) => {
      
 
       const newReportEntry = {
+        transactionId,
         date: matchingRequest.date,
         fullname: client.fullname,
         amount: matchingRequest.amount,
@@ -946,11 +948,24 @@ exports.deleteTransactionbyId = async (req, res) => {
   
     }
     
-    
+
     // Remove the transaction from the array
     user.transactions.splice(transactionIndex, 1);
 
+    const reports = await Report.findOne();
+
+    const matchingRequestIndex2 = reports.reports.findIndex(item => item.transactionId.toString() === transactionId);
+
+     if (matchingRequestIndex2 !== -1) {
+                  reports.reports.splice(matchingRequestIndex2, 1);
+                  await reports.save();
+      } else {
+                 console.log("Matching request not found.");
+             }
+    
+
     await user.save();
+    
 
     return res.status(200).json({ message: 'Delete successful!' });
   } catch (error) {

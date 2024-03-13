@@ -7,6 +7,7 @@ const reportsSchema = new Schema({
 
     reports:[{
 
+        transactionId: Number,
         date: String,
         fullname: String,
         amount: Number,
