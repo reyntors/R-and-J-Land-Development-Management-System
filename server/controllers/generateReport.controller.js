@@ -3,19 +3,27 @@ const moment = require('moment');
 const ExcelJS = require('exceljs');
 const path = require('path');
 const fs = require('fs');
-
 exports.generateReports = async (req, res, next) => {
     try {
         const { date } = req.params;
 
-        const selectedColumns = req.query.selectedColumns; 
+        let selectedColumns = req.query.selectedColumns; 
+
+        console.log(selectedColumns)
         
         // Check if selectedColumns is provided
-        if (!selectedColumns || !Array.isArray(selectedColumns) || selectedColumns.length === 0) {
+        if (!selectedColumns  || selectedColumns.length === 0) {
             return res.status(400).json({ message: 'Invalid or missing selectedColumns' });
+        }
+        
+        // Convert selectedColumns to array if it's not already
+        if (!Array.isArray(selectedColumns)) {
+            selectedColumns = [selectedColumns];
         }
 
         const reports = await Report.findOne({ 'reports.date': date });
+
+     
 
         if (!reports) {
             res.status(404).json({ message: 'No report found for this date' });
@@ -70,9 +78,11 @@ exports.generateReports = async (req, res, next) => {
             data: selectedData,
         });
     } catch (error) {
+        console.log(error)
         return next(error);
     }
 };
+
 
 
 // API endpoint to retrieve the Excel file
