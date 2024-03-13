@@ -27,7 +27,8 @@ exports.addTransaction = async (req, res, next) => {
 
       const { id } = req.params;
       const { date, amount, purpose } = req.body;
-      const attachments = req.file; // The uploaded file is now available in req.file
+      const username = req.user.username;
+      const attachments = req.file; 
 
       
       
@@ -42,6 +43,14 @@ exports.addTransaction = async (req, res, next) => {
           message: 'Client not found or you do not have permission to add a transaction for this client.',
         });
       }
+
+      const user = await User.findOne({ username });
+
+      if(!user) {
+        return res.status(404).json({message: 'user not found'});
+    }
+
+    
 
       const transactionId =  generateTransactionId();
       // Create a new transaction
@@ -59,8 +68,15 @@ exports.addTransaction = async (req, res, next) => {
         }]:[],
     
       }
-      if (purpose === 'monthly-payment' || purpose === 'spot-cash') {
 
+      if(user.roles === 'management'){
+        console.log("This  user is an admin:",user.roles === 'management')
+
+        let amountPaid = parseFloat(newTransaction.amount);
+        let totalAmountPayable = parseFloat(client.accountingDetails.totalAmountPayable);
+
+
+        if (purpose === 'monthly-payment' || purpose === 'spot-cash') {
         if( 
           client.reservationAgreement.isSubmitted === false ||
           client.approvePaymentScheme.isSubmitted === false ||
@@ -71,57 +87,223 @@ exports.addTransaction = async (req, res, next) => {
           return res.status(404).json({
             message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
           });
-
-        
-      }else{
-        const request = await requestTransaction.findOne()
-
-        if (!request) {
-    
-          console.log(!request)
-            // If requests object doesn't exist, create it
-            const newRequests = new requestTransaction({ request: [newTransaction] });
-            await newRequests.save();
         }else{
- 
-                  // If the requestLegitId doesn't exist, push the new request
-                  request.request.push(newTransaction);
-                  // Save to requests
-                  await request.save();
-    
-         
-      }
-      }
-}else{
-       
-  const request = await requestTransaction.findOne()
+                          if (newTransaction.purpose === 'monthly-payment') {
 
-    if (!request) {
+                                      
 
-      console.log(!request)
-        // If requests object doesn't exist, create it
-        const newRequests = new requestTransaction({ request: [newTransaction] });
-        await newRequests.save();
-    }else{
+                            if(client.approvePaymentScheme.typePayment != 'cash'){
 
-     
-          
-              // If the requestLegitId doesn't exist, push the new request
-              request.request.push(newTransaction);
-              // Save to requests
-              await request.save();
+                      
 
-      
-  }
+                                if(client.accountingDetails.totalPayment === 0){
+                                
+                                  client.accountingDetails.totalPayment = amountPaid;
+                          
+                                }else{
+                          
+                                  client.accountingDetails.totalPayment += amountPaid
+                                }
+                          
+                                if( client.accountingDetails.totalAmountPayable === 0){
+                          
+                                  client.accountingDetails.totalAmountPayable = totalAmountPayable - amountPaid;
+                          
+                                }else{
+                          
+                                  client.accountingDetails.totalAmountPayable -= amountPaid
+                          
+                                }
 
-}
+                    
+                      
+                }else{
+                  return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not installment!'})
+                }
 
+                }
+
+
+
+
+                if (newTransaction.purpose === 'spot-cash'){
+
+                if(client.approvePaymentScheme.typePayment === 'cash'){
+
+
+
+                    if(client.accountingDetails.totalPayment === 0){
+
+                      client.accountingDetails.totalPayment = amountPaid;
+
+                    }else{
+
+                      client.accountingDetails.totalPayment += amountPaid
+                    }
+
+                  
+
+                }else{
+                return res.status(401).json({message: 'The transaction cannot be made because the clients type payment is not cash!'})
+                }
+
+
+                }
+
+        }
+      }else{
+                    
+                    if(newTransaction.purpose === 'reservation'){
+              
+
+
+                        client.paymentDetails.reservationPayment = matchingRequest.amount;
+
+                      if(client.accountingDetails.totalPayment === 0) {
+
+                        client.accountingDetails.totalPayment = client.paymentDetails.reservationPayment;
+                      
+                      }else{
+                        client.accountingDetails.totalPayment += client.paymentDetails.reservationPayment;
+                      }
+
+                      
+
+                    }
+                    if(newTransaction.purpose === 'downpayment'){
+              
+
+                      client.paymentDetails.downPayment = amountPaid;
+
+                      if(client.accountingDetails.totalPayment === 0){
+                            
+                        client.accountingDetails.totalPayment = amountPaid;
+                
+                      }else{
+                
+                        client.accountingDetails.totalPayment += amountPaid
+                      }
+
+                    }
+
+          // Save the updated user record
+          client.transactions.push(newTransaction);
+          await client.save();
+
+
+
+          const newReportEntry = {
+            date: newTransaction.date,
+            fullname: client.fullname,
+            amount: newTransaction.amount,
+            purpose: newTransaction.purpose,
+            address: client.homeAddress,
+            contactNo: client.contactNumber,
+            fblink: client.fbAccount,
+            email: client.email,
+            civilStatus: client.profileDetails.civilStatus,
+            spouseName: client.profileDetails.spouseName,
+            occupation: client.profileDetails.occupation,
+            businessMonthlyIncome: client.profileDetails.businessMonthlyIncome,
+            buyerSourceOfIncome: client.profileDetails.buyerSourceOfIncome,
+            typeOfEmployment: client.profileDetails.typeOfEmployment,
+            employer: client.profileDetails.employer,
+            employerAddress: client.profileDetails.employerAddress,
+            grossSalary: client.profileDetails.grossSalary,
+            businessName: client.profileDetails.businessName,
+            businessAddress: client.profileDetails.businessAddress,
+            monthlyGrossIncome: client.profileDetails.monthlyGrossIncome,
+
+
+          };
+
+          const reports = await Report.findOne();
+
+          if (!reports){
+
+            const newReports = new Report({ reports: [newReportEntry]  });
+            await newReports.save();
+          }else{
+
+            reports.reports.push(newReportEntry);
+
+            await reports.save();
+
+          }
+        }
+
+        return res.status(200).json({
+          message: `${client.username}, Transaction  successfully.`,
+          data: newTransaction,
+        });
+
+      }else{
+
+        if (purpose === 'monthly-payment' || purpose === 'spot-cash') {
+
+          if( 
+            client.reservationAgreement.isSubmitted === false ||
+            client.approvePaymentScheme.isSubmitted === false ||
+            client.paymentDetails.reservationPayment === 0 ||
+            client.paymentDetails.downPayment === 0
+          ){
   
-
-      return res.status(200).json({
-        message: `${client.username}, Transaction request  successfully.`,
-        data: newTransaction,
-      });
+            return res.status(404).json({
+              message: `Client ${client.fullname} has not submitted all the required documents. A transaction cannot be made. Please process all the necessary documents to proceed.`,
+            });
+  
+          
+        }else{
+          const request = await requestTransaction.findOne()
+  
+          if (!request) {
+      
+            console.log(!request)
+              // If requests object doesn't exist, create it
+              const newRequests = new requestTransaction({ request: [newTransaction] });
+              await newRequests.save();
+          }else{
+   
+                    // If the requestLegitId doesn't exist, push the new request
+                    request.request.push(newTransaction);
+                    // Save to requests
+                    await request.save();
+      
+           
+        }
+        }
+  }else{
+         
+    const request = await requestTransaction.findOne()
+  
+      if (!request) {
+  
+        console.log(!request)
+          // If requests object doesn't exist, create it
+          const newRequests = new requestTransaction({ request: [newTransaction] });
+          await newRequests.save();
+      }else{
+  
+       
+            
+                // If the requestLegitId doesn't exist, push the new request
+                request.request.push(newTransaction);
+                // Save to requests
+                await request.save();
+  
+        
+    }
+  
+  }
+  
+    
+  
+        return res.status(200).json({
+          message: `${client.username}, Transaction request  successfully.`,
+          data: newTransaction,
+        });
+      }
+      
 
       });
 
