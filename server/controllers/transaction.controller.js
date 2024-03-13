@@ -504,10 +504,14 @@ exports.approvalTransaction = async (req, res) => {
         await reports.save();
 
       }
+            const matchingRequestIndex2 = request.request.findIndex(item => item._id.toString() === requestId);
+            if (matchingRequestIndex2 !== -1) {
+              request.request.splice(matchingRequestIndex2, 1);
+              await request.save(); 
+          } else {
+              console.log("Matching request not found.");
+          }
 
-          request.request.splice(matchingRequest, 1);
-
-          await request.save()
 
         }else{
           return res.status(404).json({message: 'request not found'})
@@ -520,10 +524,17 @@ exports.approvalTransaction = async (req, res) => {
 
     }else{
       const request = await requestTransaction.findOne({"request._id": requestId})
-      const matchingRequestIndex = request.request.findIndex(item => item._id.toString() === requestId);
-      const matchingRequest = request.request[matchingRequestIndex];
 
-        request.request.splice(matchingRequest, 1);
+      const matchingRequestIndex = request.request.findIndex(item => item._id.toString() === requestId);
+      
+      if (matchingRequestIndex !== -1) {
+        request.request.splice(matchingRequestIndex, 1);
+        await request.save(); 
+    } else {
+        console.log("Matching request not found.");
+    }
+
+
         return res.status(500).json({ message: 'The request has been rejected!' });
     }
 
