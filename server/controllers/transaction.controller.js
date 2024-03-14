@@ -651,7 +651,7 @@ exports.approvalTransaction = async (req, res) => {
      
 
       const newReportEntry = {
-        transactionId,
+        transactionId: matchingRequest.transactionId,
         date: matchingRequest.date,
         fullname: client.fullname,
         amount: matchingRequest.amount,
