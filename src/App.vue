@@ -53,7 +53,6 @@ export default {
 *{
   padding: 0;
   margin: 0;
-  font-family: 'Poppins';
 }
 p {
   /* font-size: clamp(.5rem, 1.2vw, 1.5rem); */

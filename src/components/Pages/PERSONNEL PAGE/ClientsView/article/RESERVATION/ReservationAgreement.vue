@@ -1,6 +1,7 @@
 <template>
+    <blur-loading v-if="isLoading" type="torks" class="overRideLoading"></blur-loading>
     <form-card id="reservation-agreement"  title="Reservation Agreement Lot Only">
-        <progress-loading v-if="isLoading" type="torks" class="overRideLoading"></progress-loading>
+        
     <div class="address">
         <h5>THE MANAGEMENT</h5>
         <p>{{ companyName }}</p>
@@ -94,7 +95,7 @@
     <section class="button-container">
        <submit-form-button class="mt-2" @click="submit">Submit</submit-form-button> 
     </section>
-    
+    <br>
     </form-card>
 </template>
 

@@ -21,12 +21,13 @@ export const approvalTransaction = async (payload) => {
     console.log(payload);
     // console.log('API approvalTransaction executed')
     const token =store.getters['auth/getTokenID']
+    console.log(payload);
     try{
         const response = await axios.post(`${BASE_URL}users/approve-transaction/${payload.userId}/${payload.transactionId}`,{isApproved:payload.approval},{
             headers:{
                 'Authorization': `Bearer ${token}`
             }
-        }) 
+        })
         return response.data      
     }catch(error){
         throw (error.response.data.message);
