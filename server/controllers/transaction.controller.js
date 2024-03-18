@@ -720,7 +720,7 @@ exports.approvalTransaction = async (req, res) => {
     }
 
 
-        return res.status(500).json({ message: 'The request has been rejected!' });
+        return res.status(200).json({ message: 'The request has been rejected!' });
     }
 
     return res.status(200).json({
